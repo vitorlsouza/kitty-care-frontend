@@ -27,7 +27,7 @@ const MsgBoxs = () => {
                   <img src={CatinChat} alt="CatinChat" />
                 </span>
               )}
-              <span>{msg.msg}</span>
+              <span className="w-4/5">{msg.msg}</span>
             </div>
           </div>
         ))
