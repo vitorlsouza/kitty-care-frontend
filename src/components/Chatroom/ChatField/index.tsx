@@ -4,7 +4,7 @@ import MsgBoxs from "./MsgBoxs";
 const ChatField = () => {
   return (
     <div className="w-2/5 m-auto">
-      <MsgBoxs />
+      <MsgBoxs msgList={[]} />
       <InputField />
     </div>
   );
