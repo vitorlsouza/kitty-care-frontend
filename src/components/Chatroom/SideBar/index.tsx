@@ -14,6 +14,7 @@ import Logout from "../../../assets/svg/Logout.svg";
 import Profile from "../../../assets/svg/Profile.svg";
 import KittyCareText from "../../../assets/svg/KittyCareText.svg";
 import Edit from "../../../assets/svg/Edit.svg";
+import MiniBtn from "../../../assets/svg/MiniBtn.svg";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,7 @@ const SideBar = () => {
 
   return (
     <div id="sideBar" className="fixed h-screen flex z-20">
-      <div className="relative my-12 ml-12 w-auto h-[90%] bg-[#FADFC9] rounded-2xl p-[18px] flex flex-col justify-between">
+      <div className="hidden sm:flex relative my-12 ml-12 w-auto h-[90%] bg-[#FADFC9] rounded-2xl p-[18px] flex-col justify-between">
         <div className="absolute top-[72px] -right-[17%] -translate-x-1 -z-10 hover:cursor-pointer">
           <ExtendBtn handleClick={() => setIsOpen(true)} />
         </div>
@@ -85,6 +86,11 @@ const SideBar = () => {
           ))}
         </div>
       </div>
+
+      <div className="block sm:hidden top-12 left-4 fixed">
+        <img src={MiniBtn} alt="MiniBtn" />
+      </div>
+
       <div
         className={`transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex flex-col justify-between 
           ${isOpen ? `w-[333px] py-[18px]` : `w-0 py-0`}`}
