@@ -10,7 +10,7 @@ const MsgBoxs = ({ msgList }: { msgList: MsgType[] }) => {
   return (
     <>
       {msgList.length > 0 ? (
-        <div className="w-full h-[80vh] flex flex-col justify-end">
+        <div className="w-full h-[73vh] flex flex-col justify-end">
           {msgList.map((msg, index) => (
             <div key={index} className="w-full">
               <div
@@ -33,7 +33,7 @@ const MsgBoxs = ({ msgList }: { msgList: MsgType[] }) => {
           ))}
         </div>
       ) : (
-        <div className="w-full h-[80vh] flex justify-center items-center">
+        <div className="w-full h-[73vh] flex justify-center items-center">
           <div className="w-full h-10 mb-40">
             <div className="h-[200px]">
               <RiveAnimation src="riv/V2/Pulse_kitty.riv" />
