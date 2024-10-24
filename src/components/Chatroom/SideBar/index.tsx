@@ -13,6 +13,7 @@ import Settings from "../../../assets/svg/Settings.svg";
 import Logout from "../../../assets/svg/Logout.svg";
 import Frame from "../../../assets/svg/Frame.svg";
 import KittyCare from "../../../assets/svg/KittyCare.svg";
+import Edit from "../../../assets/svg/Edit.svg";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,6 +50,7 @@ const SideBar = () => {
               onHover={onHover}
               src={LCat}
               handleHover={(id) => setOnHover(id)}
+              isOpen={isOpen}
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -63,6 +65,7 @@ const SideBar = () => {
                 onHover={onHover}
                 src={item.src}
                 handleHover={(id) => setOnHover(id)}
+                isOpen={isOpen}
               />
             ))}
           </div>
@@ -77,12 +80,13 @@ const SideBar = () => {
               onHover={onHover}
               src={item.src}
               handleHover={(id) => setOnHover(id)}
+              isOpen={isOpen}
             />
           ))}
         </div>
       </div>
       <div
-        className={`transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex flex-col justify-between overflow-hidden
+        className={`transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex flex-col justify-between 
           ${isOpen ? `w-[333px] py-[18px]` : `w-0 py-0`}`}
         ref={sideBarRef}
       >
@@ -117,21 +121,29 @@ const SideBar = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              {[
-                { id: "logout", content: "Logout" },
-                { id: "frame", content: "Welcome Rosu" },
-              ].map((item) => (
+              <Content
+                id="logout"
+                content="Logout"
+                handleHover={(id) => setOnHover(id)}
+                onHover={onHover}
+              />
+              <div className="w-full flex items-center justify-between">
                 <Content
-                  id={item.id}
-                  content={item.content}
+                  id="frame"
+                  content="Welcome Rosu"
                   handleHover={(id) => setOnHover(id)}
                   onHover={onHover}
                 />
-              ))}
+                <div className="py-5 mx-5 tooltip">
+                  <span className="tooltiptext">Edit</span>
+                  <img src={Edit} alt="Edit" />
+                </div>
+              </div>
             </div>
             <div className="absolute top-32 -right-[52px] -translate-x-1 z-10 hover:cursor-pointer">
               <CollapseBtn handleClick={() => setIsOpen(false)} />
             </div>
+            <div className="absolute -z-40 top-0 left-0 h-screen w-screen bg-black opacity-20"></div>
           </>
         )}
       </div>
