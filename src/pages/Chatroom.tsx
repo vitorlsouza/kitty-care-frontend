@@ -4,7 +4,7 @@ import ChatField from "../components/Chatroom/ChatField";
 
 const Chatroom = () => {
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen bg-[#FAF6F3]">
       <Layout />
       <SideBar />
       <ChatField />

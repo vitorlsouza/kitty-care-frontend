@@ -1,8 +1,8 @@
 const Icon = ({ src, className }: { src: string; className: string }) => {
   return (
-    <div className={`w-full h-auto rounded-lg ${className}`}>
+    <button className={`flex justify-center items-center w-[70px] h-[70px] rounded-lg ${className}`}>
       <img src={src} alt="LCat" />
-    </div>
+    </button>
   );
 };
 
