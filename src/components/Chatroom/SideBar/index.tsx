@@ -5,14 +5,14 @@ import ExtendBtn from "./ExtendBtn";
 import CollapseBtn from "./CollapseBtn";
 import Content from "./Content";
 
-import LCat from "../../../assets/svg/LCat.svg";
-import SCat from "../../../assets/svg/SCat.svg";
-import Health from "../../../assets/svg/Heart.svg";
-import Plan from "../../../assets/svg/My Plan.svg";
+import KittyCare from "../../../assets/svg/KittyCare.svg";
+import SmartKitty from "../../../assets/svg/SmartKitty.svg";
+import Health from "../../../assets/svg/Health.svg";
+import MyPlan from "../../../assets/svg/MyPlan.svg";
 import Settings from "../../../assets/svg/Settings.svg";
 import Logout from "../../../assets/svg/Logout.svg";
-import Frame from "../../../assets/svg/Frame.svg";
-import KittyCare from "../../../assets/svg/KittyCare.svg";
+import Profile from "../../../assets/svg/Profile.svg";
+import KittyCareText from "../../../assets/svg/KittyCareText.svg";
 import Edit from "../../../assets/svg/Edit.svg";
 
 const SideBar = () => {
@@ -46,19 +46,19 @@ const SideBar = () => {
         <div className="flex flex-col gap-10">
           <div className="flex">
             <Icon
-              id="lCat"
+              id="KittyCare"
               onHover={onHover}
-              src={LCat}
+              src={KittyCare}
               handleHover={(id) => setOnHover(id)}
               isOpen={isOpen}
             />
           </div>
           <div className="flex flex-col gap-4">
             {[
-              { id: "sCat", src: SCat },
-              { id: "health", src: Health },
-              { id: "plan", src: Plan },
-              { id: "settings", src: Settings },
+              { id: "SmartKitty", src: SmartKitty },
+              { id: "Health", src: Health },
+              { id: "MyPlan", src: MyPlan },
+              { id: "Settings", src: Settings },
             ].map((item) => (
               <Icon
                 id={item.id}
@@ -72,8 +72,8 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col gap-4">
           {[
-            { id: "logout", src: Logout },
-            { id: "frame", src: Frame },
+            { id: "Logout", src: Logout },
+            { id: "Profile", src: Profile },
           ].map((item) => (
             <Icon
               id={item.id}
@@ -94,22 +94,18 @@ const SideBar = () => {
           <>
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <button
-                  className={`text-[20px] px-[26px] w-full h-[70px] flex items-center ${
-                    onHover == "lCat" ? "bg-[#FFEEE2] font-bold" : ""
-                  }`}
-                  onMouseOver={() => setOnHover("lCat")}
-                  onMouseLeave={() => setOnHover("")}
+                <div
+                  className={`text-[20px] px-[26px] w-full h-[70px] flex items-center`}
                 >
-                  <img src={KittyCare} alt="KittyCare" />
-                </button>
+                  <img src={KittyCareText} alt="KittyCareText" />
+                </div>
               </div>
               <div className="flex flex-col gap-4">
                 {[
-                  { id: "sCat", content: "Smart-Kitty" },
-                  { id: "health", content: "Health & Wellness" },
-                  { id: "plan", content: "Planner" },
-                  { id: "settings", content: "Settings" },
+                  { id: "SmartKitty", content: "Smart-Kitty" },
+                  { id: "Health", content: "Health & Wellness" },
+                  { id: "MyPlan", content: "Planner" },
+                  { id: "Settings", content: "Settings" },
                 ].map((item) => (
                   <Content
                     id={item.id}
@@ -129,7 +125,7 @@ const SideBar = () => {
               />
               <div className="w-full flex items-center justify-between">
                 <Content
-                  id="frame"
+                  id="Profile"
                   content="Welcome Rosu"
                   handleHover={(id) => setOnHover(id)}
                   onHover={onHover}

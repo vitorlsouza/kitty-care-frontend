@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  cursor: url(./assets/svg/Cursor.svg), pointer;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
