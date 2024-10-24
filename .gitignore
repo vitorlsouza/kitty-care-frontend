@@ -22,7 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-*.tsbuildinfo
-
-.env
+*.riv
+./package-lock.json

@@ -1,8 +1,14 @@
-const Panel01: React.FC = () => {
+
+
+interface Panel01Props {
+  nextStep: () => void;
+}
+
+const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
   return (
     <div className="relative flex flex-col items-center justify-start min-h-screen p-4 globalBackground">
       <div className="w-full max-w-4xl mx-auto relative">
-        <div className="hidden custom-lg:flex absolute top-2 right-[-230px] bg-lightWhite mt-2 rounded-3xl h-auto w-[350px] flex-col items-center border-2 borderGrey">
+        {/* <div className="hidden custom-lg:flex absolute top-2 right-[-230px] bg-lightWhite mt-2 rounded-3xl h-auto w-[350px] flex-col items-center border-2 borderGrey">
           <h2 className="bg-primaryYellow text-black text-lg rounded-b-[20px] px-10 h-[35px] text-center font-semibold">
             Message
           </h2>
@@ -11,23 +17,7 @@ const Panel01: React.FC = () => {
             starts now. We’ve tailored a plan just for your cat, and you'll
             receive ongoing tips and insights to keep them thriving!
           </p>
-        </div>
-
-        <div className="flex justify-center">
-          <img
-            src="/assets/Layer_1.png"
-            alt="Logo"
-            className="w-32 h-auto mt-4"
-          />
-        </div>
-
-        <div className="flex justify-center items-center h-[72.96px] w-full mt-8">
-          <img
-            src="/assets/Group 252.png"
-            alt="Timeline"
-            className="w-[600px] h-auto my-8"
-          />
-        </div>
+        </div> */}
 
         <div className="flex flex-col items-center justify-center w-[486.08px] h-[107px] mt-8 mx-auto">
           <h1 className="text-2xl font-bold text-black font-inter">
@@ -83,7 +73,7 @@ const Panel01: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-10">
-          <button className="bg-primaryBlue text-white px-8 py-3 rounded-2xl hover:bg-opacity-90">
+          <button onClick={nextStep} className="bg-primaryBlue text-white px-8 py-3 rounded-2xl hover:bg-opacity-90">
             Get Started
           </button>
         </div>
@@ -93,3 +83,4 @@ const Panel01: React.FC = () => {
 };
 
 export default Panel01;
+
