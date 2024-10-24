@@ -13,11 +13,13 @@ import CollapseBtn from "./CollapseBtn";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen);
+
   return (
     <div className="fixed h-screen flex">
       <div className="relative my-12 ml-12 w-auto h-[90%] bg-[#FADFC9] rounded-2xl p-[18px] flex flex-col justify-between">
         <div className="absolute top-[72px] -right-[17%] -translate-x-1 -z-10 hover:cursor-pointer">
-          <ExtendBtn onClick={() => setIsOpen(!isOpen)} />
+          <ExtendBtn handleClick={() => setIsOpen(true)} />
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex">
@@ -72,7 +74,11 @@ const SideBar = () => {
               </button>
             </div>
             <div className="absolute top-24 -right-[52px] -translate-x-1 z-10 hover:cursor-pointer">
-              <CollapseBtn onClick={() => setIsOpen(!isOpen)} />
+              <CollapseBtn
+                handleClick={() => {
+                  setIsOpen(false);
+                }}
+              />
             </div>
           </>
         )}
