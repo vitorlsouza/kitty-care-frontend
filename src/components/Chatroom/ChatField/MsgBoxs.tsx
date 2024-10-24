@@ -19,7 +19,7 @@ const MsgBoxs = () => {
           <div key={index} className="w-full">
             <div
               className={`w-2/3 rounded-2xl p-8 my-4 flex gap-4 ${
-                msg.isUser ? "bg-[#F3EDE8] float-end" : "bg-[#FADFC9]"
+                msg.isUser ? "bg-[#F3EDE8] float-end text-right" : "bg-[#FADFC9]"
               }`}
             >
               {!msg.isUser && (
@@ -27,7 +27,7 @@ const MsgBoxs = () => {
                   <img src={CatinChat} alt="CatinChat" />
                 </span>
               )}
-              <span className="w-4/5">{msg.msg}</span>
+              <span className="w-full text-[18px] font-medium">{msg.msg}</span>
             </div>
           </div>
         ))
