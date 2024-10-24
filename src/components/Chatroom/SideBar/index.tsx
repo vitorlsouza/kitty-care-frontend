@@ -34,45 +34,27 @@ const SideBar = () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Icon
-              id="sCat"
-              onHover={onHover}
-              src={SCat}
-              handleHover={(id) => setOnHover(id)}
-            />
-            <Icon
-              id="health"
-              onHover={onHover}
-              src={Health}
-              handleHover={(id) => setOnHover(id)}
-            />
-            <Icon
-              id="plan"
-              onHover={onHover}
-              src={Plan}
-              handleHover={(id) => setOnHover(id)}
-            />
-            <Icon
-              id="settings"
-              onHover={onHover}
-              src={Settings}
-              handleHover={(id) => setOnHover(id)}
-            />
+            {
+              [{id: "sCat", src: SCat}, {id: "health", src: Health}, {id: "plan", src: Plan}, {id: "settings", src: Settings}].map((item) => (
+                <Icon
+                  id={item.id}
+                  onHover={onHover}
+                  src={item.src}
+                  handleHover={(id) => setOnHover(id)}
+                />
+              ))
+            }
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <Icon
-            id="logout"
-            onHover={onHover}
-            src={Logout}
-            handleHover={(id) => setOnHover(id)}
-          />
-          <Icon
-            id="frame"
-            onHover={onHover}
-            src={Frame}
-            handleHover={(id) => setOnHover(id)}
-          />
+          {[{id: "logout", src: Logout}, {id: "frame", src: Frame}].map((item) => (
+            <Icon
+              id={item.id}
+              onHover={onHover}
+              src={item.src}
+              handleHover={(id) => setOnHover(id)}
+            />
+          ))}
         </div>
       </div>
       <div
@@ -94,45 +76,29 @@ const SideBar = () => {
                 </button>
               </div>
               <div className="flex flex-col gap-4">
-                <Content
-                  id="sCat"
-                  content="Smart-Kitty"
-                  handleHover={(id) => setOnHover(id)}
-                  onHover={onHover}
-                />
-                <Content
-                  id="health"
-                  content="Health & Wellness"
-                  handleHover={(id) => setOnHover(id)}
-                  onHover={onHover}
-                />
-                <Content
-                  id="plan"
-                  content="Planner"
-                  handleHover={(id) => setOnHover(id)}
-                  onHover={onHover}
-                />
-                <Content
-                  id="settings"
-                  content="Settings"
-                  handleHover={(id) => setOnHover(id)}
-                  onHover={onHover}
-                />
+                {
+                  [{id: "sCat", content: "Smart-Kitty"}, {id: "health", content: "Health & Wellness"}, {id: "plan", content: "Planner"}, {id: "settings", content: "Settings"}].map((item) => (
+                    <Content
+                      id={item.id}
+                      content={item.content}
+                      handleHover={(id) => setOnHover(id)}
+                      onHover={onHover}
+                    />
+                  ))
+                }
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <Content
-                id="logout"
-                content="Logout"
-                handleHover={(id) => setOnHover(id)}
-                onHover={onHover}
-              />
-              <Content
-                id="frame"
-                content="Welcome Rosu"
-                handleHover={(id) => setOnHover(id)}
-                onHover={onHover}
-              />
+              {
+                [{id: "logout", content: "Logout"}, {id: "frame", content: "Welcome Rosu"}].map((item) => (
+                  <Content
+                      id={item.id}
+                      content={item.content}
+                      handleHover={(id) => setOnHover(id)}
+                      onHover={onHover}
+                  />
+                ))
+              }
             </div>
             <div className="absolute top-32 -right-[52px] -translate-x-1 z-10 hover:cursor-pointer">
               <CollapseBtn handleClick={() => setIsOpen(false)} />
