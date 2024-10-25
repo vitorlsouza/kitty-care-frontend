@@ -14,12 +14,13 @@ const ChatField = () => {
 
   return (
     <div className="w-[90%] sm:w-2/5 m-auto">
-      <MsgBoxs msgList={msgList} />
+      <MsgBoxs msgList={msgList} response={response} />
       <InputField
         onTyping={onTyping}
         msgList={msgList}
         setOnTyping={setOnTyping}
         setMsgList={setMsgList}
+        setResponse={setResponse}
       />
     </div>
   );
