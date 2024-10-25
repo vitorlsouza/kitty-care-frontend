@@ -25,7 +25,7 @@ const MsgBoxs = ({
   }, [msgList, response]);
 
   return (
-    <div className="flex flex-col flex-1 w-full text-centeritems-center overflow-y-auto">
+    <div className="flex flex-col flex-1 w-full text-centeritems-center overflow-y-auto overflow-x-hidden">
       {msgList.length > 0 ? (
         <>
           <div className="flex-grow ">

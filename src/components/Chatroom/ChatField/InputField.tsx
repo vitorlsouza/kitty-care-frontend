@@ -32,7 +32,7 @@ const InputField = ({
   ];
 
   const handleSubmit = () => {
-    if (onTyping) return;
+    if (onTyping || msg.trim() === "") return;
     setMsgList([...msgList, { msg, isUser: true } as MsgType]);
     const newMsg = randomMsg[Math.floor(Math.random() * randomMsg.length)];
     setOnTyping(true);
@@ -58,10 +58,10 @@ const InputField = ({
 
   return (
     <div className="w-full pt-7">
-      <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute top-[80%]`}>
-        <RiveAnimation src="riv/V2/Typing_animation.riv" />
-      </div>
       <div className="w-full flex items-center relative">
+        <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute -top-[80%]`}>
+          <RiveAnimation src="riv/V2/Typing_animation.riv" />
+        </div>
         <input
           className="w-full text-[14px] sm:text-[16px] p-[22px] sm:p-6 border-2 rounded-[20px] bg-[#F3EDE8] text-opacity-30 font-semibold focus:outline-none"
           placeholder="Type your question... Meow it out!"
