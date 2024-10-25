@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import CatinChat from "../../../assets/svg/CatinChat.svg";
 import RiveAnimation from "../../RiveAnimation";
 
@@ -13,13 +14,22 @@ const MsgBoxs = ({
   msgList: MsgType[];
   response: string;
 }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    scrollContainerRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [msgList, response]);
+
   return (
-    <>
+    <div className="flex flex-col flex-1 w-full text-centeritems-center overflow-y-auto">
       {msgList.length > 0 ? (
         <>
-          <div className="h-28 w-full"></div>
-          <div className="w-full h-[62vh] flex items-end">
-            <div className="w-full max-h-[100%] h-auto flex flex-col overflow-y-scroll">
+          <div className="flex-grow ">
+            <div className="flex flex-col">
               <div>
                 {msgList.map((msg, index) => (
                   <div key={index} className="w-full">
@@ -57,23 +67,24 @@ const MsgBoxs = ({
                     </div>
                   </div>
                 )}
+                <div ref={scrollContainerRef}></div>
               </div>
             </div>
           </div>
         </>
       ) : (
-        <div className="w-[300px] m-auto h-[70vh] sm:h-[73vh] flex justify-center items-center">
+        <div className="flex h-full justify-center items-center">
           <div className="w-full h-10 mb-40">
             <div className="h-[200px]">
               <RiveAnimation src="riv/V2/Pulse_kitty.riv" />
             </div>
-            <div className="w-full sm:w-[472px] text-[18px] sm:text-[28px] font-bold sm:font-semibold text-center m-auto">
-              I'm your Purr-Sonal Cat Assistant, here to help you.
+            <div className="w-full text-[18px] sm:text-[28px] font-bold sm:font-semibold text-center">
+              I'm your Purr-Sonal Cat Assistant, <br /> here to help you.
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -17,6 +17,22 @@ body {
   cursor: url(./assets/svg/Cursor.svg), pointer;
 }
 
+::-webkit-scrollbar {
+  /* Customize the scrollbar width */
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  /* Customize the scrollbar track */
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  /* Customize the scrollbar thumb */
+  background: #ddd;
+  border-radius: 3px;
+}
+
 .tooltip {
   position: relative;
   display: inline-block;

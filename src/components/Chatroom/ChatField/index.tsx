@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import MsgBoxs from "./MsgBoxs";
+import KittyLogo from "../../../assets/svg/KittyLogo.svg";
 
 export interface MsgType {
   msg: string;
@@ -13,7 +14,12 @@ const ChatField = () => {
   const [response, setResponse] = useState("");
 
   return (
-    <div className="w-[90%] sm:w-2/5 m-auto">
+    <div className="flex flex-col max-w-full sm:w-[800px] p-4 pb-6 mx-auto h-screen">
+      <div className="w-full h-[120px] flex justify-center items-center">
+        <div className="">
+          <img src={KittyLogo} alt="KittyLogo" />
+        </div>
+      </div>
       <MsgBoxs msgList={msgList} response={response} />
       <InputField
         onTyping={onTyping}
