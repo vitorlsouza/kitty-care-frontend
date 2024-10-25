@@ -131,13 +131,13 @@ const SideBar = () => {
                       id={item.id}
                       onHover={onHover}
                       src={item.src}
-                      handleHover={(id) => setOnHover(id)}
+                      handleHover={()=>{}}
                       isOpen={isOpen}
                     />
                     <Content
                       id={item.id}
                       content={item.id}
-                      handleHover={(id) => setOnHover(id)}
+                      handleHover={()=>{}}
                       onHover={onHover}
                     />
                   </div>
@@ -150,13 +150,13 @@ const SideBar = () => {
                   id={"Logout"}
                   onHover={onHover}
                   src={Logout}
-                  handleHover={(id) => setOnHover(id)}
+                  handleHover={()=>{}}
                   isOpen={isOpen}
                 />
                 <Content
-                  id="logout"
+                  id="Logout"
                   content="Logout"
-                  handleHover={(id) => setOnHover(id)}
+                  handleHover={()=>{}}
                   onHover={onHover}
                 />
               </div>
@@ -166,13 +166,13 @@ const SideBar = () => {
                     id={"Profile"}
                     onHover={onHover}
                     src={Profile}
-                    handleHover={(id) => setOnHover(id)}
+                    handleHover={()=>{}}
                     isOpen={isOpen}
                   />
                   <Content
                     id="Profile"
                     content="Welcome Rosu"
-                    handleHover={(id) => setOnHover(id)}
+                    handleHover={()=>{}}
                     onHover={onHover}
                   />
                 </div>
@@ -222,7 +222,7 @@ const SideBar = () => {
             </div>
             <div className="flex flex-col gap-4">
               <Content
-                id="logout"
+                id="Logout"
                 content="Logout"
                 handleHover={(id) => setOnHover(id)}
                 onHover={onHover}
