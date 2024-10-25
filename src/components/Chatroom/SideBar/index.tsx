@@ -243,7 +243,7 @@ const SideBar = () => {
             <div className="absolute top-32 -right-[52px] -translate-x-1 z-10 hover:cursor-pointer">
               <CollapseBtn handleClick={() => setIsOpen(false)} />
             </div>
-            <div className="absolute -z-40 top-0 left-0 h-screen w-screen bg-black opacity-20"></div>
+            {/* <div className="absolute -z-40 top-0 left-0 h-screen w-screen bg-black opacity-20"></div> */}
           </>
         )}
       </div>

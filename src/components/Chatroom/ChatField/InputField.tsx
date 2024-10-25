@@ -28,11 +28,11 @@ const InputField = ({
     "You're doing great with your cat care! Is there anything specific you'd like to improve or learn more about?",
     "Purr-fect! I'm here to help with any cat queries. What aspect of cat care are you curious about today?",
     "Welcome to the world of cats! I'm your go-to source for feline facts and advice. What shall we discuss?",
-    "Feline fine and ready to chat! What cat-related topic has caught your curiosity today?"
+    "Feline fine and ready to chat! What cat-related topic has caught your curiosity today?",
   ];
 
   const handleSubmit = () => {
-    if(onTyping) return;
+    if (onTyping) return;
     setMsgList([...msgList, { msg, isUser: true } as MsgType]);
     const newMsg = randomMsg[Math.floor(Math.random() * randomMsg.length)];
     setOnTyping(true);
@@ -57,8 +57,8 @@ const InputField = ({
   };
 
   return (
-    <div className="w-full bottom-20">
-      <div className={`h-20 ${onTyping ? "w-20" : "w-0"}`}>
+    <div className="w-full pt-7">
+      <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute top-[80%]`}>
         <RiveAnimation src="riv/V2/Typing_animation.riv" />
       </div>
       <div className="w-full flex items-center relative">
