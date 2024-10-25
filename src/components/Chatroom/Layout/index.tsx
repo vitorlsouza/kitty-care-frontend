@@ -1,5 +1,5 @@
-import TopCorner from "../../../assets/svg/TopCorner.svg";
-import BottomCorner from "../../../assets/svg/BottomCorner.svg";
+import TopCorner from "/src/assets/svg/TopCorner.svg";
+import BottomCorner from "/src/assets/svg/BottomCorner.svg";
 
 const Layout = () => {
   return (
