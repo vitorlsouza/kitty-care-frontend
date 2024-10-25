@@ -2,23 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); /* Only needed if you use Google Fonts */
 
-
-/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); /* Only needed if you use Google Fonts */
-
-
-/* *{
+*{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 body {
-    @apply font-inter;
         background-color: #fff4e6;
         background-image: url("/assets/Vector.png"), url("/assets/Group.png"),
           url("/assets/Vector1.png"), url("/assets/Vector2.png");
         background-position: top left, top right, bottom left, bottom right;
         background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
         background-size: 200px, 150px, 250px, 200px;
-  } */
+  }

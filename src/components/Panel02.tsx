@@ -6,7 +6,6 @@ interface Panel02Props {
 }
 
 const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
-  // State to track selected goals (max 3)
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
 
   const goals = [
@@ -51,7 +50,6 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
     },
   ];
 
-  // Handle goal selection (max 3)
   const handleGoalSelect = (goal: string) => {
     if (selectedGoals.includes(goal)) {
       setSelectedGoals(selectedGoals.filter((g) => g !== goal));
@@ -62,17 +60,15 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      {/* Header */}
       <div className="font-Inter text-center mb-10">
         <h1 className="font-bold text-3xl mb-2">
           Let's Choose Some Goals For Your Cat!
         </h1>
-        <p className="text-md text-darkGray">
+        <p className="text-md text-darkGray p-5">
           Select up to 3 goals to focus on for your cat's health and happiness.
         </p>
       </div>
 
-      {/* Goals Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
         {goals.map((goal) => (
           <div
@@ -91,7 +87,6 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
       <div className="flex justify-center items-center mt-6 space-x-4">
         <button
           onClick={previousStep}
