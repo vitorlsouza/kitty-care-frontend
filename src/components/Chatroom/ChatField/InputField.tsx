@@ -5,10 +5,12 @@ import { HiOutlineArrowRight } from "react-icons/hi2";
 
 const InputField = ({
   onTyping,
+  msgList,
   setMsgList,
   setOnTyping,
 }: {
   onTyping: boolean;
+  msgList: MsgType[];
   setMsgList: (msgList: MsgType[]) => void;
   setOnTyping: (onTyping: boolean) => void;
 }) => {
@@ -25,20 +27,23 @@ const InputField = ({
   ];
 
   const handleSubmit = () => {
-    setMsgList((prev: MsgType[]) => {
-      return [...prev, { msg, isUser: true } as MsgType];
-    });
+    setMsgList([...msgList, { msg, isUser: true } as MsgType]);
+    const newMsg = randomMsg[Math.floor(Math.random() * randomMsg.length)];
     setOnTyping(true);
+    newMsg.split("").map((char, index) => {
+      setTimeout(() => {
+        setResponse((prev) => prev + char);
+      }, 10 * index);
+    });
     setTimeout(() => {
-      setMsgList((prev: MsgType[]) => {
-        return [
-          ...prev,
-          {
-            msg: randomMsg[Math.floor(Math.random() * randomMsg.length)],
-            isUser: false,
-          } as MsgType,
-        ];
-      });
+      setMsgList([
+        ...msgList,
+        {
+          msg: newMsg,
+          isUser: false,
+        } as MsgType,
+      ]);
+      setResponse("");
       setOnTyping(false);
     }, 2000);
     setMsg("");

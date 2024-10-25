@@ -16,7 +16,7 @@ const Icon = ({
     <div className="tooltip">
       <button
         id={id}
-        className={`flex justify-center items-center w-[70px] h-[70px] rounded-lg p-3.5 ${
+        className={`flex justify-center items-center w-[60px] h-[60px] sm:w-[70px] sm:h-[70px] rounded-lg p-3.5 ${
           id == "KittyCare"
             ? "bg-[#FFA500]"
             : onHover == id

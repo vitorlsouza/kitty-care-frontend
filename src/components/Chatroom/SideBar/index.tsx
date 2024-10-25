@@ -13,6 +13,7 @@ import Settings from "../../../assets/svg/Settings.svg";
 import Logout from "../../../assets/svg/Logout.svg";
 import Profile from "../../../assets/svg/Profile.svg";
 import KittyCareText from "../../../assets/svg/KittyCareText.svg";
+import KittyCareTextMobile from "../../../assets/svg/KittyCareTextMobile.svg";
 import Edit from "../../../assets/svg/Edit.svg";
 import MiniBtn from "../../../assets/svg/MiniBtn.svg";
 
@@ -87,12 +88,109 @@ const SideBar = () => {
         </div>
       </div>
 
-      <div className="block sm:hidden top-12 left-4 fixed">
+      <div
+        className="block sm:hidden top-12 left-4 fixed"
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
         <img src={MiniBtn} alt="MiniBtn" />
       </div>
 
+      <div className="block sm:hidden text-black text-base font-medium">
+        <div
+          className={`h-screen fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${
+            isOpen ? `w-screen py-[32px]` : `w-0 py-0`
+          }`}
+        >
+          <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
+            <div className="flex flex-col gap-10">
+              <div className="flex">
+                <div className="flex items-center">
+                  <Icon
+                    id="KittyCare"
+                    onHover={onHover}
+                    src={KittyCare}
+                    handleHover={(id) => setOnHover(id)}
+                    isOpen={isOpen}
+                  />
+                  <div className="px-[26px]">
+                    <img src={KittyCareTextMobile} alt="KittyCareText" />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                {[
+                  { id: "SmartKitty", src: SmartKitty },
+                  { id: "Health", src: Health },
+                  { id: "MyPlan", src: MyPlan },
+                  { id: "Settings", src: Settings },
+                ].map((item) => (
+                  <div className="flex items-center">
+                    <Icon
+                      id={item.id}
+                      onHover={onHover}
+                      src={item.src}
+                      handleHover={(id) => setOnHover(id)}
+                      isOpen={isOpen}
+                    />
+                    <Content
+                      id={item.id}
+                      content={item.id}
+                      handleHover={(id) => setOnHover(id)}
+                      onHover={onHover}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center">
+                <Icon
+                  id={"Logout"}
+                  onHover={onHover}
+                  src={Logout}
+                  handleHover={(id) => setOnHover(id)}
+                  isOpen={isOpen}
+                />
+                <Content
+                  id="logout"
+                  content="Logout"
+                  handleHover={(id) => setOnHover(id)}
+                  onHover={onHover}
+                />
+              </div>
+              <div className="w-full flex items-center justify-between">
+                <div className="flex items-center">
+                  <Icon
+                    id={"Profile"}
+                    onHover={onHover}
+                    src={Profile}
+                    handleHover={(id) => setOnHover(id)}
+                    isOpen={isOpen}
+                  />
+                  <Content
+                    id="Profile"
+                    content="Welcome Rosu"
+                    handleHover={(id) => setOnHover(id)}
+                    onHover={onHover}
+                  />
+                </div>
+                <div className="py-5 mx-5 tooltip">
+                  <span className="tooltiptext">Edit</span>
+                  <img src={Edit} alt="Edit" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="absolute top-32 -right-[47px] -translate-x-1 z-10 hover:cursor-pointer">
+            <CollapseBtn handleClick={() => setIsOpen(false)} />
+          </div>
+        </div>
+      </div>
+
       <div
-        className={`transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex flex-col justify-between 
+        className={`hidden sm:flex transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex-col justify-between 
           ${isOpen ? `w-[333px] py-[18px]` : `w-0 py-0`}`}
         ref={sideBarRef}
       >
