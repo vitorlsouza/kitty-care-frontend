@@ -1,5 +1,5 @@
 import React from "react";
-import layout from "../assets/png/layout.png";
+import layout from "/assets/png/layout.png";
 
 interface LayoutProps {
   children: React.ReactNode;

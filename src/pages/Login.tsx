@@ -13,7 +13,7 @@ const Login = () => {
       <div className="w-[200px] h-[40px]">
         <img
           className="w-full h-fill"
-          src="/src/assets/svg/KittyLogo.svg"
+          src="/assets/svg/KittyLogo.svg"
           alt="kitty logo"
         />
       </div>
@@ -82,7 +82,7 @@ const Login = () => {
                 <div className="w-[31px] h-[31px]">
                   <img
                     className="w-full h-full"
-                    src="/src/assets/png/google.png"
+                    src="/assets/png/google.png"
                     alt="Google"
                   />
                 </div>
@@ -92,7 +92,7 @@ const Login = () => {
                 <div className="w-[31px] h-[31px]">
                   <img
                     className="w-full h-full"
-                    src="/src/assets/png/apple.png"
+                    src="/assets/png/apple.png"
                     alt="Apple"
                   />
                 </div>
@@ -104,7 +104,7 @@ const Login = () => {
                 <div className="w-[31px] h-[31px]">
                   <img
                     className="w-full h-full"
-                    src="/src/assets/png/google.png"
+                    src="/assets/png/google.png"
                     alt="Google"
                   />
                 </div>
@@ -113,7 +113,7 @@ const Login = () => {
                 <div className="w-[31px] h-[31px]">
                   <img
                     className="w-full h-full"
-                    src="/src/assets/png/apple.png"
+                    src="/assets/png/apple.png"
                     alt="Apple"
                   />
                 </div>
