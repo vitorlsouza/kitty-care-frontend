@@ -10,14 +10,14 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-around">
-      <div className="w-[200px] h-[40px]">
+      <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px]">
         <img
           className="w-full h-fill"
           src="/assets/svg/KittyLogo.svg"
           alt="kitty logo"
         />
       </div>
-      <div className="w-[343px] h-[680px] sm:w-[600px] sm:h-[725px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] border-2 rounded-3xl border-black">
+      <div className="w-[343px] h-[680px] sm:w-[600px] sm:h-[725px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
         <div className="w-full h-full flex flex-col items-center justify-between">
           <div className="text-center">
             <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
@@ -38,7 +38,7 @@ const Login = () => {
               </label>
               <div className="w-full h-[52px]">
                 <input
-                  className="w-full py-3 sm:py-4 px-4  text-base sm:text-xl border-2 rounded-lg"
+                  className="w-full h-[55px] p-auto sm:py-4 px-4  text-base sm:text-xl border-2 rounded-lg"
                   type="email"
                   placeholder="name@email.com"
                 />
@@ -50,13 +50,13 @@ const Login = () => {
               </label>
               <div className="w-full h-[52px] relative">
                 <input
-                  className="w-full py-3 sm:py-4 px-4  text-base sm:text-xl border-2 rounded-lg pr-12"
+                  className="w-full h-[55px] p-auto sm:py-4 px-4  text-base sm:text-xl border-2 rounded-lg pr-12"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password (8+ characters)"
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-[55%] sm:top-[70%] transform -translate-y-1/2 hover:border-none focus:outline-none bg-transparent"
+                  className="absolute right-3 top-[55%] transform -translate-y-1/2 hover:border-none focus:outline-none bg-transparent"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? (
@@ -73,15 +73,14 @@ const Login = () => {
             <div className="my-3">
               <div className="w-full h-[52px] my-10">
                 <input
-                  className="w-full py-3 sm:py-4 px-4 text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl"
+                  className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl"
                   type="submit"
-                  placeholder="Email"
                   value="Log in"
                 />
               </div>
             </div>
             <div className="flex gap-4 items-center justify-between">
-              <div className="w-[120px] h-[1px] bg-black"></div>
+              <div className="w-[120px] h-[1px] bg-black opacity-40"></div>
               <div className="hidden sm:flex w-[56px] h-[56px] p-3 flex-col items-center justify-center border-2 border-[#898B90] rounded-[20px]">
                 <div className="w-[31px] h-[31px]">
                   <img
@@ -101,7 +100,7 @@ const Login = () => {
                   />
                 </div>
               </div>
-              <div className="w-[120px] h-[1px] bg-black"></div>
+              <div className="w-[120px] h-[1px] bg-black opacity-40"></div>
             </div>
             <div className="flex gap-4 items-center justify-center m-4">
               <div className="flex sm:hidden w-[56px] h-[56px] p-3 flex-col items-center justify-center border-2 border-[#898B90] rounded-[20px]">
