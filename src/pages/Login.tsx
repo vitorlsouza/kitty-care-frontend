@@ -33,24 +33,24 @@ const Login = () => {
 
           <div className="w-full h-full flex-col justify-between">
             <div className="my-3 flex flex-col">
-              <label className=" text-base sm:text-xl font-bold sm:font-medium m-4">
+              <label className="text-base sm:text-xl font-bold sm:font-medium m-4">
                 Email
               </label>
               <div className="w-full h-[52px]">
                 <input
-                  className="w-full h-[55px] p-auto sm:py-4 px-4  text-base sm:text-xl border-2 rounded-lg"
+                  className="w-full h-[55px] p-auto sm:py-4 px-4 text-base sm:text-xl border-2 rounded-lg"
                   type="email"
                   placeholder="name@email.com"
                 />
               </div>
             </div>
             <div className="my-3 flex flex-col">
-              <label className=" text-base sm:text-xl font-bold sm:font-medium m-4">
+              <label className="text-base sm:text-xl font-bold sm:font-medium m-4">
                 Password
               </label>
               <div className="w-full h-[52px] relative">
                 <input
-                  className="w-full h-[55px] p-auto sm:py-4 px-4  text-base sm:text-xl border-2 rounded-lg pr-12"
+                  className="w-full h-[55px] p-auto sm:py-4 px-4 text-base sm:text-xl border-2 rounded-lg pr-12"
                   type={showPassword ? "text" : "password"}
                   placeholder="Password (8+ characters)"
                 />
@@ -73,7 +73,7 @@ const Login = () => {
             <div className="my-3">
               <div className="w-full h-[52px] my-10">
                 <input
-                  className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl"
+                  className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer"
                   type="submit"
                   value="Log in"
                 />
@@ -102,8 +102,8 @@ const Login = () => {
               </div>
               <div className="w-[120px] h-[1px] bg-black opacity-40"></div>
             </div>
-            <div className="flex gap-4 items-center justify-center m-4">
-              <div className="flex sm:hidden w-[56px] h-[56px] p-3 flex-col items-center justify-center border-2 border-[#898B90] rounded-[20px]">
+            <div className="flex sm:hidden gap-4 items-center justify-center m-4">
+              <div className="flex w-[56px] h-[56px] p-3 flex-col items-center justify-center border-2 border-[#898B90] rounded-[20px]">
                 <div className="w-[31px] h-[31px]">
                   <img
                     className="w-full h-full"
@@ -112,7 +112,7 @@ const Login = () => {
                   />
                 </div>
               </div>
-              <div className="flex sm:hidden w-[56px] h-[56px] flex-col items-center justify-center border-2 border-[#898B90] rounded-[20px]">
+              <div className="flex w-[56px] h-[56px] flex-col items-center justify-center border-2 border-[#898B90] rounded-[20px]">
                 <div className="w-[31px] h-[31px]">
                   <img
                     className="w-full h-full"
