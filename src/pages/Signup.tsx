@@ -50,7 +50,7 @@ const Signup = () => {
     }
   };
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-around">
+    <div className="w-full h-full sm:h-screen mt-10 sm:mt-0 flex flex-col items-center sm:justify-around justify-center">
       <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px]">
         <img
           className="w-full h-full"
@@ -59,8 +59,8 @@ const Signup = () => {
         />
       </div>
       <div className="flex flex-col sm:flex-row">
-        <div>
-          <div className="w-[343px] h-[680px] sm:w-[430px] sm:h-[636px] max-w-[90%] py-[27px] me-[120px]">
+        <div className="w-full m-auto">
+          <div className="w-[343px] sm:w-[430px] max-w-[90%] py-[27px] sm:me-[120px]">
             <label className="flex gap-[16px] items-center cursor-pointer my-8">
               <span
                 className={`text-[18px] text-black dark:text-gray-300 capitalize  ${
@@ -122,8 +122,8 @@ const Signup = () => {
             </div>
           </div>
         </div>
-        <div>
-          <div className="w-[343px] h-[680px] sm:w-[608px] sm:h-[98%] max-w-[90%] px-[21px] py-[47px] sm:px-[104px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
+        <div className="w-full m-auto mb-10">
+          <div className="m-auto w-[343px] h-[720px] sm:w-[608px] sm:h-[98%] max-w-[90%] px-[21px] py-[47px] sm:px-[104px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <div className="w-full h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
@@ -170,6 +170,16 @@ const Signup = () => {
                   className={error ? "border-red-500" : ""}
                   onChange={handleChange}
                 />
+                <div className="my-3 flex gap-2">
+                  <div>
+                    <input type="checkbox" />
+                  </div>
+                  <div>
+                    I agree to the{" "}
+                    <a href="/termsofconditions">Terms of Conditions</a> and{" "}
+                    <a href="/privacypolicy">Privacy Policy.</a>
+                  </div>
+                </div>
                 <div className="my-3">
                   <div className="w-full h-[52px] my-10">
                     <input

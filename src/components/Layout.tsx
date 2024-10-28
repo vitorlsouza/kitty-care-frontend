@@ -9,7 +9,7 @@ interface LayoutProps {
 function Layout({ children }: LayoutProps) {
   return (
     <div className="w-screen h-screen">
-      <div className="w-full h-full absolute top-0 left-0 -z-10 bg-[#FAF6F3]">
+      <div className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]">
         <div className="w-full h-full relative">
           <img
             src={layout}

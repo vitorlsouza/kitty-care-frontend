@@ -37,7 +37,7 @@ const TextInput = ({
         {type === "password" && (
           <button
             type="button"
-            className="absolute right-3 top-[55%] transform -translate-y-1/2 border-none hover:border-none focus:outline-none bg-transparent"
+            className="absolute right-0 sm:right-3 top-[55%] transform -translate-y-1/2 border-none hover:border-none focus:outline-none bg-transparent"
             onClick={togglePasswordVisibility}
           >
             {showPassword ? (
