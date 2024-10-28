@@ -12,3 +12,9 @@ export interface LogBtnByProps {
   alt: string;
   className?: string;
 }
+
+export interface ToggleProps {
+  name?: string;
+  value?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
