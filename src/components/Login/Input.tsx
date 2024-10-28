@@ -6,6 +6,7 @@ const TextInput = ({
   label,
   type,
   placeholder,
+  className,
   onChange,
 }: TextInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +22,7 @@ const TextInput = ({
       </label>
       <div className="w-full h-[52px] relative">
         <input
-          className="w-full h-[55px] p-auto sm:py-4 px-4 text-base sm:text-xl border-2 rounded-lg pr-12"
+          className={`w-full h-[55px] p-auto sm:py-4 px-4 text-base sm:text-xl border-2 rounded-lg pr-12 ${className}`}
           type={type === "password" ? (showPassword ? "text" : "password") : type}
           placeholder={placeholder}
           onChange={onChange}

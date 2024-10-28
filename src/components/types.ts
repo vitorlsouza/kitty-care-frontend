@@ -2,6 +2,7 @@ export interface TextInputProps {
   label: string;
   type: string;
   placeholder: string;
+  className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
