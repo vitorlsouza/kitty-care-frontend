@@ -10,6 +10,10 @@ const Login = () => {
   });
   const [error, setError] = useState("");
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (userInfo.email === "" || userInfo.password === "") {
@@ -46,25 +50,28 @@ const Login = () => {
 
           <div className="w-full h-full flex-col justify-between">
             <TextInput
+              name="email"
               label="Email"
               type="email"
               placeholder="name@email.com"
               className={error ? "border-red-500" : ""}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, email: e.target.value })
-              }
+              onChange={handleChange}
             />
             <TextInput
+              name="password"
               label="Password"
               type="password"
               placeholder="Password (8+ characters)"
               className={error ? "border-red-500" : ""}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, password: e.target.value })
-              }
+              onChange={handleChange}
             />
+
+            <div className="relative ml-[24px] -mt-[13px] text-[14px] font-medium">
+              <a href="#">Forgot Password?</a>
+            </div>
+
             <div className="my-3">
-              <div className="w-full h-[52px] my-10">
+              <div className="w-full h-[52px] my-[30px]">
                 <input
                   className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer"
                   type="submit"
