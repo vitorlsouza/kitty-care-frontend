@@ -7,6 +7,7 @@ import Toggle from "../components/Login/Toggle";
 import CheckOption from "../components/Login/CheckOption";
 import { useAppDispatch } from '../Redux/hooks';
 import { signUpUserAsync } from '../Redux/features/userSlice';
+import { validateUserInfo } from '../utils/validation';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -38,8 +39,19 @@ const Signup = () => {
     general: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const validateForm = () => {
+    const { isValid, errors } = validateUserInfo(userInfo);
+    setError(errors);
+    return isValid;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setUserInfo(prev => ({ ...prev, [name]: value }));
+    // Clear errors when user types
+    setError(prev => ({ ...prev, [name]: "", general: "" }));
   };
 
   const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,40 +63,28 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setError({
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
-      general: "",
-    });
-    if (userInfo.first_name === "")
-      setError({ ...error, first_name: "First name is required." });
-    else if (userInfo.last_name === "")
-      setError({ ...error, last_name: "Last name is required." });
-    else if (userInfo.email === "")
-      setError({ ...error, email: "Email is required." });
-    else if (userInfo.password === "")
-      setError({ ...error, password: "Password is required." });
-    else {
-      try {
-        const result = await dispatch(signUpUserAsync({
-          first_name: userInfo.first_name,
-          last_name: userInfo.last_name,
-          email: userInfo.email,
-          password: userInfo.password,
-        })).unwrap();
-
-        console.log(result);
-        
-        // If signup successful, redirect
-        navigate('/dashboard');
-      } catch (err: any) {
-        // Handle error (e.g., show error message)
-        setError({ ...error, general: err.message });
-      }
+    
+    if (!validateForm()) {
+      return;
     }
-    setTimeout(() => {
+
+    setIsLoading(true);
+
+    try {
+      const result = await dispatch(signUpUserAsync({
+        first_name: userInfo.first_name.trim(),
+        last_name: userInfo.last_name.trim(),
+        email: userInfo.email.trim(),
+        password: userInfo.password,
+      })).unwrap();
+
+      // Clear form and errors on success
+      setUserInfo({
+        first_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+      });
       setError({
         first_name: "",
         last_name: "",
@@ -92,8 +92,19 @@ const Signup = () => {
         password: "",
         general: "",
       });
-    }, 3000);
+
+      // Redirect on success
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(prev => ({
+        ...prev,
+        general: err.message || "Signup failed. Please try again.",
+      }));
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <div className="w-full h-full sm:h-screen mt-10 sm:mt-0 flex flex-col sm:items-center sm:justify-around">
       <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] m-auto my-6">
@@ -232,12 +243,18 @@ const Signup = () => {
                 <div className="my-3">
                   <div className="w-full h-[52px] my-10">
                     <input
-                      className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer"
+                      className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer disabled:bg-blue-400"
                       type="submit"
-                      value="Create account"
+                      value={isLoading ? "Creating account..." : "Create account"}
                       onClick={handleSubmit}
+                      disabled={isLoading}
                     />
                   </div>
+                  {error.general && (
+                    <div className="text-red-500 text-sm text-center mt-2">
+                      {error.general}
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-4 items-center justify-between">
                   <Divider />

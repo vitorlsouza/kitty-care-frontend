@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
-import { TextInputProps } from "../types";
+import { TextInputProps } from "../../utils/types";
 
 const TextInput = ({
   name,
@@ -29,7 +29,7 @@ const TextInput = ({
           name={name}
           className={`w-full h-[55px] p-auto sm:py-4 px-[24px] text-base sm:text-xl border-2 rounded-lg ${className}`}
           type={
-            type === "password" ? (showPassword ? "password" : "text") : type
+            type === "password" ? (showPassword ? "text" : "password") : type
           }
           placeholder={placeholder}
           onChange={onChange}
@@ -42,9 +42,9 @@ const TextInput = ({
             onClick={togglePasswordVisibility}
           >
             {showPassword ? (
-              <AiOutlineEye className="h-5 w-5 text-gray-500" />
-            ) : (
               <AiOutlineEyeInvisible className="h-5 w-5 text-gray-500" />
+            ) : (
+              <AiOutlineEye className="h-5 w-5 text-gray-500" />
             )}
           </button>
         )}

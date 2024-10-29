@@ -14,4 +14,13 @@ export const signUpAPI = async (userData: any) => {
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Signup failed');
   }
+};
+
+export const loginAPI = async (credentials: { email: string; password: string }) => {
+  try {
+    const response = await API.post('/api/supabase/signin', credentials);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Login failed');
+  }
 }; 

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { signUpAPI } from '../../services/api';
+import { signUpAPI, loginAPI } from '../../services/api';
 
 interface UserState {
   first_name: string;
@@ -33,6 +33,18 @@ export const signUpUserAsync = createAsyncThunk(
   }
 );
 
+export const loginUserAsync = createAsyncThunk(
+  'user/loginUser',
+  async (credentials: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await loginAPI(credentials);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -54,6 +66,17 @@ export const userSlice = createSlice({
         return { ...state, ...action.payload, isAuthenticated: true };
       })
       .addCase(signUpUserAsync.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+      .addCase(loginUserAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(loginUserAsync.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        return { ...state, ...action.payload, isAuthenticated: true };
+      })
+      .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
       });

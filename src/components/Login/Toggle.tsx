@@ -1,4 +1,4 @@
-import { ToggleProps } from "../types";
+import { ToggleProps } from "../../utils/types";
 
 const Toggle = ({ name, value, onChange }: ToggleProps) => {
   return (
