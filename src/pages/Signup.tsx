@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
 import LogBtnBy from "../components/Login/LogBtnBy";
 import Toggle from "../components/Login/Toggle";
 import CheckOption from "../components/Login/CheckOption";
 import { useAppDispatch } from '../Redux/hooks';
-import { signUpUser } from '../Redux/features/userSlice';
+import { signUpUserAsync } from '../Redux/features/userSlice';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [userInfo, setUserInfo] = useState({
     first_name: "",
@@ -33,6 +35,7 @@ const Signup = () => {
     last_name: "",
     email: "",
     password: "",
+    general: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +49,14 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     setError({
       first_name: "",
       last_name: "",
       email: "",
       password: "",
+      general: "",
     });
     if (userInfo.first_name === "")
       setError({ ...error, first_name: "First name is required." });
@@ -63,14 +67,22 @@ const Signup = () => {
     else if (userInfo.password === "")
       setError({ ...error, password: "Password is required." });
     else {
-      dispatch(signUpUser({
-        first_name: userInfo.first_name,
-        last_name: userInfo.last_name,
-        email: userInfo.email,
-        password: userInfo.password,
-        isAuthenticated: true,
-      }));
-      console.log(userInfo);
+      try {
+        const result = await dispatch(signUpUserAsync({
+          first_name: userInfo.first_name,
+          last_name: userInfo.last_name,
+          email: userInfo.email,
+          password: userInfo.password,
+        })).unwrap();
+
+        console.log(result);
+        
+        // If signup successful, redirect
+        navigate('/dashboard');
+      } catch (err: any) {
+        // Handle error (e.g., show error message)
+        setError({ ...error, general: err.message });
+      }
     }
     setTimeout(() => {
       setError({
@@ -78,6 +90,7 @@ const Signup = () => {
         last_name: "",
         email: "",
         password: "",
+        general: "",
       });
     }, 3000);
   };

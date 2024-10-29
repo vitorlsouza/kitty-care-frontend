@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { signUpAPI } from '../../services/api';
 
 interface UserState {
   first_name: string;
@@ -6,6 +7,8 @@ interface UserState {
   email: string;
   password: string;
   isAuthenticated: boolean;
+  status: string;
+  error: string;
 }
 
 const initialState: UserState = {
@@ -14,7 +17,21 @@ const initialState: UserState = {
   email: '',
   password: '',
   isAuthenticated: false,
+  status: '',
+  error: '',
 };
+
+export const signUpUserAsync = createAsyncThunk(
+  'user/signUpUser',
+  async (userData: Partial<UserState>, { rejectWithValue }) => {
+    try {
+      const response = await signUpAPI(userData);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -26,6 +43,20 @@ export const userSlice = createSlice({
     logout: (state) => {
       return initialState;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signUpUserAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(signUpUserAsync.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        return { ...state, ...action.payload, isAuthenticated: true };
+      })
+      .addCase(signUpUserAsync.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      });
   },
 });
 
