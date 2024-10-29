@@ -4,8 +4,12 @@ import TextInput from "../components/Login/Input";
 import LogBtnBy from "../components/Login/LogBtnBy";
 import Toggle from "../components/Login/Toggle";
 import CheckOption from "../components/Login/CheckOption";
+import { useAppDispatch } from '../Redux/hooks';
+import { signUpUser } from '../Redux/features/userSlice';
 
 const Signup = () => {
+  const dispatch = useAppDispatch();
+
   const [userInfo, setUserInfo] = useState({
     first_name: "",
     last_name: "",
@@ -59,6 +63,13 @@ const Signup = () => {
     else if (userInfo.password === "")
       setError({ ...error, password: "Password is required." });
     else {
+      dispatch(signUpUser({
+        first_name: userInfo.first_name,
+        last_name: userInfo.last_name,
+        email: userInfo.email,
+        password: userInfo.password,
+        isAuthenticated: true,
+      }));
       console.log(userInfo);
     }
     setTimeout(() => {
