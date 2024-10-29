@@ -64,7 +64,7 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
   ];
 
   const handleCardSelect = (id: number) => {
-    setSelectedProgress(id === selectedProgress ? null : id); // Toggle selection
+    setSelectedProgress(id === selectedProgress ? null : id);
   };
 
   const handleSubmit = () => {
@@ -80,7 +80,6 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full max-w-2xl lg:max-w-6xl mx-auto p-6 relative">
-      {/* Header */}
       <div className="text-center mb-8">
         <h1 className="font-bold text-2xl lg:text-3xl mb-2">
           What Progress is Most Important To You?
@@ -90,8 +89,6 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
           your cat.
         </p>
       </div>
-
-      {/* Progress Items Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:mx-12">
         {progressItems.map((item) => (
           <div
@@ -122,8 +119,6 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
           </div>
         ))}
       </div>
-
-      {/* Popup Card */}
       <AnimatePresence>
         {selectedPopup && (
           <motion.div
@@ -143,8 +138,6 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Navigation Buttons */}
       <div className="flex justify-center items-center mt-8 space-x-4">
         <button
           onClick={previousStep}

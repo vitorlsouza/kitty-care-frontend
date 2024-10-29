@@ -6,7 +6,7 @@ interface Panel09Props {
 }
 
 const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
-  const [selectedFrequency, setSelectedFrequency] = useState<number | null>(2); // Default to the recommended frequency (id: 2)
+  const [selectedFrequency, setSelectedFrequency] = useState<number | null>(2);
 
   const frequencyOptions = [
     {
@@ -36,7 +36,6 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto relative font-inter">
-      {/* Header */}
       <div className="text-center mb-6 lg:mb-8">
         <h1 className="font-extrabold text-xl mb-2 md:mx-56 lg:mx-80">
           How Often Do You Want to Check In With Your Cat?
@@ -47,8 +46,6 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
           track your cat’s care?
         </p>
       </div>
-
-      {/* Frequency Options */}
       <div className="space-y-1 md:mx-32 lg:mx-60">
         {frequencyOptions.map((option) => (
           <div
@@ -61,7 +58,6 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
             }`}
           >
             <div className="flex justify-between items-center lg:space-x-4">
-              {/* Wrap Title and Description in a Flex Container */}
               <div className="flex flex-col">
                 <h3
                   className={`text-md lg:text-lg font-semibold ${
@@ -89,7 +85,6 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
                   {option.description}
                 </p>
               </div>
-              {/* Radio Button */}
               <div
                 className={`ml-4 lg:ml-auto w-6 h-6 rounded-full border-2 flex justify-center items-center ${
                   selectedFrequency === option.id
@@ -105,8 +100,6 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
           </div>
         ))}
       </div>
-
-      {/* Navigation Buttons */}
       <div className="flex justify-center items-center mt-8 space-x-4">
         <button
           onClick={previousStep}

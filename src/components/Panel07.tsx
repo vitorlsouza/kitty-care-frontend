@@ -11,7 +11,6 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
   const [unit, setUnit] = useState<"Kg" | "Lbs" | null>("Lbs");
   const [targetWeight, setTargetWeight] = useState<string>("");
 
-  // State to track validation errors
   const [errors, setErrors] = useState({
     breed: "",
     weight: "",
@@ -26,8 +25,6 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
     "Siamese",
     "Persian",
   ];
-
-  // Handle form submission and validation
   const handleSubmit = () => {
     let hasError = false;
     const newErrors = {
@@ -36,26 +33,18 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
       unit: "",
       targetWeight: "",
     };
-
-    // Validate breed
     if (!breed) {
       newErrors.breed = "Please select your cat's breed";
       hasError = true;
     }
-
-    // Validate weight
     if (!weight || isNaN(Number(weight)) || Number(weight) <= 0) {
       newErrors.weight = "Please enter a valid weight for your cat";
       hasError = true;
     }
-
-    // Validate unit
     if (!unit) {
       newErrors.unit = "Please select the weight unit";
       hasError = true;
     }
-
-    // Validate target weight
     if (!targetWeight || isNaN(Number(targetWeight)) || Number(targetWeight) <= 0) {
       newErrors.targetWeight = "Please enter a valid target weight";
       hasError = true;
@@ -70,7 +59,6 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full max-w-md lg:max-w-lg p-4 lg:p-6 mx-auto">
-      {/* Header */}
       <div className="text-center mb-6">
         <h1 className="font-bold text-2xl lg:text-3xl mb-2">
           Tell Us More About Your Cat's Breed and Weight
@@ -79,10 +67,7 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
           To better understand your cat's needs, please share their breed, current weight, and target weight.
         </p>
       </div>
-
-      {/* Form */}
       <div className="space-y-4 mx-16">
-        {/* Breed selection */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             What breed is your cat? <span className="text-red-500">*</span>
@@ -105,8 +90,6 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
             {errors.breed && <p className="text-red-500 text-sm">{errors.breed}</p>}
           </div>
         </div>
-
-        {/* Weight selection */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Weight of your cat? <span className="text-red-500">*</span>
@@ -139,8 +122,6 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
           {errors.weight && <p className="text-red-500 text-sm">{errors.weight}</p>}
           {errors.unit && <p className="text-red-500 text-sm">{errors.unit}</p>}
         </div>
-
-        {/* Target weight */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Target Weight <span className="text-red-500">*</span>
@@ -160,8 +141,6 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
           )}
         </div>
       </div>
-
-      {/* Navigation Buttons */}
       <div className="flex justify-center items-center mt-8 space-x-4">
         <button
           onClick={previousStep}

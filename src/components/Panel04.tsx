@@ -81,12 +81,6 @@ const goals = [
   },
 ];
 
-const slideVariant = {
-  hidden: { opacity: 0, x: -100 },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: 100 },
-};
-
 interface Panel04Props {
   nextStep: () => void;
   previousStep: () => void;
@@ -106,7 +100,6 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle goal selection (max 3)
   const handleGoalSelect = (goal: string) => {
     if (selectedGoals.includes(goal)) {
       setSelectedGoals(selectedGoals.filter((g) => g !== goal));

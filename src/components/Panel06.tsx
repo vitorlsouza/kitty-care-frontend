@@ -11,7 +11,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
   const [country, setCountry] = useState<string>("");
   const [zipCode, setZipCode] = useState<string>("");
 
-  // State to track validation errors
   const [errors, setErrors] = useState({
     gender: "",
     age: "",
@@ -19,7 +18,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
     zipCode: "",
   });
 
-  // Handle form submission
   const handleSubmit = () => {
     let hasError = false;
     const newErrors = {
@@ -29,13 +27,11 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
       zipCode: "",
     };
 
-    // Validate gender
     if (!gender) {
       newErrors.gender = "Please select your cat's gender";
       hasError = true;
     }
 
-    // Validate age (must be a number and greater than zero)
     if (!age) {
       newErrors.age = "Please enter your cat's age";
       hasError = true;
@@ -44,8 +40,7 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
       hasError = true;
     }
 
-    // Validate country (must be a string without numbers)
-    const countryPattern = /^[A-Za-z\s]+$/; // Only allow letters and spaces
+    const countryPattern = /^[A-Za-z\s]+$/;
     if (!country) {
       newErrors.country = "Please enter your country";
       hasError = true;
@@ -54,7 +49,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
       hasError = true;
     }
 
-    // Validate zip code (non-empty check)
     if (!zipCode) {
       newErrors.zipCode = "Please enter a zip/postal code";
       hasError = true;
@@ -62,7 +56,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
 
     setErrors(newErrors);
 
-    // If no errors, move to next step
     if (!hasError) {
       nextStep();
     }
@@ -70,7 +63,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full max-w-md lg:max-w-lg p-4 lg:p-6 mx-auto font-inter">
-      {/* Header */}
       <div className="text-center mb-6">
         <h1 className="font-bold text-2xl lg:text-3xl mb-2">
           Tell Us About Your Cat
@@ -80,10 +72,7 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           best advice.
         </p>
       </div>
-
-      {/* Form */}
       <div className="space-y-4 mx-16">
-        {/* Gender selection */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Select your cat's gender <span className="text-red-500">*</span>
@@ -114,8 +103,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
             <p className="text-red-500 text-sm">{errors.gender}</p>
           )}
         </div>
-
-        {/* Cat's age */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             How old is your cat? <span className="text-red-500">*</span>
@@ -129,8 +116,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           />
           {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
         </div>
-
-        {/* Country */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Which country do you live? <span className="text-red-500">*</span>
@@ -146,8 +131,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
             <p className="text-red-500 text-sm">{errors.country}</p>
           )}
         </div>
-
-        {/* Zip Code */}
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Zip/Postal Code <span className="text-red-500">*</span>
@@ -168,8 +151,6 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           )}
         </div>
       </div>
-
-      {/* Navigation Buttons */}
       <div className="flex justify-center items-center mt-8 space-x-4">
         <button
           onClick={previousStep}

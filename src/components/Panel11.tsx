@@ -23,7 +23,6 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
   ];
 
   const handleSubmit = () => {
-    // Handle form submission if necessary
     nextStep();
   };
 

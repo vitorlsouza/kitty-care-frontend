@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import RiveComponent , { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 import { motion, AnimatePresence } from "framer-motion";
 
 const data = [
@@ -35,12 +35,6 @@ const data = [
       "Scratching up your furniture and being less active than you'd like? We understand how hard it can be to keep your cat engaged. With some extra playtime and training, we can help reduce those destructive behaviors and bring more fun to your cat’s day.",
   },
 ];
-
-const slideVariant = {
-  hidden: { opacity: 0, x: -100 },
-  visible: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: 100 },
-};
 
 interface Panel03Props {
   previousStep: () => void;
