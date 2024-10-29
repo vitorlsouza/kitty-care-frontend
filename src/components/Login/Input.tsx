@@ -8,6 +8,7 @@ const TextInput = ({
   type,
   placeholder,
   className,
+  error,
   onChange,
 }: TextInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +18,7 @@ const TextInput = ({
   };
 
   return (
-    <div className="my-[30px] flex flex-col gap-[20px]">
+    <div className="my-[30px] flex flex-col gap-[20px] h-auto">
       {label && (
         <label className="text-base sm:text-xl font-bold sm:font-medium ml-[24px]">
           {label}
@@ -48,6 +49,11 @@ const TextInput = ({
           </button>
         )}
       </div>
+      {error && (
+        <div className="text-red-500 text-sm font-medium ms-6 -mt-[6px] relative">
+          {error}
+        </div>
+      )}
     </div>
   );
 };
