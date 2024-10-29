@@ -7,8 +7,8 @@ import CheckOption from "../components/Login/CheckOption";
 
 const Signup = () => {
   const [userInfo, setUserInfo] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
@@ -25,8 +25,8 @@ const Signup = () => {
   });
 
   const [error, setError] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
@@ -45,22 +45,26 @@ const Signup = () => {
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     setError({
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
     });
-    if (userInfo.firstName === "") setError({ ...error, firstName: "First name is required." });
-    else if (userInfo.lastName === "") setError({ ...error, lastName: "Last name is required." });
-    else if (userInfo.email === "") setError({ ...error, email: "Email is required." });
-    else if (userInfo.password === "") setError({ ...error, password: "Password is required." });
+    if (userInfo.first_name === "")
+      setError({ ...error, first_name: "First name is required." });
+    else if (userInfo.last_name === "")
+      setError({ ...error, last_name: "Last name is required." });
+    else if (userInfo.email === "")
+      setError({ ...error, email: "Email is required." });
+    else if (userInfo.password === "")
+      setError({ ...error, password: "Password is required." });
     else {
       console.log(userInfo);
     }
     setTimeout(() => {
       setError({
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
         password: "",
       });
@@ -156,22 +160,22 @@ const Signup = () => {
 
               <div className="w-full h-full flex-col justify-between">
                 <TextInput
-                  name="firstName"
+                  name="first_name"
                   label=""
                   type="text"
                   placeholder="First name"
-                  className={error.firstName === "" ? "" : "border-red-500"}
+                  className={error.first_name === "" ? "" : "border-red-500"}
                   onChange={handleChange}
-                  error={error.firstName}
+                  error={error.first_name}
                 />
                 <TextInput
-                  name="lastName"
+                  name="last_name"
                   label=""
                   type="text"
                   placeholder="Last name"
-                  className={error.lastName === "" ? "" : "border-red-500"}
+                  className={error.last_name === "" ? "" : "border-red-500"}
                   onChange={handleChange}
-                  error={error.lastName}
+                  error={error.last_name}
                 />
                 <TextInput
                   name="email"
