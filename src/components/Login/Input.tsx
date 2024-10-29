@@ -49,7 +49,7 @@ const TextInput = ({
           </button>
         )}
       </div>
-      {error && (
+      {error !== "" && (
         <div className="text-red-500 text-sm font-medium ms-6 -mt-[6px] relative">
           {error}
         </div>

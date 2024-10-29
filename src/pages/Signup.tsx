@@ -24,7 +24,12 @@ const Signup = () => {
     saveOption: true,
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
@@ -34,24 +39,36 @@ const Signup = () => {
     setBillingOption({
       ...billingOption,
       [e.target.name]: e.target.checked,
-      // !billingOption[e.target.name as keyof typeof billingOption],
     });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (userInfo.email === "" || userInfo.password === "") {
-      setError("Please fill in all fields");
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-    } else {
+    setError({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
+    if (userInfo.firstName === "") setError({ ...error, firstName: "First name is required." });
+    else if (userInfo.lastName === "") setError({ ...error, lastName: "Last name is required." });
+    else if (userInfo.email === "") setError({ ...error, email: "Email is required." });
+    else if (userInfo.password === "") setError({ ...error, password: "Password is required." });
+    else {
       console.log(userInfo);
     }
+    setTimeout(() => {
+      setError({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+    }, 3000);
   };
   return (
-    <div className="w-full h-full sm:h-screen mt-10 sm:mt-0 flex flex-col items-center sm:justify-around justify-center">
-      <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px]">
+    <div className="w-full h-full sm:h-screen mt-10 sm:mt-0 flex flex-col sm:items-center sm:justify-around">
+      <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] m-auto my-6">
         <img
           className="w-full h-full"
           src="/assets/svg/KittyLogo.svg"
@@ -60,7 +77,7 @@ const Signup = () => {
       </div>
       <div className="flex flex-col sm:flex-row">
         <div className="w-full m-auto">
-          <div className="w-[343px] sm:w-[430px] max-w-[90%] py-[27px] sm:me-[120px]">
+          <div className="w-[343px] sm:w-[430px] max-w-[90%] sm:me-[120px] m-auto mb-6">
             <label className="flex gap-[16px] items-center cursor-pointer my-8">
               <span
                 className={`text-[18px] text-black dark:text-gray-300 capitalize  ${
@@ -123,7 +140,7 @@ const Signup = () => {
           </div>
         </div>
         <div className="w-full m-auto mb-10">
-          <div className="m-auto w-[343px] h-[720px] sm:w-[608px] sm:h-[98%] max-w-[90%] px-[21px] py-[47px] sm:px-[104px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
+          <div className="m-auto w-[343px] sm:w-[610px] h-auto max-w-[90%] px-[21px] py-[47px] sm:px-[104px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <div className="w-full h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
@@ -143,34 +160,38 @@ const Signup = () => {
                   label=""
                   type="text"
                   placeholder="First name"
-                  className={error ? "border-red-500" : ""}
+                  className={error.firstName === "" ? "" : "border-red-500"}
                   onChange={handleChange}
+                  error={error.firstName}
                 />
                 <TextInput
                   name="lastName"
                   label=""
                   type="text"
                   placeholder="Last name"
-                  className={error ? "border-red-500" : ""}
+                  className={error.lastName === "" ? "" : "border-red-500"}
                   onChange={handleChange}
+                  error={error.lastName}
                 />
                 <TextInput
                   name="email"
                   label=""
                   type="email"
                   placeholder="name@email.com"
-                  className={error ? "border-red-500" : ""}
+                  className={error.email === "" ? "" : "border-red-500"}
                   onChange={handleChange}
+                  error={error.email}
                 />
                 <TextInput
                   name="password"
                   label=""
                   type="password"
                   placeholder="Password (8+ characters)"
-                  className={error ? "border-red-500" : ""}
+                  className={error.password === "" ? "" : "border-red-500"}
                   onChange={handleChange}
+                  error={error.password}
                 />
-                <div className="my-3 flex gap-2">
+                <div className="flex sm:hidden my-3 gap-2">
                   <div>
                     <input type="checkbox" />
                   </div>
@@ -188,9 +209,6 @@ const Signup = () => {
                       value="Create account"
                       onClick={handleSubmit}
                     />
-                    <div className="text-sm text-center text-red-500 my-2">
-                      {error}
-                    </div>
                   </div>
                 </div>
                 <div className="flex gap-4 items-center justify-between">
