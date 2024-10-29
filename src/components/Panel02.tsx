@@ -60,7 +60,7 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      <div className="font-Inter text-center mb-10">
+      <div className="font-Inter text-center mb-8">
         <h1 className="font-bold text-3xl mb-2">
           Let's Choose Some Goals For Your Cat!
         </h1>
@@ -69,7 +69,7 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
         {goals.map((goal) => (
           <div
             key={goal.title}
@@ -81,7 +81,6 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
             }`}
           >
             <h3 className="text-lg mb-1.5">{goal.title}</h3>
-
             <p className="text-sm opacity-80">{goal.description}</p>
           </div>
         ))}

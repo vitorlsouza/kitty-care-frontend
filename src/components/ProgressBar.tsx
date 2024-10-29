@@ -14,7 +14,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div className="flex items-center justify-center w-full">
       {steps.map((step, index) => (
-        <div key={step} className="flex items-center justify-center w-min ">
+        <div key={step} className="flex items-center justify-center ">
           <div className="flex flex-col items-center">
             {step === 1 || step === 6 || step === 10 || step === 15 ? (
               <>
@@ -25,7 +25,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                       : "/assets/progress-paw-disable.png"
                   }
                   alt={`Step ${step}`}
-                  className="w-12 h-8 mt-1"
+                  className="w-12 h-12 mt-1 object-cover"
                 />
 
                 <p>{step}</p>

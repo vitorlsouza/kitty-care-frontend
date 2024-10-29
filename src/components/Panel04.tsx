@@ -58,12 +58,12 @@ const goals = [
   },
   {
     title: "Cat's Stubburn Behavior",
-    description:
-      "My cat is resistant to change or ignores training efforts.",
+    description: "My cat is resistant to change or ignores training efforts.",
   },
   {
     title: "Stressful Environment",
-    description: "There are things in my home that make my cat anxious (e.g., other pets, loud noises).",
+    description:
+      "There are things in my home that make my cat anxious (e.g., other pets, loud noises).",
   },
   {
     title: "Health Issues",
@@ -77,8 +77,7 @@ const goals = [
   },
   {
     title: "Lack of Motivation",
-    description:
-      "I struggle to stay motivated or keep track of progress.",
+    description: "I struggle to stay motivated or keep track of progress.",
   },
 ];
 
@@ -118,7 +117,7 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      <div className="relative h-24 md:h-28 flex items-center justify-center mb-8">
+      <div className="relative h-auto flex flex-col items-center justify-center mb-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentDescription}
@@ -126,51 +125,55 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.5 }}
-            className="absolute w-full text-center"
+            className="w-full text-center"
           >
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
               {data[currentDescription].title}
             </h2>
-            <p className="text-md max-w-2xl mx-auto mt-4 text-darkGray">
+            <p className="text-sm sm:text-md md:text-lg max-w-lg mx-auto mt-2 text-darkGray leading-relaxed">
               {data[currentDescription].description}
             </p>
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
         {goals.map((goal) => (
           <div
             key={goal.title}
             onClick={() => handleGoalSelect(goal.title)}
-            className={`cursor-pointer border-2 border-lightGray2 py-8 px-6 rounded-lg text-left transition-colors ${
+            className={`cursor-pointer border-2 border-lightGray2 p-4 rounded-lg text-center transition-colors w-full ${
               selectedGoals.includes(goal.title)
                 ? "bg-primaryBlue text-white"
-                : "border-gray-300 hover:bg-primaryBlue hover:text-white"
+                : "hover:bg-primaryBlue hover:text-white"
             }`}
           >
-            <h3 className="text-lg mb-1.5">{goal.title}</h3>
-
-            <p className="text-sm opacity-80">{goal.description}</p>
+            <h3 className="text-md md:text-lg mb-1.5">{goal.title}</h3>
+            <p className="text-xs sm:text-sm opacity-80 leading-snug">
+              {goal.description}
+            </p>
           </div>
         ))}
       </div>
-      <div className="flex justify-center items-center mt-6 space-x-4">
+      
+
+      <div className="flex flex-col sm:flex-row justify-center items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
         <button
           onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
+          className="px-4 sm:px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:bg-primaryBlue"
         >
-          {'<'} Back
+          {"<"} Back
         </button>
         <button
           onClick={nextStep}
           disabled={selectedGoals.length !== 3}
-          className={`px-8 py-2 rounded-full text-white ${
+          className={`px-6 py-2 rounded-full text-white ${
             selectedGoals.length === 3
-              ? "bg-primaryBlue hover:bg-primaryBlue"
+              ? "bg-primaryBlue"
               : "bg-gray-300 cursor-not-allowed"
           }`}
         >
-          Next {'>'}
+          Next {">"}
         </button>
       </div>
     </div>

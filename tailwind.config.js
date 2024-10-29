@@ -17,9 +17,12 @@ export default {
         lightWhite: "#FAF6F3",
         globalBackground: "#FAF6F3",
         lightOrange: "#FADFC9",
+        pearlBush:"#DBCEC4",
+        lightPearl:"#F3EDE8"
 
       },
       screens: {
+        'sm':'375px',
         'custom-lg': '1340px',
       },
       fontFamily: {
