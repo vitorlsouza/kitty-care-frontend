@@ -3,6 +3,7 @@ import GooglePayButton from "@google-pay/button-react";
 import { useNavigate } from "react-router-dom";
 
 const GooglePayBtn = () => {
+  // @ts-ignore
   const [billingOption, setBillingOption] = useState({
     method: true,
     price: 0,

@@ -7,6 +7,7 @@ import ApplePayBtn from "../components/Payments/ApplePayBtn";
 import GooglePayBtn from "../components/Payments/GooglePayBtn";
 
 const PaymentMethod = () => {
+  // @ts-ignore
   const [billingOption, setBillingOption] = useState({
     method: true,
     price: 0,
@@ -39,6 +40,7 @@ const PaymentMethod = () => {
     intent: "capture",
   };
 
+  // @ts-ignore
   const handlePayPalOrder = (data: any, actions: any) => {
     return actions.order.create({
       purchase_units: [
@@ -53,6 +55,7 @@ const PaymentMethod = () => {
     });
   };
 
+  // @ts-ignore
   const handlePayPalApprove = (data: any, actions: any) => {
     return actions.order.capture().then((details: any) => {
       // Handle successful payment
@@ -99,7 +102,7 @@ const PaymentMethod = () => {
         }
       };
 
-      session.onpaymentauthorized = async (event: any) => {
+      session.onpaymentauthorized = async () => {
         try {
           // Process the payment here
           // You would typically make an API call to your backend

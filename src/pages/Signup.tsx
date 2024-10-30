@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
 import LogBtnBy from "../components/Login/LogBtnBy";
-import Toggle from "../components/Login/Toggle";
-import CheckOption from "../components/Login/CheckOption";
+// import Toggle from "../components/Login/Toggle";
+// import CheckOption from "../components/Login/CheckOption";
 import { useAppDispatch } from '../Redux/hooks';
 import { signUpUserAsync } from '../Redux/features/userSlice';
 import { validateUserInfo } from '../utils/validation';
@@ -21,6 +21,7 @@ const Signup = () => {
     password: "",
   });
 
+  // @ts-ignore
   const [billingOption, setBillingOption] = useState({
     method: true,
     price: 0,
@@ -55,12 +56,12 @@ const Signup = () => {
     setError(prev => ({ ...prev, [name]: "", general: "" }));
   };
 
-  const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBillingOption({
-      ...billingOption,
-      [e.target.name]: e.target.checked,
-    });
-  };
+  // const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setBillingOption({
+  //     ...billingOption,
+  //     [e.target.name]: e.target.checked,
+  //   });
+  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();

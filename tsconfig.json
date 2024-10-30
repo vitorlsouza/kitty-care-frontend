@@ -9,7 +9,9 @@
       "@store/*": ["store/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]
-    }
+    },
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
   },
   "files": [],
   "references": [
