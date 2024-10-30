@@ -82,92 +82,83 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-around">
-      <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px]">
-        <img
-          className="w-full h-full"
-          src="/assets/svg/KittyLogo.svg"
-          alt="kitty logo"
-        />
-      </div>
-      <div className="w-[343px] h-[680px] sm:w-[600px] sm:h-[725px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
-        <div className="w-full h-full flex flex-col items-center justify-between">
-          <div className="text-center">
-            <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
-              Login
-            </h2>
-            <div className="text-base sm:text-lg font-medium">
-              New to KittyCare?{" "}
-              <span>
-                <a href="/signup">Sign up for free</a>
-              </span>
+    <div className="w-[343px] h-[680px] sm:w-[600px] sm:h-[725px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
+      <div className="w-full h-full flex flex-col items-center justify-between">
+        <div className="text-center">
+          <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
+            Login
+          </h2>
+          <div className="text-base sm:text-lg font-medium">
+            New to KittyCare?{" "}
+            <span>
+              <a href="/signup">Sign up for free</a>
+            </span>
+          </div>
+        </div>
+
+        <div className="w-full h-full flex-col justify-between">
+          <TextInput
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="name@email.com"
+            className={error.email ? "border-red-500" : ""}
+            onChange={handleChange}
+            error={error.email}
+          />
+          <TextInput
+            name="password"
+            label="Password"
+            type="password"
+            placeholder="Password (8+ characters)"
+            className={error.password ? "border-red-500" : ""}
+            onChange={handleChange}
+            error={error.password}
+          />
+
+          {error.general && (
+            <div className="text-red-500 text-sm text-center mt-2">
+              {error.general}
+            </div>
+          )}
+
+          <div className="my-3">
+            <div className="w-full h-[52px] my-[30px]">
+              <input
+                className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer disabled:bg-blue-400"
+                type="submit"
+                value={isLoading ? "Logging in..." : "Log in"}
+                onClick={handleSubmit}
+                disabled={isLoading}
+              />
             </div>
           </div>
-
-          <div className="w-full h-full flex-col justify-between">
-            <TextInput
-              name="email"
-              label="Email"
-              type="email"
-              placeholder="name@email.com"
-              className={error.email ? "border-red-500" : ""}
-              onChange={handleChange}
-              error={error.email}
+          <div className="flex gap-4 items-center justify-between">
+            <Divider />
+            <LogBtnBy
+              src="/assets/png/google.png"
+              alt="Google"
+              className="hidden sm:flex"
             />
-            <TextInput
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="Password (8+ characters)"
-              className={error.password ? "border-red-500" : ""}
-              onChange={handleChange}
-              error={error.password}
+            <div className="sm:hidden">Or</div>
+            <LogBtnBy
+              src="/assets/png/apple.png"
+              alt="Apple"
+              className="hidden sm:flex"
             />
-
-            {error.general && (
-              <div className="text-red-500 text-sm text-center mt-2">
-                {error.general}
-              </div>
-            )}
-
-            <div className="my-3">
-              <div className="w-full h-[52px] my-[30px]">
-                <input
-                  className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer disabled:bg-blue-400"
-                  type="submit"
-                  value={isLoading ? "Logging in..." : "Log in"}
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-            <div className="flex gap-4 items-center justify-between">
-              <Divider />
-              <LogBtnBy
-                src="/assets/png/google.png"
-                alt="Google"
-                className="hidden sm:flex"
-              />
-              <div className="sm:hidden">Or</div>
-              <LogBtnBy
-                src="/assets/png/apple.png"
-                alt="Apple"
-                className="hidden sm:flex"
-              />
-              <Divider />
-            </div>
-            <div className="flex sm:hidden gap-4 items-center justify-center m-4">
-              <LogBtnBy
-                src="/assets/png/google.png"
-                alt="Google"
-                className="flex"
-              />
-              <LogBtnBy
-                src="/assets/png/apple.png"
-                alt="Apple"
-                className="flex"
-              />
-            </div>
+            <Divider />
+          </div>
+          <div className="flex sm:hidden gap-4 items-center justify-center m-4">
+            <LogBtnBy
+              src="/assets/png/google.png"
+              alt="Google"
+              className="flex"
+            />
+            <LogBtnBy
+              src="/assets/png/apple.png"
+              alt="Apple"
+              className="flex"
+            />
           </div>
         </div>
       </div>

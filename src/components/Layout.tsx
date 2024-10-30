@@ -23,7 +23,20 @@ function Layout({ children }: LayoutProps) {
           />
         </div>
       </div>
-      <main>{children}</main>
+      <main>
+        <div className="w-full h-screen flex flex-col items-center justify-around">
+          <a href="/">
+            <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px]">
+              <img
+                className="w-full h-full"
+                src="/assets/svg/KittyLogo.svg"
+                alt="kitty logo"
+              />
+            </div>
+          </a>
+          {children}
+        </div>
+      </main>
     </div>
   );
 }
