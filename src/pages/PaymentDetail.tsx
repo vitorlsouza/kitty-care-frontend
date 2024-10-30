@@ -10,10 +10,11 @@ import {
 } from "@stripe/react-stripe-js";
 
 import { loadStripe } from "@stripe/stripe-js";
+import { JSX } from "react/jsx-runtime";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const PaymentDetail = () => {
+const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -98,128 +99,131 @@ const PaymentDetail = () => {
   };
 
   return (
-    
-    <Elements stripe={stripePromise}>
-      <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
-        <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
-          <SwitchMethod />
-        </div>
-        <div className="m-auto sm:m-0 my-2">
-          <div className="w-[343px] px-[21px] py-[47px] sm:w-[610px] sm:px-[50px] sm:py-[64px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <div className="text-center text-[40px] font-semibold capitalize">$0 Today</div>
-                <div className="text-center text-[18px] font-medium opacity-60 text-black">$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription.</div>
-              </div>
-              <div>
-                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                  Full Name on Card
-                </label>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                  required
-                />
-              </div>
+    <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
+      <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
+        <SwitchMethod />
+      </div>
+      <div className="m-auto sm:m-0 my-2">
+        <div className="w-[343px] px-[21px] py-[20px] sm:w-[610px] sm:px-[50px] sm:py-[44px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <div>
+              <div className="text-center text-[40px] font-semibold capitalize">$0 Today</div>
+              <div className="text-center text-[18px] font-medium opacity-60 text-black">$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription.</div>
+            </div>
+            <div>
+              <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                Full Name on Card
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                required
+              />
+            </div>
 
-              <div className="rounded-lg overflow-hidden">
+            <div className="rounded-lg overflow-hidden">
+              <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                Card Number
+              </label>
+              <CardNumberElement
+                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                options={cardElementOptions}
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
                 <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                  Card Number
+                  Expiry Month
                 </label>
-                <CardNumberElement
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                <CardExpiryElement
+                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                   options={cardElementOptions}
                 />
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                    Expiry Month
-                  </label>
-                  <CardExpiryElement
-                    className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                    options={cardElementOptions}
-                  />
-                </div>
-                <div>
-                  <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                    Security Code
-                  </label>
-                  <CardCvcElement
-                    className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                    options={cardElementOptions}
-                  />
-                </div>
-              </div>
-
               <div>
                 <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                  Country
+                  Security Code
+                </label>
+                <CardCvcElement
+                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  options={cardElementOptions}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                Country
+              </label>
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleInputChange}
+                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                  State
                 </label>
                 <input
                   type="text"
-                  name="country"
-                  value={formData.country}
+                  name="state"
+                  value={formData.state}
                   onChange={handleInputChange}
                   className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={formData.state}
-                    onChange={handleInputChange}
-                    className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
-                    Postal Code
-                  </label>
-                  <input
-                    type="text"
-                    name="postalCode"
-                    value={formData.postalCode}
-                    onChange={handleInputChange}
-                    className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                    required
-                  />
-                </div>
+              <div>
+                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                  Postal Code
+                </label>
+                <input
+                  type="text"
+                  name="postalCode"
+                  value={formData.postalCode}
+                  onChange={handleInputChange}
+                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  required
+                />
               </div>
+            </div>
 
-              <div className="flex justify-center gap-4">
-                <button
-                  disabled={!stripe || isLoading}
-                  className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
-                >
-                  Cancel
-                </button>
-                <button
-                  disabled={!stripe || isLoading}
-                  className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
-                >
-                  {isLoading ? "Submitting..." : "Submit"}
-                </button>
-              </div>
-            </form>
-          </div>
+            <div className="flex justify-center gap-4">
+              <button
+                disabled={!stripe || isLoading}
+                className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={!stripe || isLoading}
+                className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
+              >
+                {isLoading ? "Submitting..." : "Submit"}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </Elements>
+    </div>
   );
 };
+
+const PaymentDetail = (props: JSX.IntrinsicAttributes) => (
+  <Elements stripe={stripePromise}>
+    <PaymentForm {...props} />
+  </Elements>
+);
 
 export default PaymentDetail;
