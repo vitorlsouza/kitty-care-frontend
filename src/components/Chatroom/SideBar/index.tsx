@@ -5,17 +5,17 @@ import ExtendBtn from "./ExtendBtn";
 import CollapseBtn from "./CollapseBtn";
 import Content from "./Content";
 
-import KittyCare from "/src/assets/svg/KittyCare.svg";
-import SmartKitty from "/src/assets/svg/SmartKitty.svg";
-import Health from "/src/assets/svg/Health.svg";
-import MyPlan from "/src/assets/svg/MyPlan.svg";
-import Settings from "/src/assets/svg/Settings.svg";
-import Logout from "/src/assets/svg/Logout.svg";
-import Profile from "/src/assets/svg/Profile.svg";
-import KittyCareText from "/src/assets/svg/KittyCareText.svg";
-import KittyCareTextMobile from "/src/assets/svg/KittyCareTextMobile.svg";
-import Edit from "/src/assets/svg/Edit.svg";
-import MiniBtn from "/src/assets/svg/MiniBtn.svg";
+import KittyCare from "/assets/svg/KittyCare.svg";
+import SmartKitty from "/assets/svg/SmartKitty.svg";
+import Health from "/assets/svg/Health.svg";
+import MyPlan from "/assets/svg/MyPlan.svg";
+import Settings from "/assets/svg/Settings.svg";
+import Logout from "/assets/svg/Logout.svg";
+import Profile from "/assets/svg/Profile.svg";
+import KittyCareText from "/assets/svg/KittyCareText.svg";
+import KittyCareTextMobile from "/assets/svg/KittyCareTextMobile.svg";
+import Edit from "/assets/svg/Edit.svg";
+import MiniBtn from "/assets/svg/MiniBtn.svg";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);

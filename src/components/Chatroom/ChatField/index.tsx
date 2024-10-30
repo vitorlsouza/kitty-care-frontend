@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import MsgBoxs from "./MsgBoxs";
-import KittyLogo from "/src/assets/svg/KittyLogo.svg";
+import KittyLogo from "/assets/svg/KittyLogo.svg";
 
 export interface MsgType {
   msg: string;
