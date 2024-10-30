@@ -22,7 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*.riv
 package-lock.json
 tsconfig.app.tsbuildinfo
 tsconfig.node.tsbuildinfo
