@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PaymentMethod from "./pages/PaymentMethod";
 import PaymentDetail from "./pages/PaymentDetail";
+import Progress from "./pages/Progess";
 
 // Initialize Stripe with publishable key from environment variables
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/paymentmethod" element={<PaymentMethod />} />
           <Route path="/paymentdetail" element={<PaymentDetail />} />
+          <Route path="/progress" element={<Progress />} />
         </Routes>
       </Layout>
     </Router>

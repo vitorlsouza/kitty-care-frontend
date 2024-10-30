@@ -4,7 +4,7 @@ interface Panel01Props {
 
 const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
   return (
-    <div className="relative flex flex-col items-center justify-start min-h-screen p-4 globalBackground">
+    <div className="relative flex flex-col items-center justify-start p-4 globalBackground">
       <div className="w-full max-w-4xl mx-auto">
         <div className="flex flex-col items-center justify-center w-full max-w-md mt-8 mx-auto text-center">
           <h1 className="text-xl sm:text-2xl font-bold text-black font-inter">
