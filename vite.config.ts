@@ -7,4 +7,5 @@ export default defineConfig({
     host: 'localhost',
     port: 5173, // You can change the port if needed
   },
+  assetsInclude: ['**/*.riv'],
 });

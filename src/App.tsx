@@ -6,8 +6,7 @@ import Signup from "./pages/Signup";
 import PaymentMethod from "./pages/PaymentMethod";
 import PaymentDetail from "./pages/PaymentDetail";
 import Progress from "./pages/Progess";
-
-// Initialize Stripe with publishable key from environment variables
+import Chatroom from "./pages/Chatroom";
 
 function App() {
 
@@ -21,6 +20,7 @@ function App() {
           <Route path="/paymentmethod" element={<PaymentMethod />} />
           <Route path="/paymentdetail" element={<PaymentDetail />} />
           <Route path="/progress" element={<Progress />} />
+          <Route path="/cat-assistant" element={<Chatroom />} />
         </Routes>
       </Layout>
     </Router>
