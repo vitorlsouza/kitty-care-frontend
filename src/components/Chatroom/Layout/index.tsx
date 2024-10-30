@@ -1,7 +1,12 @@
 import TopCorner from "/assets/svg/TopCorner.svg";
 import BottomCorner from "/assets/svg/BottomCorner.svg";
+import { useEffect } from "react";
 
-const Layout = () => {
+const ChatroomLayout = () => {
+  useEffect(() => {
+    const element = document.querySelector('[data-id="mainLY"]');
+    if(element) element.remove();
+  }, [])
   return (
     <>
       <div className="w-screen h-screen flex flex-col justify-between absolute bg-[#FAF6F3] -z-50 top-0 right-0">
@@ -20,4 +25,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default ChatroomLayout;

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import CatinChat from "/assets/svg/CatinChat.svg";
+import CatinChat from "/assets/svg/catInChat.svg";
 import RiveAnimation from "../../RiveAnimation";
 
 interface MsgType {

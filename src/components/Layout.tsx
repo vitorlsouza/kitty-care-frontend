@@ -8,10 +8,10 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="w-screen relative">
+    <div className="w-screen relative" >
       <main>
         <div className="w-full">
-          <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] my-[6vh] sm:mt-[3vh] m-auto relative">
+          <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] my-[6vh] sm:mt-[3vh] m-auto relative " data-id="mainLY">
             <a href="/">
               <img
                 className="w-full h-full"
@@ -24,7 +24,7 @@ function Layout({ children }: LayoutProps) {
           <div className="flex-1">{children}</div>
         </div>
       </main>
-      <div className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]">
+      <div className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]" data-id="mainLY">
         <div className="w-full h-full relative">
           <img
             src={layout}
