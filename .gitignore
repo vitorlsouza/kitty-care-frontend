@@ -23,6 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 *.riv
-./package-lock.json
+package-lock.json
 tsconfig.app.tsbuildinfo
 tsconfig.node.tsbuildinfo
+
+.env
