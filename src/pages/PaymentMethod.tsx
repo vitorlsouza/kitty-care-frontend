@@ -44,6 +44,13 @@ const PaymentMethod = () => {
 
   return (
     <div className="w-full h-full sm:h-screen mt-10 sm:mt-0 flex flex-col sm:items-center sm:justify-around">
+      <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] m-auto my-6">
+        <img
+          className="w-full h-full"
+          src="/assets/svg/KittyLogo.svg"
+          alt="kitty logo"
+        />
+      </div>
       <div className="flex flex-col sm:flex-row gap-[170px]">
         <div className="w-full m-auto">
           <div className="w-[343px] sm:w-[430px] max-w-[90%] m-auto mb-6">

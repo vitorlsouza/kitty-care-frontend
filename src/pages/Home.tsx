@@ -6,6 +6,7 @@ const Home = () => {
       <a href="/login" className="text-xl">Login</a>
       <a href="/signup" className="text-xl">Signup</a>
       <a href="/paymentmethod" className="text-xl">Payment Method</a>
+      <a href="/paymentdetail" className="text-xl">Payment Detail</a>
     </div>
   );
 };

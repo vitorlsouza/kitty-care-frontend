@@ -48,12 +48,12 @@ const PaymentDetail = () => {
         <img
           className="w-full h-full"
           src="/assets/svg/KittyLogo.svg"
-          alt="kitty logo"
+          alt="Kitty Logo"
         />
       </div>
-      <div className="flex flex-col sm:flex-row">
+      <div className="flex flex-col sm:flex-row gap-[170px]">
         <div className="w-full m-auto">
-          <div className="w-[343px] sm:w-[430px] max-w-[90%] sm:me-[120px] m-auto mb-6">
+          <div className="w-[343px] sm:w-[430px] max-w-[90%] m-auto mb-6">
             <label className="flex gap-[16px] items-center cursor-pointer my-8">
               <span
                 className={`text-[18px] text-black dark:text-gray-300 capitalize  ${
@@ -116,7 +116,7 @@ const PaymentDetail = () => {
           </div>
         </div>
         <div className="w-full m-auto mb-10">
-          <div className="m-auto w-[343px] sm:w-[710px] h-auto max-w-[90%] px-[21px] py-[47px] sm:px-[85px] sm:py-[145px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
+          <div className="m-auto w-[343px] sm:w-[660px] h-auto max-w-[90%] px-[21px] py-[47px] sm:px-[85px] sm:py-[145px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <div className="w-full h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <h2 className="text-[28px] sm:text-[40px] font-semibold mb-6">

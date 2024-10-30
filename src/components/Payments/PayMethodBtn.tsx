@@ -8,11 +8,11 @@ const PayMethodBtn = ({
   return (
     <div>
       {payBy === "card" ? (
-        <label className="block sm:hidden mb-3 ms-5 font-medium sm:font-normal text-[16px] sm:text-[18px]">
+        <label className="block sm:hidden mb-3 ms-5 font-semibold sm:font-normal text-[16px] sm:text-[18px]">
           Credit or Debit Card
         </label>
       ) : (
-        <label className="block sm:hidden mb-3 ms-5 font-medium sm:font-normal text-[16px] sm:text-[18px]">PayPal</label>
+        <label className="block sm:hidden mb-3 ms-5 font-semibold sm:font-normal text-[16px] sm:text-[18px]">PayPal</label>
       )}
       <div className="h-[55px] w-full border border-[#898B90] rounded-lg flex justify-between items-center ps-5 pe-2">
         {payBy === "card" ? (
