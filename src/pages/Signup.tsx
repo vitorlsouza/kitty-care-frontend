@@ -71,7 +71,7 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      const result = await dispatch(signUpUserAsync({
+      await dispatch(signUpUserAsync({
         first_name: userInfo.first_name.trim(),
         last_name: userInfo.last_name.trim(),
         email: userInfo.email.trim(),

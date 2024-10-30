@@ -52,7 +52,7 @@ export const userSlice = createSlice({
     signUpUser: (state, action: PayloadAction<Partial<UserState>>) => {
       return { ...state, ...action.payload };
     },
-    logout: (state) => {
+    logout: () => {
       return initialState;
     },
   },

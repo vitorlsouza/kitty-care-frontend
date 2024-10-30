@@ -60,7 +60,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const result = await dispatch(loginUserAsync({
+      await dispatch(loginUserAsync({
         email: userInfo.email,
         password: userInfo.password,
       })).unwrap();
