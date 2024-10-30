@@ -12,7 +12,7 @@ const CheckOption = ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div>
+    <div className="w-full">
       <div className="flex gap-2 items-center">
         <div className="border-2 border-black w-[19px] h-[19px] flex items-center rounded-md">
           <input

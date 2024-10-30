@@ -82,7 +82,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-[343px] h-[680px] sm:w-[600px] sm:h-[725px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
+    <div className="w-[343px] m-auto sm:w-[600px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
       <div className="w-full h-full flex flex-col items-center justify-between">
         <div className="text-center">
           <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
@@ -90,7 +90,7 @@ const Login = () => {
           </h2>
           <div className="text-base sm:text-lg font-medium">
             New to KittyCare?{" "}
-            <span>
+            <span className="block sm:inline">
               <a href="/signup">Sign up for free</a>
             </span>
           </div>

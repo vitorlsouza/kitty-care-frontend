@@ -8,7 +8,22 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen relative">
+      <main>
+        <div className="w-full">
+          <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] my-[6vh] sm:mt-[3vh] m-auto relative">
+            <a href="/">
+              <img
+                className="w-full h-full"
+                src="/assets/svg/KittyLogo.svg"
+                alt="kitty logo"
+              />
+            </a>
+          </div>
+
+          <div className="flex-1">{children}</div>
+        </div>
+      </main>
       <div className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]">
         <div className="w-full h-full relative">
           <img
@@ -23,20 +38,6 @@ function Layout({ children }: LayoutProps) {
           />
         </div>
       </div>
-      <main>
-        <div className="w-full h-screen flex flex-col items-center justify-around">
-          <a href="/">
-            <div className="w-[150px] h-[30px] sm:w-[200px] sm:h-[40px]">
-              <img
-                className="w-full h-full"
-                src="/assets/svg/KittyLogo.svg"
-                alt="kitty logo"
-              />
-            </div>
-          </a>
-          {children}
-        </div>
-      </main>
     </div>
   );
 }
