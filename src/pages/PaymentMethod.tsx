@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Toggle from "../components/Login/Toggle";
-import CheckOption from "../components/Login/CheckOption";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import SubscribeBtn from "../components/Payments/SubscribeBtn";
 import PayMethodBtn from "../components/Payments/PayMethodBtn";
 import SwitchMethod from "../components/Payments/SwitchMethod";
+import { useNavigate } from "react-router-dom";
 
 const PaymentMethod = () => {
   const [billingOption, setBillingOption] = useState({
@@ -17,10 +17,40 @@ const PaymentMethod = () => {
     saveOption: true,
   });
 
+  const navigate = useNavigate();
+
   const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBillingOption({
       ...billingOption,
       [e.target.name]: e.target.checked,
+    });
+  };
+
+  const initialPayPalOptions = {
+    clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, // Replace with your PayPal client ID
+    currency: "USD",
+    intent: "capture",
+  };
+
+  const handlePayPalOrder = (data: any, actions: any) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: billingOption.method
+              ? billingOption.yearly
+              : billingOption.monthly,
+          },
+        },
+      ],
+    });
+  };
+
+  const handlePayPalApprove = (data: any, actions: any) => {
+    return actions.order.capture().then((details: any) => {
+      // Handle successful payment
+      console.log("Payment completed", details);
+      navigate("/success"); // Navigate to success page
     });
   };
 
@@ -45,9 +75,30 @@ const PaymentMethod = () => {
               </div>
 
               <div className="w-full h-full flex flex-col justify-between gap-[30px]">
-                <PayMethodBtn payBy="card" onClick={() => {}} />
-                <PayMethodBtn payBy="paypal" onClick={() => {}} />
-                <SubscribeBtn payBy="apple" onClick={() => {}} />
+                <PayMethodBtn
+                  payBy="card"
+                  onClick={() => {
+                    navigate("/paymentdetail");
+                  }}
+                />
+                {/* <PayMethodBtn payBy="paypal" onClick={() => {}} /> */}
+                <PayPalScriptProvider options={initialPayPalOptions}>
+                  <PayPalButtons
+                    style={{
+                      layout: "horizontal",
+                      tagline: false,
+                      label: "paypal",
+                    }}
+                    createOrder={(data, actions) =>
+                      handlePayPalOrder(data, actions)
+                    }
+                    onApprove={(data, actions) =>
+                      handlePayPalApprove(data, actions)
+                    }
+                  />
+                </PayPalScriptProvider>
+                <SubscribeBtn payBy="google" onClick={() => {}} />
+                {/* <SubscribeBtn payBy="apple" onClick={() => {}} /> */}
                 <div>
                   <div className="text-[14px] font-semibold opacity-60 text-center">
                     Applicable VAT, sales or other applicable taxes may apply.
