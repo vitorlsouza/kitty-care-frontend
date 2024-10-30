@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import SubscribeBtn from "../components/Payments/SubscribeBtn";
 import PayMethodBtn from "../components/Payments/PayMethodBtn";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import { useNavigate } from "react-router-dom";
+import ApplePayBtn from "../components/Payments/ApplePayBtn";
+import GooglePayBtn from "../components/Payments/GooglePayBtn";
 
 const PaymentMethod = () => {
   const [billingOption, setBillingOption] = useState({
@@ -17,14 +18,20 @@ const PaymentMethod = () => {
     saveOption: true,
   });
 
+  const [isApplePayAvailable, setIsApplePayAvailable] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBillingOption({
-      ...billingOption,
-      [e.target.name]: e.target.checked,
-    });
-  };
+  useEffect(() => {
+    // Check if Apple Pay is available
+    const checkApplePayAvailability = () => {
+      if ('ApplePaySession' in window) {
+        setIsApplePayAvailable((window as any).ApplePaySession.canMakePayments());
+      }
+    };
+
+    checkApplePayAvailability();
+  }, []);
 
   const initialPayPalOptions = {
     clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, // Replace with your PayPal client ID
@@ -54,6 +61,63 @@ const PaymentMethod = () => {
     });
   };
 
+  const handleApplePayClick = async () => {
+    try {
+      const session = new (window as any).ApplePaySession(3, {
+        countryCode: "US",
+        currencyCode: "USD",
+        supportedNetworks: ["visa", "masterCard", "amex"],
+        merchantCapabilities: ["supports3DS"],
+        total: {
+          label: "Your Company Name",
+          amount: billingOption.method
+            ? billingOption.yearly
+            : billingOption.monthly,
+        },
+      });
+
+      session.onvalidatemerchant = async (event: any) => {
+        // Here you would typically make an API call to your backend to validate the merchant
+        try {
+          const merchantSession = await fetch(
+            "/api/apple-pay/validate-merchant",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                validationURL: event.validationURL,
+              }),
+            }
+          ).then((res) => res.json());
+
+          session.completeMerchantValidation(merchantSession);
+        } catch (err) {
+          console.error("Merchant validation failed:", err);
+          session.abort();
+        }
+      };
+
+      session.onpaymentauthorized = async (event: any) => {
+        try {
+          // Process the payment here
+          // You would typically make an API call to your backend
+
+          session.completePayment((window as any).ApplePaySession.STATUS_SUCCESS);
+          navigate("/success");
+        } catch (err) {
+          console.error("Payment failed:", err);
+          session.completePayment((window as any).ApplePaySession.STATUS_FAILURE);
+        }
+      };
+
+      session.begin();
+    } catch (error) {
+      console.error("Apple Pay error:", error);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
@@ -77,11 +141,8 @@ const PaymentMethod = () => {
               <div className="w-full h-full flex flex-col justify-between gap-[30px]">
                 <PayMethodBtn
                   payBy="card"
-                  onClick={() => {
-                    navigate("/paymentdetail");
-                  }}
+                  onClick={() => navigate("/paymentdetail")}
                 />
-                {/* <PayMethodBtn payBy="paypal" onClick={() => {}} /> */}
                 <PayPalScriptProvider options={initialPayPalOptions}>
                   <PayPalButtons
                     style={{
@@ -97,8 +158,14 @@ const PaymentMethod = () => {
                     }
                   />
                 </PayPalScriptProvider>
-                <SubscribeBtn payBy="google" onClick={() => {}} />
-                {/* <SubscribeBtn payBy="apple" onClick={() => {}} /> */}
+                {isApplePayAvailable ? (
+                  <ApplePayBtn
+                    onClick={handleApplePayClick}
+                    disabled={false}
+                  />
+                ) : (
+                  <GooglePayBtn />
+                )}
                 <div>
                   <div className="text-[14px] font-semibold opacity-60 text-center">
                     Applicable VAT, sales or other applicable taxes may apply.

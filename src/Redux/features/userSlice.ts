@@ -1,15 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { signUpAPI, loginAPI } from '../../services/api';
-
-interface UserState {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  isAuthenticated: boolean;
-  status: string;
-  error: string;
-}
+import { UserState } from '../../utils/types';
 
 const initialState: UserState = {
   first_name: '',

@@ -1,3 +1,13 @@
+export interface UserState {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  isAuthenticated: boolean;
+  status: string;
+  error: string;
+}
+
 export interface TextInputProps {
   name: string;
   label: string;
@@ -25,4 +35,9 @@ export interface UserInfo {
   last_name: string;
   email: string;
   password: string;
+}
+
+export interface ApplePayButtonProps {
+  onClick: () => void;
+  disabled?: boolean;
 }
