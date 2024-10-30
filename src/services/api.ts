@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL || 'https://kittycare-nodejs.vercel.app',
+  baseURL: import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app',
   headers: {
     'Content-Type': 'application/json',
   },

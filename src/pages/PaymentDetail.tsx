@@ -1,13 +1,17 @@
 import { useState } from "react";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import {
-  CardElement,
+  Elements,
   useStripe,
   useElements,
   CardNumberElement,
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const PaymentDetail = () => {
   const stripe = useStripe();
@@ -94,7 +98,8 @@ const PaymentDetail = () => {
   };
 
   return (
-    <div>
+    
+    <Elements stripe={stripePromise}>
       <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
         <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
           <SwitchMethod />
@@ -213,7 +218,7 @@ const PaymentDetail = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Elements>
   );
 };
 
