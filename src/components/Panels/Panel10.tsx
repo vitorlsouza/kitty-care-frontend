@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import NavigationButtons from "../NavigationButtons";
 
@@ -21,12 +21,29 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
     { id: 8, day: "Sunday" },
   ];
 
+  useEffect(() => {
+    const storedDays = localStorage.getItem("training_days");
+    if (storedDays) {
+      setSelectedDays(storedDays.split(","));
+    }
+  }, []);
+
   const handleDaySelect = (day: string) => {
-    setSelectedDays((prevSelectedDays) =>
-      prevSelectedDays.includes(day)
+    setSelectedDays((prevSelectedDays) => {
+      const newSelectedDays = prevSelectedDays.includes(day)
         ? prevSelectedDays.filter((selectedDay) => selectedDay !== day)
-        : [...prevSelectedDays, day]
-    );
+        : [...prevSelectedDays, day];
+
+      localStorage.setItem("training_days", newSelectedDays.join(","));
+      return newSelectedDays;
+    });
+  };
+
+  const handleSubmit = () => {
+    if (selectedDays.length > 0) {
+      localStorage.setItem("training_days", selectedDays.join(","));
+      nextStep();
+    }
   };
 
   return (
@@ -81,7 +98,7 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleSubmit}
         previousStep={previousStep}
         isNextDisabled={selectedDays.length === 0}
       />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel05Props {
@@ -46,13 +46,40 @@ const activityLevels = [
 const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
   const [selectedActivity, setSelectedActivity] = useState<number | null>(null);
 
+  useEffect(() => {
+    // Load previously selected activity level from local storage
+    const storedActivity = localStorage.getItem("activity_level");
+    if (storedActivity) {
+      const activityId = activityLevels.find(
+        (level) => level.title === storedActivity
+      )?.id;
+      setSelectedActivity(activityId ?? null);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update local storage whenever the selected activity changes
+    if (selectedActivity !== null) {
+      const selectedLevel = activityLevels.find(
+        (level) => level.id === selectedActivity
+      );
+      if (selectedLevel) {
+        localStorage.setItem("activity_level", selectedLevel.title);
+      }
+    }
+  }, [selectedActivity]);
+
+  const handleNext = () => {
+    nextStep();
+  };
+
   return (
     <div className="w-full p-6 rounded-md mx-auto font-Inter">
       <div className="text-center mb-6">
-        <h1 className="font-bold text-3xl lg:text-xl mb-2">
+        <h1 className="font-bold text-2xl md:text-3xl mb-2">
           What's Your Cat’s Activity Level?
         </h1>
-        <p className="text-md lg:text-darkGray mx-8 md:mx-36 text-center px-4">
+        <p className="text-sm text-darkGray mx-8 md:mx-36 text-center px-4">
           Select the option that best describes your cat’s typical energy and
           activity level.
         </p>
@@ -96,7 +123,7 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleNext}
         previousStep={previousStep}
         isNextDisabled={!selectedActivity}
       />
