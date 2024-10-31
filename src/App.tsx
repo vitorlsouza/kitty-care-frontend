@@ -41,9 +41,9 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/priceselection" element={
-            // <ProtectedRoute>
+            <ProtectedRoute>
               <PriceSelection />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           } />
           <Route path="/paymentmethod" element={
             <ProtectedRoute>
