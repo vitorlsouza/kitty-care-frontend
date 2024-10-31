@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./Redux/hooks";
 import { logout } from "./Redux/features/userSlice";
 import { isAuthenticated } from "./utils/auth";
+import PriceSelection from "./pages/PriceSelection.tsx";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -37,6 +38,11 @@ function App() {
           <Route path="/" element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          } />
+          <Route path="/priceselection" element={
+            <ProtectedRoute>
+              <PriceSelection />
             </ProtectedRoute>
           } />
           <Route path="/paymentmethod" element={

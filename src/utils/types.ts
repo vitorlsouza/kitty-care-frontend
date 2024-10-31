@@ -79,6 +79,14 @@ export interface ApplePayButtonProps {
   disabled?: boolean;
 }
 
+export interface PriceSelectBoxProps {
+  checked: boolean;
+  method: boolean;
+  annual?: number;
+  monthly?: number;
+  daily?: number;
+  isBest: boolean;
+}
 export interface LocalStorage {
   bearerToken: string;
   catId: string;
