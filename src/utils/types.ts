@@ -8,6 +8,12 @@ export interface UserState {
   error: string;
 }
 
+export interface Message {
+  id: string;
+  role: string;
+  content: string;
+}
+
 export interface BillingState {
   method: boolean;
   price: number;
@@ -71,4 +77,10 @@ export interface UserInfo {
 export interface ApplePayButtonProps {
   onClick: () => void;
   disabled?: boolean;
+}
+
+export interface LocalStorage {
+  bearerToken: string;
+  catId: string;
+  conversationId: string;
 }
