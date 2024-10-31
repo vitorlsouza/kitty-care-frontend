@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { signUpAPI, loginAPI } from '../../services/api';
-import { UserState } from '../../utils/types';
+import { LoginState, SignupState, UserState } from '../../utils/types';
 import { setAuthToken, clearAuthToken } from '../../utils/auth';
 
 const initialState: UserState = {
@@ -15,7 +15,7 @@ const initialState: UserState = {
 
 export const signUpUserAsync = createAsyncThunk(
   'user/signUpUser',
-  async (userData: Partial<UserState>, { rejectWithValue }) => {
+  async (userData: SignupState, { rejectWithValue }) => {
     try {
       const response = await signUpAPI(userData);
       return response;
@@ -27,7 +27,7 @@ export const signUpUserAsync = createAsyncThunk(
 
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
-  async (credentials: { email: string; password: string }, { rejectWithValue }) => {
+  async (credentials: LoginState, { rejectWithValue }) => {
     try {
       const response = await loginAPI(credentials);
       return response;

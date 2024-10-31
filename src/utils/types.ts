@@ -8,6 +8,37 @@ export interface UserState {
   error: string;
 }
 
+export interface BillingState {
+  method: boolean;
+  price: number;
+  daily: number;
+  monthly: number;
+  yearly: number;
+  trustOption: boolean;
+  nostringOption: boolean;
+  saveOption: boolean;
+  status: string;
+  error: string;
+}
+
+export interface PlanState {
+  plan: string;
+  end_date: string;
+  provider: string;
+}
+
+export interface SignupState {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginState {
+  email: string;
+  password: string;
+}
+
 export interface TextInputProps {
   name: string;
   label: string;
