@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { signUpAPI, loginAPI } from '../../services/api';
 import { UserState } from '../../utils/types';
+import { setAuthToken, clearAuthToken } from '../../utils/auth';
 
 const initialState: UserState = {
   first_name: '',
@@ -17,7 +18,7 @@ export const signUpUserAsync = createAsyncThunk(
   async (userData: Partial<UserState>, { rejectWithValue }) => {
     try {
       const response = await signUpAPI(userData);
-      return response.data;
+      return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -29,7 +30,7 @@ export const loginUserAsync = createAsyncThunk(
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await loginAPI(credentials);
-      return response.data;
+      return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -44,6 +45,7 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     },
     logout: () => {
+      clearAuthToken();
       return initialState;
     },
   },
@@ -53,11 +55,16 @@ export const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
-        Object.assign(state, {
-          ...action.payload,
-          status: 'succeeded',
-          isAuthenticated: true
-        });
+        if (action.payload?.token) {
+          setAuthToken({
+            token: action.payload.token,
+            expiresIn: action.payload.expiresIn || '1h'
+          });
+          Object.assign(state, {
+            status: 'succeeded',
+            isAuthenticated: true
+          });
+        }
       })
       .addCase(signUpUserAsync.rejected, (state, action) => {
         state.status = 'failed';
@@ -67,11 +74,16 @@ export const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        Object.assign(state, {
-          ...action.payload,
-          status: 'succeeded',
-          isAuthenticated: true
-        });
+        if (action.payload?.token) {
+          setAuthToken({
+            token: action.payload.token,
+            expiresIn: action.payload.expiresIn || '1h'
+          });
+          Object.assign(state, {
+            status: 'succeeded',
+            isAuthenticated: true
+          });
+        }
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'failed';
