@@ -1,32 +1,39 @@
-import { useState } from "react";
 import InputField from "./InputField";
-import MsgBoxs from "./MsgBoxs";
 import KittyLogo from "/assets/svg/KittyLogo.svg";
+import { useAppSelector, useAppDispatch } from "../../../Redux/hooks";
+import { Message } from "../../../utils/types";
+import { useEffect } from "react";
+import { updateConversationAsync } from "../../../Redux/features/chatSlice";
+import MessageBoxes from "./MessageBoxes";
 
-export interface MsgType {
-  msg: string;
-  isUser: boolean;
-}
+export type MsgType = Message;
 
 const ChatField = () => {
-  const [msgList, setMsgList] = useState<MsgType[]>([]);
-  const [onTyping, setOnTyping] = useState(false);
-  const [response, setResponse] = useState("");
+  const { messages, isLoading, needsSync, error } = useAppSelector((state) => state.chat);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (needsSync && messages.length > 0) {
+      dispatch(updateConversationAsync({ messages }));
+    }
+  }, [needsSync, messages, dispatch]);
 
   return (
     <div className="flex flex-col max-w-full sm:w-[800px] p-4 pb-6 mx-auto h-screen">
+      {error && (
+        <div className="text-red-500 text-center mb-4">
+          {error}
+        </div>
+      )}
       <div className="w-full h-[120px] flex justify-center items-center">
         <div className="">
           <img src={KittyLogo} alt="KittyLogo" />
         </div>
       </div>
-      <MsgBoxs msgList={msgList} response={response} />
+      <MessageBoxes messageList={messages} response={""} />
       <InputField
-        onTyping={onTyping}
-        msgList={msgList}
-        setOnTyping={setOnTyping}
-        setMsgList={setMsgList}
-        setResponse={setResponse}
+        onTyping={isLoading}
+        messageList={messages}
       />
     </div>
   );

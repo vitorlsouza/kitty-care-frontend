@@ -8,6 +8,12 @@ export interface UserState {
   error: string;
 }
 
+export interface Message {
+  id: string;
+  role: string;
+  content: string;
+}
+
 export interface TextInputProps {
   name: string;
   label: string;
@@ -40,4 +46,10 @@ export interface UserInfo {
 export interface ApplePayButtonProps {
   onClick: () => void;
   disabled?: boolean;
+}
+
+export interface LocalStorage {
+  bearerToken: string;
+  catId: string;
+  conversationId: string;
 }
