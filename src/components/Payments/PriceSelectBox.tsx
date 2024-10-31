@@ -52,7 +52,7 @@ const PriceSelectBox = ({
         </div>
       </div>
       {isBest && (
-        <span className="absolute top-[-20px] left-[15%] text-[14px] sm:text-[18px] text-center font-semibold text-[#FAF6F3] bg-[#0061EF] rounded-[7.2px] sm:rounded-[10px] px-[21px] py-[7px]">
+        <span className="absolute top-[-20px] left-[10%] text-[14px] sm:text-[18px] text-center font-semibold text-[#FAF6F3] bg-[#0061EF] rounded-[7.2px] sm:rounded-[10px] px-[21px] py-[7px]">
           Best Value
         </span>
       )}
