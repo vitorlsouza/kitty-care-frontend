@@ -53,8 +53,11 @@ export const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        return { ...state, ...action.payload, isAuthenticated: true };
+        Object.assign(state, {
+          ...action.payload,
+          status: 'succeeded',
+          isAuthenticated: true
+        });
       })
       .addCase(signUpUserAsync.rejected, (state, action) => {
         state.status = 'failed';
@@ -64,8 +67,11 @@ export const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        return { ...state, ...action.payload, isAuthenticated: true };
+        Object.assign(state, {
+          ...action.payload,
+          status: 'succeeded',
+          isAuthenticated: true
+        });
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'failed';
