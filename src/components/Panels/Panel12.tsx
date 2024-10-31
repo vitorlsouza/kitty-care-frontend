@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel12Props {
@@ -10,7 +10,7 @@ interface CatItem {
   id: number;
   title: string;
   description: string;
-  icon: string; // Icon path or component name
+  icon: string;
 }
 
 const catItems: CatItem[] = [
@@ -73,10 +73,23 @@ const catItems: CatItem[] = [
 const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
+  useEffect(() => {
+    const storedItems = localStorage.getItem("items");
+    if (storedItems) {
+      const itemIds = storedItems.split(",").map(Number);
+      setSelectedItems(itemIds);
+    }
+  }, []);
+
   const handleItemClick = (id: number) => {
-    setSelectedItems((prev) =>
-      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
-    );
+    setSelectedItems((prev) => {
+      const updatedItems = prev.includes(id)
+        ? prev.filter((itemId) => itemId !== id)
+        : [...prev, id];
+
+      localStorage.setItem("items", updatedItems.join(","));
+      return updatedItems;
+    });
   };
 
   return (

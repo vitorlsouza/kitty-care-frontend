@@ -4,20 +4,20 @@ interface Panel01Props {
 
 const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
   return (
-    <div className="relative flex flex-col items-center justify-start p-4 globalBackground">
+    <div className="relative flex flex-col items-center justify-start px-4 py-2 md:p-4 globalBackground">
       <div className="w-full max-w-4xl mx-auto">
-        <div className="flex flex-col items-center justify-center w-full max-w-md mt-8 mx-auto text-center">
-          <h1 className="text-xl sm:text-2xl font-bold text-black font-inter">
+        <div className="flex flex-col items-center justify-center w-full max-w-md md:mt-8 mx-auto text-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-black font-inter">
             Welcome To The Feline Family!
           </h1>
-          <p className="text-sm sm:text-md font-light px-3 py-2 sm:px-5 sm:py-3">
+          <p className="text-md md:text-lg font-light px-3 py-2 sm:px-5 sm:py-3 text-darkGray">
             Thank you for subscribing! 🎉 You’re now part of the best feline
             companion community. We’re excited to help you and your cat achieve
             all your goals!
           </p>
         </div>
 
-        <div className="mt-6 sm:mt-10 rounded-3xl w-full max-w-md mx-auto h-auto flex flex-col justify-start items-center border-2 border-lightGray bg-[url('/assets/White-paw.png')] bg-no-repeat bg-right-bottom">
+        <div className="mt-10 md:mt-2 rounded-3xl w-full max-w-md mx-auto h-auto flex flex-col justify-start items-center border-2 border-lightPearl bg-[url('/assets/White-paw.png')] bg-no-repeat bg-right-bottom bg-cover">
           <h2 className="bg-primaryOrange text-black text-sm sm:text-lg rounded-b-2xl font-semibold py-2 px-5 w-full max-w-[249px] text-center">
             Feature Highlights
           </h2>
@@ -71,7 +71,7 @@ const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
           </div>
         </div>
 
-        <div className="bg-lightOrange flex flex-col justify-center items-center mt-4 sm:mt-1 rounded-3xl w-full max-w-md mx-auto p-6 sm:px-10 sm:py-10 border-2 border-lightGray">
+        <div className="bg-lightOrange flex flex-col justify-center items-center mt-4 sm:mt-1 rounded-3xl w-full max-w-md mx-auto p-6 sm:px-10 sm:py-10 border-2 border-pearlBush">
           <p className="text-black text-sm sm:text-lg text-center">
             Get started by answering a few questions. This will help us create
             your personalized dashboard.

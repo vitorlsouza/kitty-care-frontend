@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel08Props {
@@ -64,8 +64,28 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
     },
   ];
 
+  useEffect(() => {
+    const storedProgress = localStorage.getItem("required_progress");
+    if (storedProgress) {
+      const foundItem = progressItems.find(
+        (item) => item.title === storedProgress
+      );
+      if (foundItem) {
+        setSelectedProgress(foundItem.id);
+      }
+    }
+  }, []);
+
   const handleCardSelect = (id: number) => {
-    setSelectedProgress(id === selectedProgress ? null : id);
+    const newProgress = id === selectedProgress ? null : id;
+    setSelectedProgress(newProgress);
+
+    const selectedItem = progressItems.find((item) => item.id === newProgress);
+    if (selectedItem) {
+      localStorage.setItem("required_progress", selectedItem.title);
+    } else {
+      localStorage.removeItem("required_progress");
+    }
   };
 
   const handleSubmit = () => {
@@ -85,7 +105,7 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
         <h1 className="font-bold text-2xl lg:text-3xl mb-2">
           What Progress is Most Important To You?
         </h1>
-        <p className="text-md text-darkGray max-w-2xl mx-auto">
+        <p className="text-sm text-darkGray max-w-2xl mx-auto">
           Choose the most important area where you'd like to see progress for
           your cat.
         </p>
@@ -128,7 +148,7 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
-            className="hidden md:flex absolute md:top-[-150px] md:right-[-20px] lg:top-[-280px] lg:right-[20px] bg-lightWhite mt-2 rounded-2xl md:w-64 lg:w-72 flex-col items-center border-2 border-pearlBush shadow-lg"
+            className="hidden md:flex absolute md:top-[-150px] md:right-[-20px] lg:top-[-150px] lg:right-0 bg-lightWhite mt-2 rounded-2xl md:w-64 lg:w-72 flex-col items-center border-2 border-pearlBush shadow-lg"
           >
             <h2 className="bg-primaryYellow text-black text-md font-semibold rounded-b-2xl px-4 py-1 mx-auto text-center">
               {selectedPopup.popupTitle}
@@ -139,9 +159,8 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
           </motion.div>
         )}
       </AnimatePresence>
-
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleSubmit}
         previousStep={previousStep}
         isNextDisabled={selectedProgress === null}
       />

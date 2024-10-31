@@ -1,19 +1,14 @@
 import { useEffect, useRef } from "react";
 import CatinChat from "/assets/svg/catInChat.svg";
 import RiveAnimation from "../../RiveAnimation";
+import { Message } from "../../../utils/types";
 
-interface MsgType {
-  msg: string;
-  isUser: boolean;
+interface MessageBoxesProps {
+  messageList: Message[];
+  response: string;
 }
 
-const MsgBoxs = ({
-  msgList,
-  response,
-}: {
-  msgList: MsgType[];
-  response: string;
-}) => {
+const MessageBoxes: React.FC<MessageBoxesProps> = ({ messageList, response }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -22,35 +17,33 @@ const MsgBoxs = ({
 
   useEffect(() => {
     scrollToBottom();
-  }, [msgList, response]);
+  }, [messageList, response]);
 
   return (
     <div className="flex flex-col flex-1 w-full text-centeritems-center overflow-y-auto overflow-x-hidden">
-      {msgList.length > 0 ? (
+      {messageList.length > 0 ? (
         <>
           <div className="flex-grow ">
             <div className="flex flex-col">
               <div>
-                {msgList.map((msg, index) => (
+                {messageList.map((message, index) => (
                   <div key={index} className="w-full">
                     <div
-                      className={`w-[90%] sm:w-2/3 rounded-2xl p-6 sm:p-8 my-2 sm:my-4 flex gap-4 ${
-                        msg.isUser
-                          ? "bg-[#F3EDE8] float-end text-right"
-                          : "bg-[#FADFC9]"
-                      }`}
+                      className={`w-[90%] sm:w-2/3 rounded-2xl p-6 sm:p-8 my-2 sm:my-4 flex gap-4 ${message.role === "user"
+                        ? "bg-[#F3EDE8] float-end text-right"
+                        : "bg-[#FADFC9]"
+                        }`}
                     >
-                      {!msg.isUser && (
+                      {!message.role && (
                         <span className="w-6 h-6 sm:w-8 sm:h-8 flex justify-center items-center rounded-full bg-[#FFA500]">
                           <img src={CatinChat} alt="CatinChat" />
                         </span>
                       )}
                       <span
-                        className={`${
-                          msg.isUser ? "w-full" : "w-[90%]"
-                        } text-[14px] sm:text-[18px] font-medium`}
+                        className={`${message.role ? "w-full" : "w-[90%]"
+                          } text-[14px] sm:text-[18px] font-medium`}
                       >
-                        {msg.msg}
+                        {message.content}
                       </span>
                     </div>
                   </div>
@@ -88,4 +81,4 @@ const MsgBoxs = ({
   );
 };
 
-export default MsgBoxs;
+export default MessageBoxes;

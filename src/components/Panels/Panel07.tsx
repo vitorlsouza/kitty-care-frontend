@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel07Props {
@@ -26,6 +26,30 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
     "Siamese",
     "Persian",
   ];
+
+  useEffect(() => {
+    const storedBreed = localStorage.getItem("breed");
+    const storedWeight = localStorage.getItem("weight");
+    const storedUnit = localStorage.getItem("unit");
+    const storedTargetWeight = localStorage.getItem("target_weight");
+
+    if (storedBreed) setBreed(storedBreed);
+    if (storedWeight) setWeight(storedWeight);
+    if (storedUnit) setUnit(storedUnit as "Kg" | "Lbs");
+    if (storedTargetWeight) setTargetWeight(storedTargetWeight);
+  }, []);
+
+  useEffect(() => {
+    if (breed) localStorage.setItem("breed", breed);
+    if (weight) localStorage.setItem("weight", parseFloat(weight).toFixed(2));
+    if (unit) localStorage.setItem("unit", unit);
+    if (targetWeight)
+      localStorage.setItem(
+        "target_weight",
+        parseFloat(targetWeight).toFixed(2)
+      );
+  }, [breed, weight, unit, targetWeight]);
+
   const handleSubmit = () => {
     let hasError = false;
     const newErrors = {
@@ -34,24 +58,29 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
       unit: "",
       targetWeight: "",
     };
+
     if (!breed) {
       newErrors.breed = "Please select your cat's breed";
       hasError = true;
     }
-    if (!weight || isNaN(Number(weight)) || Number(weight) <= 0) {
-      newErrors.weight = "Please enter a valid weight for your cat";
+
+    const decimalPattern = /^\d+(\.\d{1,2})?$/;
+    if (!weight || !decimalPattern.test(weight) || parseFloat(weight) <= 0) {
+      newErrors.weight = "Please enter a valid weight for your cat (e.g., 8.5)";
       hasError = true;
     }
+
     if (!unit) {
       newErrors.unit = "Please select the weight unit";
       hasError = true;
     }
+
     if (
       !targetWeight ||
-      isNaN(Number(targetWeight)) ||
-      Number(targetWeight) <= 0
+      !decimalPattern.test(targetWeight) ||
+      parseFloat(targetWeight) <= 0
     ) {
-      newErrors.targetWeight = "Please enter a valid target weight";
+      newErrors.targetWeight = "Please enter a valid target weight (e.g., 8.5)";
       hasError = true;
     }
 
@@ -106,7 +135,7 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
           <p className="text-md font-medium mb-2">
             Weight of your cat? <span className="text-red-500">*</span>
           </p>
-          <div className="flex justify-center items-center space-x-4">
+          <div className="flex justify-center items-center space-x-4 lg:space-x-0 lg:gap-2">
             <button
               onClick={() => setUnit("Lbs")}
               className={`px-4 py-2 rounded-full border ${
@@ -120,7 +149,7 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               placeholder="Weight"
-              className="w-full lg:w-2/3 border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue"
+              className="w-full lg:w-28 border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-sm"
             />
             <button
               onClick={() => setUnit("Kg")}
@@ -145,11 +174,11 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
             value={targetWeight}
             onChange={(e) => setTargetWeight(e.target.value)}
             placeholder="Enter cat's ideal target weight"
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none"
+            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
           />
-          <p className="text-sm text-mediumGray mt-2 px-6 md:px-12">
+          <p className="text-xs text-mediumGray mt-2 px-6 md:px-8">
             Tip: If you're unsure, we can help determine the ideal weight based
-            on breed and activity level. Example: 8 lbs or 3.6 Kg
+            on breed and activity level. Example: 8.5 lbs or 3.6 Kg
           </p>
           {errors.targetWeight && (
             <p className="text-red-500 text-sm">{errors.targetWeight}</p>
@@ -157,7 +186,7 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
         </div>
       </div>
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleSubmit}
         previousStep={previousStep}
         isNextDisabled={!breed || !weight || !unit || !targetWeight}
       />

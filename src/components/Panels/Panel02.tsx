@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel02Props {
@@ -59,6 +59,23 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
     }
   };
 
+  const handleNext = () => {
+    nextStep();
+  };
+
+  // Load previously saved goals from local storage when the component mounts
+  useEffect(() => {
+    const storedGoals = localStorage.getItem("goals");
+    if (storedGoals) {
+      setSelectedGoals(storedGoals.split(","));
+    }
+  }, []);
+
+  // Update local storage whenever selectedGoals changes
+  useEffect(() => {
+    localStorage.setItem("goals", selectedGoals.join(","));
+  }, [selectedGoals]);
+
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
       <div className="font-Inter text-center mb-8">
@@ -88,7 +105,7 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleNext} // Call handleNext to proceed to the next step
         previousStep={previousStep}
         isNextDisabled={selectedGoals.length < 3}
       />
