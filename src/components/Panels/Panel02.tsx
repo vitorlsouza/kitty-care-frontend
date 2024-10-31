@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel02Props {
   nextStep: () => void;
@@ -86,25 +87,11 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
         ))}
       </div>
 
-      <div className="flex justify-center items-center mt-6 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {'<'} Back
-        </button>
-        <button
-          onClick={nextStep}
-          disabled={selectedGoals.length !== 3}
-          className={`px-8 py-2 rounded-full text-white ${
-            selectedGoals.length === 3
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-        >
-          Next {'>'}
-        </button>
-      </div>
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={selectedGoals.length < 3}
+      />
     </div>
   );
 };
