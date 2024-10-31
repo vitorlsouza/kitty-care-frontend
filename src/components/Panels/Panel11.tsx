@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel11Props {
   nextStep: () => void;
@@ -43,24 +44,24 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
           <label className="block text-sm font-medium mb-0.5">
             Medical Conditions
           </label>
-            <select
-              value={medicalCondition || ""}
-              onChange={(e) => setMedicalCondition(e.target.value)}
-              className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
-            >
-              <option value="" disabled className="bg-lightWhite text-sm">
-                Select a condition
+          <select
+            value={medicalCondition || ""}
+            onChange={(e) => setMedicalCondition(e.target.value)}
+            className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
+          >
+            <option value="" disabled className="bg-lightWhite text-sm">
+              Select a condition
+            </option>
+            {medicalConditions.map((condition) => (
+              <option
+                key={condition}
+                value={condition}
+                className="bg-lightWhite text-sm"
+              >
+                {condition}
               </option>
-              {medicalConditions.map((condition) => (
-                <option
-                  key={condition}
-                  value={condition}
-                  className="bg-lightWhite text-sm"
-                >
-                  {condition}
-                </option>
-              ))}
-            </select>
+            ))}
+          </select>
         </div>
 
         <div className="text-center">
@@ -107,7 +108,10 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
         <button
           onClick={handleSubmit}
           className={`px-8 py-2 rounded-full text-white ${
-            medicalCondition && medication && dietaryRestrictions && surgeryHistory
+            medicalCondition &&
+            medication &&
+            dietaryRestrictions &&
+            surgeryHistory
               ? "bg-primaryBlue hover:bg-primaryBlue"
               : "bg-gray-300 cursor-not-allowed"
           }`}
@@ -128,30 +132,16 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      <div className="flex justify-center items-center mt-8 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={handleSubmit}
-          className={`px-8 py-2 rounded-full text-white ${
-            medicalCondition && medication && dietaryRestrictions && surgeryHistory
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-          disabled={
-            !medicalCondition ||
-            !medication ||
-            !dietaryRestrictions ||
-            !surgeryHistory
-          }
-        >
-          Next {">"}
-        </button>
-      </div>
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={
+          !medicalCondition ||
+          !medication ||
+          !dietaryRestrictions ||
+          !surgeryHistory
+        }
+      />
     </div>
   );
 };

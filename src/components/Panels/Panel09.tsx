@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel09Props {
   nextStep: () => void;
@@ -114,6 +115,11 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
           Set My Schedule
         </button>
       </div>
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={false}
+      />
     </div>
   );
 };

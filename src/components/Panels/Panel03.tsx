@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 import { motion, AnimatePresence } from "framer-motion";
+import NavigationButtons from "../NavigationButtons";
 
 const data = [
   {
@@ -41,24 +42,22 @@ interface Panel03Props {
   nextStep: () => void;
 }
 
-const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) =>  {
-  const [currentDescription, setCurrentDescription] = useState(0); 
+const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) => {
+  const [currentDescription, setCurrentDescription] = useState(0);
   const { rive, RiveComponent } = useRive({
     src: "/assets/riv-files/Graph_kitty.riv",
     stateMachines: "State Machine 1",
     autoplay: true,
   });
 
-
   const riveInput = useStateMachineInput(rive, "State Machine 1", "Number 1");
-
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDescription((prev) =>
         prev === data.length - 1 ? 0 : prev + 1
       );
-    }, 3000); 
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -71,8 +70,8 @@ const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) =>  {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-          <div className="relative h-24 md:h-24 flex items-center justify-center mb-2"> 
-        <AnimatePresence mode="wait"> 
+      <div className="relative h-24 md:h-24 flex items-center justify-center mb-2">
+        <AnimatePresence mode="wait">
           <motion.div
             key={currentDescription}
             initial={{ opacity: 0, x: 100 }}
@@ -81,7 +80,9 @@ const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) =>  {
             transition={{ duration: 0.5 }}
             className="absolute w-full text-center"
           >
-            <h2 className="text-2xl font-semibold">{data[currentDescription].title}</h2>
+            <h2 className="text-2xl font-semibold">
+              {data[currentDescription].title}
+            </h2>
             <p className="text-md max-w-2xl mx-auto mt-4 text-darkGray">
               {data[currentDescription].description}
             </p>
@@ -91,20 +92,12 @@ const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) =>  {
       <div className="flex justify-center">
         <RiveComponent style={{ width: "845px", height: "350px" }} />
       </div>
-      <div className="flex justify-center items-center mt-6 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={nextStep}
-          className="px-8 py-2 rounded-full text-white bg-primaryBlue hover:bg-primaryBlue"
-        >
-          Next {">"}
-        </button>
-      </div>
+
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={false}
+      />
     </div>
   );
 };

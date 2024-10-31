@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel05Props {
   nextStep: () => void;
@@ -30,8 +31,7 @@ const activityLevels = [
   {
     id: 4,
     title: "Mostly Inactive",
-    description:
-      "My cat prefers lounging around and only plays occasionally.",
+    description: "My cat prefers lounging around and only plays occasionally.",
     image: "/assets/mostlyInactive.png",
   },
   {
@@ -53,7 +53,8 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
           What's Your Cat’s Activity Level?
         </h1>
         <p className="text-md lg:text-darkGray mx-8 md:mx-36 text-center px-4">
-          Select the option that best describes your cat’s typical energy and activity level.
+          Select the option that best describes your cat’s typical energy and
+          activity level.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:max-w-[1450px] mx-8 md:mx-12 lg:mx-36">
@@ -67,7 +68,11 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
                 : "border-gray-300 bg-white"
             }`}
           >
-            <img src={level.image} alt={level.title} className="w-20 h-20 md:w-24 md:h-24" />
+            <img
+              src={level.image}
+              alt={level.title}
+              className="w-20 h-20 md:w-24 md:h-24"
+            />
             <div className="flex flex-col justify-center">
               <h3
                 className={`font-medium ${
@@ -78,7 +83,9 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
               </h3>
               <p
                 className={`${
-                  selectedActivity === level.id ? "text-white opacity-80" : "text-darkGray"
+                  selectedActivity === level.id
+                    ? "text-white opacity-80"
+                    : "text-darkGray"
                 } text-xs md:text-sm font-extralight`}
               >
                 {level.description}
@@ -87,23 +94,12 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
           </div>
         ))}
       </div>
-      <div className="flex justify-center items-center mt-8 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={nextStep}
-          disabled={!selectedActivity}
-          className={`px-8 py-2 rounded-full text-white ${
-            selectedActivity ? "bg-primaryBlue hover:bg-primaryBlue" : "bg-gray-300 cursor-not-allowed"
-          }`}
-        >
-          Next {">"}
-        </button>
-      </div>
+
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={!selectedActivity}
+      />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel12Props {
   nextStep: () => void;
@@ -103,7 +104,11 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
           >
             {/* Icon */}
             <div className="w-12 h-12 bg-primaryBlue flex items-center justify-center rounded-lg mr-4">
-              <img src={item.icon} alt={`${item.title} icon`} className="w-12 h-12" />
+              <img
+                src={item.icon}
+                alt={`${item.title} icon`}
+                className="w-12 h-12"
+              />
             </div>
             {/* Text Content */}
             <div className="flex-1">
@@ -126,26 +131,11 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex justify-center items-center mt-8 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={nextStep}
-          className={`px-8 py-2 rounded-full text-white ${
-            selectedItems.length > 0
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-          disabled={selectedItems.length === 0} // Disable button if no items are selected
-        >
-          Submit My Cat Items
-        </button>
-      </div>
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={selectedItems.length === 0}
+      />
     </div>
   );
 };

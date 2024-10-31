@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel07Props {
   nextStep: () => void;
@@ -45,7 +46,11 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
       newErrors.unit = "Please select the weight unit";
       hasError = true;
     }
-    if (!targetWeight || isNaN(Number(targetWeight)) || Number(targetWeight) <= 0) {
+    if (
+      !targetWeight ||
+      isNaN(Number(targetWeight)) ||
+      Number(targetWeight) <= 0
+    ) {
       newErrors.targetWeight = "Please enter a valid target weight";
       hasError = true;
     }
@@ -64,7 +69,8 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
           Tell Us More About Your Cat's Breed and Weight
         </h1>
         <p className="text-md text-darkGray mx-12">
-          To better understand your cat's needs, please share their breed, current weight, and target weight.
+          To better understand your cat's needs, please share their breed,
+          current weight, and target weight.
         </p>
       </div>
       <div className="space-y-4 mx-16">
@@ -82,12 +88,18 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
                 Select breed
               </option>
               {breeds.map((b) => (
-                <option key={b} value={b} className="bg-gray-100 hover:bg-gray-200">
+                <option
+                  key={b}
+                  value={b}
+                  className="bg-gray-100 hover:bg-gray-200"
+                >
                   {b}
                 </option>
               ))}
             </select>
-            {errors.breed && <p className="text-red-500 text-sm">{errors.breed}</p>}
+            {errors.breed && (
+              <p className="text-red-500 text-sm">{errors.breed}</p>
+            )}
           </div>
         </div>
         <div className="text-center">
@@ -119,7 +131,9 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
               Kg
             </button>
           </div>
-          {errors.weight && <p className="text-red-500 text-sm">{errors.weight}</p>}
+          {errors.weight && (
+            <p className="text-red-500 text-sm">{errors.weight}</p>
+          )}
           {errors.unit && <p className="text-red-500 text-sm">{errors.unit}</p>}
         </div>
         <div className="text-center">
@@ -134,32 +148,19 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
             className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none"
           />
           <p className="text-sm text-mediumGray mt-2 px-6 md:px-12">
-            Tip: If you're unsure, we can help determine the ideal weight based on breed and activity level. Example: 8 lbs or 3.6 Kg
+            Tip: If you're unsure, we can help determine the ideal weight based
+            on breed and activity level. Example: 8 lbs or 3.6 Kg
           </p>
           {errors.targetWeight && (
             <p className="text-red-500 text-sm">{errors.targetWeight}</p>
           )}
         </div>
       </div>
-      <div className="flex justify-center items-center mt-8 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={handleSubmit}
-          className={`px-8 py-2 rounded-full text-white ${
-            breed && weight && unit && targetWeight
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-          disabled={!breed || !weight || !unit || !targetWeight}
-        >
-          Next {">"}
-        </button>
-      </div>
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={!breed || !weight || !unit || !targetWeight}
+      />
     </div>
   );
 };

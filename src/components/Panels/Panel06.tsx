@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
 
 interface Panel06Props {
   nextStep: () => void;
@@ -45,7 +46,8 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
       newErrors.country = "Please enter your country";
       hasError = true;
     } else if (!countryPattern.test(country)) {
-      newErrors.country = "Country must not contain numbers or special characters";
+      newErrors.country =
+        "Country must not contain numbers or special characters";
       hasError = true;
     }
 
@@ -151,25 +153,12 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           )}
         </div>
       </div>
-      <div className="flex justify-center items-center mt-8 space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={handleSubmit}
-          className={`px-8 py-2 rounded-full text-white ${
-            gender && age && country && zipCode
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-          disabled={!gender || !age || !country || !zipCode}
-        >
-          Next {">"}
-        </button>
-      </div>
+
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={!gender || !age || !country || !zipCode}
+      />
     </div>
   );
 };

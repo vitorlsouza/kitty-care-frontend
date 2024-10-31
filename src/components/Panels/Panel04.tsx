@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import NavigationButtons from "../NavigationButtons";
 
 const data = [
   {
@@ -148,27 +149,12 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
           </div>
         ))}
       </div>
-      
 
-      <div className="flex flex-col sm:flex-row justify-center items-center mt-6 space-y-4 sm:space-y-0 sm:space-x-4">
-        <button
-          onClick={previousStep}
-          className="px-4 sm:px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
-          onClick={nextStep}
-          disabled={selectedGoals.length !== 3}
-          className={`px-6 py-2 rounded-full text-white ${
-            selectedGoals.length === 3
-              ? "bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-        >
-          Next {">"}
-        </button>
-      </div>
+      <NavigationButtons
+        nextStep={nextStep}
+        previousStep={previousStep}
+        isNextDisabled={selectedGoals.length < 3}
+      />
     </div>
   );
 };
