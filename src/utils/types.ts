@@ -72,3 +72,12 @@ export interface ApplePayButtonProps {
   onClick: () => void;
   disabled?: boolean;
 }
+
+export interface PriceSelectBoxProps {
+  checked: boolean;
+  method: boolean;
+  annual?: number;
+  monthly?: number;
+  daily?: number;
+  isBest: boolean;
+}
