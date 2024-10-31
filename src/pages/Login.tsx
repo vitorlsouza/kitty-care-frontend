@@ -140,23 +140,12 @@ const Login = () => {
               alt="Google"
               className="hidden sm:flex"
             />
-            <div className="sm:hidden">Or</div>
-            <LogBtnBy
-              src="/assets/png/apple.png"
-              alt="Apple"
-              className="hidden sm:flex"
-            />
             <Divider />
           </div>
           <div className="flex sm:hidden gap-4 items-center justify-center m-4">
             <LogBtnBy
               src="/assets/png/google.png"
               alt="Google"
-              className="flex"
-            />
-            <LogBtnBy
-              src="/assets/png/apple.png"
-              alt="Apple"
               className="flex"
             />
           </div>
