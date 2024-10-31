@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel06Props {
@@ -18,6 +18,18 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
     country: "",
     zipCode: "",
   });
+
+  useEffect(() => {
+    const storedGender = localStorage.getItem("gender");
+    const storedAge = localStorage.getItem("age");
+    const storedCountry = localStorage.getItem("country");
+    const storedZipCode = localStorage.getItem("zipcode");
+
+    if (storedGender) setGender(storedGender);
+    if (storedAge) setAge(storedAge);
+    if (storedCountry) setCountry(storedCountry);
+    if (storedZipCode) setZipCode(storedZipCode);
+  }, []);
 
   const handleSubmit = () => {
     let hasError = false;
@@ -51,14 +63,22 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
       hasError = true;
     }
 
+    const zipCodePattern = /^[a-zA-Z0-9\s]+$/;
     if (!zipCode) {
       newErrors.zipCode = "Please enter a zip/postal code";
+      hasError = true;
+    } else if (!zipCodePattern.test(zipCode)) {
+      newErrors.zipCode = "Zip code must be alphanumeric";
       hasError = true;
     }
 
     setErrors(newErrors);
 
     if (!hasError) {
+      localStorage.setItem("gender", gender!);
+      localStorage.setItem("age", age);
+      localStorage.setItem("country", country);
+      localStorage.setItem("zipcode", zipCode);
       nextStep();
     }
   };
@@ -81,7 +101,7 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           </p>
           <div className="flex justify-center space-x-3 ">
             <button
-              className={`px-4 lg:px-9 py-2 rounded-full border ${
+              className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${
                 gender === "Male"
                   ? "bg-primaryBlue text-white"
                   : "border-gray-300"
@@ -91,7 +111,7 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
               Male
             </button>
             <button
-              className={`px-4 lg:px-9 py-2 rounded-full border ${
+              className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${
                 gender === "Female"
                   ? "bg-primaryBlue text-white"
                   : "border-gray-300"
@@ -110,11 +130,11 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
             How old is your cat? <span className="text-red-500">*</span>
           </p>
           <input
-            type="text"
+            type="number"
             value={age}
             onChange={(e) => setAge(e.target.value)}
             placeholder="Enter your cat's age"
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue"
+            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
           />
           {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
         </div>
@@ -127,7 +147,7 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Enter your country"
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue"
+            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
           />
           {errors.country && (
             <p className="text-red-500 text-sm">{errors.country}</p>
@@ -139,10 +159,14 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           </p>
           <input
             type="text"
+            pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
             value={zipCode}
-            onChange={(e) => setZipCode(e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setZipCode(e.target.value);
+            }}
             placeholder="Enter zip/postal code"
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue"
+            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
           />
           <p className="text-sm text-mediumGray mt-2 px-4 md:px-6 lg:px-12">
             This can help make insights about your cat based on the area you
@@ -155,7 +179,7 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleSubmit}
         previousStep={previousStep}
         isNextDisabled={!gender || !age || !country || !zipCode}
       />
