@@ -90,7 +90,7 @@ const Login = () => {
           </h2>
           <div className="text-base sm:text-lg font-medium">
             New to KittyCare?{" "}
-            <span className="block sm:inline">
+            <span className="block sm:inline text-[#0061EF]">
               <a href="/signup">Sign up for free</a>
             </span>
           </div>

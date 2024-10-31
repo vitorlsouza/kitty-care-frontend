@@ -33,7 +33,7 @@ const PayMethodBtn = ({
           )}
         </div>
         <button
-          className="top-1/2 bg-[#0061EF] hover:bg-blue-700 active:bg-blue-800 focus:outline-none h-10 w-16 flex items-center justify-center"
+          className="top-1/2 bg-[#0061EF] hover:bg-blue-700 active:bg-blue-800 focus:outline-none h-10 w-16 flex items-center justify-center rounded-xl"
           onClick={onClick}
         >
           <img src="/assets/svg/arrow.svg" alt="Mastercard" />
