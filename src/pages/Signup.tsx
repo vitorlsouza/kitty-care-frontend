@@ -122,7 +122,7 @@ const Signup = () => {
                 </h2>
                 <div className="text-base sm:text-lg font-medium">
                   Already have an account?{" "}
-                  <span>
+                  <span className="text-[#0061EF]">
                     <a href="/login">Login</a>
                   </span>
                 </div>
