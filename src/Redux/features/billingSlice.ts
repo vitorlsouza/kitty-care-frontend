@@ -18,7 +18,7 @@ const initialState: BillingState = {
 
 export const createPlanAsync = createAsyncThunk(
   "billing/createPlan",
-  async (userData: BillingState, { rejectWithValue }) => {
+  async (_userData: BillingState, { rejectWithValue }) => {
     try {
       const response = await createPlanAPI();
       return response;
