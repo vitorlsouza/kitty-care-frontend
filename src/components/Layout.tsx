@@ -22,6 +22,7 @@ function Layout({ children }: LayoutProps) {
           </div>
 
           <div className="flex-1">{children}</div>
+          <div className="w-full h-5"></div>
         </div>
       </main>
       <div className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]" data-id="mainLY">

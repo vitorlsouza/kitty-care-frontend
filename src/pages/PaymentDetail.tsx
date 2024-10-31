@@ -81,7 +81,7 @@ const PaymentForm = () => {
         color: "#32325d",
         fontFamily: 'Inter, "Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: "antialiased",
-        fontSize: "20px",
+        fontSize: window.innerWidth < 640 ? "16px" : "20px",
         lineHeight: "normal",
         fontWeight: 500,
         "::placeholder": {
@@ -107,11 +107,16 @@ const PaymentForm = () => {
         <div className="w-[343px] px-[21px] py-[20px] sm:w-[610px] sm:px-[50px] sm:py-[44px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <div className="text-center text-[40px] font-semibold capitalize">$0 Today</div>
-              <div className="text-center text-[18px] font-medium opacity-60 text-black">$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription.</div>
+              <div className="text-center text-[40px] font-semibold capitalize">
+                $0 Today
+              </div>
+              <div className="text-center text-[18px] font-medium opacity-60 text-black">
+                $0.00 for 7-day free trial; converts to $299.99 annually
+                renewing subscription.
+              </div>
             </div>
             <div>
-              <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                 Full Name on Card
               </label>
               <input
@@ -119,44 +124,44 @@ const PaymentForm = () => {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleInputChange}
-                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                 required
               />
             </div>
 
             <div className="rounded-lg overflow-hidden">
-              <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                 Card Number
               </label>
               <CardNumberElement
-                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
                 options={cardElementOptions}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                   Expiry Month
                 </label>
                 <CardExpiryElement
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
                   options={cardElementOptions}
                 />
               </div>
               <div>
-                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                   Security Code
                 </label>
                 <CardCvcElement
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
                   options={cardElementOptions}
                 />
               </div>
             </div>
 
             <div>
-              <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                 Country
               </label>
               <input
@@ -171,7 +176,7 @@ const PaymentForm = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                   State
                 </label>
                 <input
@@ -185,7 +190,7 @@ const PaymentForm = () => {
               </div>
 
               <div>
-                <label className="ms-3 mb-[10px] block text-[20px] font-medium text-black">
+                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                   Postal Code
                 </label>
                 <input

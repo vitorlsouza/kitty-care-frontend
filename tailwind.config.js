@@ -22,7 +22,7 @@ export default {
 
       },
       screens: {
-        'sm':'375px',
+        'sm':'500px',
         'custom-lg': '1340px',
       },
       fontFamily: {
