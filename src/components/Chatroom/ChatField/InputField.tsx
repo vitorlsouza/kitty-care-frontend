@@ -13,11 +13,14 @@ interface InputFieldProps {
 
 const InputField = ({ onTyping, messageList }: InputFieldProps) => {
   const [input, setInput] = useState("");
+  const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
+
+    setError("");
 
     const newMessage = {
       content: input,
@@ -29,18 +32,32 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
     const cats = localStorage.getItem('cats');
     const catId = cats ? JSON.parse(cats)[0].id : "";
 
+    if (!catId) {
+      setError("No cat found. Please try again later.");
+      return;
+    }
+
     const messagesForApi = [...messageList, newMessage].map(({ role, content }) => ({ role, content }));
 
-    dispatch(sendChatMessageAsync({
-      catId: catId,
-      messages: messagesForApi as Message[]
-    }));
+    try {
+      await dispatch(sendChatMessageAsync({
+        catId: catId,
+        messages: messagesForApi as Message[]
+      })).unwrap();
+    } catch (err: any) {
+      setError(err.message || "Failed to send message");
+    }
 
     setInput("");
   };
 
   return (
     <div className="w-full pt-7">
+      {/* {error && (
+        <div className="text-red-500 text-sm text-center mb-2">
+          {error}
+        </div>
+      )} */}
       <div className="w-full flex items-center relative">
         <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute -top-[80%]`}>
           <RiveAnimation src="riv/V2/Typing_animation.riv" />
