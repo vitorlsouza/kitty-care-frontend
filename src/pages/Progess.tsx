@@ -18,7 +18,7 @@ import Panel15 from "../components/Panels/Panel15";
 import ProgressBar from "../components/ProgressBar";
 
 const Progress = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(15);
 
   const nextStep = () => {
     setCurrentStep((prevStep) => Math.min(prevStep + 1, 15));

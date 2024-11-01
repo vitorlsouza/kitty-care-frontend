@@ -7,10 +7,6 @@ interface Panel13Props {
 }
 
 const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
-  // const handleSubmit = () => {
-  //   nextStep();
-  // };
-
   return (
     <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-8">

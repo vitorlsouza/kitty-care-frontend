@@ -1,8 +1,37 @@
+import React, { useEffect } from "react";
+
 interface Panel01Props {
   nextStep: () => void;
 }
 
 const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
+  useEffect(() => {
+    const keysToRemove = [
+      "activity_level",
+      "age",
+      "breed",
+      "check_in_period",
+      "country",
+      "dietary_restrictions",
+      "gender",
+      "goals",
+      "issues_faced",
+      "items",
+      "medical_conditions",
+      "medications",
+      "required_progress",
+      "selectedDate",
+      "surgery_history",
+      "target_weight",
+      "training_days",
+      "unit",
+      "weight",
+      "zipcode",
+    ];
+
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
+  }, []);
+
   return (
     <div className="relative flex flex-col items-center justify-start px-4 py-2 md:p-4 globalBackground">
       <div className="w-full max-w-4xl mx-auto">

@@ -23,7 +23,6 @@ const goalsData = [
 const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      {/* Header */}
       <div className="text-center mb-6 lg:mb-8">
         <h1 className="font-bold text-xl md:text-2xl lg:text-3xl mb-2 mx-8 md:mx-40 lg:mx-80">
           Congratulations! Your Custom Care Plan Is Ready
@@ -35,26 +34,22 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <div className="rounded-3xl mx-4 p-6 border-2 border-lightGray bg-lightWhite relative text-center md:mx-8 lg:mx-28">
-        {/* Overview Tab */}
         <div className="flex justify-center mb-4 absolute top-0 right-1/2 transform translate-x-1/2">
           <span className="bg-primaryOrange text-black font-semibold text-center py-1 px-4 rounded-bl-2xl rounded-br-2xl text-sm md:text-lg border border-mediumGray">
             Overview
           </span>
         </div>
 
-        {/* Goals Sections */}
         {goalsData.map((section, index) => (
           <div
             key={index}
             className={`flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 ${index === 0 ? "mt-3 md:mt-5" : "mt-0"
               }`}
           >
-            {/* Section Title */}
             <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
               {section.title}
             </h3>
 
-            {/* Section Items */}
             <div className="flex flex-wrap justify-center md:justify-start gap-2">
               {section.items.map((item, idx) => (
                 <span
@@ -68,8 +63,6 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           </div>
         ))}
       </div>
-
-      {/* Navigation Button */}
       <div className="flex justify-center mt-8 gap-2">
         <button
           onClick={previousStep}
@@ -84,11 +77,6 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           See My Report
         </button>
       </div>
-      {/* <NavigationButtons
-        nextStep={nextStep}
-        previousStep={previousStep}
-        isNextDisabled={false}
-      /> */}
     </div>
   );
 };

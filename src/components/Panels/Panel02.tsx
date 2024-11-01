@@ -63,7 +63,6 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
     nextStep();
   };
 
-  // Load previously saved goals from local storage when the component mounts
   useEffect(() => {
     const storedGoals = localStorage.getItem("goals");
     if (storedGoals) {
@@ -71,7 +70,6 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
     }
   }, []);
 
-  // Update local storage whenever selectedGoals changes
   useEffect(() => {
     localStorage.setItem("goals", selectedGoals.join(","));
   }, [selectedGoals]);
@@ -105,7 +103,7 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={handleNext} // Call handleNext to proceed to the next step
+        nextStep={handleNext}
         previousStep={previousStep}
         isNextDisabled={selectedGoals.length < 3}
       />

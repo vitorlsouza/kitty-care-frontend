@@ -3,6 +3,7 @@ import Suggestions from "./Panel15Components/Suggestions";
 import Timeline from "./Panel15Components/Timeline";
 import DateSelection from "./Panel15Components/DateSelection";
 import EnvironmentalEnrichmentSuggestions from "./Panel15Components/EnvironmentalEnrichmentSuggestions";
+import GoalSummary from "./Panel15Components/GoalSummary";
 
 interface Panel15Props {
   previousStep: () => void;
@@ -10,7 +11,7 @@ interface Panel15Props {
 
 const Panel15: React.FC<Panel15Props> = ({ previousStep }) => {
   return (
-    <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
+    <div className="w-full lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-8">
         <h1 className="font-bold text-xl lg:text-3xl mb-2">
           Your Cat’s Personalized Plan & Insights Let’s Keep Your Cat Healthy
@@ -22,11 +23,17 @@ const Panel15: React.FC<Panel15Props> = ({ previousStep }) => {
           dive into the details!
         </p>
       </div>
-
-      <Suggestions />
-      <Timeline />
-      <DateSelection />
-      <EnvironmentalEnrichmentSuggestions />
+      <div className="flex flex-col lg:flex-row lg:space-x-8 items-center lg:items-start justify-center">
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8 mb-8 lg:mb-0">
+          <GoalSummary />
+          <Suggestions />
+        </div>
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8">
+          <Timeline />
+          <DateSelection />
+          <EnvironmentalEnrichmentSuggestions />
+        </div>
+      </div>
 
       <div className="flex justify-center mt-8">
         <button
