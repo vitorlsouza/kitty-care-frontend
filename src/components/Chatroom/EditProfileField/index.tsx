@@ -4,11 +4,13 @@ import { useState } from "react";
 import CustomDropdown from "./CustomDropdown";
 import CustomInput from "./CustomInput";
 import CustomTextArea from "./CustomTextArea";
+import CancelModal from "./CancelModal";
 
 export type MsgType = Message;
 
 const EditProfileField = () => {
   const [avatar, setAvatar] = useState<File | undefined>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileInfo, setProfileInfo] = useState({
     name: "",
     breed: "",
@@ -51,7 +53,13 @@ const EditProfileField = () => {
   };
 
   const saveProfile = () => {
+    if(!checkValidate()) return;
     console.log(profileInfo);
+  };
+
+  const cancelConfirm = () => {
+    console.log("confirm");
+    setIsModalOpen(false);
   };
 
   return (
@@ -170,11 +178,20 @@ const EditProfileField = () => {
           >
             Save Profile
           </button>
-          <button className="h-[55px] px-[42px] py-[14px] justify-center items-center rounded-[20px] border border-[#898B90] text-[#898B90]">
+          <button
+           className="h-[55px] px-[42px] py-[14px] justify-center items-center rounded-[20px] border border-[#898B90] text-[#898B90] hover:bg-[#dddddd]/70 active:bg-[#cccccc]"
+           onClick={() => {setIsModalOpen(true)}}
+          >
             Cancel Subscription
           </button>
         </div>
       </div>
+      <CancelModal
+        finalDate="11/11/2024"
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={cancelConfirm}
+      />
     </div>
   );
 };
