@@ -4,12 +4,16 @@ import Timeline from "./Panel15Components/Timeline";
 import DateSelection from "./Panel15Components/DateSelection";
 import EnvironmentalEnrichmentSuggestions from "./Panel15Components/EnvironmentalEnrichmentSuggestions";
 import GoalSummary from "./Panel15Components/GoalSummary";
+import { useNavigate } from "react-router-dom";
 
 interface Panel15Props {
   previousStep: () => void;
 }
 
-const Panel15: React.FC<Panel15Props> = ({ previousStep }) => {
+const Panel15: React.FC<Panel15Props> = () => {
+
+  const navigate = useNavigate();
+  
   return (
     <div className="w-full lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-8">
@@ -36,11 +40,11 @@ const Panel15: React.FC<Panel15Props> = ({ previousStep }) => {
       </div>
 
       <div className="flex justify-center mt-8">
-        <button
-          onClick={previousStep}
-          className="w-full h-[55px] md:w-[115px] md:h-[40px] bg-transparent text-mediumGray border border-mediumGray rounded-2xl hover:text-white hover:border-none hover:bg-primaryBlue"
+      <button
+          onClick={()=>navigate("/cat-assistant")}
+          className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
         >
-          {"<"} Back
+          Explore My Plan
         </button>
       </div>
     </div>
