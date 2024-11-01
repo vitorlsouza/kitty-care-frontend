@@ -16,8 +16,6 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
-  console.log("error", error);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -55,11 +53,11 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
 
   return (
     <div className="w-full pt-7">
-      {/* {error && (
+      {error && (
         <div className="text-red-500 text-sm text-center mb-2">
           {error}
         </div>
-      )} */}
+      )}
       <div className="w-full flex items-center relative">
         <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute -top-[80%]`}>
           <RiveAnimation src="riv/V2/Typing_animation.riv" />
