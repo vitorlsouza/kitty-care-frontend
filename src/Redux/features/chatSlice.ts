@@ -25,7 +25,7 @@ export const sendChatMessageAsync = createAsyncThunk(
       const response = await chatAPI({ catId, messages: messagesWithoutIds as Message[] });
       const transformedResponse = {
         id: uuidv4(),
-        content: response.data.message,
+        content: response.message,
         role: "assistant"   
       };
       return transformedResponse;

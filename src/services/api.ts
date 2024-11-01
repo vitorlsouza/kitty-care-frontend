@@ -34,7 +34,6 @@ export const chatAPI = async ({ catId, messages }: { catId: string; messages: Me
     if (!token) {
       throw new Error("User Not Authenticated");
     }
-
     const response = await API.post('/api/openai/chat', { catId, messages }, {
       headers: {
         'Authorization': `Bearer ${token}`,
