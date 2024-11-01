@@ -47,7 +47,7 @@ const SideBar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (
@@ -58,7 +58,7 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex">
-            <a href="/">
+            <a href="/dashboard">
               <Icon
                 id="KittyCare"
                 onHover={onHover}
@@ -120,7 +120,7 @@ const SideBar = () => {
           <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <a href="/">
+                <a href="/dashboard">
                   <div className="flex items-center">
                     <Icon
                       id="KittyCare"
@@ -214,7 +214,7 @@ const SideBar = () => {
           <>
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <a href="/">
+                <a href="/dashboard">
                   <div
                     className={`text-[20px] px-[26px] w-full h-[70px] flex items-center`}
                   >
