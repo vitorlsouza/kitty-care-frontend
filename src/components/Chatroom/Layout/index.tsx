@@ -33,7 +33,7 @@ const ChatroomLayout = () => {
     <>
       <div className="w-screen h-screen flex flex-col justify-between fixed bg-[#FAF6F3] -z-50 top-0 right-0">
         <div className="flex justify-end top-0">
-          <div className="w-1/3 h-1/3 sm:w-auto">
+          <div className="w-1/4 h-1/4 sm:w-auto">
             <img src={TopCorner} alt="TopCorner" />
           </div>
         </div>

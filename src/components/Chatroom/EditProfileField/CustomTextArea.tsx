@@ -16,7 +16,7 @@ const CustomTextArea: React.FC<CustomTextAreaProps> = ({
   rows = 4,
 }) => {
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 w-full h-full">
       <label className="text-xl font-medium">{label}</label>
       <div className="w-full">
         <textarea
