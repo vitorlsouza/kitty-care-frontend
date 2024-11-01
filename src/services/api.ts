@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { Message, LoginState, PlanState, SignupState } from '../utils/types';
 
+const baseURL = import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app';
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -159,17 +161,4 @@ export const updatePlanAPI = async (credentials: PlanState) => {
   }
 };
 
-export const loginWithGoogleAPI = async () => {
-  try {
-    console.log("loginWithGoogleAPI");
-    const response = await API.get('/api/supabase/signin/google', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    console.log("loginWithGoogleAPI response", response);
-    return response.data;
-  } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Google login failed');
-  }
-};
+export default baseURL;

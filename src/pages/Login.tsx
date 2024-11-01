@@ -5,7 +5,7 @@ import { loginUserAsync } from "../Redux/features/userSlice";
 import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
 import LogBtnBy from "../components/Login/LogBtnBy";
-import { loginWithGoogleAPI } from "../services/api";
+import baseURL from "../services/api";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -82,27 +82,6 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      setIsLoading(true);
-      const response = await loginWithGoogleAPI();
-      console.log("response", response);
-
-      // If we received an authorization URL, redirect to it
-      if (response.url) {
-        window.location.href = response.url;
-      } else {
-        throw new Error('Failed to get authorization URL');
-      }
-    } catch (err: any) {
-      setError({
-        ...error,
-        general: err.message || "Google login failed. Please try again.",
-      });
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="w-[343px] m-auto sm:w-[600px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8]">
       <div className="w-full h-full flex flex-col items-center justify-between">
@@ -155,24 +134,24 @@ const Login = () => {
               />
             </div>
           </div>
-          <div className="flex gap-4 items-center justify-between">
-            <Divider />
-            <LogBtnBy
-              src="/assets/png/google.png"
-              alt="Google"
-              className="hidden sm:flex"
-              onClick={handleGoogleLogin}
-            />
-            <Divider />
-          </div>
-          <div className="flex sm:hidden gap-4 items-center justify-center m-4">
-            <LogBtnBy
-              src="/assets/png/google.png"
-              alt="Google"
-              className="flex"
-              onClick={handleGoogleLogin}
-            />
-          </div>
+          <a href={`${baseURL}/api/supabase/signin/google`}>
+            <div className="flex gap-4 items-center justify-between">
+              <Divider />
+              <LogBtnBy
+                src="/assets/png/google.png"
+                alt="Google"
+                className="hidden sm:flex"
+              />
+              <Divider />
+            </div>
+            <div className="flex sm:hidden gap-4 items-center justify-center m-4">
+              <LogBtnBy
+                src="/assets/png/google.png"
+                alt="Google"
+                className="flex"
+              />
+            </div>
+          </a>
         </div>
       </div>
     </div>
