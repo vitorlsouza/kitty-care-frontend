@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { signUpAPI, loginAPI, loginWithGoogleAPI } from '../../services/api';
+import { signUpAPI, loginAPI } from '../../services/api';
 import { LoginState, SignupState, UserState } from '../../utils/types';
 import { setAuthToken, clearAuthToken } from '../../utils/auth';
 
@@ -37,17 +37,6 @@ export const loginUserAsync = createAsyncThunk(
   }
 );
 
-export const loginWithGoogleAsync = createAsyncThunk(
-  'user/loginWithGoogle',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await loginWithGoogleAPI();
-      return response;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -101,25 +90,6 @@ export const userSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload as string;
       })
-      .addCase(loginWithGoogleAsync.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(loginWithGoogleAsync.fulfilled, (state, action) => {
-        if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
-          });
-          Object.assign(state, {
-            status: 'succeeded',
-            isAuthenticated: true
-          });
-        }
-      })
-      .addCase(loginWithGoogleAsync.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload as string;
-      });
   },
 });
 
