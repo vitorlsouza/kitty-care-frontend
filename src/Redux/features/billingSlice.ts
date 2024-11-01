@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createPlanAPI, updatePlanAPI } from "../../services/api";
-import { BillingState, PlanState, UserState } from "../../utils/types";
+import { BillingState, PlanState } from "../../utils/types";
 import { setAuthToken, clearAuthToken } from "../../utils/auth";
 
 const initialState: BillingState = {
@@ -47,7 +47,7 @@ export const billingSlice = createSlice({
   name: "billing",
   initialState,
   reducers: {
-    createPlan: (state, action: PayloadAction<Partial<UserState>>) => {
+    createPlan: (state, action: PayloadAction<Partial<BillingState>>) => {
       return { ...state, ...action.payload };
     },
     logout: () => {

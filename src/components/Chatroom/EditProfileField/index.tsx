@@ -53,7 +53,7 @@ const EditProfileField = () => {
   };
 
   const saveProfile = () => {
-    if(!checkValidate()) return;
+    if (!checkValidate()) return;
     console.log(profileInfo);
   };
 
@@ -66,7 +66,7 @@ const EditProfileField = () => {
     <div className="max-w-full sm:w-[1130px] p-2 pb-6 mx-auto">
       <div className="w-full h-[120px] flex justify-center items-center">
         <div>
-          <a href="/">
+          <a href="/dashboard">
             <img src={KittyLogo} alt="KittyLogo" />
           </a>
         </div>
@@ -179,8 +179,10 @@ const EditProfileField = () => {
             Save Profile
           </button>
           <button
-           className="h-[55px] px-[42px] py-[14px] justify-center items-center rounded-[20px] border border-[#898B90] text-[#898B90] hover:bg-[#dddddd]/70 active:bg-[#cccccc]"
-           onClick={() => {setIsModalOpen(true)}}
+            className="h-[55px] px-[42px] py-[14px] justify-center items-center rounded-[20px] border border-[#898B90] text-[#898B90] hover:bg-[#dddddd]/70 active:bg-[#cccccc]"
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
           >
             Cancel Subscription
           </button>

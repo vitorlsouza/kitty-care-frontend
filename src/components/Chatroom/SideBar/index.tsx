@@ -16,15 +16,15 @@ import KittyCareText from "/assets/svg/KittyCareText.svg";
 import KittyCareTextMobile from "/assets/svg/KittyCareTextMobile.svg";
 import Edit from "/assets/svg/Edit.svg";
 import MiniBtn from "/assets/svg/MiniBtn.svg";
-import { useDispatch } from "react-redux";
 import { logout } from "../../../Redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../Redux/hooks";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [onHover, setOnHover] = useState("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const sideBarRef = useRef(null);
@@ -47,7 +47,7 @@ const SideBar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (
@@ -58,7 +58,7 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex">
-            <a href="/">
+            <a href="/dashboard">
               <Icon
                 id="KittyCare"
                 onHover={onHover}
@@ -120,7 +120,7 @@ const SideBar = () => {
           <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <a href="/">
+                <a href="/dashboard">
                   <div className="flex items-center">
                     <Icon
                       id="KittyCare"
@@ -214,7 +214,7 @@ const SideBar = () => {
           <>
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <a href="/">
+                <a href="/dashboard">
                   <div
                     className={`text-[20px] px-[26px] w-full h-[70px] flex items-center`}
                   >

@@ -1,8 +1,16 @@
 import { useState } from "react";
 import PriceSelectBox from "../components/Payments/PriceSelectBox";
+import { useNavigate } from "react-router-dom";
 
 const PriceSelection = () => {
   const [checked, setChecked] = useState(true);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate("/paymentmethod");
+  }
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-[90%] m-auto flex flex-col gap-10">
@@ -53,7 +61,10 @@ const PriceSelection = () => {
           </div>
         </div>
         <div className="w-full">
-          <button className="w-full sm:w-auto h-[55px] px-[42px] py-[14px] flex justify-center items-center rounded-[8px] sm:rounded-[20px] bg-[#0061EF] text-[18px] font-semibold text-[#FAF6F3] capitalize m-auto">
+          <button
+            className="w-full sm:w-auto h-[55px] px-[42px] py-[14px] flex justify-center items-center rounded-[8px] sm:rounded-[20px] bg-[#0061EF] text-[18px] font-semibold text-[#FAF6F3] capitalize m-auto"
+            onClick={handleSubmit}
+          >
             Start Your Free Trial
           </button>
         </div>
