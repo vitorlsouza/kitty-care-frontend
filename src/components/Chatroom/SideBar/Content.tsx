@@ -2,12 +2,14 @@ const Content = ({
   content,
   className,
   id,
+  onClick,
   handleHover,
   onHover,
 }: {
   content: string;
   className?: string;
   id: string;
+  onClick?: () => void;
   handleHover: (id: string) => void;
   onHover: string;
 }) => {
@@ -19,6 +21,7 @@ const Content = ({
       } ${className}`}
       onMouseOver={() => handleHover(id)}
       onMouseLeave={() => handleHover("")}
+      onClick={onClick}
     >
       {content}
     </button>
