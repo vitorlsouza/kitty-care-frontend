@@ -16,15 +16,15 @@ import KittyCareText from "/assets/svg/KittyCareText.svg";
 import KittyCareTextMobile from "/assets/svg/KittyCareTextMobile.svg";
 import Edit from "/assets/svg/Edit.svg";
 import MiniBtn from "/assets/svg/MiniBtn.svg";
-import { useDispatch } from "react-redux";
 import { logout } from "../../../Redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../Redux/hooks";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [onHover, setOnHover] = useState("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const sideBarRef = useRef(null);

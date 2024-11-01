@@ -96,7 +96,7 @@ const Signup = () => {
       });
 
       // Redirect on success
-      navigate('/dashboard');
+      navigate('/priceselection');
     } catch (err: any) {
       setError(prev => ({
         ...prev,
