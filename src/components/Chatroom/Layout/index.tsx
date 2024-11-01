@@ -1,15 +1,18 @@
 import TopCorner from "/assets/svg/TopCorner.svg";
 import BottomCorner from "/assets/svg/BottomCorner.svg";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAppDispatch } from "../../../Redux/hooks";
 import { fetchCatsAsync } from "../../../Redux/features/catsSlice";
 import { createConversationAsync, fetchConversationsAsync } from "../../../Redux/features/chatSlice";
 
 const ChatroomLayout = () => {
   const dispatch = useAppDispatch();
-  localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjM3LCJpYXQiOjE3MzA0MDA4NzcsImV4cCI6MTczMDQ4NzI3N30.kvO8I8UOXVZLps-A_agNup4EZlU-Pk6XynINYjse8aA');
+  const isInitialized = useRef(false);
 
   useEffect(() => {
+    if (isInitialized.current) return;
+    isInitialized.current = true;
+
     const element = document.querySelector('[data-id="mainLY"]');
     if (element) element.remove();
 
@@ -22,7 +25,6 @@ const ChatroomLayout = () => {
       })
       .catch((error) => {
         console.error('Error fetching conversations:', error);
-
         dispatch(createConversationAsync());
       });
 

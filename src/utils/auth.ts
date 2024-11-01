@@ -1,10 +1,6 @@
-interface AuthToken {
-  token: string;
-  expiresIn: string;
-}
+import { AuthToken } from './types';
 
 export const setAuthToken = (authData: AuthToken) => {
-  console.log("setAuth data", authData)
   localStorage.setItem('token', authData.token);
   // Convert expiresIn to timestamp
   const expiresAt = new Date().getTime() + parseExpirationTime(authData.expiresIn);
@@ -21,7 +17,6 @@ export const isAuthenticated = (): boolean => {
   const expiresAt = localStorage.getItem('expiresAt');
   
   if (!token || !expiresAt) return false;
-  console.log(new Date().getTime() < parseInt(expiresAt));
   
   return new Date().getTime() < parseInt(expiresAt);
 };

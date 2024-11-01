@@ -1,3 +1,8 @@
+export interface AuthToken {
+  token: string;
+  expiresIn: string;
+}
+
 export interface UserState {
   first_name: string;
   last_name: string;
