@@ -1,5 +1,4 @@
 import React from "react";
-import NavigationButtons from "../NavigationButtons";
 
 interface Panel14Props {
   nextStep: () => void;
@@ -47,9 +46,8 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
         {goalsData.map((section, index) => (
           <div
             key={index}
-            className={`flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 ${
-              index === 0 ? "mt-3 md:mt-5" : "mt-0"
-            }`}
+            className={`flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 ${index === 0 ? "mt-3 md:mt-5" : "mt-0"
+              }`}
           >
             {/* Section Title */}
             <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
