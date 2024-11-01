@@ -65,7 +65,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -191,7 +191,7 @@ const Signup = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-4 items-center justify-between">
+                {/* <div className="flex gap-4 items-center justify-between">
                   <Divider />
                   <LogBtnBy
                     src="/assets/png/google.png"
@@ -206,7 +206,7 @@ const Signup = () => {
                     alt="Google"
                     className="flex"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
