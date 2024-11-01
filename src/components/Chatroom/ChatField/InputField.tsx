@@ -16,6 +16,8 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
   const [error, setError] = useState("");
   const dispatch = useAppDispatch();
 
+  console.log("error", error);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
