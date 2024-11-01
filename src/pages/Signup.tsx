@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Divider from "../components/Login/Divider";
+// import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
-import LogBtnBy from "../components/Login/LogBtnBy";
+// import LogBtnBy from "../components/Login/LogBtnBy";
 // import Toggle from "../components/Login/Toggle";
 // import CheckOption from "../components/Login/CheckOption";
 import { useAppDispatch } from '../Redux/hooks';
