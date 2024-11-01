@@ -10,7 +10,7 @@ interface CatItem {
   id: number;
   title: string;
   description: string;
-  icon: string;
+  icon: string; // Icon path or component name
 }
 
 const catItems: CatItem[] = [
@@ -71,22 +71,24 @@ const catItems: CatItem[] = [
 ];
 
 const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   useEffect(() => {
+    // Load selected items from local storage
     const storedItems = localStorage.getItem("items");
     if (storedItems) {
-      const itemIds = storedItems.split(",").map(Number);
-      setSelectedItems(itemIds);
+      const itemNames = storedItems.split(",");
+      setSelectedItems(itemNames);
     }
   }, []);
 
-  const handleItemClick = (id: number) => {
+  const handleItemClick = (title: string) => {
     setSelectedItems((prev) => {
-      const updatedItems = prev.includes(id)
-        ? prev.filter((itemId) => itemId !== id)
-        : [...prev, id];
+      const updatedItems = prev.includes(title)
+        ? prev.filter((item) => item !== title)
+        : [...prev, title];
 
+      // Update local storage
       localStorage.setItem("items", updatedItems.join(","));
       return updatedItems;
     });
@@ -108,9 +110,9 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
         {catItems.map((item) => (
           <div
             key={item.id}
-            onClick={() => handleItemClick(item.id)}
+            onClick={() => handleItemClick(item.title)}
             className={`flex items-start cursor-pointer border-2 p-4 lg:p-5 rounded-2xl transition-all duration-300 ${
-              selectedItems.includes(item.id)
+              selectedItems.includes(item.title)
                 ? "border-primaryBlue bg-lightBlue"
                 : "border-lightGray2"
             }`}
@@ -131,12 +133,12 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
             {/* Radio Button */}
             <div
               className={`ml-4 mt-1 w-6 h-6 lg:w-6 lg:h-6 rounded-full border-2 flex-shrink-0 flex justify-center items-center ${
-                selectedItems.includes(item.id)
+                selectedItems.includes(item.title)
                   ? "border-primaryBlue"
                   : "border-lightGray2"
               }`}
             >
-              {selectedItems.includes(item.id) && (
+              {selectedItems.includes(item.title) && (
                 <span className="w-3 h-3 lg:w-3 lg:h-3 rounded-full bg-primaryBlue"></span>
               )}
             </div>

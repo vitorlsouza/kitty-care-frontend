@@ -13,7 +13,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   const progress = useRef(0);
 
   const riveParams = {
-    src: "/assets/riv-files/loadingbarkitty_v4.riv",
+    src: "/assets/riv-files/loadingbar_V5.riv",
     stateMachines: "State Machine 1",
     autoplay: true,
   };
