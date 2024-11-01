@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/hooks";
-import { loginUserAsync, loginWithGoogleAsync } from "../Redux/features/userSlice";
+import { loginUserAsync } from "../Redux/features/userSlice";
 import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
 import LogBtnBy from "../components/Login/LogBtnBy";
