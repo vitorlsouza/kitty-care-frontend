@@ -4,6 +4,7 @@ const Icon = ({
   onHover,
   isOpen,
   handleHover,
+  onClick,
 }: {
   src: string;
   className?: string;
@@ -11,6 +12,7 @@ const Icon = ({
   onHover: string;
   isOpen: boolean;
   handleHover: (id: string) => void;
+  onClick?: () => void;
 }) => {
   return (
     <div className="tooltip">
@@ -25,6 +27,7 @@ const Icon = ({
         }`}
         onMouseOver={() => handleHover(id)}
         onMouseLeave={() => handleHover("")}
+        onClick={onClick}
       >
         <img src={src} alt={id} />
       </button>

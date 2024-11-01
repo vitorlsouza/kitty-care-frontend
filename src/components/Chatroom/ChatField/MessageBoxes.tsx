@@ -20,7 +20,7 @@ const MessageBoxes: React.FC<MessageBoxesProps> = ({ messageList, response }) =>
   }, [messageList, response]);
 
   return (
-    <div className="flex flex-col flex-1 w-full text-center items-center overflow-y-auto overflow-x-hidden">
+    <div className="flex flex-col flex-1 w-full overflow-y-auto overflow-x-hidden">
       {messageList.length > 0 ? (
         <>
           <div className="flex-grow ">
