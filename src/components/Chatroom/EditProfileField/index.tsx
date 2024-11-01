@@ -1,14 +1,12 @@
-import InputField from "./InputField";
 import KittyLogo from "/assets/svg/KittyLogo.svg";
 import { useAppSelector, useAppDispatch } from "../../../Redux/hooks";
 import { Message } from "../../../utils/types";
 import { useEffect } from "react";
 import { updateConversationAsync } from "../../../Redux/features/chatSlice";
-import MessageBoxes from "./MessageBoxes";
 
 export type MsgType = Message;
 
-const ChatField = () => {
+const EditProfileField = () => {
   const { messages, isLoading, needsSync, error } = useAppSelector((state) => state.chat);
   const dispatch = useAppDispatch();
 
@@ -19,7 +17,7 @@ const ChatField = () => {
   }, [needsSync, messages, dispatch]);
 
   return (
-    <div className="flex flex-col max-w-full sm:w-[800px] p-4 pb-6 mx-auto h-full">
+    <div className="max-w-full sm:w-[800px] p-4 pb-6 mx-auto">
       {error && (
         <div className="text-red-500 text-center mb-4">
           {error}
@@ -30,13 +28,11 @@ const ChatField = () => {
           <a href="/"><img src={KittyLogo} alt="KittyLogo" /></a>
         </div>
       </div>
-      <MessageBoxes messageList={messages} response={""} />
-      <InputField
-        onTyping={isLoading}
-        messageList={messages}
-      />
+      <div className="border-2 border-black rounded-lg p-4 flex-1">
+        <h1>Edit Profile</h1>
+      </div>
     </div>
   );
 };
 
-export default ChatField;
+export default EditProfileField;

@@ -131,13 +131,13 @@ const SideBar = () => {
                       id={item.id}
                       onHover={onHover}
                       src={item.src}
-                      handleHover={()=>{}}
+                      handleHover={() => {}}
                       isOpen={isOpen}
                     />
                     <Content
                       id={item.id}
                       content={item.id}
-                      handleHover={()=>{}}
+                      handleHover={() => {}}
                       onHover={onHover}
                     />
                   </div>
@@ -150,13 +150,13 @@ const SideBar = () => {
                   id={"Logout"}
                   onHover={onHover}
                   src={Logout}
-                  handleHover={()=>{}}
+                  handleHover={() => {}}
                   isOpen={isOpen}
                 />
                 <Content
                   id="Logout"
                   content="Logout"
-                  handleHover={()=>{}}
+                  handleHover={() => {}}
                   onHover={onHover}
                 />
               </div>
@@ -166,13 +166,13 @@ const SideBar = () => {
                     id={"Profile"}
                     onHover={onHover}
                     src={Profile}
-                    handleHover={()=>{}}
+                    handleHover={() => {}}
                     isOpen={isOpen}
                   />
                   <Content
                     id="Profile"
                     content="Welcome Rosu"
-                    handleHover={()=>{}}
+                    handleHover={() => {}}
                     onHover={onHover}
                   />
                 </div>
@@ -236,7 +236,9 @@ const SideBar = () => {
                 />
                 <div className="py-5 mx-5 tooltip">
                   <span className="tooltiptext">Edit</span>
-                  <img src={Edit} alt="Edit" />
+                  <a href="/profile">
+                    <img src={Edit} alt="Edit" />
+                  </a>
                 </div>
               </div>
             </div>

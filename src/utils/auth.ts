@@ -21,7 +21,6 @@ export const isAuthenticated = (): boolean => {
   const expiresAt = localStorage.getItem('expiresAt');
   
   if (!token || !expiresAt) return false;
-  console.log(new Date().getTime() < parseInt(expiresAt));
   
   return new Date().getTime() < parseInt(expiresAt);
 };

@@ -13,6 +13,7 @@ import { useAppDispatch } from "./Redux/hooks";
 import { logout } from "./Redux/features/userSlice";
 import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
+import Profile from "./pages/Profile.tsx";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -63,6 +64,11 @@ function App() {
           <Route path="/cat-assistant" element={
             <ProtectedRoute>
               <Chatroom />
+            </ProtectedRoute>
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           } />
           <Route path="/*" element={
