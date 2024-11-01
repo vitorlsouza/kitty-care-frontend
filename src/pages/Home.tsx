@@ -13,6 +13,7 @@ const Home = () => {
       <a href="/paymentmethod" className="text-xl">Payment Method</a>
       <a href="/paymentdetail" className="text-xl">Payment Detail</a>
       <a href="/cat-assistant" className="text-xl">Chatroom</a>
+      <a href="/profile" className="text-xl">Profile</a>
       <a href="/progress" className="text-xl">Go to Progress</a>
       <span className="text-xl" onClick={()=>{dispatch(logout()); navigate("/login");}}>Logout</span>
     </div>

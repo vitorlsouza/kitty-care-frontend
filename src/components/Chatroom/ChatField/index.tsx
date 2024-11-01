@@ -19,15 +19,15 @@ const ChatField = () => {
   }, [needsSync, messages, dispatch]);
 
   return (
-    <div className="flex flex-col max-w-full sm:w-[800px] p-4 pb-6 mx-auto h-screen">
+    <div className="flex flex-col max-w-full sm:w-[800px] p-4 pb-6 mx-auto h-full">
       {error && (
         <div className="text-red-500 text-center mb-4">
           {error}
         </div>
       )}
       <div className="w-full h-[120px] flex justify-center items-center">
-        <div className="">
-          <img src={KittyLogo} alt="KittyLogo" />
+        <div>
+          <a href="/"><img src={KittyLogo} alt="KittyLogo" /></a>
         </div>
       </div>
       <MessageBoxes messageList={messages} response={""} />
