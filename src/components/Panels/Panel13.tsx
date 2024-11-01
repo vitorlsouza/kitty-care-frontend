@@ -23,7 +23,7 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      <PawAnimation className="flex items-center justify-center w-72 h-72 mx-16" />
+      <PawAnimation className="flex items-center justify-center w-72 h-72 lg:w-full mx-16" />
 
       <div className="text-center mt-4">
         <p className="font-semibold text-md lg:text-lg text-darkGray">
