@@ -67,3 +67,49 @@ body {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+/* Custom Calendar Style */
+.custom-calendar {
+  background-color: #f3ede8;
+  padding: 1rem;
+  color: #ffa500;
+  font-weight: 400;
+  border: none;
+}
+
+.custom-calendar .react-datepicker__header {
+  background-color: #f3ede8;
+  border-bottom: none;
+  color: #ffa500;
+  font-weight: 400;
+  border-bottom: 1px solid lightgray;
+}
+
+.custom-calendar .react-datepicker__day--selected,
+.custom-calendar .react-datepicker__day--keyboard-selected {
+  background-color: #ffa500;
+  color: white;
+  border-radius: 50%;
+}
+
+.custom-calendar .react-datepicker__day--today {
+  color: #fff;
+  font-weight: bold;
+}
+
+.custom-calendar .react-datepicker__day:hover {
+  background-color: rgba(255, 130, 0, 0.2);
+  color: #ffa500;
+}
+
+.custom-calendar .react-datepicker__navigation--previous,
+.custom-calendar .react-datepicker__navigation--next {
+  padding: 6px;
+  margin-top: 20px;
+  font-weight: 200;
+}
+
+.custom-calendar .react-datepicker__navigation--previous:hover,
+.custom-calendar .react-datepicker__navigation--next:hover {
+  background-color: rgba(255, 130, 0, 0.1);
+}

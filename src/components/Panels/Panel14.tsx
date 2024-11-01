@@ -1,5 +1,4 @@
 import React from "react";
-import NavigationButtons from "../NavigationButtons";
 
 interface Panel14Props {
   nextStep: () => void;
@@ -47,9 +46,8 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
         {goalsData.map((section, index) => (
           <div
             key={index}
-            className={`flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 ${
-              index === 0 ? "mt-3 md:mt-5" : "mt-0"
-            }`}
+            className={`flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 ${index === 0 ? "mt-3 md:mt-5" : "mt-0"
+              }`}
           >
             {/* Section Title */}
             <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
@@ -72,19 +70,25 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
       </div>
 
       {/* Navigation Button */}
-      {/* <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-8 gap-2">
+        <button
+          onClick={previousStep}
+          className="w-full h-[55px] md:w-[115px] md:h-[40px] py-2 bg-transparent text-mediumGray border border-mediumGray rounded-2xl hover:text-white hover:border-none hover:bg-primaryBlue"
+        >
+          {"<"} Back
+        </button>
         <button
           onClick={nextStep}
-          className="bg-primaryBlue text-white px-6 py-3 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
+          className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
         >
           See My Report
         </button>
-      </div> */}
-      <NavigationButtons
+      </div>
+      {/* <NavigationButtons
         nextStep={nextStep}
         previousStep={previousStep}
         isNextDisabled={false}
-      />
+      /> */}
     </div>
   );
 };

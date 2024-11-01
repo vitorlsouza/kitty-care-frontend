@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/hooks";
 import { loginUserAsync } from "../Redux/features/userSlice";
-import Divider from "../components/Login/Divider";
+// import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
-import LogBtnBy from "../components/Login/LogBtnBy";
+// import LogBtnBy from "../components/Login/LogBtnBy";
+// import baseURL from "../services/api";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +53,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -133,22 +134,24 @@ const Login = () => {
               />
             </div>
           </div>
-          <div className="flex gap-4 items-center justify-between">
-            <Divider />
-            <LogBtnBy
-              src="/assets/png/google.png"
-              alt="Google"
-              className="hidden sm:flex"
-            />
-            <Divider />
-          </div>
-          <div className="flex sm:hidden gap-4 items-center justify-center m-4">
-            <LogBtnBy
-              src="/assets/png/google.png"
-              alt="Google"
-              className="flex"
-            />
-          </div>
+          {/* <a href={`${baseURL}/api/supabase/signin/google`}>
+            <div className="flex gap-4 items-center justify-between">
+              <Divider />
+              <LogBtnBy
+                src="/assets/png/google.png"
+                alt="Google"
+                className="hidden sm:flex"
+              />
+              <Divider />
+            </div>
+            <div className="flex sm:hidden gap-4 items-center justify-center m-4">
+              <LogBtnBy
+                src="/assets/png/google.png"
+                alt="Google"
+                className="flex"
+              />
+            </div>
+          </a> */}
         </div>
       </div>
     </div>

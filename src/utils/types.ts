@@ -1,3 +1,8 @@
+export interface AuthToken {
+  token: string;
+  expiresIn: string;
+}
+
 export interface UserState {
   first_name: string;
   last_name: string;
@@ -6,6 +11,12 @@ export interface UserState {
   isAuthenticated: boolean;
   status: string;
   error: string;
+}
+
+export interface Message {
+  id: string;
+  role: string;
+  content: string;
 }
 
 export interface BillingState {
@@ -80,4 +91,9 @@ export interface PriceSelectBoxProps {
   monthly?: number;
   daily?: number;
   isBest: boolean;
+}
+export interface LocalStorage {
+  bearerToken: string;
+  catId: string;
+  conversationId: string;
 }

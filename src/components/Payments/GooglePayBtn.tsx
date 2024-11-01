@@ -19,7 +19,7 @@ const GooglePayBtn = () => {
 
   const handleGooglePayPayment = (paymentData: any) => {
     console.log("Success", paymentData);
-    navigate("/success");
+    navigate("/progress");
   };
   return (
     <GooglePayButton

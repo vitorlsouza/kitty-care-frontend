@@ -1,21 +1,18 @@
 import React from "react";
 import PawAnimation from "../PawPrintAnimation";
 import NavigationButtons from "../NavigationButtons";
-
-// import ProgressBar from "./progressbar2";
 interface Panel13Props {
   nextStep: () => void;
   previousStep: () => void;
 }
 
 const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
-  const handleSubmit = () => {
-    nextStep();
-  };
+  // const handleSubmit = () => {
+  //   nextStep();
+  // };
 
   return (
     <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
-      {/* Header */}
       <div className="text-center mb-8">
         <h1 className="font-bold text-xl lg:text-3xl mb-2">
           We’re Creating Your Cat’s Personal Plan!
@@ -26,13 +23,8 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      {/* v4 progressbar */}
-      {/* <ProgressBar className="w-full border" /> */}
+      <PawAnimation className="flex items-center justify-center w-72 h-72 lg:w-full mx-16" />
 
-      {/* Rive Animation */}
-      <PawAnimation className="flex items-center justify-center w-72 h-72 mx-16" />
-
-      {/* Loading Text */}
       <div className="text-center mt-4">
         <p className="font-semibold text-md lg:text-lg text-darkGray">
           Fetching the best advice for your cat...

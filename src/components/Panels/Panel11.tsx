@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 
 interface Panel11Props {
@@ -23,14 +23,41 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
     "other",
   ];
 
+  useEffect(() => {
+    const storedMedicalCondition = localStorage.getItem("medical_conditions");
+    const storedMedication = localStorage.getItem("medications");
+    const storedDietaryRestrictions = localStorage.getItem(
+      "dietary_restrictions"
+    );
+    const storedSurgeryHistory = localStorage.getItem("surgery_history");
+
+    if (storedMedicalCondition) {
+      setMedicalCondition(storedMedicalCondition);
+    }
+    if (storedMedication) {
+      setMedication(storedMedication);
+    }
+    if (storedDietaryRestrictions) {
+      setDietaryRestrictions(storedDietaryRestrictions);
+    }
+    if (storedSurgeryHistory) {
+      setSurgeryHistory(storedSurgeryHistory);
+    }
+  }, []);
+
   const handleSubmit = () => {
+    localStorage.setItem("medical_conditions", medicalCondition || "");
+    localStorage.setItem("medications", medication);
+    localStorage.setItem("dietary_restrictions", dietaryRestrictions);
+    localStorage.setItem("surgery_history", surgeryHistory);
+
     nextStep();
   };
 
   return (
     <div className="w-full max-w-md lg:max-w-2xl mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-6">
-        <h1 className="font-bold text-2xl mb-2 mx-4 md:mx-2 px-4 lg:px-0  md:px-0 ">
+        <h1 className="font-bold text-2xl mb-2 mx-4 md:mx-2 px-4 lg:px-0 md:px-0">
           Any Medical History We Should Be Aware Of?
         </h1>
         <p className="text-sm lg:text-md text-darkGray mx-4 px-5 lg:px-8">
@@ -46,7 +73,11 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
           </label>
           <select
             value={medicalCondition || ""}
-            onChange={(e) => setMedicalCondition(e.target.value)}
+            onChange={(e) => {
+              const selectedValue = e.target.value;
+              setMedicalCondition(selectedValue);
+              localStorage.setItem("medical_conditions", selectedValue);
+            }}
             className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
           >
             <option value="" disabled className="bg-lightWhite text-sm">
@@ -71,7 +102,11 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
           <input
             type="text"
             value={medication}
-            onChange={(e) => setMedication(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setMedication(value);
+              localStorage.setItem("medications", value);
+            }}
             placeholder="Enter current medication"
             className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
           />
@@ -84,7 +119,11 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
           <input
             type="text"
             value={dietaryRestrictions}
-            onChange={(e) => setDietaryRestrictions(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setDietaryRestrictions(value);
+              localStorage.setItem("dietary_restrictions", value);
+            }}
             placeholder="Enter food allergies"
             className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
           />
@@ -97,7 +136,11 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
           <input
             type="text"
             value={surgeryHistory}
-            onChange={(e) => setSurgeryHistory(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSurgeryHistory(value);
+              localStorage.setItem("surgery_history", value);
+            }}
             placeholder="Enter recent surgeries"
             className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
           />

@@ -68,8 +68,11 @@ const Progress = () => {
 
   return (
     <>
-      <div className="w-full max-w-[800px] mx-auto">
-        <ProgressBar currentStep={currentStep} totalSteps={15} />
+      <div className="w-full text-center flex justify-center items-center">
+        <ProgressBar
+          className="w-full flex items-center justify-center"
+          currentStep={currentStep}
+        />
       </div>
       <div className="flex-grow flex items-center justify-center w-full">
         {renderPanel()}

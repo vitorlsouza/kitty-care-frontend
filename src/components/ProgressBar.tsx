@@ -1,54 +1,46 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 
 interface ProgressBarProps {
+  className?: string;
   currentStep: number;
-  totalSteps: number;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
+  className,
   currentStep,
-  totalSteps,
 }) => {
-  const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
+  const progress = useRef(0);
+
+  const riveParams = {
+    src: "/assets/riv-files/loadingbar_V5.riv",
+    stateMachines: "State Machine 1",
+    autoplay: true,
+  };
+
+  const { RiveComponent, rive } = useRive(riveParams);
+  const progressInput = useStateMachineInput(
+    rive,
+    "State Machine 1",
+    "Progress"
+  );
+
+  useEffect(() => {
+    if (progressInput) {
+      progressInput.value = currentStep;
+      progress.current = currentStep;
+
+      if (rive) {
+        rive.play();
+      }
+    }
+  }, [currentStep, progressInput, rive]);
 
   return (
-    <div className="flex items-center justify-center w-full">
-      {steps.map((step, index) => (
-        <div key={step} className="flex items-center justify-center ">
-          <div className="flex flex-col items-center">
-            {step === 1 || step === 6 || step === 10 || step === 15 ? (
-              <>
-                <img
-                  src={
-                    currentStep >= step
-                      ? "/assets/progress-paw.png"
-                      : "/assets/progress-paw-disable.png"
-                  }
-                  alt={`Step ${step}`}
-                  className="w-12 h-12 mt-1 object-cover"
-                />
-
-                <p>{step}</p>
-              </>
-            ) : (
-              <div
-                className={`w-4 h-4 rounded-full ${
-                  currentStep >= step ? "bg-primaryOrange" : "bg-lightGray"
-                }`}
-              ></div>
-            )}
-          </div>
-          {index < steps.length - 1 && (
-            <div className="w-1 md:w-4 lg:w-8 h-2">
-              <div
-                className={`h-full ${
-                  currentStep > step ? "bg-primaryBlue" : "bg-lightGray"
-                }`}
-              />
-            </div>
-          )}
-        </div>
-      ))}
+    <div className={className}>
+      <div className="w-full rive-container md:w-[750px] h-20 md:h-[28]">
+        {RiveComponent ? <RiveComponent /> : <p>Loading animation...</p>}
+      </div>
     </div>
   );
 };

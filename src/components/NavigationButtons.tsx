@@ -17,7 +17,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         {/* Back Button */}
         <button
           onClick={previousStep}
-          className="w-full h-[55px]  md:w-[140px] md:h-[55px] bg-transparent text-mediumGray border border-mediumGray rounded-2xl hover:text-white hover:border-none hover:bg-primaryBlue"
+          className="w-full h-[55px]  md:w-[115px] md:h-[40px] bg-transparent text-mediumGray border border-mediumGray rounded-2xl hover:text-white hover:border-none hover:bg-primaryBlue"
         >
           {"<"} Back
         </button>
@@ -25,7 +25,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         <button
           onClick={nextStep}
           disabled={isNextDisabled}
-          className={`w-full h-[55px] md:w-[140px] md:h-[55px] rounded-2xl ${
+          className={`w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl ${
             isNextDisabled
               ? "bg-lightGray text-mediumGray cursor-not-allowed"
               : "bg-primaryBlue text-white hover:bg-opacity-90"

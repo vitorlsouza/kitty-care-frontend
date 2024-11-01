@@ -16,10 +16,16 @@ import KittyCareText from "/assets/svg/KittyCareText.svg";
 import KittyCareTextMobile from "/assets/svg/KittyCareTextMobile.svg";
 import Edit from "/assets/svg/Edit.svg";
 import MiniBtn from "/assets/svg/MiniBtn.svg";
+import { logout } from "../../../Redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../Redux/hooks";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [onHover, setOnHover] = useState("");
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const sideBarRef = useRef(null);
   useEffect(() => {
@@ -39,6 +45,11 @@ const SideBar = () => {
     };
   }, [isOpen]);
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <div id="sideBar" className="fixed h-screen flex z-20">
       <div className="hidden sm:flex relative my-12 ml-12 w-auto h-[90%] bg-[#FADFC9] rounded-2xl p-[18px] flex-col justify-between">
@@ -47,13 +58,15 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex">
-            <Icon
-              id="KittyCare"
-              onHover={onHover}
-              src={KittyCare}
-              handleHover={(id) => setOnHover(id)}
-              isOpen={isOpen}
-            />
+            <a href="/">
+              <Icon
+                id="KittyCare"
+                onHover={onHover}
+                src={KittyCare}
+                handleHover={(id) => setOnHover(id)}
+                isOpen={isOpen}
+              />
+            </a>
           </div>
           <div className="flex flex-col gap-4">
             {[
@@ -74,7 +87,7 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col gap-4">
           {[
-            { id: "Logout", src: Logout },
+            { id: "Logout", src: Logout, onClick: handleLogout },
             { id: "Profile", src: Profile },
           ].map((item) => (
             <Icon
@@ -83,6 +96,7 @@ const SideBar = () => {
               src={item.src}
               handleHover={(id) => setOnHover(id)}
               isOpen={isOpen}
+              onClick={item?.onClick}
             />
           ))}
         </div>
@@ -106,18 +120,20 @@ const SideBar = () => {
           <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <div className="flex items-center">
-                  <Icon
-                    id="KittyCare"
-                    onHover={onHover}
-                    src={KittyCare}
-                    handleHover={(id) => setOnHover(id)}
-                    isOpen={isOpen}
-                  />
-                  <div className="px-[26px]">
-                    <img src={KittyCareTextMobile} alt="KittyCareText" />
+                <a href="/">
+                  <div className="flex items-center">
+                    <Icon
+                      id="KittyCare"
+                      onHover={onHover}
+                      src={KittyCare}
+                      handleHover={(id) => setOnHover(id)}
+                      isOpen={isOpen}
+                    />
+                    <div className="px-[26px]">
+                      <img src={KittyCareTextMobile} alt="KittyCareText" />
+                    </div>
                   </div>
-                </div>
+                </a>
               </div>
               <div className="flex flex-col gap-4">
                 {[
@@ -131,13 +147,13 @@ const SideBar = () => {
                       id={item.id}
                       onHover={onHover}
                       src={item.src}
-                      handleHover={()=>{}}
+                      handleHover={() => {}}
                       isOpen={isOpen}
                     />
                     <Content
                       id={item.id}
                       content={item.id}
-                      handleHover={()=>{}}
+                      handleHover={() => {}}
                       onHover={onHover}
                     />
                   </div>
@@ -145,18 +161,18 @@ const SideBar = () => {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="flex items-center">
+              <div className="flex items-center" onClick={handleLogout}>
                 <Icon
                   id={"Logout"}
                   onHover={onHover}
                   src={Logout}
-                  handleHover={()=>{}}
+                  handleHover={() => {}}
                   isOpen={isOpen}
                 />
                 <Content
                   id="Logout"
                   content="Logout"
-                  handleHover={()=>{}}
+                  handleHover={() => {}}
                   onHover={onHover}
                 />
               </div>
@@ -166,13 +182,13 @@ const SideBar = () => {
                     id={"Profile"}
                     onHover={onHover}
                     src={Profile}
-                    handleHover={()=>{}}
+                    handleHover={() => {}}
                     isOpen={isOpen}
                   />
                   <Content
                     id="Profile"
                     content="Welcome Rosu"
-                    handleHover={()=>{}}
+                    handleHover={() => {}}
                     onHover={onHover}
                   />
                 </div>
@@ -198,11 +214,13 @@ const SideBar = () => {
           <>
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <div
-                  className={`text-[20px] px-[26px] w-full h-[70px] flex items-center`}
-                >
-                  <img src={KittyCareText} alt="KittyCareText" />
-                </div>
+                <a href="/">
+                  <div
+                    className={`text-[20px] px-[26px] w-full h-[70px] flex items-center`}
+                  >
+                    <img src={KittyCareText} alt="KittyCareText" />
+                  </div>
+                </a>
               </div>
               <div className="flex flex-col gap-4">
                 {[
@@ -225,6 +243,7 @@ const SideBar = () => {
                 id="Logout"
                 content="Logout"
                 handleHover={(id) => setOnHover(id)}
+                onClick={handleLogout}
                 onHover={onHover}
               />
               <div className="w-full flex items-center justify-between">
@@ -236,7 +255,9 @@ const SideBar = () => {
                 />
                 <div className="py-5 mx-5 tooltip">
                   <span className="tooltiptext">Edit</span>
-                  <img src={Edit} alt="Edit" />
+                  <a href="/profile">
+                    <img src={Edit} alt="Edit" />
+                  </a>
                 </div>
               </div>
             </div>

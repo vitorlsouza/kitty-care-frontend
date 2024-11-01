@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Divider from "../components/Login/Divider";
+// import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
-import LogBtnBy from "../components/Login/LogBtnBy";
+// import LogBtnBy from "../components/Login/LogBtnBy";
 // import Toggle from "../components/Login/Toggle";
 // import CheckOption from "../components/Login/CheckOption";
 import { useAppDispatch } from '../Redux/hooks';
@@ -65,7 +65,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -96,7 +96,7 @@ const Signup = () => {
       });
 
       // Redirect on success
-      navigate('/dashboard');
+      navigate('/priceselection');
     } catch (err: any) {
       setError(prev => ({
         ...prev,
@@ -191,7 +191,7 @@ const Signup = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex gap-4 items-center justify-between">
+                {/* <div className="flex gap-4 items-center justify-between">
                   <Divider />
                   <LogBtnBy
                     src="/assets/png/google.png"
@@ -206,7 +206,7 @@ const Signup = () => {
                     alt="Google"
                     className="flex"
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

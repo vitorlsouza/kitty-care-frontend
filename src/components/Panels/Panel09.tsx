@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import NavigationButtons from "../NavigationButtons";
+import React, { useEffect, useState } from "react";
 
 interface Panel09Props {
   nextStep: () => void;
@@ -31,8 +30,37 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
     },
   ];
 
+  // Load data from local storage on mount
+  useEffect(() => {
+    const storedFrequency = localStorage.getItem("check_in_period");
+    if (storedFrequency) {
+      const foundOption = frequencyOptions.find(
+        (option) => option.title === storedFrequency
+      );
+      if (foundOption) {
+        setSelectedFrequency(foundOption.id);
+      }
+    }
+  }, []);
+
   const handleCardSelect = (id: number) => {
     setSelectedFrequency(id);
+    const selectedOption = frequencyOptions.find((option) => option.id === id);
+    if (selectedOption) {
+      localStorage.setItem("check_in_period", selectedOption.title);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedFrequency !== null) {
+      const selectedOption = frequencyOptions.find(
+        (option) => option.id === selectedFrequency
+      );
+      if (selectedOption) {
+        localStorage.setItem("check_in_period", selectedOption.title);
+      }
+      nextStep();
+    }
   };
 
   return (
@@ -68,14 +96,12 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
                   }`}
                 >
                   {option.title}
-
                   {option.isRecommended && (
                     <span className="bg-primaryBlue text-white text-xs px-2 py-1 rounded-full ml-2">
                       Recommended
                     </span>
                   )}
                 </h3>
-
                 <p
                   className={`text-sm ${
                     selectedFrequency === option.id
@@ -104,22 +130,17 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
       <div className="flex justify-center items-center mt-8 space-x-4">
         <button
           onClick={previousStep}
-          className="px-6 py-2 bg-transparent text-mediumGray border border-mediumGray rounded-full hover:text-white hover:border-none hover:bg-primaryBlue"
+          className="w-full h-[55px] md:w-[115px] md:h-[40px] bg-transparent text-mediumGray border border-mediumGray rounded-2xl hover:text-white hover:border-none hover:bg-primaryBlue"
         >
           {"<"} Back
         </button>
         <button
-          onClick={nextStep}
+          onClick={handleSubmit}
           className="px-8 py-2 rounded-full text-white bg-primaryBlue hover:bg-primaryBlue"
         >
           Set My Schedule
         </button>
       </div>
-      <NavigationButtons
-        nextStep={nextStep}
-        previousStep={previousStep}
-        isNextDisabled={false}
-      />
     </div>
   );
 };

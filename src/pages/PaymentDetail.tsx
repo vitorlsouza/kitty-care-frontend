@@ -11,6 +11,7 @@ import {
 
 import { loadStripe } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -38,6 +39,8 @@ const PaymentForm = () => {
     state: "",
     postalCode: "",
   });
+
+  const navigate = useNavigate();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -68,11 +71,16 @@ const PaymentForm = () => {
       if (result.error) {
         setError({ ...error, general: result.error?.message || "" });
       }
+      navigate("/progress");
     } catch (err) {
       setError({ ...error, general: "An unexpected error occurred." });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleCancel = () => {
+    navigate("/paymentmethod");
   };
 
   const cardElementOptions = {
@@ -208,10 +216,12 @@ const PaymentForm = () => {
               <button
                 disabled={!stripe || isLoading}
                 className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
+                onClick={handleCancel}
               >
                 Cancel
               </button>
               <button
+                type="submit"
                 disabled={!stripe || isLoading}
                 className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
               >

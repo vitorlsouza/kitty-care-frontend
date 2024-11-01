@@ -70,13 +70,13 @@ const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      <div className="relative h-24 md:h-24 flex items-center justify-center mb-2">
+      <div className="h-[224px] md:h-36 flex items-center justify-center md:mx-24 md:px-8 relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentDescription}
-            initial={{ opacity: 0, x: 100 }}
+            initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
+            exit={{ opacity: 0, x: -10 }}
             transition={{ duration: 0.5 }}
             className="absolute w-full text-center"
           >
@@ -90,7 +90,7 @@ const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) => {
         </AnimatePresence>
       </div>
       <div className="flex justify-center">
-        <RiveComponent style={{ width: "845px", height: "350px" }} />
+        <RiveComponent style={{ width: "845px", height: "280px" }} />
       </div>
 
       <NavigationButtons
