@@ -71,7 +71,7 @@ const Login = () => {
       setError({ email: "", password: "", general: "" });
 
       // Redirect on success
-      navigate("/dashboard");
+      navigate("/cat-assistant");
     } catch (err: any) {
       setError({
         ...error,
