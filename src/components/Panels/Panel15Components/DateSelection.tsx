@@ -43,7 +43,7 @@ const DateSelection: React.FC = () => {
             onChange={handleDateChange}
             inline
             calendarClassName="custom-calendar"
-            dayClassName={(date) =>
+            dayClassName={() =>
               "rounded-full hover:bg-orange-200 focus:bg-orange-500"
             }
           />
