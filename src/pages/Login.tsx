@@ -86,6 +86,7 @@ const Login = () => {
     try {
       setIsLoading(true);
       const response = await loginWithGoogleAPI();
+      console.log("response", response);
 
       // If we received an authorization URL, redirect to it
       if (response.url) {

@@ -161,7 +161,13 @@ export const updatePlanAPI = async (credentials: PlanState) => {
 
 export const loginWithGoogleAPI = async () => {
   try {
-    const response = await API.get('/api/supabase/signin/google');
+    console.log("loginWithGoogleAPI");
+    const response = await API.get('/api/supabase/signin/google', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log("loginWithGoogleAPI response", response);
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Google login failed');

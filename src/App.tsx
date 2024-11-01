@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -10,13 +10,11 @@ import Chatroom from "./pages/Chatroom";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { useEffect } from "react";
 import { useAppDispatch } from "./Redux/hooks";
-import { loginUserAsync, logout } from "./Redux/features/userSlice";
-import { isAuthenticated, setAuthToken } from "./utils/auth";
+import { logout } from "./Redux/features/userSlice";
+import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
 
 function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -30,42 +28,6 @@ function App() {
     const interval = setInterval(checkAuth, 60000); // Check every minute
     return () => clearInterval(interval);
   }, [dispatch]);
-
-  useEffect(() => {
-    // Handle OAuth callback
-    const handleOAuthCallback = async () => {
-      const params = new URLSearchParams(location.search);
-      const token = params.get('access_token');
-      const error = params.get('error');
-
-      if (token) {
-        // Store the token
-        setAuthToken({
-          token,
-          expiresIn: '1d' // You might want to get this from the response
-        });
-
-        // Update Redux state with required LoginState properties
-        dispatch(loginUserAsync.fulfilled(
-          { token },
-          'login/fulfilled',
-          { email: '', password: '' } // Provide the required LoginState properties
-        ));
-
-        // Redirect to dashboard
-        navigate('/dashboard');
-      } else if (error) {
-        navigate('/login', {
-          state: { error: 'Google login failed. Please try again.' }
-        });
-      }
-    };
-
-    // Check if this is an OAuth callback
-    if (location.pathname === '/callback/google') {
-      handleOAuthCallback();
-    }
-  }, [location, navigate, dispatch]);
 
   return (
     <Router>
@@ -108,7 +70,6 @@ function App() {
               <Home />
             </ProtectedRoute>
           } />
-          <Route path="/callback/google" element={<div>Processing login...</div>} />
         </Routes>
       </Layout>
     </Router>
