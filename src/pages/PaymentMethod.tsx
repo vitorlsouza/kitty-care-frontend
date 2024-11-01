@@ -5,10 +5,13 @@ import SwitchMethod from "../components/Payments/SwitchMethod";
 import { useNavigate } from "react-router-dom";
 import ApplePayBtn from "../components/Payments/ApplePayBtn";
 import GooglePayBtn from "../components/Payments/GooglePayBtn";
+import { createPlanAsync } from "../Redux/features/billingSlice";
+import { useAppDispatch } from "../Redux/hooks";
+import { BillingState } from "../utils/types";
 
 const PaymentMethod = () => {
   // @ts-ignore
-  const [billingOption, setBillingOption] = useState({
+  const [billingOption, setBillingOption] = useState<BillingState>({
     method: true,
     price: 0,
     daily: 0.82,
@@ -19,15 +22,21 @@ const PaymentMethod = () => {
     saveOption: true,
   });
 
-  const [isApplePayAvailable, setIsApplePayAvailable] = useState(false);
+  const [error, setError] = useState<string>("");
 
+  const [isApplePayAvailable, setIsApplePayAvailable] =
+    useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     // Check if Apple Pay is available
     const checkApplePayAvailability = () => {
-      if ('ApplePaySession' in window) {
-        setIsApplePayAvailable((window as any).ApplePaySession.canMakePayments());
+      if ("ApplePaySession" in window) {
+        setIsApplePayAvailable(
+          (window as any).ApplePaySession.canMakePayments()
+        );
       }
     };
 
@@ -60,7 +69,7 @@ const PaymentMethod = () => {
     return actions.order.capture().then((details: any) => {
       // Handle successful payment
       console.log("Payment completed", details);
-      navigate("/success"); // Navigate to success page
+      handlePaymentComplete();
     });
   };
 
@@ -94,6 +103,7 @@ const PaymentMethod = () => {
               }),
             }
           ).then((res) => res.json());
+          handlePaymentComplete();
 
           session.completeMerchantValidation(merchantSession);
         } catch (err) {
@@ -107,17 +117,35 @@ const PaymentMethod = () => {
           // Process the payment here
           // You would typically make an API call to your backend
 
-          session.completePayment((window as any).ApplePaySession.STATUS_SUCCESS);
+          session.completePayment(
+            (window as any).ApplePaySession.STATUS_SUCCESS
+          );
           navigate("/success");
         } catch (err) {
           console.error("Payment failed:", err);
-          session.completePayment((window as any).ApplePaySession.STATUS_FAILURE);
+          session.completePayment(
+            (window as any).ApplePaySession.STATUS_FAILURE
+          );
         }
       };
 
       session.begin();
     } catch (error) {
       console.error("Apple Pay error:", error);
+    }
+  };
+
+  const handlePaymentComplete = async () => {
+    try {
+      await dispatch(createPlanAsync(billingOption)).unwrap();
+
+      // Clear form and errors
+      setError("");
+
+      // Redirect on success
+      navigate("/progress");
+    } catch (err: any) {
+      setError(err.message || "Payment failed. Please try again.");
     }
   };
 
@@ -162,10 +190,7 @@ const PaymentMethod = () => {
                   />
                 </PayPalScriptProvider>
                 {isApplePayAvailable ? (
-                  <ApplePayBtn
-                    onClick={handleApplePayClick}
-                    disabled={false}
-                  />
+                  <ApplePayBtn onClick={handleApplePayClick} disabled={false} />
                 ) : (
                   <GooglePayBtn />
                 )}
@@ -178,6 +203,7 @@ const PaymentMethod = () => {
                   </div>
                 </div>
               </div>
+              {error && <div className="text-red-500">{error}</div>}
             </div>
           </div>
         </div>

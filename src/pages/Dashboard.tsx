@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../Redux/features/userSlice";
 import { useAppDispatch } from "../Redux/hooks";
 
-const Home = () => {
+const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
@@ -20,4 +20,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

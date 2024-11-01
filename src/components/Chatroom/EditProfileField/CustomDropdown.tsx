@@ -67,8 +67,8 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
         </button>
 
         {isOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
-            <ul className="py-1 max-h-60 overflow-auto">
+          <div className="absolute z-10 w-full border border-[#898B90] rounded-[20px] bg-[#FAF6F3]">
+            <ul className="py-4 px-[15px] max-h-60 overflow-auto">
               {options.map((option, index) => (
                 <li
                   key={index}
@@ -76,7 +76,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                     onSelect(option);
                     setIsOpen(false);
                   }}
-                  className="px-4 py-2 text-gray-900 cursor-pointer hover:bg-blue-50 focus:bg-blue-50"
+                  className="text-center py-2 hover:bg-[#D1D6E2] rounded-[15px] text-gray-900 cursor-pointer"
                 >
                   {option}
                 </li>
