@@ -134,7 +134,7 @@ const Login = () => {
               />
             </div>
           </div>
-          <a href={`${baseURL}/api/supabase/signin/google`}>
+          {/* <a href={`${baseURL}/api/supabase/signin/google`}>
             <div className="flex gap-4 items-center justify-between">
               <Divider />
               <LogBtnBy
@@ -151,7 +151,7 @@ const Login = () => {
                 className="flex"
               />
             </div>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
