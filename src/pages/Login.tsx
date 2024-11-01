@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/hooks";
-import { loginUserAsync } from "../Redux/features/userSlice";
+import { loginUserAsync, loginWithGoogleAsync } from "../Redux/features/userSlice";
 import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
 import LogBtnBy from "../components/Login/LogBtnBy";
+import { loginWithGoogleAPI } from "../services/api";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +53,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -77,6 +78,26 @@ const Login = () => {
         general: err.message || "Login failed. Please try again.",
       });
     } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const response = await loginWithGoogleAPI();
+
+      // If we received an authorization URL, redirect to it
+      if (response.url) {
+        window.location.href = response.url;
+      } else {
+        throw new Error('Failed to get authorization URL');
+      }
+    } catch (err: any) {
+      setError({
+        ...error,
+        general: err.message || "Google login failed. Please try again.",
+      });
       setIsLoading(false);
     }
   };
@@ -139,6 +160,7 @@ const Login = () => {
               src="/assets/png/google.png"
               alt="Google"
               className="hidden sm:flex"
+              onClick={handleGoogleLogin}
             />
             <Divider />
           </div>
@@ -147,6 +169,7 @@ const Login = () => {
               src="/assets/png/google.png"
               alt="Google"
               className="flex"
+              onClick={handleGoogleLogin}
             />
           </div>
         </div>

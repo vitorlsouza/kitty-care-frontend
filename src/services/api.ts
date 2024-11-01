@@ -158,3 +158,12 @@ export const updatePlanAPI = async (credentials: PlanState) => {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Update plan failed');
   }
 };
+
+export const loginWithGoogleAPI = async () => {
+  try {
+    const response = await API.get('/api/supabase/signin/google');
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Google login failed');
+  }
+};
