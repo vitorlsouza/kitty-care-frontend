@@ -64,7 +64,6 @@ export interface LogBtnByProps {
   src: string;
   alt: string;
   className?: string;
-  onClick?: () => void;
 }
 
 export interface ToggleProps {
