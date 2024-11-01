@@ -74,7 +74,6 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   useEffect(() => {
-    // Load selected items from local storage
     const storedItems = localStorage.getItem("items");
     if (storedItems) {
       const itemNames = storedItems.split(",");
@@ -88,7 +87,6 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
         ? prev.filter((item) => item !== title)
         : [...prev, title];
 
-      // Update local storage
       localStorage.setItem("items", updatedItems.join(","));
       return updatedItems;
     });
@@ -96,7 +94,6 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full max-w-lg lg:max-w-5xl mx-auto p-4 lg:p-6 relative font-inter">
-      {/* Header */}
       <div className="text-center mb-6 lg:mb-8">
         <h1 className="font-bold text-xl mb-2">What Cat Items Do You Own?</h1>
         <p className="text-sm lg:text-md text-darkGray max-w-2xl mx-auto">
@@ -105,7 +102,6 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      {/* Cat Items Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:mx-24">
         {catItems.map((item) => (
           <div
@@ -125,12 +121,10 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
                 className="w-12 h-12"
               />
             </div>
-            {/* Text Content */}
             <div className="flex-1">
               <h3 className="text-md font-semibold mb-1">{item.title}</h3>
               <p className="text-sm text-darkGray">{item.description}</p>
             </div>
-            {/* Radio Button */}
             <div
               className={`ml-4 mt-1 w-6 h-6 lg:w-6 lg:h-6 rounded-full border-2 flex-shrink-0 flex justify-center items-center ${
                 selectedItems.includes(item.title)

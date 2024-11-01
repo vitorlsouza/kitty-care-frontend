@@ -47,7 +47,6 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
   const [selectedActivity, setSelectedActivity] = useState<number | null>(null);
 
   useEffect(() => {
-    // Load previously selected activity level from local storage
     const storedActivity = localStorage.getItem("activity_level");
     if (storedActivity) {
       const activityId = activityLevels.find(
@@ -58,7 +57,6 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
   }, []);
 
   useEffect(() => {
-    // Update local storage whenever the selected activity changes
     if (selectedActivity !== null) {
       const selectedLevel = activityLevels.find(
         (level) => level.id === selectedActivity

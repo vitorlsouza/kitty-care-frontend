@@ -102,7 +102,6 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
   }, []);
 
   useEffect(() => {
-    // Load previously saved goals from local storage
     const storedGoals = localStorage.getItem("issues_faced");
     if (storedGoals) {
       setSelectedGoals(storedGoals.split(","));
@@ -118,7 +117,6 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
   };
 
   const handleNext = () => {
-    // Save selected goals as comma-separated values in local storage
     localStorage.setItem("issues_faced", selectedGoals.join(","));
     nextStep();
   };
@@ -165,7 +163,7 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={handleNext} // Use the updated handleNext function
+        nextStep={handleNext}
         previousStep={previousStep}
         isNextDisabled={selectedGoals.length < 3}
       />

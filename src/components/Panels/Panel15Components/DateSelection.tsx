@@ -7,7 +7,6 @@ const DateSelection: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    // Load the date from local storage
     const storedDate = localStorage.getItem("selectedDate");
     if (storedDate) {
       setSelectedDate(new Date(storedDate));
@@ -16,7 +15,6 @@ const DateSelection: React.FC = () => {
 
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
-    // Store the date in local storage
     if (date) {
       localStorage.setItem("selectedDate", date.toString());
     } else {

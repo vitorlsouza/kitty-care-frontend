@@ -36,46 +36,63 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          } />
-          <Route path="/priceselection" element={
-            <ProtectedRoute>
-              <PriceSelection />
-            </ProtectedRoute>
-          } />
-          <Route path="/paymentmethod" element={
-            <ProtectedRoute>
-              <PaymentMethod />
-            </ProtectedRoute>
-          } />
-          <Route path="/paymentdetail" element={
-            <ProtectedRoute>
-              <PaymentDetail />
-            </ProtectedRoute>
-          } />
-          <Route path="/progress" element={
-            <ProtectedRoute>
-              <Progress />
-            </ProtectedRoute>
-          } />
-          <Route path="/cat-assistant" element={
-            <ProtectedRoute>
-              <Chatroom />
-            </ProtectedRoute>
-          } />
-          <Route path="/profile" element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } />
-          <Route path="/*" element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          } />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/priceselection"
+            element={
+              <ProtectedRoute>
+                <PriceSelection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/paymentmethod"
+            element={
+              <ProtectedRoute>
+                <PaymentMethod />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/paymentdetail"
+            element={
+              <ProtectedRoute>
+                <PaymentDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/progress" element={<Progress />} />
+          <Route
+            path="/cat-assistant"
+            element={
+              <ProtectedRoute>
+                <Chatroom />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Layout>
     </Router>
