@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createPlanAPI, removePlanAPI, updatePlanAPI } from "../../services/api";
 import { BillingState, PlanState } from "../../utils/types";
-import { setAuthToken, clearAuthToken } from "../../utils/auth";
+import { setAuthToken, clearTokens } from "../../utils/auth";
 
 const initialState: BillingState = {
   method: true, // "true" for annual, "false" for monthly
@@ -63,7 +63,7 @@ export const billingSlice = createSlice({
       return { ...state, ...action.payload, price: action.payload.method ? state.yearly : state.monthly };
     },
     logout: () => {
-      clearAuthToken();
+      clearTokens();
       return initialState;
     },
   },

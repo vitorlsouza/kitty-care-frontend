@@ -24,7 +24,7 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
   useEffect(() => {
     const storedDays = localStorage.getItem("training_days");
     if (storedDays) {
-      setSelectedDays(storedDays.split(","));
+      setSelectedDays(JSON.parse(storedDays));
     }
   }, []);
 
@@ -34,14 +34,14 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
         ? prevSelectedDays.filter((selectedDay) => selectedDay !== day)
         : [...prevSelectedDays, day];
 
-      localStorage.setItem("training_days", newSelectedDays.join(","));
+      localStorage.setItem("training_days", JSON.stringify(newSelectedDays));
       return newSelectedDays;
     });
   };
 
   const handleSubmit = () => {
     if (selectedDays.length > 0) {
-      localStorage.setItem("training_days", selectedDays.join(","));
+      localStorage.setItem("training_days", JSON.stringify(selectedDays));
       nextStep();
     }
   };
@@ -63,30 +63,27 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
           <motion.div
             key={day.id}
             onClick={() => handleDaySelect(day.day)}
-            className={`cursor-pointer border-2 p-4 lg:p-6 rounded-2xl text-left transition-all duration-300 ${
-              selectedDays.includes(day.day)
-                ? "border-primaryBlue"
-                : "border-lightGray2"
-            }`}
+            className={`cursor-pointer border-2 p-4 lg:p-6 rounded-2xl text-left transition-all duration-300 ${selectedDays.includes(day.day)
+              ? "border-primaryBlue"
+              : "border-lightGray2"
+              }`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <div className="flex justify-between items-center">
               <h3
-                className={`text-md lg:text-lg font-semibold ${
-                  selectedDays.includes(day.day)
-                    ? "text-primaryBlue"
-                    : "text-black"
-                }`}
+                className={`text-md lg:text-lg font-semibold ${selectedDays.includes(day.day)
+                  ? "text-primaryBlue"
+                  : "text-black"
+                  }`}
               >
                 {day.day}
               </h3>
               <div
-                className={`ml-4 lg:ml-auto w-6 h-6 lg:w-6 lg:h-6 rounded-full border-2 flex justify-center items-center ${
-                  selectedDays.includes(day.day)
-                    ? "border-primaryBlue"
-                    : "border-lightGray2"
-                }`}
+                className={`ml-4 lg:ml-auto w-6 h-6 lg:w-6 lg:h-6 rounded-full border-2 flex justify-center items-center ${selectedDays.includes(day.day)
+                  ? "border-primaryBlue"
+                  : "border-lightGray2"
+                  }`}
               >
                 {selectedDays.includes(day.day) && (
                   <span className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-primaryYellow"></span>

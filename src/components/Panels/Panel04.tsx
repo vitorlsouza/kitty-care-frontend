@@ -104,7 +104,7 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
   useEffect(() => {
     const storedGoals = localStorage.getItem("issues_faced");
     if (storedGoals) {
-      setSelectedGoals(storedGoals.split(","));
+      setSelectedGoals(JSON.parse(storedGoals));
     }
   }, []);
 
@@ -117,7 +117,7 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
   };
 
   const handleNext = () => {
-    localStorage.setItem("issues_faced", selectedGoals.join(","));
+    localStorage.setItem("issues_faced", JSON.stringify(selectedGoals));
     nextStep();
   };
 
@@ -148,11 +148,10 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
           <div
             key={goal.title}
             onClick={() => handleGoalSelect(goal.title)}
-            className={`cursor-pointer border-2 border-lightGray2 py-8 px-6 rounded-lg text-left transition-colors ${
-              selectedGoals.includes(goal.title)
-                ? "bg-primaryBlue text-white border-none"
-                : "hover:bg-primaryBlue hover:text-white"
-            }`}
+            className={`cursor-pointer border-2 border-lightGray2 py-8 px-6 rounded-lg text-left transition-colors ${selectedGoals.includes(goal.title)
+              ? "bg-primaryBlue text-white border-none"
+              : "hover:bg-primaryBlue hover:text-white"
+              }`}
           >
             <h3 className="text-md md:text-lg mb-1.5">{goal.title}</h3>
             <p className="text-xs sm:text-sm opacity-80 leading-snug">

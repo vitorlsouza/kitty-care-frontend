@@ -18,10 +18,8 @@ const GoalSummary: React.FC = () => {
         <span className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit m-1">
           Selected Goals
         </span>
-        {localStorage
-          .getItem("goals")
-          ?.split(",")
-          ?.map((item, idx) => (
+        {JSON.parse(localStorage.getItem("goals") || "[]")
+          .map((item: string, idx: number) => (
             <span
               key={idx}
               className="inline-block text-mediumGray py-2 px-3 rounded-full text-sm border border-mediumGray m-1"

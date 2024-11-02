@@ -13,7 +13,7 @@ interface Panel15Props {
 const Panel15: React.FC<Panel15Props> = () => {
 
   const navigate = useNavigate();
-  
+
   return (
     <div className="w-full lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-8">
@@ -40,8 +40,8 @@ const Panel15: React.FC<Panel15Props> = () => {
       </div>
 
       <div className="flex justify-center mt-8">
-      <button
-          onClick={()=>navigate("/cat-assistant")}
+        <button
+          onClick={() => navigate("/cat-assistant")}
           className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
         >
           Explore My Plan

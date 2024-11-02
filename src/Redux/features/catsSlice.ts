@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCatsAPI, updateCatAPI } from '../../services/api';
+import { getCatsAPI, createCatAPI, updateCatAPI } from '../../services/api';
 
 interface Cat {
   id: string;       
@@ -45,10 +45,31 @@ export const fetchCatsAsync = createAsyncThunk(
       const response = await getCatsAPI();
 
       if (Array.isArray(response)) {
-        localStorage.setItem('cats', JSON.stringify(response));
+        const highestId = response.reduce((max, cat) => Math.max(max, cat.id), 0);
+        localStorage.setItem('catId', JSON.stringify(highestId));
         return response;
       }
       throw new Error('Invalid response format');
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const createCatAsync = createAsyncThunk(
+  'cats/createCat',
+  async (catDetails: any, { rejectWithValue }) => {
+    try {
+      const response = await createCatAPI(catDetails);
+
+      const catId = response.id;
+      localStorage.setItem(`catId`, JSON.stringify(catId));
+
+      localStorage.setItem(`food_bowls`, JSON.stringify(response.food_bowls));
+      localStorage.setItem(`treats`, JSON.stringify(response.treats));
+      localStorage.setItem(`playtime`, JSON.stringify(response.playtime));
+      
+      return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -90,6 +111,14 @@ export const catsSlice = createSlice({
       .addCase(fetchCatsAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(createCatAsync.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createCatAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cats.push(action.payload);
       })
       .addCase(updateCatAsync.pending, (state) => {
         state.isLoading = true;

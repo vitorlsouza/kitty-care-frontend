@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 // import Divider from "../components/Login/Divider";
 import TextInput from "../components/Login/Input";
@@ -13,6 +13,13 @@ import SwitchMethod from "../components/Payments/SwitchMethod";
 const Signup = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/progress');
+    }
+  }, []);
 
   const [userInfo, setUserInfo] = useState({
     first_name: "",

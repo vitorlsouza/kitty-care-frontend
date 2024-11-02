@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/hooks";
 import { loginUserAsync } from "../Redux/features/userSlice";
@@ -10,6 +10,18 @@ import TextInput from "../components/Login/Input";
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const catId = localStorage.getItem("catId");
+      if (!catId || catId === "undefined") {
+        navigate("/progress");
+      } else {
+        navigate('/cat-assistant');
+      }
+    }
+  }, []);
 
   const [userInfo, setUserInfo] = useState({
     email: "",
@@ -71,7 +83,15 @@ const Login = () => {
       setError({ email: "", password: "", general: "" });
 
       // Redirect on success
-      navigate("/cat-assistant");
+      const token = localStorage.getItem('token');
+      if (token) {
+        const catId = localStorage.getItem("catId");
+        if (!catId || catId === "undefined") {
+          navigate("/progress");
+        } else {
+          navigate('/cat-assistant');
+        }
+      }
     } catch (err: any) {
       setError({
         ...error,

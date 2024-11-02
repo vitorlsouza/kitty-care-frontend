@@ -75,8 +75,9 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
 
   useEffect(() => {
     const storedItems = localStorage.getItem("items");
+
     if (storedItems) {
-      const itemNames = storedItems.split(",");
+      const itemNames = JSON.parse(storedItems);
       setSelectedItems(itemNames);
     }
   }, []);
@@ -87,7 +88,7 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
         ? prev.filter((item) => item !== title)
         : [...prev, title];
 
-      localStorage.setItem("items", updatedItems.join(","));
+      localStorage.setItem("items", JSON.stringify(updatedItems));
       return updatedItems;
     });
   };
@@ -107,11 +108,10 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
           <div
             key={item.id}
             onClick={() => handleItemClick(item.title)}
-            className={`flex items-start cursor-pointer border-2 p-4 lg:p-5 rounded-2xl transition-all duration-300 ${
-              selectedItems.includes(item.title)
-                ? "border-primaryBlue bg-lightBlue"
-                : "border-lightGray2"
-            }`}
+            className={`flex items-start cursor-pointer border-2 p-4 lg:p-5 rounded-2xl transition-all duration-300 ${selectedItems.includes(item.title)
+              ? "border-primaryBlue bg-lightBlue"
+              : "border-lightGray2"
+              }`}
           >
             {/* Icon */}
             <div className="w-12 h-12 bg-primaryBlue flex items-center justify-center rounded-lg mr-4">
@@ -126,11 +126,10 @@ const Panel12: React.FC<Panel12Props> = ({ nextStep, previousStep }) => {
               <p className="text-sm text-darkGray">{item.description}</p>
             </div>
             <div
-              className={`ml-4 mt-1 w-6 h-6 lg:w-6 lg:h-6 rounded-full border-2 flex-shrink-0 flex justify-center items-center ${
-                selectedItems.includes(item.title)
-                  ? "border-primaryBlue"
-                  : "border-lightGray2"
-              }`}
+              className={`ml-4 mt-1 w-6 h-6 lg:w-6 lg:h-6 rounded-full border-2 flex-shrink-0 flex justify-center items-center ${selectedItems.includes(item.title)
+                ? "border-primaryBlue"
+                : "border-lightGray2"
+                }`}
             >
               {selectedItems.includes(item.title) && (
                 <span className="w-3 h-3 lg:w-3 lg:h-3 rounded-full bg-primaryBlue"></span>
