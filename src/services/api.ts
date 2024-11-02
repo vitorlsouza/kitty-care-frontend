@@ -196,4 +196,24 @@ export const getClientSecretKey = async ({
   }
 };
 
+export const updateCatAPI = async (catData: any) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const catId = localStorage.getItem('catId');
+    const response = await API.put(`/api/supabase/cats/${catId}`, catData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to update cat');
+  }
+};
+
 export default baseURL;
