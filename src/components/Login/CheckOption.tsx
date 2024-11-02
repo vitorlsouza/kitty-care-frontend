@@ -19,14 +19,14 @@ const CheckOption = ({
             name={name}
             type="checkbox"
             checked={checked}
-            className="accent-[#FFCE01] w-full h-full className border-none"
+            className="accent-[#FFCE01] w-full h-full border-none"
             onChange={onChange}
           />
         </div>
 
-        <label className="text-[18px] font-bold">{label}</label>
+        <label className="text-[14px] sm:text-[18px] font-bold">{label}</label>
       </div>
-      <div className="text-[18px] font-medium ms-7 leading-6">
+      <div className="text-[14px] sm:text-[18px] font-medium ms-7 leading-6 opacity-60">
         {content}
       </div>
     </div>
