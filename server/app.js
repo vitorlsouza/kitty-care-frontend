@@ -35,12 +35,11 @@ app.post('/clientsecret', async (req, res) => {
       customer: customer.id,
       items: [{ price: priceId }],
       trial_end: trial_end,
-      trial_pero
     });
 
     // Return the client secret for the payment
-    const clientSecret = subscription.latest_invoice.payment_intent.client_secret;
-    res.json({ clientSecret });
+    const invoice = subscription.latest_invoice;
+    res.json({ invoice });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });

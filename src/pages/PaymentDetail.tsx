@@ -85,20 +85,16 @@ const PaymentForm = () => {
         },
       });
 
-      const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Date.now();
+      const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
       console.log("triel_end", trial_end, userInfo.email);
 
 
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID
 
-      const { clientSecret } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
+      const { invoice } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
 
       // Confirm the payment
-      const { error: confirmError } = await stripe.confirmCardPayment(clientSecret);
-      if (confirmError) {
-        console.error(confirmError);
-      } else {
-
+      if (invoice) {
         navigate("/progress");
         console.log('Subscription successful!');
       }

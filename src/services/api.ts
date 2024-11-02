@@ -169,7 +169,7 @@ type GetClientSecretKeyParams = {
 };
 
 type ClientSecretResponse = {
-  clientSecret: string;
+  invoice: string;
 };
 
 export const getClientSecretKey = async ({
@@ -181,7 +181,7 @@ export const getClientSecretKey = async ({
 }: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
   try {
 
-    const { clientSecret } = await fetch('http://localhost:3001/clientsecret', {
+    const { invoice } = await fetch('http://localhost:3001/clientsecret', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -193,7 +193,7 @@ export const getClientSecretKey = async ({
       }),
     }).then(r => r.json());
 
-    return { clientSecret };
+    return { invoice };
 
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
