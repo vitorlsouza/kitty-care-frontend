@@ -1,6 +1,7 @@
 export interface AuthToken {
   token: string;
   expiresIn: string;
+  photo: string;
 }
 
 export interface UserState {

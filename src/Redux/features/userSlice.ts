@@ -59,7 +59,8 @@ export const userSlice = createSlice({
         if (action.payload?.token) {
           setAuthToken({
             token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
+            expiresIn: action.payload.expiresIn || '1h',
+            photo: action.payload.photo || ''
           });
           Object.assign(state, {
             status: 'succeeded',
@@ -78,7 +79,8 @@ export const userSlice = createSlice({
         if (action.payload?.token) {
           setAuthToken({
             token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
+            expiresIn: action.payload.expiresIn || '1h',
+            photo: action.payload.photo || ''
           });
           Object.assign(state, {
             status: 'succeeded',
