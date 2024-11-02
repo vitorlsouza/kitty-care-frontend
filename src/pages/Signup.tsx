@@ -21,18 +21,6 @@ const Signup = () => {
     password: "",
   });
 
-  // @ts-ignore
-  const [billingOption, setBillingOption] = useState({
-    method: true,
-    price: 0,
-    daily: 0.82,
-    monthly: 49.99,
-    yearly: 299.99,
-    trustOption: true,
-    nostringOption: true,
-    saveOption: true,
-  });
-
   const [error, setError] = useState({
     first_name: "",
     last_name: "",
@@ -55,13 +43,6 @@ const Signup = () => {
     // Clear errors when user types
     setError(prev => ({ ...prev, [name]: "", general: "" }));
   };
-
-  // const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setBillingOption({
-  //     ...billingOption,
-  //     [e.target.name]: e.target.checked,
-  //   });
-  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();

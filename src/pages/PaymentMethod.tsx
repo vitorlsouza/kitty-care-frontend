@@ -6,26 +6,16 @@ import { useNavigate } from "react-router-dom";
 import ApplePayBtn from "../components/Payments/ApplePayBtn";
 import GooglePayBtn from "../components/Payments/GooglePayBtn";
 import { createPlanAsync } from "../Redux/features/billingSlice";
-import { useAppDispatch } from "../Redux/hooks";
-import { BillingState } from "../utils/types";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
 
 const PaymentMethod = () => {
-  // @ts-ignore
-  const [billingOption, setBillingOption] = useState<BillingState>({
-    method: true,
-    price: 0,
-    daily: 0.82,
-    monthly: 49.99,
-    yearly: 299.99,
-    trustOption: true,
-    nostringOption: true,
-    saveOption: true,
-  });
-
   const [error, setError] = useState<string>("");
 
   const [isApplePayAvailable, setIsApplePayAvailable] =
     useState<boolean>(false);
+
+  const billingOption = useAppSelector((state: RootState) => state.billing);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

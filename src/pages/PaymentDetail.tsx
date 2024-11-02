@@ -9,15 +9,20 @@ import {
   CardCvcElement,
 } from "@stripe/react-stripe-js";
 
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
+import { getClientSecretKey } from "../services/api";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const billingOption = useAppSelector((state: RootState) => state.billing);
 
   const [error, setError] = useState({
     first_name: "",
@@ -61,10 +66,21 @@ const PaymentForm = () => {
     setIsLoading(true);
 
     try {
-      const result = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-complete`,
+      const { clientSecret } = await getClientSecretKey(billingOption.price * 100, 'usd');
+
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(
+            CardNumberElement
+          ) as StripeCardNumberElement,
+          billing_details: {
+            name: formData.fullName,
+            address: {
+              country: formData.country,
+              state: formData.state,
+              postal_code: formData.postalCode,
+            },
+          },
         },
       });
 
@@ -116,11 +132,12 @@ const PaymentForm = () => {
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <div className="text-center text-[40px] font-semibold capitalize">
-                $0 Today
+                ${billingOption.price} Today
               </div>
               <div className="text-center text-[18px] font-medium opacity-60 text-black">
-                $0.00 for 7-day free trial; converts to $299.99 annually
-                renewing subscription.
+                {billingOption.method
+                  ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+                  : "$0.00 for 3-day free trial; converts to $49.99 annually renewing subscription."}
               </div>
             </div>
             <div>
@@ -231,6 +248,7 @@ const PaymentForm = () => {
               </button>
             </div>
           </form>
+          <div className="text-red-500">{error.general}</div>
         </div>
       </div>
     </div>

@@ -160,4 +160,13 @@ export const updatePlanAPI = async (credentials: PlanState) => {
   }
 };
 
+export const getClientSecretKey = async (amount: number, currency: string) => {
+  try {
+    const response = await API.post('/api/supabase/clientsecret', {amount, currency});
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
+  }
+};
+
 export default baseURL;
