@@ -33,7 +33,7 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
     const medical_conditions = localStorage.getItem("medical_conditions");
     const medications = localStorage.getItem("medications");
     const dietary_restrictions = localStorage.getItem("dietary_restrictions");
-    const surgery_history = localStorage.getItem("surgery_history");
+    const medical_history = localStorage.getItem("medical_history");
     const items = localStorage.getItem("items");
 
     dispatch(
@@ -54,7 +54,7 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
         medical_conditions,
         medications,
         dietary_restrictions,
-        surgery_history,
+        medical_history,
         items,
       })
     );

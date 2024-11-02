@@ -157,10 +157,9 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           </p>
           <input
             type="text"
-            pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
+            // pattern="^\s*?\d{5}(?:[-\s]\d{4})?\s*?$"
             value={zipCode}
             onChange={(e) => {
-              console.log(e.target.value);
               setZipCode(e.target.value);
             }}
             placeholder="Enter zip/postal code"

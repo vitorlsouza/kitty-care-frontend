@@ -21,7 +21,7 @@ const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
       "medications",
       "required_progress",
       "selectedDate",
-      "surgery_history",
+      "medical_history",
       "target_weight",
       "training_days",
       "unit",

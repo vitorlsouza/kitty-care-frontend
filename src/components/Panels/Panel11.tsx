@@ -29,7 +29,7 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
     const storedDietaryRestrictions = localStorage.getItem(
       "dietary_restrictions"
     );
-    const storedSurgeryHistory = localStorage.getItem("surgery_history");
+    const storedSurgeryHistory = localStorage.getItem("medical_history");
 
     if (storedMedicalCondition) {
       setMedicalCondition(storedMedicalCondition);
@@ -49,7 +49,7 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
     localStorage.setItem("medical_conditions", medicalCondition || "");
     localStorage.setItem("medications", medication);
     localStorage.setItem("dietary_restrictions", dietaryRestrictions);
-    localStorage.setItem("surgery_history", surgeryHistory);
+    localStorage.setItem("medical_history", surgeryHistory);
 
     nextStep();
   };
@@ -139,7 +139,7 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
             onChange={(e) => {
               const value = e.target.value;
               setSurgeryHistory(value);
-              localStorage.setItem("surgery_history", value);
+              localStorage.setItem("medical_history", value);
             }}
             placeholder="Enter recent surgeries"
             className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
