@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const stripe = require('stripe')('sk_test_51QFWycRvq7cJuaoz9IgfRsJl2ttVQyGbfiANw9ZMRhxxYieI1lt0sXu3OKP5ZW45p0MdhOJysZjfPn7Idr2h2hHZ00qGjJaJSk');
+const stripe = require('stripe')('sk_test_51PyczFLgFSikZxwjjilfAawpMDfL3lv1SX8KznqEkFLxFk03RZw9V2xobZSwtDBVKZDM3XOtm5pmOm8ezC4DUnGb00EB7iNc3A');
 const app = express();
 
 const corsOptions = {
@@ -15,18 +15,35 @@ app.use(express.json());
 
 app.post('/clientsecret', async (req, res) => {
   try {
-    const { amount, currency } = req.body;
-    console.log({amount, currency});
+    const {name, email, paymentMethodId, priceId, trial_end } = req.body;
+
+    console.log(name, paymentMethodId, priceId);
     
-    
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency,
+
+    // Create a new customer
+    const customer = await stripe.customers.create({
+      name,
+      email,
+      payment_method: paymentMethodId,
+      invoice_settings: {
+        default_payment_method: paymentMethodId,
+      },
     });
 
-    res.json({ clientSecret: paymentIntent.client_secret });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    // Create the subscription
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: priceId }],
+      trial_end: trial_end,
+      trial_pero
+    });
+
+    // Return the client secret for the payment
+    const clientSecret = subscription.latest_invoice.payment_intent.client_secret;
+    res.json({ clientSecret });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
   }
 });
 

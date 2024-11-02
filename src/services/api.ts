@@ -120,7 +120,7 @@ export const getConversationsAPI = async () => {
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch conversations');
   }
-}; 
+};
 
 export const getConversationByIdAPI = async (id: string) => {
   try {
@@ -128,7 +128,7 @@ export const getConversationByIdAPI = async (id: string) => {
     if (!token) {
       throw new Error("User Not Authenticated");
     }
-    
+
     const response = await API.get(`/api/supabase/conversations/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -149,7 +149,7 @@ export const createPlanAPI = async () => {
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Create plan failed');
   }
-}; 
+};
 
 export const updatePlanAPI = async (credentials: PlanState) => {
   try {
@@ -160,28 +160,40 @@ export const updatePlanAPI = async (credentials: PlanState) => {
   }
 };
 
-export const getClientSecretKey = async (amount: number, currency: string) => {
+type GetClientSecretKeyParams = {
+  name: string;
+  email: string;
+  paymentMethodId: string | undefined;
+  priceId: string;
+  trial_end: number;
+};
+
+type ClientSecretResponse = {
+  clientSecret: string;
+};
+
+export const getClientSecretKey = async ({
+  name,
+  email,
+  paymentMethodId,
+  priceId,
+  trial_end
+}: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
   try {
-    // const response = await API.post('/api/supabase/clientsecret', {amount, currency});
-    // return response.data;
-    
-    // There are stripe backend endpoint example.
-    // Start
 
     const { clientSecret } = await fetch('http://localhost:3001/clientsecret', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        amount: amount,
-        currency: currency,
+        name,
+        email,
+        paymentMethodId,
+        priceId,
+        trial_end
       }),
     }).then(r => r.json());
-    
-    return { clientSecret };
 
-    // End
+    return { clientSecret };
 
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
