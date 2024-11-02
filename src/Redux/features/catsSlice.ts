@@ -45,7 +45,8 @@ export const fetchCatsAsync = createAsyncThunk(
       const response = await getCatsAPI();
 
       if (Array.isArray(response)) {
-        localStorage.setItem('cats', JSON.stringify(response));
+        const highestId = response.reduce((max, cat) => Math.max(max, cat.id), 0);
+        localStorage.setItem('catId', JSON.stringify(highestId));
         return response;
       }
       throw new Error('Invalid response format');

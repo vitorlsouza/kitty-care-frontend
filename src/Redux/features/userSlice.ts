@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { signUpAPI, loginAPI } from '../../services/api';
 import { LoginState, SignupState, UserState } from '../../utils/types';
 import { setAuthToken, clearTokens } from '../../utils/auth';
+import { fetchCatsAsync } from './catsSlice';
 
 const initialState: UserState = {
   first_name: '',
@@ -27,9 +28,22 @@ export const signUpUserAsync = createAsyncThunk(
 
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
-  async (credentials: LoginState, { rejectWithValue }) => {
+  async (credentials: LoginState, { rejectWithValue, dispatch }) => {
     try {
       const response = await loginAPI(credentials);
+
+      setAuthToken({
+        token: response.token,
+        expiresIn: response.expiresIn || '1h'
+      });
+
+      // Ignore any errors from fetchCatsAsync
+      try {
+        await dispatch(fetchCatsAsync()).unwrap();
+      } catch (error) {
+        // Silently ignore any errors from fetchCatsAsync
+      }
+
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -57,10 +71,6 @@ export const userSlice = createSlice({
       })
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
-          });
           Object.assign(state, {
             status: 'succeeded',
             isAuthenticated: true
@@ -76,10 +86,6 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
-          });
           Object.assign(state, {
             status: 'succeeded',
             isAuthenticated: true

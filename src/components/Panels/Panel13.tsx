@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import PawAnimation from "../PawPrintAnimation";
 import NavigationButtons from "../NavigationButtons";
 import { createCatAsync } from "../../Redux/features/catsSlice";
@@ -11,8 +11,12 @@ interface Panel13Props {
 
 const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
   const dispatch = useAppDispatch();
+  const hasDispatchedRef = useRef(false);
 
   useEffect(() => {
+    if (hasDispatchedRef.current) return;
+    hasDispatchedRef.current = true;
+
     const goals = localStorage.getItem("goals");
     const issues_faced = localStorage.getItem("issues_faced");
     const activity_level = localStorage.getItem("activity_level");
@@ -55,11 +59,10 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
       })
     );
 
-    // sleep for 3 seconds
     setTimeout(() => {
       nextStep();
     }, 3000);
-  }, [dispatch]);
+  }, [dispatch, nextStep]);
 
   return (
     <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">

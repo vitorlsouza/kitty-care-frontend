@@ -29,9 +29,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
 
     dispatch(addMessage(newMessage));
 
-    const cats = localStorage.getItem('cats');
-    const catId = cats ? JSON.parse(cats)[0].id : "";
-
+    const catId = localStorage.getItem('catId');
     if (!catId) {
       setError("No cat found. Please try again later.");
       return;
