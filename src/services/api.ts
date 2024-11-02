@@ -181,7 +181,7 @@ export const getClientSecretKey = async ({
 }: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
   try {
 
-    const { invoice } = await API.post('/api/clientsecret', {
+    const { invoice } = await API.post('/api/confirm-stripe-payment', {
         name,
         email,
         paymentMethodId,
