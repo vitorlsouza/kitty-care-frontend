@@ -8,6 +8,7 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+import { getCode } from "country-list";
 
 import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
@@ -23,6 +24,7 @@ const PaymentForm = () => {
   const elements = useElements();
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
+  const userInfo = useAppSelector((state: RootState) => state.user);
 
   const [error, setError] = useState({
     first_name: "",
@@ -66,28 +68,37 @@ const PaymentForm = () => {
     setIsLoading(true);
 
     try {
-      const { clientSecret } = await getClientSecretKey(billingOption.price * 100, 'usd');
 
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(
-            CardNumberElement
-          ) as StripeCardNumberElement,
-          billing_details: {
-            name: formData.fullName,
-            address: {
-              country: formData.country,
-              state: formData.state,
-              postal_code: formData.postalCode,
-            },
+      const { paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(
+          CardNumberElement
+        ) as StripeCardNumberElement,
+        billing_details: {
+          name: formData.fullName,
+          email: userInfo.email,
+          address: {
+            country: getCode(formData.country),
+            state: formData.state,
+            postal_code: formData.postalCode,
           },
         },
       });
 
-      if (result.error) {
-        setError({ ...error, general: result.error?.message || "" });
+      const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
+      console.log("triel_end", trial_end, userInfo.email);
+
+
+      const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID
+
+      const { invoice } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
+
+      // Confirm the payment
+      if (invoice) {
+        navigate("/progress");
+        console.log('Subscription successful!');
       }
-      navigate("/progress");
+
     } catch (err) {
       setError({ ...error, general: "An unexpected error occurred." });
     } finally {
