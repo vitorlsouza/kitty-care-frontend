@@ -14,7 +14,12 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/cat-assistant');
+      const catId = localStorage.getItem("catId");
+      if (!catId || catId === "undefined") {
+        navigate("/progress");
+      } else {
+        navigate('/cat-assistant');
+      }
     }
   }, []);
 
@@ -78,7 +83,15 @@ const Login = () => {
       setError({ email: "", password: "", general: "" });
 
       // Redirect on success
-      navigate("/cat-assistant");
+      const token = localStorage.getItem('token');
+      if (token) {
+        const catId = localStorage.getItem("catId");
+        if (!catId || catId === "undefined") {
+          navigate("/progress");
+        } else {
+          navigate('/cat-assistant');
+        }
+      }
     } catch (err: any) {
       setError({
         ...error,

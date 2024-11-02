@@ -17,7 +17,7 @@ const Signup = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/cat-assistant');
+      navigate('/progress');
     }
   }, []);
 
