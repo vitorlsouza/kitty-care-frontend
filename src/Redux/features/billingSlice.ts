@@ -4,8 +4,8 @@ import { BillingState, PlanState } from "../../utils/types";
 import { setAuthToken, clearAuthToken } from "../../utils/auth";
 
 const initialState: BillingState = {
-  method: true,
-  price: 0,
+  method: true, // "true" for annual, "false" for monthly
+  price: 299.99,
   daily: 0.82,
   monthly: 49.99,
   yearly: 299.99,
@@ -47,8 +47,8 @@ export const billingSlice = createSlice({
   name: "billing",
   initialState,
   reducers: {
-    createPlan: (state, action: PayloadAction<Partial<BillingState>>) => {
-      return { ...state, ...action.payload };
+    changeMethod: (state, action: PayloadAction<Partial<BillingState>>) => {
+      return { ...state, ...action.payload, price: action.payload.method ? state.yearly : state.monthly };
     },
     logout: () => {
       clearAuthToken();
@@ -98,5 +98,5 @@ export const billingSlice = createSlice({
   },
 });
 
-export const { createPlan, logout } = billingSlice.actions;
+export const { changeMethod, logout } = billingSlice.actions;
 export default billingSlice.reducer;
