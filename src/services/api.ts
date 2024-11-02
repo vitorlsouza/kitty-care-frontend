@@ -162,8 +162,27 @@ export const updatePlanAPI = async (credentials: PlanState) => {
 
 export const getClientSecretKey = async (amount: number, currency: string) => {
   try {
-    const response = await API.post('/api/supabase/clientsecret', {amount, currency});
-    return response.data;
+    // const response = await API.post('/api/supabase/clientsecret', {amount, currency});
+    // return response.data;
+    
+    // There are stripe backend endpoint example.
+    // Start
+
+    const { clientSecret } = await fetch('http://localhost:3001/clientsecret', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: amount,
+        currency: currency,
+      }),
+    }).then(r => r.json());
+    
+    return { clientSecret };
+
+    // End
+
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
   }
