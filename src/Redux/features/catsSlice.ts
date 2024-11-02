@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCatsAPI, createCatAPI } from '../../services/api';
+import { getCatsAPI, createCatAPI, updateCatAPI } from '../../services/api';
 
 interface Cat {
   id: string;       
@@ -76,6 +76,18 @@ export const createCatAsync = createAsyncThunk(
   }
 );
 
+export const updateCatAsync = createAsyncThunk(
+  'cats/updateCat',
+  async ({ data }: { data: any }, { rejectWithValue }) => {
+    try {
+      const response = await updateCatAPI(data);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const catsSlice = createSlice({
   name: 'cats',
   initialState,
@@ -108,7 +120,19 @@ export const catsSlice = createSlice({
         state.isLoading = false;
         state.cats.push(action.payload);
       })
-      .addCase(createCatAsync.rejected, (state, action) => {
+      .addCase(updateCatAsync.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateCatAsync.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const updatedCat = action.payload;
+        const index = state.cats.findIndex(cat => cat.id === updatedCat.id);
+        if (index !== -1) {
+          state.cats[index] = updatedCat;
+        }
+      })
+      .addCase(updateCatAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });

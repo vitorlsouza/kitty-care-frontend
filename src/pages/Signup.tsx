@@ -28,18 +28,6 @@ const Signup = () => {
     password: "",
   });
 
-  // @ts-ignore
-  const [billingOption, setBillingOption] = useState({
-    method: true,
-    price: 0,
-    daily: 0.82,
-    monthly: 49.99,
-    yearly: 299.99,
-    trustOption: true,
-    nostringOption: true,
-    saveOption: true,
-  });
-
   const [error, setError] = useState({
     first_name: "",
     last_name: "",
@@ -62,13 +50,6 @@ const Signup = () => {
     // Clear errors when user types
     setError(prev => ({ ...prev, [name]: "", general: "" }));
   };
-
-  // const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setBillingOption({
-  //     ...billingOption,
-  //     [e.target.name]: e.target.checked,
-  //   });
-  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -115,14 +96,14 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row sm:px-[381px] justify-between">
-        <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
+        <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
           <SwitchMethod />
         </div>
-        <div className="m-auto sm:m-0">
-          <div className="w-[343px] px-[21px] py-[47px] sm:w-[610px] sm:px-[104px] sm:py-[50px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-            <div className="w-full h-full flex flex-col items-center justify-between">
+        <div className="m-auto w-full sm:m-0">
+          <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+            <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
                   Sign up

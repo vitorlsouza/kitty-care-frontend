@@ -1,6 +1,7 @@
 export interface AuthToken {
   token: string;
   expiresIn: string;
+  photo: string;
 }
 
 export interface UserState {
@@ -48,6 +49,17 @@ export interface SignupState {
 export interface LoginState {
   email: string;
   password: string;
+}
+
+export interface ProfileState {
+  name: string;
+  breed: string;
+  gender: string;
+  color: string;
+  medicalHistory: string;
+  dietaryPreferences: string;
+  status: string;
+  error: string;
 }
 
 export interface TextInputProps {

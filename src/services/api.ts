@@ -120,7 +120,7 @@ export const getConversationsAPI = async () => {
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch conversations');
   }
-}; 
+};
 
 export const getConversationByIdAPI = async (id: string) => {
   try {
@@ -128,7 +128,7 @@ export const getConversationByIdAPI = async (id: string) => {
     if (!token) {
       throw new Error("User Not Authenticated");
     }
-    
+
     const response = await API.get(`/api/supabase/conversations/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -149,7 +149,7 @@ export const createPlanAPI = async () => {
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Create plan failed');
   }
-}; 
+};
 
 export const updatePlanAPI = async (credentials: PlanState) => {
   try {
@@ -157,6 +157,62 @@ export const updatePlanAPI = async (credentials: PlanState) => {
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Update plan failed');
+  }
+};
+
+type GetClientSecretKeyParams = {
+  name: string;
+  email: string;
+  paymentMethodId: string | undefined;
+  priceId: string;
+  trial_end: number;
+};
+
+type ClientSecretResponse = {
+  invoice: string;
+};
+
+export const getClientSecretKey = async ({
+  name,
+  email,
+  paymentMethodId,
+  priceId,
+  trial_end
+}: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
+  try {
+
+    const { invoice } = await API.post('/api/clientsecret', {
+        name,
+        email,
+        paymentMethodId,
+        priceId,
+        trial_end
+    }).then(r => r.data);
+
+    return { invoice };
+
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
+  }
+};
+
+export const updateCatAPI = async (catData: any) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const catId = localStorage.getItem('catId');
+    const response = await API.put(`/api/supabase/cats/${catId}`, catData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to update cat');
   }
 };
 
@@ -178,5 +234,6 @@ export const createCatAPI = async (catDetails: any) => {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to create cat');
   }
 };
+
 
 export default baseURL;

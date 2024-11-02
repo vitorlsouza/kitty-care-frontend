@@ -8,16 +8,23 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
+import { getCode } from "country-list";
 
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
+import { getClientSecretKey } from "../services/api";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const billingOption = useAppSelector((state: RootState) => state.billing);
+  const userInfo = useAppSelector((state: RootState) => state.user);
 
   const [error, setError] = useState({
     first_name: "",
@@ -61,17 +68,37 @@ const PaymentForm = () => {
     setIsLoading(true);
 
     try {
-      const result = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-complete`,
+
+      const { paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(
+          CardNumberElement
+        ) as StripeCardNumberElement,
+        billing_details: {
+          name: formData.fullName,
+          email: userInfo.email,
+          address: {
+            country: getCode(formData.country),
+            state: formData.state,
+            postal_code: formData.postalCode,
+          },
         },
       });
 
-      if (result.error) {
-        setError({ ...error, general: result.error?.message || "" });
+      const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
+      console.log("triel_end", trial_end, userInfo.email);
+
+
+      const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
+
+      const { invoice } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
+
+      // Confirm the payment
+      if (invoice) {
+        navigate("/progress");
+        console.log('Subscription successful!');
       }
-      navigate("/progress");
+
     } catch (err) {
       setError({ ...error, general: "An unexpected error occurred." });
     } finally {
@@ -107,20 +134,21 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
-      <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
+    <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
+      <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
         <SwitchMethod />
       </div>
-      <div className="m-auto sm:m-0 my-2">
-        <div className="w-[343px] px-[21px] py-[20px] sm:w-[610px] sm:px-[50px] sm:py-[44px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+      <div className="m-auto w-full sm:m-0">
+        <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <div className="text-center text-[40px] font-semibold capitalize">
-                $0 Today
+                ${billingOption.price} Today
               </div>
               <div className="text-center text-[18px] font-medium opacity-60 text-black">
-                $0.00 for 7-day free trial; converts to $299.99 annually
-                renewing subscription.
+                {billingOption.method
+                  ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+                  : "$0.00 for 3-day free trial; converts to $49.99 annually renewing subscription."}
               </div>
             </div>
             <div>
@@ -133,6 +161,7 @@ const PaymentForm = () => {
                 value={formData.fullName}
                 onChange={handleInputChange}
                 className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                placeholder="Enter your full name"
                 required
               />
             </div>
@@ -177,7 +206,8 @@ const PaymentForm = () => {
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
-                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                placeholder="Select country"
                 required
               />
             </div>
@@ -192,7 +222,7 @@ const PaymentForm = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                   required
                 />
               </div>
@@ -206,7 +236,7 @@ const PaymentForm = () => {
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                   required
                 />
               </div>
@@ -229,6 +259,7 @@ const PaymentForm = () => {
               </button>
             </div>
           </form>
+          <div className="text-red-500">{error.general}</div>
         </div>
       </div>
     </div>

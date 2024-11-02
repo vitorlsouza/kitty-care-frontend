@@ -1,32 +1,26 @@
-import { useState } from "react";
 import CheckOption from "../Login/CheckOption";
 import Toggle from "../Login/Toggle";
+import { changeMethod } from "../../Redux/features/billingSlice";
+import { RootState } from "../../Redux/store";
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 
 const SwitchMethod = () => {
+  const billingOption = useAppSelector((state: RootState) => state.billing);
 
-  const [billingOption, setBillingOption] = useState({
-    method: true,
-    price: 0,
-    daily: 0.82,
-    monthly: 49.99,
-    yearly: 299.99,
-    trustOption: true,
-    nostringOption: true,
-    saveOption: true,
-  });
+  const dispatch = useAppDispatch();
 
   const handleBillInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBillingOption({
+    dispatch(changeMethod({
       ...billingOption,
       [e.target.name]: e.target.checked,
-    });
+    }));
   };
-  
+
   return (
-    <div className="w-full">
+    <div className="w-full text-justify">
       <label className="flex gap-[16px] items-center cursor-pointer my-8">
         <span
-          className={`text-[18px] text-black dark:text-gray-300 capitalize  ${
+          className={`text-[14px] sm:text-[18px] text-black dark:text-gray-300 capitalize  ${
             billingOption.method ? "font-medium opacity-60" : "font-bold"
           }`}
         >
@@ -38,19 +32,19 @@ const SwitchMethod = () => {
           onChange={handleBillInfo}
         />
         <span
-          className={`text-[18px] text-black dark:text-gray-300 capitalize  ${
+          className={`text-[14px] sm:text-[18px] text-black dark:text-gray-300 capitalize  ${
             !billingOption.method ? "font-medium opacity-60" : "font-bold"
           }`}
         >
           Annually
         </span>
       </label>
-      <div className="text-xl font-semibold capitalize opacity-60">
+      <div className="text-base sm:text-xl font-semibold capitalize opacity-60">
         Get Full Access To
         <br />
         Kitty Care's Expert Advice For
       </div>
-      <div className="text-[50px] font-semibold text-[#0061EF] mt-3">
+      <div className="text-[50px] sm:text-[64px] font-semibold text-[#0061EF] mt-3">
         ${billingOption.price} Today
       </div>
       <div className="text-xl sm:text-2xl font-semibold leading-normal w-full">

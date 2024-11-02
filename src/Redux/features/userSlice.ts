@@ -34,7 +34,8 @@ export const loginUserAsync = createAsyncThunk(
 
       setAuthToken({
         token: response.token,
-        expiresIn: response.expiresIn || '1h'
+        expiresIn: response.expiresIn || '1h',
+        photo: response.photo || ''
       });
 
       // Ignore any errors from fetchCatsAsync
@@ -71,6 +72,11 @@ export const userSlice = createSlice({
       })
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
+          setAuthToken({
+            token: action.payload.token,
+            expiresIn: action.payload.expiresIn || '1h',
+            photo: action.payload.photo || ''
+          });
           Object.assign(state, {
             status: 'succeeded',
             isAuthenticated: true
@@ -86,6 +92,11 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
+          setAuthToken({
+            token: action.payload.token,
+            expiresIn: action.payload.expiresIn || '1h',
+            photo: action.payload.photo || ''
+          });
           Object.assign(state, {
             status: 'succeeded',
             isAuthenticated: true
