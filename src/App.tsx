@@ -21,8 +21,12 @@ function App() {
   useEffect(() => {
     // Check authentication status periodically
     const checkAuth = () => {
-      if (!isAuthenticated()) {
+      const auth = isAuthenticated();
+      if (!auth) {
         dispatch(logout());
+      }
+      else {
+        console.log(auth);
       }
     };
 

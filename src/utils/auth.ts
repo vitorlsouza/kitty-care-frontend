@@ -12,13 +12,25 @@ export const clearAuthToken = () => {
   localStorage.removeItem('expiresAt');
 };
 
-export const isAuthenticated = (): boolean => {
+export const isAuthenticated = (): null | any => {
   const token = localStorage.getItem('token');
   const expiresAt = localStorage.getItem('expiresAt');
   
-  if (!token || !expiresAt) return false;
+  if (!token || !expiresAt) return null;
   
-  return new Date().getTime() < parseInt(expiresAt);
+  const isValid = new Date().getTime() < parseInt(expiresAt);
+  if(!isValid) return null;
+  
+  try {
+    // Get user info from token
+    const payload = token.split('.')[1];
+    const user = JSON.parse(atob(payload));
+    
+    return user;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
 };
 
 // Helper to parse expiration time (e.g., "1h" to milliseconds)
