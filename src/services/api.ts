@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Message, LoginState, PlanState, SignupState } from '../utils/types';
+import { Message, LoginState, PlanState, SignupState, ProfileState } from '../utils/types';
 
 const baseURL = import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app';
 
@@ -166,6 +166,15 @@ export const removePlanAPI = async () => {
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Cancel plan failed');
+  }
+}
+
+export const updateProfileAPI = async (profileData: ProfileState) => {
+  try {
+    const response = await API.put('/api/supabase/updateProfile', profileData);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Update plan failed');
   }
 };
 
