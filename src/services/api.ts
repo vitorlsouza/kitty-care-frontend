@@ -181,17 +181,13 @@ export const getClientSecretKey = async ({
 }: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
   try {
 
-    const { invoice } = await fetch('http://localhost:3001/clientsecret', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    const { invoice } = await API.post('/api/clientsecret', {
         name,
         email,
         paymentMethodId,
         priceId,
         trial_end
-      }),
-    }).then(r => r.json());
+    }).then(r => r.data);
 
     return { invoice };
 
