@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { signUpAPI, loginAPI } from '../../services/api';
 import { LoginState, SignupState, UserState } from '../../utils/types';
-import { setAuthToken, clearAuthToken } from '../../utils/auth';
+import { setAuthToken, clearTokens } from '../../utils/auth';
 
 const initialState: UserState = {
   first_name: '',
@@ -46,7 +46,7 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     },
     logout: () => {
-      clearAuthToken();
+      clearTokens();
       return initialState;
     },
   },

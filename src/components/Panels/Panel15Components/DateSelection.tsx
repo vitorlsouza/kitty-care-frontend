@@ -7,7 +7,7 @@ const DateSelection: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    const storedDate = localStorage.getItem("selectedDate");
+    const storedDate = localStorage.getItem("selected_date");
     if (storedDate) {
       setSelectedDate(new Date(storedDate));
     }
@@ -16,9 +16,9 @@ const DateSelection: React.FC = () => {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
     if (date) {
-      localStorage.setItem("selectedDate", date.toString());
+      localStorage.setItem("selected_date", date.toString());
     } else {
-      localStorage.removeItem("selectedDate");
+      localStorage.removeItem("selected_date");
     }
   };
 
@@ -50,10 +50,8 @@ const DateSelection: React.FC = () => {
         <div className="flex flex-col items-center justify-center gap-3">
           <h3 className="font-bold text-sm text-black">You have selected</h3>
           <div>
-            {localStorage
-              .getItem("training_days")
-              ?.split(",")
-              .map((item) => (
+            {JSON.parse(localStorage.getItem("training_days") || "[]")
+              .map((item: string) => (
                 <span
                   className="bg-primaryBlue text-white px-3 py-1 rounded-md font-bold text-xs mx-1"
                   key={item}

@@ -48,6 +48,7 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
         "target_weight",
         parseFloat(targetWeight).toFixed(2)
       );
+
   }, [breed, weight, unit, targetWeight]);
 
   const handleSubmit = () => {
@@ -138,9 +139,8 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
           <div className="flex justify-center items-center space-x-4 lg:space-x-0 lg:gap-2">
             <button
               onClick={() => setUnit("Lbs")}
-              className={`px-4 py-2 rounded-full border ${
-                unit === "Lbs" ? "bg-primaryBlue text-white" : "border-gray-300"
-              }`}
+              className={`px-4 py-2 rounded-full border ${unit === "Lbs" ? "bg-primaryBlue text-white" : "border-gray-300"
+                }`}
             >
               Lbs
             </button>
@@ -153,9 +153,8 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
             />
             <button
               onClick={() => setUnit("Kg")}
-              className={`px-4 py-2 rounded-full border ${
-                unit === "Kg" ? "bg-primaryBlue text-white" : "border-gray-300"
-              }`}
+              className={`px-4 py-2 rounded-full border ${unit === "Kg" ? "bg-primaryBlue text-white" : "border-gray-300"
+                }`}
             >
               Kg
             </button>

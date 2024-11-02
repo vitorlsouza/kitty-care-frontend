@@ -87,11 +87,10 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
           <div
             key={level.id}
             onClick={() => setSelectedActivity(level.id)}
-            className={`cursor-pointer flex items-start p-2 sm:p-4 w-full space-x-4 border-2 rounded-2xl transition-colors ${
-              selectedActivity === level.id
-                ? "bg-primaryBlue text-white border-primaryBlue"
-                : "border-gray-300 bg-white"
-            }`}
+            className={`cursor-pointer flex items-start p-2 sm:p-4 w-full space-x-4 border-2 rounded-2xl transition-colors ${selectedActivity === level.id
+              ? "bg-primaryBlue text-white border-primaryBlue"
+              : "border-gray-300 bg-white"
+              }`}
           >
             <img
               src={level.image}
@@ -100,18 +99,16 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
             />
             <div className="flex flex-col justify-center">
               <h3
-                className={`font-medium ${
-                  selectedActivity === level.id ? "text-white" : "text-black"
-                } lg:text-xl text-base`}
+                className={`font-medium ${selectedActivity === level.id ? "text-white" : "text-black"
+                  } lg:text-xl text-base`}
               >
                 {level.title}
               </h3>
               <p
-                className={`${
-                  selectedActivity === level.id
-                    ? "text-white opacity-80"
-                    : "text-darkGray"
-                } text-xs md:text-sm font-extralight`}
+                className={`${selectedActivity === level.id
+                  ? "text-white opacity-80"
+                  : "text-darkGray"
+                  } text-xs md:text-sm font-extralight`}
               >
                 {level.description}
               </p>

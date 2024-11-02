@@ -30,7 +30,6 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
     },
   ];
 
-  // Load data from local storage on mount
   useEffect(() => {
     const storedFrequency = localStorage.getItem("check_in_period");
     if (storedFrequency) {
@@ -80,20 +79,18 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
           <div
             key={option.id}
             onClick={() => handleCardSelect(option.id)}
-            className={`cursor-pointer lg:h-20 border-2 p-4 lg:px-6 lg:py-2 rounded-2xl text-left transition-all duration-300 ${
-              selectedFrequency === option.id
-                ? "border-primaryBlue"
-                : "border-lightGray2"
-            }`}
+            className={`cursor-pointer lg:h-20 border-2 p-4 lg:px-6 lg:py-2 rounded-2xl text-left transition-all duration-300 ${selectedFrequency === option.id
+              ? "border-primaryBlue"
+              : "border-lightGray2"
+              }`}
           >
             <div className="flex justify-between items-center lg:space-x-4">
               <div className="flex flex-col">
                 <h3
-                  className={`text-md lg:text-lg font-semibold ${
-                    selectedFrequency === option.id
-                      ? "text-primaryBlue"
-                      : "text-black"
-                  }`}
+                  className={`text-md lg:text-lg font-semibold ${selectedFrequency === option.id
+                    ? "text-primaryBlue"
+                    : "text-black"
+                    }`}
                 >
                   {option.title}
                   {option.isRecommended && (
@@ -103,21 +100,19 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
                   )}
                 </h3>
                 <p
-                  className={`text-sm ${
-                    selectedFrequency === option.id
-                      ? "text-primaryBlue"
-                      : "text-darkGray"
-                  }`}
+                  className={`text-sm ${selectedFrequency === option.id
+                    ? "text-primaryBlue"
+                    : "text-darkGray"
+                    }`}
                 >
                   {option.description}
                 </p>
               </div>
               <div
-                className={`ml-4 lg:ml-auto w-6 h-6 rounded-full border-2 flex justify-center items-center ${
-                  selectedFrequency === option.id
-                    ? "border-primaryBlue"
-                    : "border-lightGray2"
-                }`}
+                className={`ml-4 lg:ml-auto w-6 h-6 rounded-full border-2 flex justify-center items-center ${selectedFrequency === option.id
+                  ? "border-primaryBlue"
+                  : "border-lightGray2"
+                  }`}
               >
                 {selectedFrequency === option.id && (
                   <span className="w-3 h-3 rounded-full bg-primaryYellow"></span>

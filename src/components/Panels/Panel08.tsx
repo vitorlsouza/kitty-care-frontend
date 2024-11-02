@@ -115,24 +115,21 @@ const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
           <div
             key={item.id}
             onClick={() => handleCardSelect(item.id)}
-            className={`cursor-pointer border-2 flex items-center justify-start h-24 md:h-20 px-4 sm:px-8 md:px-4 md:py-3 lg:py-5 rounded-2xl text-left transition-all duration-300 ${
-              selectedProgress === item.id
-                ? "bg-primaryBlue text-white"
-                : "border-gray-300"
-            }`}
+            className={`cursor-pointer border-2 flex items-center justify-start h-24 md:h-20 px-4 sm:px-8 md:px-4 md:py-3 lg:py-5 rounded-2xl text-left transition-all duration-300 ${selectedProgress === item.id
+              ? "bg-primaryBlue text-white"
+              : "border-gray-300"
+              }`}
           >
             <div className="">
               <h3
-                className={`text-md font-semibold ${
-                  selectedProgress === item.id ? "text-white" : "text-black"
-                }`}
+                className={`text-md font-semibold ${selectedProgress === item.id ? "text-white" : "text-black"
+                  }`}
               >
                 {item.title}
               </h3>
               <p
-                className={`text-xs ${
-                  selectedProgress === item.id ? "text-white" : "text-darkGray"
-                }`}
+                className={`text-xs ${selectedProgress === item.id ? "text-white" : "text-darkGray"
+                  }`}
               >
                 {item.description}
               </p>

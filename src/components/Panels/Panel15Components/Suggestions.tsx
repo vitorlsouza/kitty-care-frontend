@@ -2,6 +2,12 @@ import React from "react";
 import Tip from "../Tip";
 
 const Suggestions: React.FC = () => {
+  const foodBowls = JSON.parse(localStorage.getItem("food_bowls") || "0");
+  const treats = JSON.parse(localStorage.getItem("treats") || "0");
+  const playtime = JSON.parse(localStorage.getItem("playtime") || "0");
+
+  console.log(foodBowls, treats, playtime);
+
   return (
     <div className="w-full max-w-lg p-6 rounded-lg mx-auto font-inter">
       <h2 className="text-[20px] font-semibold text-center mb-4">
@@ -26,7 +32,7 @@ const Suggestions: React.FC = () => {
           <span className="bg-primaryBlue text-white px-3 py-1 rounded-full font-bold text-xs">
             Recommended
           </span>{" "}
-          1.5 cups of food per day based on your cat’s current weight and target
+          {foodBowls} cups of food per day based on your cat’s current weight and target
           weight.
         </p>
         <div className="flex items-center w-full px-6">
@@ -35,7 +41,7 @@ const Suggestions: React.FC = () => {
             type="range"
             min="1"
             max="3"
-            defaultValue="2"
+            defaultValue={parseInt(foodBowls)}
             className="flex-grow mx-2 appearance-none h-2 bg-gray-300 rounded-full accent-[#F4A623] cursor-pointer"
           />
           <span className="text-black font-medium text-sm">3</span>
@@ -61,10 +67,10 @@ const Suggestions: React.FC = () => {
         </div>
         <div className="flex flex-col items-center justify-center">
           <h1 className="font-inter text-base font-semibold text-black leading-[28px]">
-            2 Treats/Day
+            {treats} Treats/Day
           </h1>
           <p className="text-center font-inter font-medium text-black text-sm">
-            No more than 2 treats per day to help manage weight.
+            No more than {treats} treats per day to help manage weight.
           </p>
         </div>
       </div>
@@ -84,10 +90,10 @@ const Suggestions: React.FC = () => {
         </div>
         <div className="flex flex-col items-center justify-center">
           <h1 className="font-inter text-base font-semibold text-black leading-[28px]">
-            20 Minute Segments
+            {playtime} Minute Segments
           </h1>
           <p className="text-center font-inter font-thin text-black text-sm">
-            We suggest 20 minutes of active play per day to improve your cat’s
+            We suggest {playtime} minutes of active play per day to improve your cat’s
             lifestyle.
           </p>
           <h1 className="font-inter text-sm font-bold m-3">

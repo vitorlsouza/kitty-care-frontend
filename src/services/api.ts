@@ -160,4 +160,23 @@ export const updatePlanAPI = async (credentials: PlanState) => {
   }
 };
 
+export const createCatAPI = async (catDetails: any) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.post('/api/supabase/cats', catDetails, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to create cat');
+  }
+};
+
 export default baseURL;

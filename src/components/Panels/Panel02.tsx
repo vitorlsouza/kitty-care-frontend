@@ -6,7 +6,10 @@ interface Panel02Props {
   previousStep: () => void;
 }
 
-const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
+const Panel02: React.FC<Panel02Props> = ({
+  nextStep,
+  previousStep,
+}) => {
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
 
   const goals = [
@@ -66,12 +69,12 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
   useEffect(() => {
     const storedGoals = localStorage.getItem("goals");
     if (storedGoals) {
-      setSelectedGoals(storedGoals.split(","));
+      setSelectedGoals(JSON.parse(storedGoals));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("goals", selectedGoals.join(","));
+    localStorage.setItem("goals", JSON.stringify(selectedGoals));
   }, [selectedGoals]);
 
   return (
@@ -90,11 +93,10 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
           <div
             key={goal.title}
             onClick={() => handleGoalSelect(goal.title)}
-            className={`cursor-pointer border-2 border-lightGray2 py-8 px-6 rounded-lg text-left transition-colors ${
-              selectedGoals.includes(goal.title)
-                ? "bg-primaryBlue text-white"
-                : "border-gray-300 hover:bg-primaryBlue hover:text-white"
-            }`}
+            className={`cursor-pointer border-2 border-lightGray2 py-8 px-6 rounded-lg text-left transition-colors ${selectedGoals.includes(goal.title)
+              ? "bg-primaryBlue text-white"
+              : "border-gray-300 hover:bg-primaryBlue hover:text-white"
+              }`}
           >
             <h3 className="text-lg mb-1.5">{goal.title}</h3>
             <p className="text-sm opacity-80">{goal.description}</p>

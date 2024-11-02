@@ -7,9 +7,38 @@ export const setAuthToken = (authData: AuthToken) => {
   localStorage.setItem('expiresAt', expiresAt.toString());
 };
 
-export const clearAuthToken = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('expiresAt');
+export const clearTokens = () => {
+  const keysToRemove = [
+    "token",
+    "expiresAt",
+    "catId",
+    "ConversationId",
+    "activity_level",
+    "age",
+    "breed",
+    "check_in_period",
+    "country",
+    "dietary_restrictions",
+    "gender",
+    "goals",
+    "issues_faced",
+    "items",
+    "medical_conditions",
+    "medications",
+    "required_progress",
+    "selectedDate",
+    "surgery_history",
+    "target_weight",
+    "training_days",
+    "unit",
+    "weight",
+    "zipcode",
+    "food_bowls",
+    "treats",
+    "playtime",
+  ];
+
+  keysToRemove.forEach((key) => localStorage.removeItem(key));
 };
 
 export const isAuthenticated = (): boolean => {

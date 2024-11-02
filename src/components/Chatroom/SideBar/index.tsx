@@ -113,9 +113,8 @@ const SideBar = () => {
 
       <div className="block sm:hidden text-black text-base font-medium">
         <div
-          className={`h-screen fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${
-            isOpen ? `w-screen py-[32px]` : `w-0 py-0`
-          }`}
+          className={`h-screen fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${isOpen ? `w-screen py-[32px]` : `w-0 py-0`
+            }`}
         >
           <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
             <div className="flex flex-col gap-10">
@@ -147,13 +146,13 @@ const SideBar = () => {
                       id={item.id}
                       onHover={onHover}
                       src={item.src}
-                      handleHover={() => {}}
+                      handleHover={() => { }}
                       isOpen={isOpen}
                     />
                     <Content
                       id={item.id}
                       content={item.id}
-                      handleHover={() => {}}
+                      handleHover={() => { }}
                       onHover={onHover}
                     />
                   </div>
@@ -166,13 +165,13 @@ const SideBar = () => {
                   id={"Logout"}
                   onHover={onHover}
                   src={Logout}
-                  handleHover={() => {}}
+                  handleHover={() => { }}
                   isOpen={isOpen}
                 />
                 <Content
                   id="Logout"
                   content="Logout"
-                  handleHover={() => {}}
+                  handleHover={() => { }}
                   onHover={onHover}
                 />
               </div>
@@ -182,13 +181,13 @@ const SideBar = () => {
                     id={"Profile"}
                     onHover={onHover}
                     src={Profile}
-                    handleHover={() => {}}
+                    handleHover={() => { }}
                     isOpen={isOpen}
                   />
                   <Content
                     id="Profile"
                     content="Welcome Rosu"
-                    handleHover={() => {}}
+                    handleHover={() => { }}
                     onHover={onHover}
                   />
                 </div>

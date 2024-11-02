@@ -150,14 +150,13 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
       <div className="flex flex-col items-center mt-8">
         <button
           onClick={handleSubmit}
-          className={`px-8 py-2 rounded-full text-white ${
-            medicalCondition &&
+          className={`px-8 py-2 rounded-full text-white ${medicalCondition &&
             medication &&
             dietaryRestrictions &&
             surgeryHistory
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
+            ? "bg-primaryBlue hover:bg-primaryBlue"
+            : "bg-gray-300 cursor-not-allowed"
+            }`}
           disabled={
             !medicalCondition ||
             !medication ||

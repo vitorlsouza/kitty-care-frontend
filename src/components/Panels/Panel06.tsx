@@ -101,21 +101,19 @@ const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
           </p>
           <div className="flex justify-center space-x-3 ">
             <button
-              className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${
-                gender === "Male"
-                  ? "bg-primaryBlue text-white"
-                  : "border-gray-300"
-              }`}
+              className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${gender === "Male"
+                ? "bg-primaryBlue text-white"
+                : "border-gray-300"
+                }`}
               onClick={() => setGender("Male")}
             >
               Male
             </button>
             <button
-              className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${
-                gender === "Female"
-                  ? "bg-primaryBlue text-white"
-                  : "border-gray-300"
-              }`}
+              className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${gender === "Female"
+                ? "bg-primaryBlue text-white"
+                : "border-gray-300"
+                }`}
               onClick={() => setGender("Female")}
             >
               Female
