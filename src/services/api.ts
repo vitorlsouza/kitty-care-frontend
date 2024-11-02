@@ -235,5 +235,13 @@ export const createCatAPI = async (catDetails: any) => {
   }
 };
 
+export const removePlanAPI = async () => {
+  try {
+    const response = await API.delete('/api/supabase/removePlan');
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Cancel plan failed');
+  }
+}
 
 export default baseURL;
