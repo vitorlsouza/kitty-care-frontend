@@ -21,6 +21,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
     if (!input.trim()) return;
 
     setError("");
+    setInput("");
 
     const newMessage = {
       content: input,
@@ -45,8 +46,6 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
     } catch (err: any) {
       setError(err.message || "Failed to send message");
     }
-
-    setInput("");
   };
 
   return (
