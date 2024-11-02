@@ -160,6 +160,15 @@ export const updatePlanAPI = async (credentials: PlanState) => {
   }
 };
 
+export const removePlanAPI = async () => {
+  try {
+    const response = await API.delete('/api/supabase/removePlan');
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Cancel plan failed');
+  }
+};
+
 export const getClientSecretKey = async (amount: number, currency: string) => {
   try {
     const response = await API.post('/api/supabase/clientsecret', {amount, currency});

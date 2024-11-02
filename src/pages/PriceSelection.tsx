@@ -1,14 +1,30 @@
-import { useState } from "react";
 import PriceSelectBox from "../components/Payments/PriceSelectBox";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
+import { changeMethod, removePlanAsync } from "../Redux/features/billingSlice";
+import { useEffect } from "react";
 
 const PriceSelection = () => {
-  const [checked, setChecked] = useState(true);
+  const billingOption = useAppSelector((state: RootState) => state.billing);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(changeMethod({ yearly: 359.99 }));
+  }, []);
 
   const handleSubmit = () => {
     navigate("/paymentmethod");
+  };
+
+  const handleChecked = (value: boolean) => {
+    dispatch(changeMethod({ method: value, yearly: 359.99 }));
+  };
+
+  const handleCancel = () => {
+    dispatch(removePlanAsync());
   }
 
   return (
@@ -28,18 +44,18 @@ const PriceSelection = () => {
         </div>
         <div className="w-full flex flex-col gap-8">
           <div className="w-full sm:w-[1000px] flex flex-col sm:flex-row gap-8 m-auto">
-            <div className="w-full" onClick={() => setChecked(true)}>
+            <div className="w-full" onClick={() => handleChecked(true)}>
               <PriceSelectBox
-                checked={checked}
+                checked={billingOption.method}
                 method={true}
                 isBest={true}
                 annual={359.99}
                 daily={0.98}
               />
             </div>
-            <div className="w-full" onClick={() => setChecked(false)}>
+            <div className="w-full" onClick={() => handleChecked(false)}>
               <PriceSelectBox
-                checked={!checked}
+                checked={!billingOption.method}
                 method={false}
                 isBest={false}
                 monthly={49.99}
@@ -48,15 +64,23 @@ const PriceSelection = () => {
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-[14px] sm:text-[18px] text-center font-semibold">
-              After your free trial, the annual subscription is{" "}
-              <b>$359.99 USD</b> and automatically renews each year.
+              After your free trial, the{" "}
+              {billingOption.method ? "annual" : "monthly"} subscription is{" "}
+              <b>
+                $
+                {billingOption.method
+                  ? billingOption.yearly
+                  : billingOption.monthly}{" "}
+                USD
+              </b>{" "}
+              and automatically renews each {billingOption.method ? "year" : "month"}.
             </div>
             <div className="text-[16px] sm:text-[18px] text-center font-semibold text-[#0061EF]">
               <span>
                 <a href="#">Terms & Conditions</a>
               </span>{" "}
               <span className="hidden sm:inline">-</span>{" "}
-              <span className="block sm:inline">Cancel Anytime</span>
+              <span className="block sm:inline" onClick={handleCancel}>Cancel Anytime</span>
             </div>
           </div>
         </div>
