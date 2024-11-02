@@ -107,12 +107,12 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
-      <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
+    <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
+      <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
         <SwitchMethod />
       </div>
-      <div className="m-auto sm:m-0 my-2">
-        <div className="w-[343px] px-[21px] py-[20px] sm:w-[610px] sm:px-[50px] sm:py-[44px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+      <div className="m-auto w-full sm:m-0">
+        <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <div className="text-center text-[40px] font-semibold capitalize">
@@ -133,6 +133,7 @@ const PaymentForm = () => {
                 value={formData.fullName}
                 onChange={handleInputChange}
                 className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                placeholder="Enter your full name"
                 required
               />
             </div>
@@ -177,7 +178,8 @@ const PaymentForm = () => {
                 name="country"
                 value={formData.country}
                 onChange={handleInputChange}
-                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                placeholder="Select country"
                 required
               />
             </div>
@@ -192,7 +194,7 @@ const PaymentForm = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                   required
                 />
               </div>
@@ -206,7 +208,7 @@ const PaymentForm = () => {
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
                   required
                 />
               </div>
