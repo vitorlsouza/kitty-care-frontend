@@ -50,6 +50,17 @@ export interface LoginState {
   password: string;
 }
 
+export interface ProfileState {
+  name: string;
+  breed: string;
+  gender: string;
+  color: string;
+  medicalHistory: string;
+  dietaryPreferences: string;
+  status: string;
+  error: string;
+}
+
 export interface TextInputProps {
   name: string;
   label: string;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { createPlanAPI, updatePlanAPI } from "../../services/api";
+import { createPlanAPI, removePlanAPI, updatePlanAPI } from "../../services/api";
 import { BillingState, PlanState } from "../../utils/types";
 import { setAuthToken, clearAuthToken } from "../../utils/auth";
 
@@ -36,6 +36,18 @@ export const updatePlanAsync = createAsyncThunk(
   ) => {
     try {
       const response = await updatePlanAPI(credentials);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const removePlanAsync = createAsyncThunk(
+  "billing/removePlan",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await removePlanAPI();
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
