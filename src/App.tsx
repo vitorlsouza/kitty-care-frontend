@@ -10,7 +10,7 @@ import Chatroom from "./pages/Chatroom";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { useEffect } from "react";
 import { useAppDispatch } from "./Redux/hooks";
-import { logout } from "./Redux/features/userSlice";
+import { logout, signUpUser } from "./Redux/features/userSlice";
 import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
 import Profile from "./pages/Profile.tsx";
@@ -21,10 +21,16 @@ function App() {
   useEffect(() => {
     // Check authentication status periodically
     const checkAuth = () => {
-      if (!isAuthenticated()) {
+      const auth = isAuthenticated();
+      
+      if (!auth) {
         dispatch(logout());
       }
+      else {
+        dispatch(signUpUser({email: auth.email, first_name: auth.full_name.split(" ")[0], last_name: auth.full_name.split(" ")[1]}));
+      }
     };
+    checkAuth();
 
     const interval = setInterval(checkAuth, 60000); // Check every minute
     return () => clearInterval(interval);

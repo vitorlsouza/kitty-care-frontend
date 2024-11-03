@@ -65,7 +65,7 @@ const PaymentForm = () => {
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading(true);    
 
     try {
 
@@ -86,15 +86,14 @@ const PaymentForm = () => {
       });
 
       const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
-      console.log("triel_end", trial_end, userInfo.email);
 
 
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
 
-      const { invoice } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
+      const { success } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
 
       // Confirm the payment
-      if (invoice) {
+      if (success) {
         navigate("/progress");
         console.log('Subscription successful!');
       }
