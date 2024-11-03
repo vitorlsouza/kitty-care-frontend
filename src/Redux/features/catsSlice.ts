@@ -40,9 +40,9 @@ const initialState: CatsState = loadInitialState();
 
 export const fetchCatsAsync = createAsyncThunk(
   'cats/fetchCats',
-  async (token: string, { rejectWithValue }) => {
+  async (token: string | undefined, { rejectWithValue }) => {
     try {
-      const response = await getCatsAPI(token);
+      const response = await getCatsAPI(token || '');
 
       if (Array.isArray(response)) {
         const highestIdCat = response.reduce((maxCat, cat) => (cat.id > maxCat.id ? cat : maxCat), response[0]);
