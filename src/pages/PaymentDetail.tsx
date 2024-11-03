@@ -66,6 +66,8 @@ const PaymentForm = () => {
     }
 
     setIsLoading(true);
+    console.log(userInfo.email);
+    
 
     try {
 
@@ -91,10 +93,10 @@ const PaymentForm = () => {
 
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID
 
-      const { invoice } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
+      const { success } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
 
       // Confirm the payment
-      if (invoice) {
+      if (success) {
         navigate("/progress");
         console.log('Subscription successful!');
       }

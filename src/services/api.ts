@@ -2,11 +2,13 @@ import axios from 'axios';
 import { Message, LoginState, PlanState, SignupState } from '../utils/types';
 
 const baseURL = import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app';
+const token = localStorage.getItem('token');
 
 const API = axios.create({
   baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
   },
 });
 
@@ -30,16 +32,10 @@ export const loginAPI = async (credentials: LoginState) => {
 
 export const chatAPI = async ({ catId, messages }: { catId: string; messages: Message[] }) => {
   try {
-    const token = localStorage.getItem('token');
     if (!token) {
       throw new Error("User Not Authenticated");
     }
-    const response = await API.post('/api/openai/chat', { catId, messages }, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await API.post('/api/openai/chat', { catId, messages });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Chat request failed');
@@ -53,12 +49,7 @@ export const getCatsAPI = async () => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.get('/api/supabase/cats', {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await API.get('/api/supabase/cats');
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch cats');
@@ -72,12 +63,7 @@ export const updateConversationAPI = async ({ id, messages }: { id: string; mess
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.put(`/api/supabase/conversations/${id}`, { messages }, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await API.put(`/api/supabase/conversations/${id}`, { messages });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to update conversation');
@@ -91,12 +77,7 @@ export const createConversationAPI = async () => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.post('/api/supabase/conversations', {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await API.post('/api/supabase/conversations', {});
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to create conversation');
@@ -110,12 +91,7 @@ export const getConversationsAPI = async () => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.get('/api/supabase/conversations', {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await API.get('/api/supabase/conversations');
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch conversations');
@@ -129,12 +105,7 @@ export const getConversationByIdAPI = async (id: string) => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.get(`/api/supabase/conversations/${id}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await API.get(`/api/supabase/conversations/${id}`);
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch conversation');
@@ -159,6 +130,14 @@ export const updatePlanAPI = async (credentials: PlanState) => {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Update plan failed');
   }
 };
+export const removePlanAPI = async () => {
+  try {
+    const response = await API.delete('/api/supabase/removePlan');
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Remove plan failed');
+  }
+};
 
 type GetClientSecretKeyParams = {
   name: string;
@@ -169,7 +148,7 @@ type GetClientSecretKeyParams = {
 };
 
 type ClientSecretResponse = {
-  invoice: string;
+  success: boolean;
 };
 
 export const getClientSecretKey = async ({
@@ -181,7 +160,7 @@ export const getClientSecretKey = async ({
 }: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
   try {
 
-    const { invoice } = await API.post('/api/confirm-stripe-payment', {
+    const { success } = await API.post('/api/payments/stripe/subscription', {
         name,
         email,
         paymentMethodId,
@@ -189,7 +168,7 @@ export const getClientSecretKey = async ({
         trial_end
     }).then(r => r.data);
 
-    return { invoice };
+    return { success };
 
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
