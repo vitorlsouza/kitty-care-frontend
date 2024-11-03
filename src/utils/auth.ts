@@ -5,8 +5,7 @@ export const setAuthToken = (authData: AuthToken) => {
   // Convert expiresIn to timestamp
   const expiresAt = new Date().getTime() + parseExpirationTime(authData.expiresIn);
   localStorage.setItem('expiresAt', expiresAt.toString());
-
-  localStorage.setItem('photo', authData?.photo);
+  if(authData.photo)  localStorage.setItem('photo', authData.photo);
 };
 
 export const clearTokens = () => {
