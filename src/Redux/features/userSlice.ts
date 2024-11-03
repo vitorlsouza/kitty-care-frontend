@@ -47,7 +47,7 @@ export const loginUserAsync = createAsyncThunk(
       });
 
       try {
-        dispatch(fetchSubscriptionsAsync(response.token)).unwrap();
+        await dispatch(fetchSubscriptionsAsync(response.token)).unwrap();
       } catch (error) {
         // Silently ignore any errors from fetchSubscriptionsAsync
       }

@@ -38,7 +38,10 @@ export const clearTokens = () => {
     "food_bowls",
     "treats",
     "playtime",
-    "subscriptionId"
+    "subscriptionId",
+    "goals",
+    "issues_identified",
+    "required_progress"
   ];
 
   keysToRemove.forEach((key) => localStorage.removeItem(key));
