@@ -14,11 +14,16 @@ import { logout, signUpUser } from "./Redux/features/userSlice";
 import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
 import Profile from "./pages/Profile.tsx";
+import ReactPixel from 'react-facebook-pixel';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // Initialize Facebook Pixel
+    ReactPixel.init('1245735489886653');
+    ReactPixel.pageView();
+
     // Check authentication status periodically
     const checkAuth = () => {
       const auth = isAuthenticated();

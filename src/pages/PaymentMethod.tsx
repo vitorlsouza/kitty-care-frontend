@@ -8,6 +8,7 @@ import GooglePayBtn from "../components/Payments/GooglePayBtn";
 import { createPlanAsync } from "../Redux/features/billingSlice";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
+import ReactPixel from 'react-facebook-pixel';
 
 const PaymentMethod = () => {
   useEffect(() => {
@@ -15,6 +16,9 @@ const PaymentMethod = () => {
     if (subscriptionId) {
       navigate("/cat-assistant");
     }
+
+    // Track InitiateCheckout when payment method page loads
+    ReactPixel.track('InitiateCheckout');
   }, []);
 
   const [error, setError] = useState<string>("");
@@ -135,6 +139,12 @@ const PaymentMethod = () => {
   const handlePaymentComplete = async () => {
     try {
       await dispatch(createPlanAsync(billingOption)).unwrap();
+
+      // Track Purchase event after successful payment
+      ReactPixel.track('Purchase', {
+        value: billingOption.method ? billingOption.yearly : billingOption.monthly,
+        currency: 'USD'
+      });
 
       // Clear form and errors
       setError("");

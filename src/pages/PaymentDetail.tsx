@@ -18,6 +18,7 @@ import { RootState } from "../Redux/store";
 import { getClientSecretKey } from "../services/api";
 import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
 import { useAppDispatch } from "../Redux/hooks";
+import ReactPixel from 'react-facebook-pixel';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -103,6 +104,8 @@ const PaymentForm = () => {
         },
       });
 
+      ReactPixel.track('AddPaymentInfo');
+
       const trial_end = (billingOption.method ? 7 : 3) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
 
@@ -123,6 +126,11 @@ const PaymentForm = () => {
           provider: formData.provider,
           billing_period: formData.billing_period
         })).unwrap();
+
+        ReactPixel.track('Purchase', {
+          value: billingOption.price,
+          currency: 'USD'
+        });
 
         navigate("/progress");
       }
