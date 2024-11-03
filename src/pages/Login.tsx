@@ -61,6 +61,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
+      const urlParams = new URLSearchParams(window.location.search);
       await dispatch(loginUserAsync({
         email: userInfo.email,
         password: userInfo.password,
@@ -75,7 +76,7 @@ const Login = () => {
       if (token) {
         const subscriptionId = localStorage.getItem("subscriptionId");
         if (!subscriptionId || subscriptionId === "undefined") {
-          navigate("/priceselection");
+          navigate("/priceselection?" + urlParams.toString());
         } else {
           const catId = localStorage.getItem("catId");
           if (!catId || catId === "undefined") {
