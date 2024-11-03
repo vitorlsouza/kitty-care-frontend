@@ -1,6 +1,7 @@
 export interface AuthToken {
   token: string;
   expiresIn: string;
+  email: string;
   photo?: string;
 }
 
@@ -108,4 +109,14 @@ export interface LocalStorage {
   bearerToken: string;
   catId: string;
   conversationId: string;
+  subscriptionId: string;
+}
+
+export interface SubscriptionState {
+  id: string;
+  plan: string;
+  end_date: string;
+  start_date: string;
+  provider: string;
+  billing_period: string;
 }

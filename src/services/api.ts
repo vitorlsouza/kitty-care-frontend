@@ -1,15 +1,10 @@
 import axios from 'axios';
-import { Message, LoginState, PlanState, SignupState } from '../utils/types';
+import { Message, LoginState, PlanState, SignupState, SubscriptionState } from '../utils/types';
 
 const baseURL = import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app';
-const token = localStorage.getItem('token');
 
 const API = axios.create({
   baseURL: baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
-  },
 });
 
 export const signUpAPI = async (userData: SignupState) => {
@@ -32,24 +27,35 @@ export const loginAPI = async (credentials: LoginState) => {
 
 export const chatAPI = async ({ catId, messages }: { catId: string; messages: Message[] }) => {
   try {
+    const token = localStorage.getItem('token');
     if (!token) {
       throw new Error("User Not Authenticated");
     }
-    const response = await API.post('/api/openai/chat', { catId, messages });
+    const response = await API.post('/api/openai/chat', { catId, messages }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Chat request failed');
   }
 };
 
-export const getCatsAPI = async () => {
+export const getCatsAPI = async (token: string) => {
   try {
-    const token = localStorage.getItem('token');
+    token = localStorage.getItem('token') || token;
     if (!token) {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.get('/api/supabase/cats');
+    const response = await API.get('/api/supabase/cats', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch cats');
@@ -63,7 +69,12 @@ export const updateConversationAPI = async ({ id, messages }: { id: string; mess
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.put(`/api/supabase/conversations/${id}`, { messages });
+    const response = await API.put(`/api/supabase/conversations/${id}`, { messages }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to update conversation');
@@ -77,7 +88,12 @@ export const createConversationAPI = async () => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.post('/api/supabase/conversations', {});
+    const response = await API.post('/api/supabase/conversations', {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to create conversation');
@@ -91,7 +107,12 @@ export const getConversationsAPI = async () => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.get('/api/supabase/conversations');
+    const response = await API.get('/api/supabase/conversations', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch conversations');
@@ -105,7 +126,12 @@ export const getConversationByIdAPI = async (id: string) => {
       throw new Error("User Not Authenticated");
     }
 
-    const response = await API.get(`/api/supabase/conversations/${id}`);
+    const response = await API.get(`/api/supabase/conversations/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch conversation');
@@ -115,7 +141,17 @@ export const getConversationByIdAPI = async (id: string) => {
 
 export const createPlanAPI = async () => {
   try {
-    const response = await API.post('/api/supabase/createPlan');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.post('/api/supabase/createPlan', {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Create plan failed');
@@ -124,7 +160,17 @@ export const createPlanAPI = async () => {
 
 export const updatePlanAPI = async (credentials: PlanState) => {
   try {
-    const response = await API.put('/api/supabase/updatePlan', credentials);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.put('/api/supabase/updatePlan', credentials, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Update plan failed');
@@ -133,14 +179,10 @@ export const updatePlanAPI = async (credentials: PlanState) => {
 
 type GetClientSecretKeyParams = {
   name: string;
-  email: string;
+  email: string | null;
   paymentMethodId: string | undefined;
   priceId: string;
   trial_end: number;
-};
-
-type ClientSecretResponse = {
-  success: boolean;
 };
 
 export const getClientSecretKey = async ({
@@ -149,32 +191,40 @@ export const getClientSecretKey = async ({
   paymentMethodId,
   priceId,
   trial_end
-}: GetClientSecretKeyParams): Promise<ClientSecretResponse> => {
+}: GetClientSecretKeyParams) => {
   try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+    const response = await API.post('/api/payments/stripe/subscription', {
+      name,
+      email,
+      paymentMethodId,
+      priceId,
+      trial_end
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
 
-    const { success } = await API.post('/api/payments/stripe/subscription', {
-        name,
-        email,
-        paymentMethodId,
-        priceId,
-        trial_end
-    }).then(r => r.data);
-
-    return { success };
+    return response.data;
 
   } catch (error: any) {
+    console.log("error", error);
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Get client secret key failed');
   }
 };
 
-export const updateCatAPI = async (catData: any) => {
+export const updateCatAPI = async (catData: any, catId: string | null) => {
   try {
     const token = localStorage.getItem('token');
     if (!token) {
       throw new Error("User Not Authenticated");
     }
 
-    const catId = localStorage.getItem('catId');
     const response = await API.put(`/api/supabase/cats/${catId}`, catData, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -208,11 +258,91 @@ export const createCatAPI = async (catDetails: any) => {
 
 export const removePlanAPI = async () => {
   try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
     const response = await API.delete('/api/supabase/removePlan');
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Cancel plan failed');
   }
 }
+
+export const createSubscriptionAPI = async (subscriptionData: SubscriptionState) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.post('/api/supabase/subscriptions', subscriptionData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to create subscription');
+  }
+};
+
+export const getSubscriptionsAPI = async (token: string) => {
+  try {
+    token = localStorage.getItem('token') || token;
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.get('/api/supabase/subscriptions', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to fetch subscriptions');
+  }
+};
+
+export const deleteSubscriptionAPI = async (subscriptionId: string) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.delete(`/api/supabase/subscriptions/${subscriptionId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to delete subscription');
+  }
+};
+
+export const deleteStripeSubscriptionAPI = async (subscriptionId: string) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+    const response = await API.delete(`/api/payments/stripe/subscription/${subscriptionId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to delete subscription');
+  }
+};
 
 export default baseURL;

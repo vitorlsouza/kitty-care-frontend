@@ -40,14 +40,18 @@ const initialState: CatsState = loadInitialState();
 
 export const fetchCatsAsync = createAsyncThunk(
   'cats/fetchCats',
-  async (_, { rejectWithValue }) => {
+  async (token: string, { rejectWithValue }) => {
     try {
-      const response = await getCatsAPI();
+      const response = await getCatsAPI(token);
 
       if (Array.isArray(response)) {
-        const highestId = response.reduce((max, cat) => Math.max(max, cat.id), 0);
-        localStorage.setItem('catId', JSON.stringify(highestId));
-        return response;
+        const highestIdCat = response.reduce((maxCat, cat) => (cat.id > maxCat.id ? cat : maxCat), response[0]);
+        localStorage.setItem('catId', JSON.stringify(highestIdCat.id));
+        localStorage.setItem('food_bowls', JSON.stringify(highestIdCat.food_bowls));
+        localStorage.setItem('treats', JSON.stringify(highestIdCat.treats));
+        localStorage.setItem('playtime', JSON.stringify(highestIdCat.playtime));
+
+        return highestIdCat;
       }
       throw new Error('Invalid response format');
     } catch (error: any) {
@@ -80,7 +84,8 @@ export const updateCatAsync = createAsyncThunk(
   'cats/updateCat',
   async ({ data }: { data: any }, { rejectWithValue }) => {
     try {
-      const response = await updateCatAPI(data);
+      const catId = localStorage.getItem('catId');
+      const response = await updateCatAPI(data, catId);
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);

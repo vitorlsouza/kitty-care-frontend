@@ -1,6 +1,7 @@
 import { AuthToken } from './types';
 
 export const setAuthToken = (authData: AuthToken) => {
+  localStorage.setItem('email', authData.email);
   localStorage.setItem('token', authData.token);
   // Convert expiresIn to timestamp
   const expiresAt = new Date().getTime() + parseExpirationTime(authData.expiresIn);
@@ -37,6 +38,7 @@ export const clearTokens = () => {
     "food_bowls",
     "treats",
     "playtime",
+    "subscriptionId"
   ];
 
   keysToRemove.forEach((key) => localStorage.removeItem(key));

@@ -17,7 +17,17 @@ const Signup = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/progress');
+      const subscriptionId = localStorage.getItem("subscriptionId");
+      if (!subscriptionId || subscriptionId === "undefined") {
+        navigate("/priceselection");
+      } else {
+        const catId = localStorage.getItem("catId");
+        if (!catId || catId === "undefined") {
+          navigate("/progress");
+        } else {
+          navigate('/cat-assistant');
+        }
+      }
     }
   }, []);
 

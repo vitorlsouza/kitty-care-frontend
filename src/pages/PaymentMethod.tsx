@@ -10,6 +10,13 @@ import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
 
 const PaymentMethod = () => {
+  useEffect(() => {
+    const subscriptionId = localStorage.getItem("subscriptionId");
+    if (subscriptionId) {
+      navigate("/cat-assistant");
+    }
+  }, []);
+
   const [error, setError] = useState<string>("");
 
   const [isApplePayAvailable, setIsApplePayAvailable] =
