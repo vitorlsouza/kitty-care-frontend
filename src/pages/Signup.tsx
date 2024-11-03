@@ -124,7 +124,7 @@ const Signup = () => {
                 <div className="text-base sm:text-lg font-medium">
                   Already have an account?{" "}
                   <span className="text-[#0061EF]">
-                    <a href="/login">Login</a>
+                    <a href={`/login?${urlParams.toString()}`}>Login</a>
                   </span>
                 </div>
               </div>

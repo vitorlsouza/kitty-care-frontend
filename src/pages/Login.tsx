@@ -11,6 +11,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const urlParams = new URLSearchParams(window.location.search);
+
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -61,7 +63,6 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const urlParams = new URLSearchParams(window.location.search);
       await dispatch(loginUserAsync({
         email: userInfo.email,
         password: userInfo.password,
@@ -106,7 +107,7 @@ const Login = () => {
           <div className="text-base sm:text-lg font-medium">
             New to KittyCare?{" "}
             <span className="block sm:inline text-[#0061EF]">
-              <a href="/signup">Sign up for free</a>
+              <a href={`/signup?${urlParams.toString()}`}>Sign up for free</a>
             </span>
           </div>
         </div>
