@@ -3,6 +3,7 @@ import userReducer from './features/userSlice';
 import chatReducer from './features/chatSlice';
 import catsReducer from './features/catsSlice';
 import billingReducer from './features/billingSlice';
+import subscriptionReducer from './features/subscriptionSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     chat: chatReducer,
     cats: catsReducer,
     billing: billingReducer,
+    subscription: subscriptionReducer,
   },
 });
 

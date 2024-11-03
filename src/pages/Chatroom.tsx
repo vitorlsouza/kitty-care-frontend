@@ -36,9 +36,14 @@ const Chatroom = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const catId = localStorage.getItem("catId");
-    if (!catId || catId === "undefined") {
-      navigate("/progress");
+    const subscriptionId = localStorage.getItem("subscriptionId");
+    if (!subscriptionId || subscriptionId === "undefined") {
+      navigate("/priceselection");
+    } else {
+      const catId = localStorage.getItem("catId");
+      if (!catId || catId === "undefined") {
+        navigate("/progress");
+      }
     }
   }, []);
 

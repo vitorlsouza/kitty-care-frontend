@@ -6,6 +6,13 @@ import { changeMethod, removePlanAsync } from "../Redux/features/billingSlice";
 import { useEffect } from "react";
 
 const PriceSelection = () => {
+  useEffect(() => {
+    const subscriptionId = localStorage.getItem("subscriptionId");
+    if (subscriptionId) {
+      navigate("/cat-assistant");
+    }
+  }, []);
+
   const billingOption = useAppSelector((state: RootState) => state.billing);
 
   const navigate = useNavigate();
@@ -25,7 +32,7 @@ const PriceSelection = () => {
 
   const handleCancel = () => {
     dispatch(removePlanAsync());
-  }
+  };
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">

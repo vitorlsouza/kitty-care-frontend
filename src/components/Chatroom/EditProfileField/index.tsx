@@ -88,6 +88,10 @@ const EditProfileField = () => {
     setProfileInfo(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleCancelSubscription = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="max-w-full sm:w-[1130px] p-2 pb-6 mx-auto">
       <header className="w-full h-[120px] flex justify-center items-center">
@@ -207,10 +211,7 @@ const EditProfileField = () => {
         finalDate="11/11/2024"
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onConfirm={() => {
-          console.log("confirm");
-          setIsModalOpen(false);
-        }}
+        onConfirm={handleCancelSubscription}
       />
     </div>
   );

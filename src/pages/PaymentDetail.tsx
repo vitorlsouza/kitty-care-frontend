@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import {
   Elements,
@@ -16,12 +16,22 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
 import { getClientSecretKey } from "../services/api";
+import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
+import { useAppDispatch } from "../Redux/hooks";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const PaymentForm = () => {
+  useEffect(() => {
+    const subscriptionId = localStorage.getItem("subscriptionId");
+    if (subscriptionId) {
+      navigate("/cat-assistant");
+    }
+  }, []);
+
   const stripe = useStripe();
   const elements = useElements();
+  const dispatch = useAppDispatch();
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
   const userInfo = useAppSelector((state: RootState) => state.user);
@@ -49,10 +59,10 @@ const PaymentForm = () => {
     country: "",
     state: "",
     postalCode: "",
-    planName: "Basic",
+    planName: "Free Trial", // TODO: change this to the actual plan name
     start_date: formatDate(new Date()),
     end_date: formatDate(new Date(new Date().getTime() + (billingOption.method ? 7 : 3) * 24 * 60 * 60 * 1000)),
-    provider: "stripe",
+    provider: "Stripe",
     billing_period: billingOption.method ? "Yearly" : "Monthly"
   });
 
@@ -84,7 +94,7 @@ const PaymentForm = () => {
         ) as StripeCardNumberElement,
         billing_details: {
           name: formData.fullName,
-          email: userInfo.email,
+          email: userInfo.email || localStorage.getItem("email"),
           address: {
             country: getCode(formData.country),
             state: formData.state,
@@ -94,23 +104,31 @@ const PaymentForm = () => {
       });
 
       const trial_end = (billingOption.method ? 7 : 3) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
-
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
-      const { success } = await getClientSecretKey({
+
+      const { subscriptionId, success } = await getClientSecretKey({
         name: formData.fullName,
-        email: userInfo.email,
+        email: userInfo.email || localStorage.getItem("email"),
         paymentMethodId: paymentMethod?.id,
         priceId,
         trial_end
       });
 
-      // Confirm the payment
       if (success) {
+        await dispatch(createSubscriptionAsync({
+          id: subscriptionId,
+          plan: formData.planName,
+          end_date: formData.end_date,
+          start_date: formData.start_date,
+          provider: formData.provider,
+          billing_period: formData.billing_period
+        })).unwrap();
+
         navigate("/progress");
-        console.log('Subscription successful!');
       }
 
     } catch (err) {
+      console.log("err", err);
       setError({ ...error, general: "An unexpected error occurred." });
     } finally {
       setIsLoading(false);

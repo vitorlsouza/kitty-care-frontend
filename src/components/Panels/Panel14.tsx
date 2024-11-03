@@ -1,26 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface Panel14Props {
   nextStep: () => void;
   previousStep: () => void;
 }
 
-const goalsData = [
-  {
-    title: "Selected Goals",
-    items: ["Scratching Less", "Lose Weight", "Improve Lifestyle"],
-  },
-  {
-    title: "Key Barriers Identified",
-    items: ["Time Constraints", "Stubborn Behavior"],
-  },
-  {
-    title: "Progress Focus",
-    items: ["Weight Loss"],
-  },
-];
-
 const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
+  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+  const [keyBarriers, setKeyBarriers] = useState<string[]>([]);
+  const [progressFocus, setProgressFocus] = useState<string[]>([]);
+
+  useEffect(() => {
+    const selectedGoals = JSON.parse(JSON.parse(localStorage.getItem('goals') || '[]'));
+    const keyBarriers = JSON.parse(JSON.parse(localStorage.getItem('issues_faced') || '[]'));
+    const progressFocus = JSON.parse(localStorage.getItem('required_progress') || '[]');
+
+    setSelectedGoals(selectedGoals);
+    setKeyBarriers(keyBarriers);
+    setProgressFocus(progressFocus);
+  }, []);
+
+
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
       <div className="text-center mb-6 lg:mb-8">
@@ -40,28 +40,66 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           </span>
         </div>
 
-        {goalsData.map((section, index) => (
-          <div
-            key={index}
-            className={`flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 ${index === 0 ? "mt-3 md:mt-5" : "mt-0"
-              }`}
-          >
-            <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
-              {section.title}
-            </h3>
+        {
+          selectedGoals.length > 0 && (
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
+              <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
+                Selected Goals
+              </h3>
 
-            <div className="flex flex-wrap justify-center md:justify-start gap-2">
-              {section.items.map((item, idx) => (
+              <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                {selectedGoals.map((item, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
+        {
+          keyBarriers.length > 0 && (
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
+              <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
+                Key Barriers Identified
+              </h3>
+
+              <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                {keyBarriers.map((item, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
+        {
+          progressFocus.length > 0 && (
+            <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
+              <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
+                Progress Focus
+              </h3>
+
+              <div className="flex flex-wrap justify-center md:justify-start gap-2">
                 <span
-                  key={idx}
                   className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
                 >
-                  {item}
+                  {progressFocus}
                 </span>
-              ))}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        }
+
       </div>
       <div className="flex justify-center mt-8 gap-2">
         <button
