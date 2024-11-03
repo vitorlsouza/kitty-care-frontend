@@ -36,6 +36,10 @@ const PaymentForm = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const formatDate = (date: Date) => {
+    return date.toISOString().split('T')[0]; // This will format to YYYY-MM-DD
+  };
+
   const [formData, setFormData] = useState({
     fullName: "",
     expiryMonth: "",
@@ -45,6 +49,11 @@ const PaymentForm = () => {
     country: "",
     state: "",
     postalCode: "",
+    planName: "Basic",
+    start_date: formatDate(new Date()),
+    end_date: formatDate(new Date(new Date().getTime() + (billingOption.method ? 7 : 3) * 24 * 60 * 60 * 1000)),
+    provider: "stripe",
+    billing_period: billingOption.method ? "Yearly" : "Monthly"
   });
 
   const navigate = useNavigate();
@@ -65,10 +74,9 @@ const PaymentForm = () => {
       return;
     }
 
-    setIsLoading(true);    
+    setIsLoading(true);
 
     try {
-
       const { paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card: elements.getElement(
@@ -85,12 +93,16 @@ const PaymentForm = () => {
         },
       });
 
-      const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
-
+      const trial_end = (billingOption.method ? 7 : 3) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
 
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
-
-      const { success } = await getClientSecretKey({ name: formData.fullName, email: userInfo.email, paymentMethodId: paymentMethod?.id, priceId, trial_end });
+      const { success } = await getClientSecretKey({
+        name: formData.fullName,
+        email: userInfo.email,
+        paymentMethodId: paymentMethod?.id,
+        priceId,
+        trial_end
+      });
 
       // Confirm the payment
       if (success) {
