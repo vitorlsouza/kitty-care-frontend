@@ -22,12 +22,12 @@ function App() {
     // Check authentication status periodically
     const checkAuth = () => {
       const auth = isAuthenticated();
-      
+
       if (!auth) {
         dispatch(logout());
       }
       else {
-        dispatch(signUpUser({email: auth.email, first_name: auth.full_name.split(" ")[0], last_name: auth.full_name.split(" ")[1]}));
+        dispatch(signUpUser({ email: auth?.email, first_name: auth?.full_name?.split(" ")[0], last_name: auth?.full_name?.split(" ")[1] }));
       }
     };
     checkAuth();
