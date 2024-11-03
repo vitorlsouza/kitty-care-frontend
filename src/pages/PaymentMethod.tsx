@@ -46,8 +46,7 @@ const PaymentMethod = () => {
     intent: "capture",
   };
 
-  // @ts-ignore
-  const handlePayPalOrder = (data: any, actions: any) => {
+  const handlePayPalOrder = (_data: any, actions: any) => {
     return actions.order.create({
       purchase_units: [
         {
@@ -61,8 +60,7 @@ const PaymentMethod = () => {
     });
   };
 
-  // @ts-ignore
-  const handlePayPalApprove = (data: any, actions: any) => {
+  const handlePayPalApprove = (_data: any, actions: any) => {
     return actions.order.capture().then((details: any) => {
       // Handle successful payment
       console.log("Payment completed", details);
