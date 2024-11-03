@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PaymentMethod from "./pages/PaymentMethod";
 import PaymentDetail from "./pages/PaymentDetail";
-import Progress from "./pages/Progess";
+import Progress from "./pages/Progress.tsx";
 import Chatroom from "./pages/Chatroom";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { useEffect } from "react";
