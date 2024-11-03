@@ -6,17 +6,27 @@ import { changeMethod, removePlanAsync } from "../Redux/features/billingSlice";
 import { useEffect } from "react";
 
 const PriceSelection = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     const subscriptionId = localStorage.getItem("subscriptionId");
     if (subscriptionId) {
       navigate("/cat-assistant");
     }
-  }, []);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const planSelection = urlParams.get('planSelection');
+
+    if (planSelection) {
+      const isYearly = planSelection.toLowerCase() === "yearly";
+      dispatch(changeMethod({ method: isYearly }));
+
+      navigate("/paymentmethod?");
+    }
+  }, [dispatch, navigate]);
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
-
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(changeMethod({ yearly: 359.99 }));

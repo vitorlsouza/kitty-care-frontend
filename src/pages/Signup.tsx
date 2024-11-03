@@ -14,12 +14,15 @@ const Signup = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // pass any url params to the links
+  const urlParams = new URLSearchParams(window.location.search);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const subscriptionId = localStorage.getItem("subscriptionId");
       if (!subscriptionId || subscriptionId === "undefined") {
-        navigate("/priceselection");
+        navigate("/priceselection?" + urlParams.toString());
       } else {
         const catId = localStorage.getItem("catId");
         if (!catId || catId === "undefined") {
@@ -94,7 +97,7 @@ const Signup = () => {
       });
 
       // Redirect on success
-      navigate('/priceselection');
+      navigate('/priceselection?' + urlParams.toString());
     } catch (err: any) {
       setError(prev => ({
         ...prev,
@@ -121,7 +124,7 @@ const Signup = () => {
                 <div className="text-base sm:text-lg font-medium">
                   Already have an account?{" "}
                   <span className="text-[#0061EF]">
-                    <a href="/login">Login</a>
+                    <a href={`/login?${urlParams.toString()}`}>Login</a>
                   </span>
                 </div>
               </div>

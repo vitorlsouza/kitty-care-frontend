@@ -11,6 +11,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const urlParams = new URLSearchParams(window.location.search);
+
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -75,7 +77,7 @@ const Login = () => {
       if (token) {
         const subscriptionId = localStorage.getItem("subscriptionId");
         if (!subscriptionId || subscriptionId === "undefined") {
-          navigate("/priceselection");
+          navigate("/priceselection?" + urlParams.toString());
         } else {
           const catId = localStorage.getItem("catId");
           if (!catId || catId === "undefined") {
@@ -105,7 +107,7 @@ const Login = () => {
           <div className="text-base sm:text-lg font-medium">
             New to KittyCare?{" "}
             <span className="block sm:inline text-[#0061EF]">
-              <a href="/signup">Sign up for free</a>
+              <a href={`/signup?${urlParams.toString()}`}>Sign up for free</a>
             </span>
           </div>
         </div>

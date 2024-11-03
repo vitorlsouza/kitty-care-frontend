@@ -36,9 +36,10 @@ const Chatroom = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
     const subscriptionId = localStorage.getItem("subscriptionId");
     if (!subscriptionId || subscriptionId === "undefined") {
-      navigate("/priceselection");
+      navigate("/priceselection?" + urlParams.toString());
     } else {
       const catId = localStorage.getItem("catId");
       if (!catId || catId === "undefined") {
