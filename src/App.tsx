@@ -22,7 +22,6 @@ function App() {
     // Check authentication status periodically
     const checkAuth = () => {
       const auth = isAuthenticated();
-      console.log(auth);
       
       if (!auth) {
         dispatch(logout());

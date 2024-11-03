@@ -65,9 +65,7 @@ const PaymentForm = () => {
       return;
     }
 
-    setIsLoading(true);
-    console.log(userInfo.email);
-    
+    setIsLoading(true);    
 
     try {
 
@@ -88,7 +86,6 @@ const PaymentForm = () => {
       });
 
       const trial_end = (billingOption.method ? 3 : 7) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
-      console.log("triel_end", trial_end, userInfo.email);
 
 
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID
