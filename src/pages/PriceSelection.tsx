@@ -16,11 +16,12 @@ const PriceSelection = () => {
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const selectedPlan = urlParams.get('sub');
+    const planSelection = urlParams.get('planSelection');
 
-    if (selectedPlan) {
-      const isYearly = selectedPlan === "1";
-      dispatch(changeMethod({ method: isYearly, yearly: 359.99 }));
+    if (planSelection) {
+      const isYearly = planSelection.toLowerCase() === "yearly";
+      dispatch(changeMethod({ method: isYearly }));
+
       navigate("/paymentmethod?");
     }
   }, [dispatch, navigate]);
