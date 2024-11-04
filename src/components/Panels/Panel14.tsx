@@ -6,14 +6,20 @@ interface Panel14Props {
 }
 
 const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
-  const [keyBarriers, setKeyBarriers] = useState<string[]>([]);
-  const [progressFocus, setProgressFocus] = useState<string[]>([]);
+  const [selectedGoals, setSelectedGoals] = useState<string[] | string>([]);
+  const [keyBarriers, setKeyBarriers] = useState<string[] | string>([]);
+  const [progressFocus, setProgressFocus] = useState<string[] | string>([]);
 
   useEffect(() => {
-    const selectedGoals = JSON.parse(JSON.parse(localStorage.getItem('goals') || '[]'));
-    const keyBarriers = JSON.parse(JSON.parse(localStorage.getItem('issues_faced') || '[]'));
-    const progressFocus = JSON.parse(localStorage.getItem('required_progress') || '[]');
+    let selectedGoals = localStorage.getItem('goals') || '[]';
+    if (typeof selectedGoals === 'string') {
+      selectedGoals = JSON.parse(selectedGoals);
+    }
+    let keyBarriers = localStorage.getItem('issues_faced') || '[]';
+    if (typeof keyBarriers === 'string') {
+      keyBarriers = JSON.parse(keyBarriers);
+    }
+    let progressFocus = localStorage.getItem('required_progress') || '[]';
 
     setSelectedGoals(selectedGoals);
     setKeyBarriers(keyBarriers);
@@ -48,14 +54,20 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
               </h3>
 
               <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                {selectedGoals.map((item, idx) => (
+                {Array.isArray(selectedGoals) ? selectedGoals.map((item, idx) => (
                   <span
                     key={idx}
                     className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
                   >
                     {item}
                   </span>
-                ))}
+                )) : (
+                  <span
+                    className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
+                  >
+                    {selectedGoals}
+                  </span>
+                )}
               </div>
             </div>
           )
@@ -69,14 +81,20 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
               </h3>
 
               <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                {keyBarriers.map((item, idx) => (
+                {Array.isArray(keyBarriers) ? keyBarriers.map((item, idx) => (
                   <span
                     key={idx}
                     className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
                   >
                     {item}
                   </span>
-                ))}
+                )) : (
+                  <span
+                    className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
+                  >
+                    {keyBarriers}
+                  </span>
+                )}
               </div>
             </div>
           )

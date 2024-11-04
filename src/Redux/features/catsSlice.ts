@@ -47,13 +47,15 @@ export const fetchCatsAsync = createAsyncThunk(
       if (Array.isArray(response)) {
         const highestIdCat = response.reduce((maxCat, cat) => (cat.id > maxCat.id ? cat : maxCat), response[0]);
 
-        localStorage.setItem('catId', JSON.stringify(highestIdCat.id));
-        localStorage.setItem('food_bowls', JSON.stringify(highestIdCat.food_bowls));
-        localStorage.setItem('treats', JSON.stringify(highestIdCat.treats));
-        localStorage.setItem('playtime', JSON.stringify(highestIdCat.playtime));
-        localStorage.setItem('goals', JSON.stringify(highestIdCat.goals));
-        localStorage.setItem('issues_faced', JSON.stringify(highestIdCat.issues_faced));
-        localStorage.setItem('required_progress', JSON.stringify(highestIdCat.required_progress));
+        console.log("highestIdCat", highestIdCat);
+
+        localStorage.setItem('catId', highestIdCat.id);
+        localStorage.setItem('food_bowls', highestIdCat.food_bowls);
+        localStorage.setItem('treats', highestIdCat.treats);
+        localStorage.setItem('playtime', highestIdCat.playtime);
+        localStorage.setItem('goals', highestIdCat.goals);
+        localStorage.setItem('issues_faced', highestIdCat.issues_faced);
+        localStorage.setItem('required_progress', highestIdCat.required_progress);
 
         return highestIdCat;
       }
