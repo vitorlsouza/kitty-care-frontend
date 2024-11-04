@@ -48,7 +48,7 @@ const SideBar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    window.location.href = "/login"
+    window.location.href = "/login";
   };
 
   return (
@@ -120,7 +120,7 @@ const SideBar = () => {
           <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <a href="/dashboard">
+                <a href="/cat-assistant">
                   <div className="flex items-center">
                     <Icon
                       id="KittyCare"
