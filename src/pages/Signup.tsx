@@ -121,7 +121,7 @@ const Signup = () => {
           <SwitchMethod />
         </div>
         <div className="m-auto w-full sm:m-0">
-          <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+          <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[40px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
