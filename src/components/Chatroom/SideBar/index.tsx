@@ -17,7 +17,6 @@ import KittyCareTextMobile from "/assets/svg/KittyCareTextMobile.svg";
 import Edit from "/assets/svg/Edit.svg";
 import MiniBtn from "/assets/svg/MiniBtn.svg";
 import { logout } from "../../../Redux/features/userSlice";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hooks";
 import { RootState } from "../../../Redux/store";
 
@@ -28,7 +27,6 @@ const SideBar = () => {
   const userInfo = useAppSelector((state: RootState) => state.user);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const sideBarRef = useRef(null);
   useEffect(() => {
@@ -50,7 +48,7 @@ const SideBar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/dashboard");
+    window.location.href = "/login"
   };
 
   return (
