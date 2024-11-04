@@ -8,6 +8,15 @@ import { useProfileForm } from "./hooks/useProfileForm";
 import { BREED_OPTIONS, GENDER_OPTIONS } from "./constants";
 import { ProfileInfo } from "./types";
 
+const keysOfInfo = [
+  "name",
+  "breed",
+  "gender",
+  "target_weight",
+  "medical_history",
+  "dietary_restrictions",
+];
+
 const EditProfileField = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
@@ -16,7 +25,7 @@ const EditProfileField = () => {
     handlePhotoChange,
     handleInputChange,
     handleProfileUpdate,
-    isFormValid
+    isFormValid,
   } = useProfileForm();
 
   return (
@@ -42,7 +51,9 @@ const EditProfileField = () => {
           {/* Form Fields Section */}
           <FormFieldsSection
             profileInfo={profileInfo}
-            onInputChange={(field: keyof ProfileInfo) => handleInputChange(field)}
+            onInputChange={(field: keyof ProfileInfo) =>
+              handleInputChange(field)
+            }
           />
         </section>
 
@@ -64,7 +75,10 @@ const EditProfileField = () => {
 };
 
 // Sub-components
-const PhotoUploadSection = ({ photo, onPhotoChange }: {
+const PhotoUploadSection = ({
+  photo,
+  onPhotoChange,
+}: {
   photo?: File;
   onPhotoChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
@@ -81,7 +95,9 @@ const PhotoUploadSection = ({ photo, onPhotoChange }: {
         <div className="w-full h-full flex flex-col justify-center items-center bg-[#D1D6E2] bg-opacity-30 border-2 border-dashed rounded-[20px] border-[#898B90] border-opacity-30">
           <img className="m-3" src="/assets/svg/upload.svg" alt="upload icon" />
           <p className="text-xl font-medium m-1">Upload photo</p>
-          <p className="text-base font-medium opacity-60">At least 256px X 256px</p>
+          <p className="text-base font-medium opacity-60">
+            At least 256px X 256px
+          </p>
           <p className="text-base font-medium opacity-60">PNG or JPG</p>
         </div>
       )}
@@ -97,7 +113,7 @@ const PhotoUploadSection = ({ photo, onPhotoChange }: {
 
 const FormFieldsSection = ({
   profileInfo,
-  onInputChange
+  onInputChange,
 }: {
   profileInfo: ProfileInfo;
   onInputChange: (field: keyof ProfileInfo) => (value: string) => void;
@@ -107,41 +123,41 @@ const FormFieldsSection = ({
       <CustomInput
         label="Name"
         value={profileInfo.name}
-        onChange={onInputChange('name')}
+        onChange={onInputChange("name")}
         placeholder="Enter your name"
       />
       <CustomDropdown
         label="Breed"
         options={[...BREED_OPTIONS]}
         selectedOption={profileInfo.breed}
-        onSelect={onInputChange('breed')}
+        onSelect={onInputChange("breed")}
         placeholder="Select a breed"
       />
       <CustomDropdown
         label="Gender"
         options={[...GENDER_OPTIONS]}
         selectedOption={profileInfo.gender}
-        onSelect={onInputChange('gender')}
+        onSelect={onInputChange("gender")}
         placeholder="Select gender"
       />
       <CustomInput
         label="Target Weight"
         value={profileInfo.target_weight}
-        onChange={onInputChange('target_weight')}
+        onChange={onInputChange("target_weight")}
         placeholder="Enter target weight"
         type="number"
       />
       <CustomTextArea
         label="Medical History"
         value={profileInfo.medical_history}
-        onChange={onInputChange('medical_history')}
+        onChange={onInputChange("medical_history")}
         placeholder="Enter medical history"
         rows={4}
       />
       <CustomTextArea
         label="Dietary Restrictions"
         value={profileInfo.dietary_restrictions}
-        onChange={onInputChange('dietary_restrictions')}
+        onChange={onInputChange("dietary_restrictions")}
         placeholder="Enter dietary preferences"
         rows={4}
       />
@@ -149,7 +165,11 @@ const FormFieldsSection = ({
   </div>
 );
 
-const ActionButtons = ({ isFormValid, onSave, onCancel }: {
+const ActionButtons = ({
+  isFormValid,
+  onSave,
+  onCancel,
+}: {
   isFormValid: boolean;
   onSave: () => void;
   onCancel: () => void;
@@ -157,9 +177,10 @@ const ActionButtons = ({ isFormValid, onSave, onCancel }: {
   <div className="flex gap-[10px] sm:gap-[30px] justify-start flex-col sm:flex-row-reverse">
     <button
       className={`h-[55px] px-[42px] py-[14px] rounded-[20px] border
-        ${isFormValid
-          ? "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700"
-          : "bg-[#D1D6E2] text-[#898B90]"
+        ${
+          isFormValid
+            ? "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700"
+            : "bg-[#D1D6E2] text-[#898B90]"
         }`}
       onClick={onSave}
     >
