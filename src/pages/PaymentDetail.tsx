@@ -32,6 +32,7 @@ const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useAppDispatch();
+  const [subscriptionId, setSubscriptionId] = useState("");
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
   const userInfo = useAppSelector((state: RootState) => state.user);
@@ -87,6 +88,21 @@ const PaymentForm = () => {
     setIsLoading(true);
 
     try {
+      const paymentMade = localStorage.getItem("paymentMade");
+
+      if (paymentMade) {
+        await dispatch(createSubscriptionAsync({
+          id: subscriptionId,
+          plan: formData.planName,
+          end_date: formData.end_date,
+          start_date: formData.start_date,
+          provider: formData.provider,
+          billing_period: formData.billing_period
+        })).unwrap();
+
+        navigate("/progress");
+      }
+
       const { paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
         card: elements.getElement(
@@ -106,17 +122,21 @@ const PaymentForm = () => {
       const trial_end = (billingOption.method ? 7 : 3) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
 
-      const { subscriptionId, success } = await getClientSecretKey({
+
+      const { _subscriptionId, success } = await getClientSecretKey({
         name: formData.fullName,
         email: userInfo.email || localStorage.getItem("email"),
         paymentMethodId: paymentMethod?.id,
         priceId,
         trial_end
       });
+      setSubscriptionId(_subscriptionId);
 
       if (success) {
+        localStorage.setItem("paymentMade", "true");
+
         await dispatch(createSubscriptionAsync({
-          id: subscriptionId,
+          id: _subscriptionId,
           plan: formData.planName,
           end_date: formData.end_date,
           start_date: formData.start_date,
