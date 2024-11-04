@@ -28,8 +28,9 @@ const GooglePayBtn = () => {
             tokenizationSpecification: {
               type: "PAYMENT_GATEWAY",
               parameters: {
-                gateway: "example",
-                gatewayMerchantId: "exampleGatewayMerchantId",
+                gateway: "stripe",
+                "stripe:version": "2024-10-28.acacia",
+                "stripe:publishableKey": import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
               },
             },
           },
@@ -44,6 +45,8 @@ const GooglePayBtn = () => {
             ? billingOption.yearly.toString()
             : billingOption.monthly.toString(),
           currencyCode: "USD",
+          checkoutOption: "COMPLETE_IMMEDIATE_PURCHASE",
+
         },
       }}
       onLoadPaymentData={handleGooglePayPayment}

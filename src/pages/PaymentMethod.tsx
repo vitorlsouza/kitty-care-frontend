@@ -169,7 +169,7 @@ const PaymentMethod = () => {
                   payBy="card"
                   onClick={() => navigate("/paymentdetail")}
                 />
-                <PayPalScriptProvider options={initialPayPalOptions}>
+                {/* <PayPalScriptProvider options={initialPayPalOptions}>
                   <PayPalButtons
                     style={{
                       layout: "horizontal",
@@ -188,7 +188,7 @@ const PaymentMethod = () => {
                   <ApplePayBtn onClick={handleApplePayClick} disabled={false} />
                 ) : (
                   <GooglePayBtn />
-                )}
+                )} */}
                 <div>
                   <div className="text-[14px] font-semibold opacity-60 text-center">
                     Applicable VAT, sales or other applicable taxes may apply.
