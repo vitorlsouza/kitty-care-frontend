@@ -5,8 +5,8 @@ import SwitchMethod from "../components/Payments/SwitchMethod";
 import { useNavigate } from "react-router-dom";
 // import ApplePayBtn from "../components/Payments/ApplePayBtn";
 // import GooglePayBtn from "../components/Payments/GooglePayBtn";
-import { createPlanAsync } from "../Redux/features/billingSlice";
-import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+// import { createPlanAsync } from "../Redux/features/billingSlice";
+import { useAppSelector } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
 
 const PaymentMethod = () => {
@@ -17,27 +17,27 @@ const PaymentMethod = () => {
     }
   }, []);
 
-  const [error, setError] = useState<string>("");
+  // const [error, setError] = useState<string>("");
 
-  const [isApplePayAvailable, setIsApplePayAvailable] = useState<boolean>(false);
+  // const [isApplePayAvailable, setIsApplePayAvailable] = useState<boolean>(false);
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if Apple Pay is available
-    const checkApplePayAvailability = () => {
-      if ("ApplePaySession" in window) {
-        setIsApplePayAvailable(
-          (window as any).ApplePaySession.canMakePayments()
-        );
-      }
-    };
+  // useEffect(() => {
+  //   // Check if Apple Pay is available
+  //   const checkApplePayAvailability = () => {
+  //     if ("ApplePaySession" in window) {
+  //       setIsApplePayAvailable(
+  //         (window as any).ApplePaySession.canMakePayments()
+  //       );
+  //     }
+  //   };
 
-    checkApplePayAvailability();
-  }, []);
+  //   checkApplePayAvailability();
+  // }, []);
 
   // const initialPayPalOptions = {
   //   clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, // Replace with your PayPal client ID
@@ -129,19 +129,19 @@ const PaymentMethod = () => {
   //   }
   // };
 
-  const handlePaymentComplete = async () => {
-    try {
-      await dispatch(createPlanAsync(billingOption)).unwrap();
+  // const handlePaymentComplete = async () => {
+  //   try {
+  //     await dispatch(createPlanAsync(billingOption)).unwrap();
 
-      // Clear form and errors
-      setError("");
+  //     // Clear form and errors
+  //     setError("");
 
-      // Redirect on success
-      navigate("/progress");
-    } catch (err: any) {
-      setError(err.message || "Payment failed. Please try again.");
-    }
-  };
+  //     // Redirect on success
+  //     navigate("/progress");
+  //   } catch (err: any) {
+  //     setError(err.message || "Payment failed. Please try again.");
+  //   }
+  // };
 
   return (
     <div className="w-full">
@@ -197,7 +197,7 @@ const PaymentMethod = () => {
                   </div>
                 </div>
               </div>
-              {error && <div className="text-red-500">{error}</div>}
+              {/* {error && <div className="text-red-500">{error}</div>} */}
             </div>
           </div>
         </div>
