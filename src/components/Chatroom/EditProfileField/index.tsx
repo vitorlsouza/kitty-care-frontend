@@ -7,6 +7,7 @@ import CancelModal from "./CancelModal";
 import { useAppDispatch } from "../../../Redux/hooks";
 import { updateCatAsync } from "../../../Redux/features/catsSlice";
 import { useNavigate } from "react-router-dom";
+import { setLoading } from "../../../store/ui/actions";
 
 // Types
 interface ProfileInfo {
@@ -64,6 +65,8 @@ const EditProfileField = () => {
   const handleProfileUpdate = async () => {
     if (!isFormValid() || !photo) return;
 
+    dispatch(setLoading(true));
+
     try {
       const arrayBuffer = await photo.arrayBuffer();
       const buffer = Array.from(new Uint8Array(arrayBuffer));
@@ -81,6 +84,8 @@ const EditProfileField = () => {
       navigate('/dashboard');
     } catch (error) {
       console.error('Failed to update cat profile:', error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 

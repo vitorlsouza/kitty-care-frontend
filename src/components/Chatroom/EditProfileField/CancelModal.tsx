@@ -4,6 +4,7 @@ import BottomCorner from "/assets/svg/BottomCorner.svg";
 import { useAppDispatch } from "../../../Redux/hooks";
 import { deleteSubscriptionAsync } from "../../../Redux/features/subscriptionSlice";
 import { useNavigate } from "react-router-dom";
+import { setLoading } from "../../../store/ui/actions";
 
 interface CancelModalProps {
   isOpen: boolean;
@@ -20,13 +21,17 @@ const CancelModal: React.FC<CancelModalProps> = ({
   const navigate = useNavigate();
 
   const handleConfirm = async () => {
+    dispatch(setLoading(true));
+
     try {
       await dispatch(deleteSubscriptionAsync()).unwrap();
       onConfirm();
-      navigate("/priceselection"); // Or wherever you want to redirect after cancellation
+      navigate("/priceselection");
     } catch (error) {
       console.error("Failed to cancel subscription:", error);
       // Optionally handle error (show error message, etc.)
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 

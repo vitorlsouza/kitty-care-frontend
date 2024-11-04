@@ -18,6 +18,7 @@ import { RootState } from "../Redux/store";
 import { getClientSecretKey } from "../services/api";
 import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
 import { useAppDispatch } from "../Redux/hooks";
+import { setLoading } from "../store/ui/actions";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -86,6 +87,7 @@ const PaymentForm = () => {
     }
 
     setIsLoading(true);
+    dispatch(setLoading(true));
 
     try {
       const paymentMade = localStorage.getItem("paymentMade");
@@ -101,13 +103,12 @@ const PaymentForm = () => {
         })).unwrap();
 
         navigate("/progress");
+        return;
       }
 
       const { paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
-        card: elements.getElement(
-          CardNumberElement
-        ) as StripeCardNumberElement,
+        card: elements.getElement(CardNumberElement)!,
         billing_details: {
           name: formData.fullName,
           email: userInfo.email || localStorage.getItem("email"),
@@ -147,11 +148,14 @@ const PaymentForm = () => {
         navigate("/progress");
       }
 
-    } catch (err) {
-      console.log("err", err);
-      setError({ ...error, general: "An unexpected error occurred." });
+    } catch (err: any) {
+      setError({
+        ...error,
+        general: err.message || "Payment failed. Please try again.",
+      });
     } finally {
       setIsLoading(false);
+      dispatch(setLoading(false));
     }
   };
 

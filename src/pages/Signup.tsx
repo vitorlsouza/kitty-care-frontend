@@ -9,6 +9,7 @@ import { useAppDispatch } from '../Redux/hooks';
 import { signUpUserAsync } from '../Redux/features/userSlice';
 import { validateUserInfo } from '../utils/validation';
 import SwitchMethod from "../components/Payments/SwitchMethod";
+import { setLoading } from "../store/ui/actions";
 
 const Signup = () => {
   const [checked, setChecked] = useState(false);
@@ -73,6 +74,7 @@ const Signup = () => {
       return;
     }
 
+    dispatch(setLoading(true));
     setIsLoading(true);
 
     try {
@@ -107,6 +109,7 @@ const Signup = () => {
       }));
     } finally {
       setIsLoading(false);
+      dispatch(setLoading(false));
     }
   };
 
@@ -174,7 +177,7 @@ const Signup = () => {
                 />
                 <div className="flex my-3 gap-2" onClick={handleCheckboxChange} >
                   <div className="w-6 h-6">
-                    <input type="checkbox" className="w-full h-full" checked={checked}/>
+                    <input type="checkbox" className="w-full h-full" checked={checked} />
                   </div>
                   <div className="text-[#898B90]">
                     I agree to the{" "}
@@ -182,11 +185,11 @@ const Signup = () => {
                     <a className="text-black font-semibold" href="https://www.kittycareapp.com/privacy-policy" target="_blank">Privacy Policy.</a>
                   </div>
                 </div>
-                  {error.general && (
-                    <div className="text-red-500 text-sm text-center mt-2">
-                      {error.general}
-                    </div>
-                  )}
+                {error.general && (
+                  <div className="text-red-500 text-sm text-center mt-2">
+                    {error.general}
+                  </div>
+                )}
                 <div className="my-3">
                   <div className="w-full h-[52px] my-10">
                     <input

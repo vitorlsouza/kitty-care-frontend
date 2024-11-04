@@ -6,6 +6,7 @@ import { loginUserAsync } from "../Redux/features/userSlice";
 import TextInput from "../components/Login/Input";
 // import LogBtnBy from "../components/Login/LogBtnBy";
 // import baseURL from "../services/api";
+import { setLoading } from "../store/ui/actions";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -60,6 +61,7 @@ const Login = () => {
       return;
     }
 
+    dispatch(setLoading(true));
     setIsLoading(true);
 
     try {
@@ -94,6 +96,7 @@ const Login = () => {
       });
     } finally {
       setIsLoading(false);
+      dispatch(setLoading(false));
     }
   };
 

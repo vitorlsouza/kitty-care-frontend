@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Redux/hooks";
 import { createConversationAsync, fetchConversationsAsync } from "../Redux/features/chatSlice";
 import { fetchCatsAsync } from "../Redux/features/catsSlice";
+import { setLoading } from "../store/ui/actions";
 
 const Chatroom = () => {
   const navigate = useNavigate();
@@ -20,19 +21,25 @@ const Chatroom = () => {
     const element = document.querySelector('[data-id="mainLY"]');
     if (element) element.remove();
 
-    dispatch(fetchConversationsAsync())
-      .unwrap()
-      .then((result) => {
-        if (!result) {
-          dispatch(createConversationAsync());
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching conversations:', error);
-        dispatch(createConversationAsync());
-      });
+    dispatch(setLoading(true));
 
-    dispatch(fetchCatsAsync());
+    Promise.all([
+      dispatch(fetchConversationsAsync())
+        .unwrap()
+        .then((result) => {
+          if (!result) {
+            return dispatch(createConversationAsync()).unwrap();
+          }
+        }),
+      dispatch(fetchCatsAsync()).unwrap()
+    ])
+      .catch((error) => {
+        console.error('Error initializing chatroom:', error);
+        dispatch(createConversationAsync());
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
   }, [dispatch]);
 
   useEffect(() => {
