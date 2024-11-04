@@ -72,7 +72,7 @@ function App() {
               <Chatroom />
             </ProtectedRoute>
           } />
-          <Route path="/profile" element={
+          <Route path="/cat-profile" element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>

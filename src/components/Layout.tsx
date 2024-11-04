@@ -8,8 +8,10 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
+  if (window.location.href.includes("/cat-")) return <>{children}</>;
+
   return (
-    <div className="w-screen relative" >
+    <div className="w-screen relative">
       <main>
         <div className="w-full">
           <KittyLogo />
@@ -17,7 +19,10 @@ function Layout({ children }: LayoutProps) {
           <div className="w-full h-5"></div>
         </div>
       </main>
-      <div className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]" data-id="mainLY">
+      <div
+        className="w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3]"
+        data-id="mainLY"
+      >
         <div className="w-full h-full relative">
           <img
             src={layout}

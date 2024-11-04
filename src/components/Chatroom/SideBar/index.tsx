@@ -6,10 +6,10 @@ import CollapseBtn from "./CollapseBtn";
 import Content from "./Content";
 
 import KittyCare from "/assets/svg/KittyCare.svg";
-import SmartKitty from "/assets/svg/SmartKitty.svg";
-import Health from "/assets/svg/Health.svg";
-import MyPlan from "/assets/svg/MyPlan.svg";
-import Settings from "/assets/svg/Settings.svg";
+// import SmartKitty from "/assets/svg/SmartKitty.svg";
+// import Health from "/assets/svg/Health.svg";
+// import MyPlan from "/assets/svg/MyPlan.svg";
+// import Settings from "/assets/svg/Settings.svg";
 import Logout from "/assets/svg/Logout.svg";
 import Profile from "/assets/svg/Profile.svg";
 import KittyCareText from "/assets/svg/KittyCareText.svg";
@@ -18,11 +18,14 @@ import Edit from "/assets/svg/Edit.svg";
 import MiniBtn from "/assets/svg/MiniBtn.svg";
 import { logout } from "../../../Redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../Redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../Redux/hooks";
+import { RootState } from "../../../Redux/store";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [onHover, setOnHover] = useState("");
+
+  const userInfo = useAppSelector((state: RootState) => state.user);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -68,7 +71,7 @@ const SideBar = () => {
               />
             </a>
           </div>
-          <div className="flex flex-col gap-4">
+          {/* <div className="flex flex-col gap-4">
             {[
               { id: "SmartKitty", src: SmartKitty },
               { id: "Health", src: Health },
@@ -83,7 +86,7 @@ const SideBar = () => {
                 isOpen={isOpen}
               />
             ))}
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col gap-4">
           {[
@@ -134,7 +137,7 @@ const SideBar = () => {
                   </div>
                 </a>
               </div>
-              <div className="flex flex-col gap-4">
+              {/* <div className="flex flex-col gap-4">
                 {[
                   { id: "SmartKitty", src: SmartKitty },
                   { id: "Health", src: Health },
@@ -157,7 +160,7 @@ const SideBar = () => {
                     />
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex items-center" onClick={handleLogout}>
@@ -186,7 +189,7 @@ const SideBar = () => {
                   />
                   <Content
                     id="Profile"
-                    content="Welcome Rosu"
+                    content={`Welcome ${userInfo.first_name} ${userInfo.last_name}`}
                     handleHover={() => { }}
                     onHover={onHover}
                   />
@@ -221,7 +224,7 @@ const SideBar = () => {
                   </div>
                 </a>
               </div>
-              <div className="flex flex-col gap-4">
+              {/* <div className="flex flex-col gap-4">
                 {[
                   { id: "SmartKitty", content: "Smart-Kitty" },
                   { id: "Health", content: "Health & Wellness" },
@@ -235,7 +238,7 @@ const SideBar = () => {
                     onHover={onHover}
                   />
                 ))}
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col gap-4">
               <Content
@@ -248,13 +251,13 @@ const SideBar = () => {
               <div className="w-full flex items-center justify-between">
                 <Content
                   id="Profile"
-                  content="Welcome Rosu"
+                  content={`Welcome ${userInfo.first_name} ${userInfo.last_name}`}
                   handleHover={(id) => setOnHover(id)}
                   onHover={onHover}
                 />
                 <div className="py-5 mx-5 tooltip">
                   <span className="tooltiptext">Edit</span>
-                  <a href="/profile">
+                  <a href="/cat-profile">
                     <img src={Edit} alt="Edit" />
                   </a>
                 </div>
