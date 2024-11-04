@@ -6,14 +6,12 @@ import { deleteSubscriptionAsync } from "../../../Redux/features/subscriptionSli
 import { useNavigate } from "react-router-dom";
 
 interface CancelModalProps {
-  finalDate: string;
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 
 const CancelModal: React.FC<CancelModalProps> = ({
-  finalDate,
   isOpen,
   onClose,
   onConfirm,

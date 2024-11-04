@@ -208,7 +208,6 @@ const EditProfileField = () => {
       </main>
 
       <CancelModal
-        finalDate="11/11/2024"
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleCancelSubscription}
