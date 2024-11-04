@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 // import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import PayMethodBtn from "../components/Payments/PayMethodBtn";
 import SwitchMethod from "../components/Payments/SwitchMethod";
