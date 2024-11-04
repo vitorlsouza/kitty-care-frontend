@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import * as Panels from '../components/Panels';
 import ProgressBar from '../components/ProgressBar';
+import Layout from '../components/Layout';
 
 // Constants
 const MAX_STEPS = 15;
@@ -15,7 +16,7 @@ interface PanelProps {
 const Progress = () => {
   // Initialize state based on localStorage
   const catId = localStorage.getItem('catId');
-  const [currentStep, setCurrentStep] = useState(catId ? MAX_STEPS : MIN_STEP);
+  const [currentStep, setCurrentStep] = useState(catId ? 14 : MIN_STEP);
 
   // Navigation handlers
   const nextStep = () => {
@@ -51,7 +52,7 @@ const Progress = () => {
   };
 
   return (
-    <>
+    <Layout>
       <div className="w-full text-center flex justify-center items-center">
         <ProgressBar
           className="w-full flex items-center justify-center"
@@ -61,7 +62,7 @@ const Progress = () => {
       <div className="flex-grow flex items-center justify-center w-full">
         {renderPanel()}
       </div>
-    </>
+    </Layout>
   );
 };
 

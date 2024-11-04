@@ -17,6 +17,7 @@ import { RootState } from "../Redux/store";
 import { getClientSecretKey } from "../services/api";
 import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
 import { setLoading } from "../store/ui/actions";
+import Layout from "../components/Layout";
 
 // Constants
 const STRIPE_PROMISE = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -221,135 +222,137 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
-      <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
-        <SwitchMethod />
-      </div>
-      <div className="m-auto w-full sm:m-0">
-        <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <div>
-              <div className="text-center text-[40px] font-semibold capitalize">
-                ${0} Today
-              </div>
-              <div className="text-center text-[18px] font-medium opacity-60 text-black">
-                {billingOption.method
-                  ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
-                  : "$0.00 for 3-day free trial; converts to $49.99 annually renewing subscription."}
-              </div>
-            </div>
-            <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                Full Name on Card
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                placeholder="Enter your full name"
-                required
-              />
-            </div>
-
-            <div className="rounded-lg overflow-hidden">
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                Card Number
-              </label>
-              <CardNumberElement
-                className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
+    <Layout>
+      <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
+        <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
+          <SwitchMethod />
+        </div>
+        <div className="m-auto w-full sm:m-0">
+          <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <div>
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Expiry Month
-                </label>
-                <CardExpiryElement
-                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
-                />
+                <div className="text-center text-[40px] font-semibold capitalize">
+                  ${0} Today
+                </div>
+                <div className="text-center text-[18px] font-medium opacity-60 text-black">
+                  {billingOption.method
+                    ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+                    : "$0.00 for 3-day free trial; converts to $49.99 annually renewing subscription."}
+                </div>
               </div>
               <div>
                 <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Security Code
-                </label>
-                <CardCvcElement
-                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                Country
-              </label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
-                className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                placeholder="Select country"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  State
+                  Full Name on Card
                 </label>
                 <input
                   type="text"
-                  name="state"
-                  value={formData.state}
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleInputChange}
                   className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  placeholder="Enter your full name"
                   required
                 />
               </div>
 
+              <div className="rounded-lg overflow-hidden">
+                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                  Card Number
+                </label>
+                <CardNumberElement
+                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    Expiry Month
+                  </label>
+                  <CardExpiryElement
+                    className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                    options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+                  />
+                </div>
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    Security Code
+                  </label>
+                  <CardCvcElement
+                    className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                    options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Postal Code
+                  Country
                 </label>
                 <input
                   type="text"
-                  name="postalCode"
-                  value={formData.postalCode}
+                  name="country"
+                  value={formData.country}
                   onChange={handleInputChange}
                   className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  placeholder="Select country"
                   required
                 />
               </div>
-            </div>
 
-            <div className="flex justify-center gap-4">
-              <button
-                disabled={!stripe || isLoading}
-                className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={!stripe || isLoading}
-                className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
-              >
-                {isLoading ? "Submitting..." : "Submit"}
-              </button>
-            </div>
-          </form>
-          <div className="text-red-500">{error.general}</div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    Postal Code
+                  </label>
+                  <input
+                    type="text"
+                    name="postalCode"
+                    value={formData.postalCode}
+                    onChange={handleInputChange}
+                    className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-4">
+                <button
+                  disabled={!stripe || isLoading}
+                  className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!stripe || isLoading}
+                  className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
+                >
+                  {isLoading ? "Submitting..." : "Submit"}
+                </button>
+              </div>
+            </form>
+            <div className="text-red-500">{error.general}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

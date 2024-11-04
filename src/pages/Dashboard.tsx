@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../Redux/features/userSlice";
 import { useAppDispatch } from "../Redux/hooks";
+import Layout from "../components/Layout";
 
 // Navigation items configuration
 const NAV_ITEMS = [
@@ -28,24 +29,26 @@ const Dashboard = () => {
   };
 
   return (
-    <nav className="w-full min-h-[700px] flex flex-col items-center justify-center gap-4">
-      {NAV_ITEMS.map(({ path, label }) => (
-        <Link
-          key={path}
-          to={path}
-          className="text-xl hover:text-primary transition-colors"
-        >
-          {label}
-        </Link>
-      ))}
+    <Layout>
+      <nav className="w-full min-h-[700px] flex flex-col items-center justify-center gap-4">
+        {NAV_ITEMS.map(({ path, label }) => (
+          <Link
+            key={path}
+            to={path}
+            className="text-xl hover:text-primary transition-colors"
+          >
+            {label}
+          </Link>
+        ))}
 
-      <button
-        onClick={handleLogout}
-        className="text-xl hover:text-red-500 transition-colors cursor-pointer"
-      >
-        Logout
-      </button>
-    </nav>
+        <button
+          onClick={handleLogout}
+          className="text-xl hover:text-red-500 transition-colors cursor-pointer"
+        >
+          Logout
+        </button>
+      </nav>
+    </Layout>
   );
 };
 

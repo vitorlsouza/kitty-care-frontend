@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Tip from "../Tip";
+import Tip from "../../Tip";
 
 const DateSelection: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

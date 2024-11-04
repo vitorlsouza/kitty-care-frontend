@@ -1,5 +1,5 @@
 import React from "react";
-import Tip from "../Tip";
+import Tip from "../../Tip";
 
 const GoalSummary: React.FC = () => {
   const progressValues = [

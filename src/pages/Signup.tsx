@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TextInput from "../components/Login/Input";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import { useSignupForm, FormErrors } from "../hooks/useSignupForm";
+import Layout from "../components/Layout";
 
 interface SignupFormProps {
   error: FormErrors;
@@ -43,28 +44,30 @@ const Signup = () => {
   }, [navigate, urlParams]);
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
-        <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
-          <SwitchMethod />
-        </div>
-        <div className="m-auto w-full sm:m-0">
-          <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px] sm:px-[104px] sm:py-[40px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-            <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">
-              <SignupHeader urlParams={urlParams} />
-              <SignupForm
-                error={error}
-                isLoading={isLoading}
-                checked={checked}
-                setChecked={setChecked}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              />
+    <Layout>
+      <div className="w-full">
+        <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
+          <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
+            <SwitchMethod />
+          </div>
+          <div className="m-auto w-full sm:m-0">
+            <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px] sm:px-[104px] sm:py-[40px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+              <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">
+                <SignupHeader urlParams={urlParams} />
+                <SignupForm
+                  error={error}
+                  isLoading={isLoading}
+                  checked={checked}
+                  setChecked={setChecked}
+                  handleChange={handleChange}
+                  handleSubmit={handleSubmit}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

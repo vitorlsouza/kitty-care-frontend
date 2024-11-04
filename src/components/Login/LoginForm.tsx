@@ -1,58 +1,66 @@
+import { FC } from 'react';
 import TextInput from './Input';
+import { LoginFormProps } from './types';
 
-interface LoginFormProps {
-    error: {
-        email: string;
-        password: string;
-        general: string;
-    };
-    isLoading: boolean;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (e: React.FormEvent<HTMLInputElement>) => void;
-}
-
-export const LoginForm: React.FC<LoginFormProps> = ({
+export const LoginForm: FC<LoginFormProps> = ({
     error,
     isLoading,
     handleChange,
     handleSubmit,
-}) => (
-    <div className="w-full h-full flex-col justify-between">
-        <TextInput
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="name@email.com"
-            className={error.email ? 'border-red-500' : ''}
-            onChange={handleChange}
-            error={error.email}
-        />
-        <TextInput
-            name="password"
-            label="Password"
-            type="password"
-            placeholder="Password (8+ characters)"
-            className={error.password ? 'border-red-500' : ''}
-            onChange={handleChange}
-            error={error.password}
-        />
+}) => {
+    return (
+        <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-4"
+            noValidate
+            aria-label="Login form"
+        >
+            <TextInput
+                name="email"
+                label="Email"
+                type="email"
+                placeholder="name@email.com"
+                className={error.email ? 'border-red-500' : ''}
+                onChange={handleChange}
+                error={error.email}
+                aria-invalid={!!error.email}
+            />
 
-        {error.general && (
-            <div className="text-red-500 text-sm text-center mt-2">
-                {error.general}
-            </div>
-        )}
+            <TextInput
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="Password (8+ characters)"
+                className={error.password ? 'border-red-500' : ''}
+                onChange={handleChange}
+                error={error.password}
+                aria-invalid={!!error.password}
+            />
 
-        <div className="my-3">
-            <div className="w-full h-[52px] my-[30px]">
-                <input
-                    className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer disabled:bg-blue-400"
-                    type="submit"
-                    value={isLoading ? 'Logging in...' : 'Log in'}
-                    onClick={handleSubmit}
-                    disabled={isLoading}
-                />
-            </div>
-        </div>
-    </div>
-); 
+            {error.general && (
+                <div
+                    className="text-red-500 text-sm text-center"
+                    role="alert"
+                    aria-live="polite"
+                >
+                    {error.general}
+                </div>
+            )}
+
+            <button
+                type="submit"
+                className="w-full h-[55px] mt-6 text-base sm:text-xl 
+                         bg-blue-600 text-white rounded-2xl
+                         hover:bg-blue-700 active:bg-blue-800
+                         disabled:bg-blue-400 disabled:cursor-not-allowed
+                         transition-colors duration-200"
+                disabled={isLoading}
+                aria-busy={isLoading}
+            >
+                {isLoading ? 'Logging in...' : 'Log in'}
+            </button>
+        </form>
+    );
+};
+
+export default LoginForm; 
