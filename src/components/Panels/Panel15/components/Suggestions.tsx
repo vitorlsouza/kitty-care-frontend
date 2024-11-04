@@ -1,5 +1,5 @@
 import React from "react";
-import Tip from "../Tip";
+import Tip from "../../Tip";
 
 const Suggestions: React.FC = () => {
   const foodBowls = JSON.parse(localStorage.getItem("food_bowls") || "0");

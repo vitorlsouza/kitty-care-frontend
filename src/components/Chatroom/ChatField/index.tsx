@@ -1,19 +1,19 @@
-import InputField from "./InputField";
-import KittyLogo from "/assets/svg/KittyLogo.svg";
-import { useAppSelector, useAppDispatch } from "../../../Redux/hooks";
-import { Message } from "../../../utils/types";
 import { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "../../../Redux/hooks";
 import { updateConversationAsync } from "../../../Redux/features/chatSlice";
+import InputField from "./InputField";
 import MessageBoxes from "./MessageBoxes";
+import ErrorMessage from "./ErrorMessage";
+import Header from "./Header";
+import type { ChatFieldProps } from "./types";
 
-export type MsgType = Message;
-
-const ChatField = () => {
+const ChatField: React.FC<ChatFieldProps> = () => {
   const { messages, isLoading, needsSync, error } = useAppSelector(
     (state) => state.chat
   );
   const dispatch = useAppDispatch();
 
+  // Sync messages with backend when needed
   useEffect(() => {
     if (needsSync && messages.length > 0) {
       dispatch(updateConversationAsync({ messages }));
@@ -22,16 +22,16 @@ const ChatField = () => {
 
   return (
     <div className="flex flex-col max-w-full sm:w-[800px] p-4 pb-6 mx-auto h-full">
-      {error && <div className="text-red-500 text-center mb-4">{error}</div>}
-      <div className="w-full h-[120px] flex justify-center items-center">
-        <div>
-          <a href="/dashboard">
-            <img src={KittyLogo} alt="KittyLogo" />
-          </a>
-        </div>
-      </div>
-      <MessageBoxes messageList={messages} response={""} />
-      <InputField onTyping={isLoading} messageList={messages} />
+      {error && <ErrorMessage message={error} />}
+      <Header />
+      <MessageBoxes
+        messageList={messages}
+        response={""}
+      />
+      <InputField
+        onTyping={isLoading}
+        messageList={messages}
+      />
     </div>
   );
 };

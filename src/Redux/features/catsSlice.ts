@@ -2,7 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getCatsAPI, createCatAPI, updateCatAPI } from '../../services/api';
 
 interface Cat {
-  id: string;       
+  id: string;
+  food_bowls?: number;
+  treats?: number;
+  playtime?: number;
+  goals?: string;
+  issues_faced?: string;
+  required_progress?: string;
 }
 
 interface CatsState {
@@ -45,17 +51,20 @@ export const fetchCatsAsync = createAsyncThunk(
       const response = await getCatsAPI(token || '');
 
       if (Array.isArray(response)) {
-        const highestIdCat = response.reduce((maxCat, cat) => (cat.id > maxCat.id ? cat : maxCat), response[0]);
+        const highestIdCat = response.reduce((maxCat, cat) => 
+          (cat.id > maxCat.id ? cat : maxCat), response[0]);
 
-        localStorage.setItem('catId', JSON.stringify(highestIdCat.id));
-        localStorage.setItem('food_bowls', JSON.stringify(highestIdCat.food_bowls));
-        localStorage.setItem('treats', JSON.stringify(highestIdCat.treats));
-        localStorage.setItem('playtime', JSON.stringify(highestIdCat.playtime));
-        localStorage.setItem('goals', JSON.stringify(highestIdCat.goals));
-        localStorage.setItem('issues_faced', JSON.stringify(highestIdCat.issues_faced));
-        localStorage.setItem('required_progress', JSON.stringify(highestIdCat.required_progress));
+        if (highestIdCat) {
+          localStorage.setItem('catId', highestIdCat.id);
+          if (highestIdCat.food_bowls) localStorage.setItem('food_bowls', highestIdCat.food_bowls.toString());
+          if (highestIdCat.treats) localStorage.setItem('treats', highestIdCat.treats.toString());
+          if (highestIdCat.playtime) localStorage.setItem('playtime', highestIdCat.playtime.toString());
+          if (highestIdCat.goals) localStorage.setItem('goals', highestIdCat.goals);
+          if (highestIdCat.issues_faced) localStorage.setItem('issues_faced', highestIdCat.issues_faced);
+          if (highestIdCat.required_progress) localStorage.setItem('required_progress', highestIdCat.required_progress);
+        }
 
-        return highestIdCat;
+        return response;
       }
       throw new Error('Invalid response format');
     } catch (error: any) {
@@ -115,7 +124,7 @@ export const catsSlice = createSlice({
       })
       .addCase(fetchCatsAsync.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cats = action.payload;
+        state.cats = Array.isArray(action.payload) ? action.payload : [action.payload];
       })
       .addCase(fetchCatsAsync.rejected, (state, action) => {
         state.isLoading = false;
@@ -127,7 +136,7 @@ export const catsSlice = createSlice({
       })
       .addCase(createCatAsync.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cats.push(action.payload);
+        state.cats = [...state.cats, action.payload];
       })
       .addCase(updateCatAsync.pending, (state) => {
         state.isLoading = true;
@@ -136,10 +145,9 @@ export const catsSlice = createSlice({
       .addCase(updateCatAsync.fulfilled, (state, action) => {
         state.isLoading = false;
         const updatedCat = action.payload;
-        const index = state.cats.findIndex(cat => cat.id === updatedCat.id);
-        if (index !== -1) {
-          state.cats[index] = updatedCat;
-        }
+        state.cats = state.cats.map(cat => 
+          cat.id === updatedCat.id ? updatedCat : cat
+        );
       })
       .addCase(updateCatAsync.rejected, (state, action) => {
         state.isLoading = false;

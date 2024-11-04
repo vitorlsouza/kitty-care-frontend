@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -14,6 +13,7 @@ import { logout, signUpUser } from "./Redux/features/userSlice";
 import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
 import Profile from "./pages/Profile.tsx";
+import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -37,8 +37,9 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Router>
-      <Layout>
+    <>
+      <LoadingOverlay />
+      <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -83,8 +84,8 @@ function App() {
             </ProtectedRoute>
           } />
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </>
   );
 }
 

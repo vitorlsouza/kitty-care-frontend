@@ -1,5 +1,5 @@
 import React from "react";
-import Tip from "../Tip";
+import Tip from "../../Tip";
 
 const GoalSummary: React.FC = () => {
   const progressValues = [
@@ -18,7 +18,7 @@ const GoalSummary: React.FC = () => {
         <span className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit m-1">
           Selected Goals
         </span>
-        {JSON.parse(JSON.parse(localStorage.getItem("goals") || "[]"))
+        {JSON.parse(localStorage.getItem("goals") || "[]")
           .map((item: string, idx: number) => (
             <span
               key={idx}

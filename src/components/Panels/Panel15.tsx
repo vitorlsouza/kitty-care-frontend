@@ -1,15 +1,11 @@
 import React from "react";
-import Suggestions from "./Panel15Components/Suggestions";
-import Timeline from "./Panel15Components/Timeline";
-import DateSelection from "./Panel15Components/DateSelection";
-import EnvironmentalEnrichmentSuggestions from "./Panel15Components/EnvironmentalEnrichmentSuggestions";
-import GoalSummary from "./Panel15Components/GoalSummary";
+import Suggestions from "./Panel15/components/Suggestions";
+import Timeline from "./Panel15/components/Timeline";
+import DateSelection from "./Panel15/components/DateSelection";
+import EnvironmentalEnrichmentSuggestions from "./Panel15/components/EnvironmentalEnrichmentSuggestions";
+import GoalSummary from "./Panel15/components/GoalSummary";
 import { useNavigate } from "react-router-dom";
-
-interface Panel15Props {
-  previousStep: () => void;
-}
-
+import { Panel15Props } from "../../types/panel.types";
 const Panel15: React.FC<Panel15Props> = () => {
 
   const navigate = useNavigate();
