@@ -25,9 +25,9 @@ const CancelModal: React.FC<CancelModalProps> = ({
     try {
       await dispatch(deleteSubscriptionAsync()).unwrap();
       onConfirm();
-      navigate('/priceselection'); // Or wherever you want to redirect after cancellation
+      navigate("/priceselection"); // Or wherever you want to redirect after cancellation
     } catch (error) {
-      console.error('Failed to cancel subscription:', error);
+      console.error("Failed to cancel subscription:", error);
       // Optionally handle error (show error message, etc.)
     }
   };
@@ -65,10 +65,8 @@ const CancelModal: React.FC<CancelModalProps> = ({
           Cancel Subscription?
         </h2>
 
-        <p className="text-base sm:text-[20px] font-medium text-[#404040] mt-4 sm:mt-6 w-[396px]">
-          <div>You have X days left in your subscription.</div>
-          <div>Your subscription will end on</div>
-          <div>{finalDate}.</div>
+        <p className="text-base sm:text-[20px] font-medium text-[#404040] mt-4 sm:mt-6 w-[280px] sm:w-[396px]">
+          Are you sure you want to cancel your subscription? We'll miss you!
         </p>
 
         <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-[10px] justify-end mt-[20px] sm:mt-9 sm:mb-8">
