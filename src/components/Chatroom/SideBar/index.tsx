@@ -189,7 +189,7 @@ const SideBar = () => {
                   />
                   <Content
                     id="Profile"
-                    content={`Welcome ${userInfo.first_name} ${userInfo.last_name}`}
+                    content={`Welcome ${userInfo.first_name}`}
                     handleHover={() => { }}
                     onHover={onHover}
                   />
@@ -251,7 +251,7 @@ const SideBar = () => {
               <div className="w-full flex items-center justify-between">
                 <Content
                   id="Profile"
-                  content={`Welcome ${userInfo.first_name} ${userInfo.last_name}`}
+                  content={`Welcome ${userInfo.first_name}`}
                   handleHover={(id) => setOnHover(id)}
                   onHover={onHover}
                 />
