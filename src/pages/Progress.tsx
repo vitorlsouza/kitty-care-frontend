@@ -45,7 +45,7 @@ const Progress = () => {
     12: <Panels.Panel12 nextStep={nextStep} previousStep={previousStep} />,
     13: <Panels.Panel13 nextStep={nextStep} previousStep={previousStep} />,
     // 14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
-    15: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
+    15: <Panels.Panel14 previousStep={previousStep} />,
     // 15: <Panels.Panel15 previousStep={previousStep} />,
   }), []);
 

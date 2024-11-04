@@ -7,7 +7,7 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
   const playtime = JSON.parse(localStorage.getItem("playtime") || "0");
 
   return (
-    <div className={`w-full ${horizontal ? 'mt-20' : 'max-w-lg'} p-6 rounded-lg mx-auto font-inter`}>
+    <div className={`w-full ${horizontal ? 'mt-10' : 'max-w-lg'} p-6 rounded-lg mx-auto font-inter`}>
       <h2 className="text-[20px] font-semibold text-center mb-4">
         Suggestions
       </h2>

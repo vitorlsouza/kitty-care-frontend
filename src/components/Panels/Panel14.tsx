@@ -2,7 +2,7 @@ import React from "react";
 import { Panel14Props, OverviewSectionProps } from "./types/panel.types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import Suggestions from "./Panel15/components/Suggestions";
-
+import { useNavigate } from "react-router-dom";
 const LOCAL_STORAGE_KEYS = {
   GOALS: 'goals',
   ISSUES_FACED: 'issues_faced',
@@ -39,7 +39,9 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ title, items }) => {
   );
 };
 
-const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
+const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
+  const navigate = useNavigate();
+
   const [selectedGoals] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.GOALS, []);
   const [keyBarriers] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.ISSUES_FACED, []);
   const [progressFocus] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.REQUIRED_PROGRESS, "");
@@ -67,6 +69,7 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
         <OverviewSection title="Key Barriers Identified" items={keyBarriers} />
         <OverviewSection title="Progress Focus" items={progressFocus} />
       </div>
+
       <Suggestions horizontal />
 
       <div className="flex justify-center mt-8 gap-2">
@@ -77,7 +80,10 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           {"<"} Back
         </button>
         <button
-          onClick={nextStep}
+          // onClick={nextStep}
+          onClick={() => {
+            navigate("/cat-assistant");
+          }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
         >
           Start Your Journey
