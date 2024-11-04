@@ -136,7 +136,7 @@ const PaymentForm = () => {
         localStorage.setItem("paymentMade", "true");
 
         await dispatch(createSubscriptionAsync({
-          id: _subscriptionId,
+          id: subscriptionId,
           plan: formData.planName,
           end_date: formData.end_date,
           start_date: formData.start_date,
