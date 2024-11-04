@@ -172,7 +172,7 @@ const PaymentForm = () => {
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
               <div className="text-center text-[40px] font-semibold capitalize">
-                ${billingOption.price} Today
+                ${0} Today
               </div>
               <div className="text-center text-[18px] font-medium opacity-60 text-black">
                 {billingOption.method
