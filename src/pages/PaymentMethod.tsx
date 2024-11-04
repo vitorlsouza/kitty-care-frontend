@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import PayMethodBtn from "../components/Payments/PayMethodBtn";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import { useNavigate } from "react-router-dom";
-import ApplePayBtn from "../components/Payments/ApplePayBtn";
-import GooglePayBtn from "../components/Payments/GooglePayBtn";
+// import ApplePayBtn from "../components/Payments/ApplePayBtn";
+// import GooglePayBtn from "../components/Payments/GooglePayBtn";
 import { createPlanAsync } from "../Redux/features/billingSlice";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
@@ -19,8 +19,7 @@ const PaymentMethod = () => {
 
   const [error, setError] = useState<string>("");
 
-  const [isApplePayAvailable, setIsApplePayAvailable] =
-    useState<boolean>(false);
+  const [isApplePayAvailable, setIsApplePayAvailable] = useState<boolean>(false);
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
 
@@ -40,95 +39,95 @@ const PaymentMethod = () => {
     checkApplePayAvailability();
   }, []);
 
-  const initialPayPalOptions = {
-    clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, // Replace with your PayPal client ID
-    currency: "USD",
-    intent: "capture",
-  };
+  // const initialPayPalOptions = {
+  //   clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID, // Replace with your PayPal client ID
+  //   currency: "USD",
+  //   intent: "capture",
+  // };
 
-  const handlePayPalOrder = (_data: any, actions: any) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: billingOption.method
-              ? billingOption.yearly
-              : billingOption.monthly,
-          },
-        },
-      ],
-    });
-  };
+  // const handlePayPalOrder = (_data: any, actions: any) => {
+  //   return actions.order.create({
+  //     purchase_units: [
+  //       {
+  //         amount: {
+  //           value: billingOption.method
+  //             ? billingOption.yearly
+  //             : billingOption.monthly,
+  //         },
+  //       },
+  //     ],
+  //   });
+  // };
 
-  const handlePayPalApprove = (_data: any, actions: any) => {
-    return actions.order.capture().then((details: any) => {
-      // Handle successful payment
-      console.log("Payment completed", details);
-      handlePaymentComplete();
-    });
-  };
+  // const handlePayPalApprove = (_data: any, actions: any) => {
+  //   return actions.order.capture().then((details: any) => {
+  //     // Handle successful payment
+  //     console.log("Payment completed", details);
+  //     handlePaymentComplete();
+  //   });
+  // };
 
-  const handleApplePayClick = async () => {
-    try {
-      const session = new (window as any).ApplePaySession(3, {
-        countryCode: "US",
-        currencyCode: "USD",
-        supportedNetworks: ["visa", "masterCard", "amex"],
-        merchantCapabilities: ["supports3DS"],
-        total: {
-          label: "Your Company Name",
-          amount: billingOption.method
-            ? billingOption.yearly
-            : billingOption.monthly,
-        },
-      });
+  // const handleApplePayClick = async () => {
+  //   try {
+  //     const session = new (window as any).ApplePaySession(3, {
+  //       countryCode: "US",
+  //       currencyCode: "USD",
+  //       supportedNetworks: ["visa", "masterCard", "amex"],
+  //       merchantCapabilities: ["supports3DS"],
+  //       total: {
+  //         label: "Your Company Name",
+  //         amount: billingOption.method
+  //           ? billingOption.yearly
+  //           : billingOption.monthly,
+  //       },
+  //     });
 
-      session.onvalidatemerchant = async (event: any) => {
-        // Here you would typically make an API call to your backend to validate the merchant
-        try {
-          const merchantSession = await fetch(
-            "/api/apple-pay/validate-merchant",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                validationURL: event.validationURL,
-              }),
-            }
-          ).then((res) => res.json());
-          handlePaymentComplete();
+  //     session.onvalidatemerchant = async (event: any) => {
+  //       // Here you would typically make an API call to your backend to validate the merchant
+  //       try {
+  //         const merchantSession = await fetch(
+  //           "/api/apple-pay/validate-merchant",
+  //           {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             body: JSON.stringify({
+  //               validationURL: event.validationURL,
+  //             }),
+  //           }
+  //         ).then((res) => res.json());
+  //         handlePaymentComplete();
 
-          session.completeMerchantValidation(merchantSession);
-        } catch (err) {
-          console.error("Merchant validation failed:", err);
-          session.abort();
-        }
-      };
+  //         session.completeMerchantValidation(merchantSession);
+  //       } catch (err) {
+  //         console.error("Merchant validation failed:", err);
+  //         session.abort();
+  //       }
+  //     };
 
-      session.onpaymentauthorized = async () => {
-        try {
-          // Process the payment here
-          // You would typically make an API call to your backend
+  //     session.onpaymentauthorized = async () => {
+  //       try {
+  //         // Process the payment here
+  //         // You would typically make an API call to your backend
 
-          session.completePayment(
-            (window as any).ApplePaySession.STATUS_SUCCESS
-          );
-          navigate("/success");
-        } catch (err) {
-          console.error("Payment failed:", err);
-          session.completePayment(
-            (window as any).ApplePaySession.STATUS_FAILURE
-          );
-        }
-      };
+  //         session.completePayment(
+  //           (window as any).ApplePaySession.STATUS_SUCCESS
+  //         );
+  //         navigate("/success");
+  //       } catch (err) {
+  //         console.error("Payment failed:", err);
+  //         session.completePayment(
+  //           (window as any).ApplePaySession.STATUS_FAILURE
+  //         );
+  //       }
+  //     };
 
-      session.begin();
-    } catch (error) {
-      console.error("Apple Pay error:", error);
-    }
-  };
+  //     session.begin();
+  //   } catch (error) {
+  //     console.error("Apple Pay error:", error);
+  //   }
+  // };
 
   const handlePaymentComplete = async () => {
     try {
@@ -145,13 +144,13 @@ const PaymentMethod = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
-        <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
+    <div className="w-full">
+      <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
+        <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
           <SwitchMethod />
         </div>
         <div className="m-auto sm:m-0 my-2">
-          <div className="w-[343px] px-[21px] py-[47px] sm:w-[610px] sm:px-[85px] sm:py-[100px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+          <div className="w-[343px] px-[21px] py-[47px] sm:w-[608px] sm:px-[85px] sm:py-[100px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <div className="w-full h-full flex flex-col items-center justify-between">
               <div className="text-center">
                 <h2 className="text-[28px] sm:text-[40px] font-semibold mb-6">
