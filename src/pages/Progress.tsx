@@ -7,12 +7,6 @@ import Layout from '../components/Layout';
 const MAX_STEPS = 15;
 const MIN_STEP = 1;
 
-// Types
-interface PanelProps {
-  nextStep?: () => void;
-  previousStep?: () => void;
-}
-
 const Progress = () => {
   // Initialize state based on localStorage
   const catId = localStorage.getItem('catId');

@@ -13,17 +13,6 @@ const STYLES = {
   errorText: 'text-red-500 text-sm font-medium ms-6 -mt-[6px] relative'
 } as const;
 
-export interface TextInputProps {
-  name: string;
-  label: string;
-  type?: string;
-  placeholder?: string;
-  className?: string;
-  error?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  'aria-label': string;
-}
-
 const TextInput = ({
   name,
   label,
