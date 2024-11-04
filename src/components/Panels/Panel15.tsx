@@ -1,8 +1,8 @@
 import React from "react";
 import Suggestions from "./Panel15/components/Suggestions";
-import Timeline from "./Panel15/components/Timeline";
-import DateSelection from "./Panel15/components/DateSelection";
-import EnvironmentalEnrichmentSuggestions from "./Panel15/components/EnvironmentalEnrichmentSuggestions";
+// import Timeline from "./Panel15/components/Timeline";
+// import DateSelection from "./Panel15/components/DateSelection";
+// import EnvironmentalEnrichmentSuggestions from "./Panel15/components/EnvironmentalEnrichmentSuggestions";
 import GoalSummary from "./Panel15/components/GoalSummary";
 import { useNavigate } from "react-router-dom";
 import { Panel15Props } from "../../types/panel.types";
