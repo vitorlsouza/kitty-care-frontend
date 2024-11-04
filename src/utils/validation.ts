@@ -22,7 +22,7 @@ export const validatePassword = (password: string): string => {
   return "";
 };
 
-export const validateUserInfo = (userInfo: UserInfo) => {
+export const validateUserInfo = (userInfo: UserInfo, isChecked: boolean) => {
   const errors = {
     first_name: validateName(userInfo.first_name, "First name"),
     last_name: validateName(userInfo.last_name, "Last name"),
@@ -30,6 +30,10 @@ export const validateUserInfo = (userInfo: UserInfo) => {
     password: validatePassword(userInfo.password),
     general: "",
   };
+
+  if (!isChecked) {
+    errors.general = "Please accept the Terms and Privacy Policy";
+  }
 
   const isValid = !Object.values(errors).some(error => error !== "");
   return { isValid, errors };

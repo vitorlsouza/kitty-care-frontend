@@ -11,6 +11,25 @@ import { validateUserInfo } from '../utils/validation';
 import SwitchMethod from "../components/Payments/SwitchMethod";
 
 const Signup = () => {
+  const [checked, setChecked] = useState(false);
+
+  const [userInfo, setUserInfo] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    general: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -34,25 +53,8 @@ const Signup = () => {
     }
   }, []);
 
-  const [userInfo, setUserInfo] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-  });
-
-  const [error, setError] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    general: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-
   const validateForm = () => {
-    const { isValid, errors } = validateUserInfo(userInfo);
+    const { isValid, errors } = validateUserInfo(userInfo, checked);
     setError(errors);
     return isValid;
   };
@@ -106,6 +108,10 @@ const Signup = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleCheckboxChange = () => {
+    setChecked(!checked);
   };
 
   return (
@@ -166,16 +172,21 @@ const Signup = () => {
                   onChange={handleChange}
                   error={error.password}
                 />
-                <div className="flex sm:hidden my-3 gap-2">
-                  <div>
-                    <input type="checkbox" />
+                <div className="flex my-3 gap-2" onClick={handleCheckboxChange} >
+                  <div className="w-6 h-6">
+                    <input type="checkbox" className="w-full h-full" checked={checked}/>
                   </div>
-                  <div>
+                  <div className="text-[#898B90]">
                     I agree to the{" "}
-                    <a href="/termsofconditions">Terms of Conditions</a> and{" "}
-                    <a href="/privacypolicy">Privacy Policy.</a>
+                    <a className="text-black font-semibold" href="https://kitty-care.webflow.io/terms-of-use" target="_blank">Terms of Conditions</a> and{" "}
+                    <a className="text-black font-semibold" href="https://www.kittycareapp.com/privacy-policy" target="_blank">Privacy Policy.</a>
                   </div>
                 </div>
+                  {error.general && (
+                    <div className="text-red-500 text-sm text-center mt-2">
+                      {error.general}
+                    </div>
+                  )}
                 <div className="my-3">
                   <div className="w-full h-[52px] my-10">
                     <input
@@ -186,11 +197,6 @@ const Signup = () => {
                       disabled={isLoading}
                     />
                   </div>
-                  {error.general && (
-                    <div className="text-red-500 text-sm text-center mt-2">
-                      {error.general}
-                    </div>
-                  )}
                 </div>
                 {/* <div className="flex gap-4 items-center justify-between">
                   <Divider />
