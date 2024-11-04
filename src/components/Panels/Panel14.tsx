@@ -1,6 +1,7 @@
 import React from "react";
 import { Panel14Props, OverviewSectionProps } from "./types/panel.types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import Suggestions from "./Panel15/components/Suggestions";
 
 const LOCAL_STORAGE_KEYS = {
   GOALS: 'goals',
@@ -66,6 +67,7 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
         <OverviewSection title="Key Barriers Identified" items={keyBarriers} />
         <OverviewSection title="Progress Focus" items={progressFocus} />
       </div>
+      <Suggestions horizontal />
 
       <div className="flex justify-center mt-8 gap-2">
         <button
@@ -76,9 +78,9 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
         </button>
         <button
           onClick={nextStep}
-          className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
+          className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
         >
-          See My Report
+          Start Your Journey
         </button>
       </div>
     </div>

@@ -10,15 +10,23 @@ const MIN_STEP = 1;
 const Progress = () => {
   // Initialize state based on localStorage
   const catId = localStorage.getItem('catId');
-  const [currentStep, setCurrentStep] = useState(catId ? 14 : MIN_STEP);
+  const [currentStep, setCurrentStep] = useState(catId ? MAX_STEPS : MIN_STEP);
 
   // Navigation handlers
   const nextStep = () => {
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, MAX_STEPS));
+    setCurrentStep((prevStep) => {
+      const nextStep = prevStep + 1;
+      // Skip step 14
+      return nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
+    });
   };
 
   const previousStep = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, MIN_STEP));
+    setCurrentStep((prevStep) => {
+      const newPrevStep = prevStep - 1;
+      // Skip step 14
+      return newPrevStep === 14 ? 13 : Math.max(newPrevStep, MIN_STEP);
+    });
   };
 
   // Memoized panel mapping to prevent recreation on each render
@@ -36,8 +44,9 @@ const Progress = () => {
     11: <Panels.Panel11 nextStep={nextStep} previousStep={previousStep} />,
     12: <Panels.Panel12 nextStep={nextStep} previousStep={previousStep} />,
     13: <Panels.Panel13 nextStep={nextStep} previousStep={previousStep} />,
-    14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
-    15: <Panels.Panel15 previousStep={previousStep} />,
+    // 14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
+    15: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
+    // 15: <Panels.Panel15 previousStep={previousStep} />,
   }), []);
 
   // Render current panel based on step
