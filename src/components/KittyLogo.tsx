@@ -38,13 +38,7 @@ const KittyLogo: FC<KittyLogoProps> = ({ className = '' }) => {
 
   return (
     <header
-      className={`w-[${LOGO_DIMENSIONS.mobile.width}px] 
-                  h-[${LOGO_DIMENSIONS.mobile.height}px] 
-                  sm:w-[${LOGO_DIMENSIONS.desktop.width}px] 
-                  sm:h-[${LOGO_DIMENSIONS.desktop.height}px] 
-                  my-[${LOGO_DIMENSIONS.marginTop.mobile}] 
-                  sm:mt-[${LOGO_DIMENSIONS.marginTop.desktop}] 
-                  m-auto relative ${className}`}
+      className={`w-[150px] h-[30px] sm:w-[200px] sm:h-[40px] my-[6vh] sm:mt-[3vh] m-auto relative ${className}`}
       data-testid="kitty-logo"
     >
       <a
@@ -65,7 +59,7 @@ const KittyLogo: FC<KittyLogoProps> = ({ className = '' }) => {
           }}
         />
       </a>
-    </header>
+    </header >
   );
 };
 
