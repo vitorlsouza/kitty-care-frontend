@@ -8,20 +8,12 @@ import { useProfileForm } from "./hooks/useProfileForm";
 import { BREED_OPTIONS, GENDER_OPTIONS } from "./constants";
 import { ProfileInfo } from "./types";
 
-const keysOfInfo = [
-  "name",
-  "breed",
-  "gender",
-  "target_weight",
-  "medical_history",
-  "dietary_restrictions",
-];
-
 const EditProfileField = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     photo,
     profileInfo,
+    dataChanged,
     handlePhotoChange,
     handleInputChange,
     handleProfileUpdate,
@@ -59,6 +51,7 @@ const EditProfileField = () => {
 
         {/* Action Buttons */}
         <ActionButtons
+          dataChanged={dataChanged}
           isFormValid={isFormValid()}
           onSave={handleProfileUpdate}
           onCancel={() => setIsModalOpen(true)}
@@ -167,9 +160,11 @@ const FormFieldsSection = ({
 
 const ActionButtons = ({
   isFormValid,
+  dataChanged,
   onSave,
   onCancel,
 }: {
+  dataChanged: boolean;
   isFormValid: boolean;
   onSave: () => void;
   onCancel: () => void;
@@ -178,7 +173,7 @@ const ActionButtons = ({
     <button
       className={`h-[55px] px-[42px] py-[14px] rounded-[20px] border
         ${
-          isFormValid
+          dataChanged
             ? "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700"
             : "bg-[#D1D6E2] text-[#898B90]"
         }`}
