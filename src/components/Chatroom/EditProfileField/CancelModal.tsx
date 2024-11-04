@@ -65,10 +65,11 @@ const CancelModal: React.FC<CancelModalProps> = ({
           Cancel Subscription?
         </h2>
 
-        <p className="text-base sm:text-[20px] font-medium text-[#404040] mt-4 sm:mt-6 w-[396px]">
-          <div>You have X days left in your subscription.</div>
+        <p className="text-base sm:text-[20px] font-medium text-[#404040] mt-4 sm:mt-6 w-[396px] te">
+          {/* <div>You have X days left in your subscription.</div>
           <div>Your subscription will end on</div>
-          <div>{finalDate}.</div>
+          <div>{finalDate}.</div> */}
+          Are you sure you want to cancel your subscription? We'll miss you!
         </p>
 
         <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-[10px] justify-end mt-[20px] sm:mt-9 sm:mb-8">
