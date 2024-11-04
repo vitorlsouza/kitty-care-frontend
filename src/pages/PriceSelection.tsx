@@ -28,16 +28,12 @@ const PriceSelection = () => {
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
 
-  useEffect(() => {
-    dispatch(changeMethod({ yearly: 359.99 }));
-  }, []);
-
   const handleSubmit = () => {
     navigate("/paymentmethod");
   };
 
   const handleChecked = (value: boolean) => {
-    dispatch(changeMethod({ method: value, yearly: 359.99 }));
+    dispatch(changeMethod({ method: value }));
   };
 
   const handleCancel = () => {
@@ -66,8 +62,8 @@ const PriceSelection = () => {
                 checked={billingOption.method}
                 method={true}
                 isBest={true}
-                annual={359.99}
-                daily={0.98}
+                annual={billingOption.yearly}
+                daily={billingOption.daily}
               />
             </div>
             <div className="w-full" onClick={() => handleChecked(false)}>
@@ -75,7 +71,7 @@ const PriceSelection = () => {
                 checked={!billingOption.method}
                 method={false}
                 isBest={false}
-                monthly={49.99}
+                monthly={billingOption.monthly}
               />
             </div>
           </div>
