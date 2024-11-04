@@ -60,7 +60,7 @@ const Panel15: React.FC<Panel15Props> = () => {
             <footer className="flex justify-center mt-8">
                 <button
                     onClick={handleExploreClick}
-                    className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
+                    className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
                     aria-label="Explore my cat care plan"
                 >
                     Explore My Plan

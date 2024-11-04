@@ -59,7 +59,7 @@ const SideBar = () => {
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex">
-            <a href="/dashboard">
+            <a href="/cat-assistant">
               <Icon
                 id="KittyCare"
                 onHover={onHover}
@@ -214,7 +214,7 @@ const SideBar = () => {
           <>
             <div className="flex flex-col gap-10">
               <div className="flex">
-                <a href="/dashboard">
+                <a href="/cat-assistant">
                   <div
                     className={`text-[20px] px-[26px] w-full h-[70px] flex items-center`}
                   >
