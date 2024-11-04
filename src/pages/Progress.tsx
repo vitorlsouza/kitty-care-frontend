@@ -1,70 +1,53 @@
-import { useState } from "react";
+import { useState, useMemo } from 'react';
+import * as Panels from '../components/Panels';
+import ProgressBar from '../components/ProgressBar';
 
-import Panel01 from "../components/Panels/Panel01";
-import Panel02 from "../components/Panels/Panel02";
-import Panel03 from "../components/Panels/Panel03";
-import Panel04 from "../components/Panels/Panel04";
-import Panel05 from "../components/Panels/Panel05";
-import Panel06 from "../components/Panels/Panel06";
-import Panel07 from "../components/Panels/Panel07";
-import Panel08 from "../components/Panels/Panel08";
-import Panel09 from "../components/Panels/Panel09";
-import Panel10 from "../components/Panels/Panel10";
-import Panel11 from "../components/Panels/Panel11";
-import Panel12 from "../components/Panels/Panel12";
-import Panel13 from "../components/Panels/Panel13";
-import Panel14 from "../components/Panels/Panel14";
-import Panel15 from "../components/Panels/Panel15";
-import ProgressBar from "../components/ProgressBar";
+// Constants
+const MAX_STEPS = 15;
+const MIN_STEP = 1;
+
+// Types
+interface PanelProps {
+  nextStep?: () => void;
+  previousStep?: () => void;
+}
 
 const Progress = () => {
-  const catId = localStorage.getItem("catId");
-  const [currentStep, setCurrentStep] = useState(catId ? 15 : 1);
+  // Initialize state based on localStorage
+  const catId = localStorage.getItem('catId');
+  const [currentStep, setCurrentStep] = useState(catId ? MAX_STEPS : MIN_STEP);
 
+  // Navigation handlers
   const nextStep = () => {
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 15));
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, MAX_STEPS));
   };
 
   const previousStep = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
+    setCurrentStep((prevStep) => Math.max(prevStep - 1, MIN_STEP));
   };
 
-  const renderPanel = () => {
-    switch (currentStep) {
-      case 1:
-        return <Panel01 nextStep={nextStep} />;
-      case 2:
-        return <Panel02 nextStep={nextStep} previousStep={previousStep} />;
-      case 3:
-        return <Panel03 nextStep={nextStep} previousStep={previousStep} />;
-      case 4:
-        return <Panel04 nextStep={nextStep} previousStep={previousStep} />;
-      case 5:
-        return <Panel05 nextStep={nextStep} previousStep={previousStep} />;
-      case 6:
-        return <Panel06 nextStep={nextStep} previousStep={previousStep} />;
-      case 7:
-        return <Panel07 nextStep={nextStep} previousStep={previousStep} />;
-      case 8:
-        return <Panel08 nextStep={nextStep} previousStep={previousStep} />;
-      case 9:
-        return <Panel09 nextStep={nextStep} previousStep={previousStep} />;
-      case 10:
-        return <Panel10 nextStep={nextStep} previousStep={previousStep} />;
-      case 11:
-        return <Panel11 nextStep={nextStep} previousStep={previousStep} />;
-      case 12:
-        return <Panel12 nextStep={nextStep} previousStep={previousStep} />;
-      case 13:
-        return <Panel13 nextStep={nextStep} previousStep={previousStep} />;
-      case 14:
-        return <Panel14 nextStep={nextStep} previousStep={previousStep} />;
-      case 15:
-        return <Panel15 previousStep={previousStep} />;
+  // Memoized panel mapping to prevent recreation on each render
+  const panelMap = useMemo(() => ({
+    1: <Panels.Panel01 nextStep={nextStep} />,
+    2: <Panels.Panel02 nextStep={nextStep} previousStep={previousStep} />,
+    3: <Panels.Panel03 nextStep={nextStep} previousStep={previousStep} />,
+    4: <Panels.Panel04 nextStep={nextStep} previousStep={previousStep} />,
+    5: <Panels.Panel05 nextStep={nextStep} previousStep={previousStep} />,
+    6: <Panels.Panel06 nextStep={nextStep} previousStep={previousStep} />,
+    7: <Panels.Panel07 nextStep={nextStep} previousStep={previousStep} />,
+    8: <Panels.Panel08 nextStep={nextStep} previousStep={previousStep} />,
+    9: <Panels.Panel09 nextStep={nextStep} previousStep={previousStep} />,
+    10: <Panels.Panel10 nextStep={nextStep} previousStep={previousStep} />,
+    11: <Panels.Panel11 nextStep={nextStep} previousStep={previousStep} />,
+    12: <Panels.Panel12 nextStep={nextStep} previousStep={previousStep} />,
+    13: <Panels.Panel13 nextStep={nextStep} previousStep={previousStep} />,
+    14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
+    15: <Panels.Panel15 previousStep={previousStep} />,
+  }), []);
 
-      default:
-        return <Panel01 nextStep={nextStep} />;
-    }
+  // Render current panel based on step
+  const renderPanel = () => {
+    return panelMap[currentStep as keyof typeof panelMap] || panelMap[1];
   };
 
   return (

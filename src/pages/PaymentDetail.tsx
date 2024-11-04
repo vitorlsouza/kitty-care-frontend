@@ -9,106 +9,164 @@ import {
   CardCvcElement,
 } from "@stripe/react-stripe-js";
 import { getCode } from "country-list";
-
 import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../Redux/hooks";
+import { useAppSelector, useAppDispatch } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
 import { getClientSecretKey } from "../services/api";
 import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
-import { useAppDispatch } from "../Redux/hooks";
 import { setLoading } from "../store/ui/actions";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Constants
+const STRIPE_PROMISE = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+const PAYMENT_CONFIG = {
+  TRIAL_DAYS: {
+    MONTHLY: 3,
+    YEARLY: 7,
+  },
+  PRICES: {
+    MONTHLY: 49.99,
+    YEARLY: 299.99,
+  },
+  CARD_ELEMENT_OPTIONS: {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: 'Inter, "Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: window.innerWidth < 640 ? "16px" : "20px",
+        lineHeight: "normal",
+        fontWeight: 500,
+        "::placeholder": {
+          color: "#B8B9BC",
+        },
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a",
+      },
+      complete: {
+        color: "#28a745",
+      },
+    },
+  },
+};
+
+// Types
+interface PaymentFormData {
+  fullName: string;
+  country: string;
+  state: string;
+  postalCode: string;
+  planName: string;
+  startDate: string;
+  endDate: string;
+  provider: string;
+  billingPeriod: string;
+}
+
+interface PaymentFormError {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  general: string;
+}
+
+const formatDate = (date: Date): string => {
+  return date.toISOString().split("T")[0];
+};
+
+const calculateEndDate = (isYearly: boolean): string => {
+  const trialDays = isYearly ? PAYMENT_CONFIG.TRIAL_DAYS.YEARLY : PAYMENT_CONFIG.TRIAL_DAYS.MONTHLY;
+  return formatDate(
+    new Date(new Date().getTime() + trialDays * 24 * 60 * 60 * 1000)
+  );
+};
 
 const PaymentForm = () => {
-  useEffect(() => {
-    const subscriptionId = localStorage.getItem("subscriptionId");
-    if (subscriptionId) {
-      navigate("/cat-assistant");
-    }
-  }, []);
-
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useAppDispatch();
-  const [_subscriptionId, setSubscriptionId] = useState("");
+  const navigate = useNavigate();
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
   const userInfo = useAppSelector((state: RootState) => state.user);
 
-  const [error, setError] = useState({
-    first_name: "",
-    last_name: "",
+  const [_subscriptionId, setSubscriptionId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<PaymentFormError>({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     general: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const formatDate = (date: Date) => {
-    return date.toISOString().split('T')[0]; // This will format to YYYY-MM-DD
-  };
-
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<PaymentFormData>({
     fullName: "",
-    expiryMonth: "",
-    expiryYear: "",
-    securityCode: "",
-    passcodeKey: "",
     country: "",
     state: "",
     postalCode: "",
-    planName: "Free Trial", // TODO: change this to the actual plan name
-    start_date: formatDate(new Date()),
-    end_date: formatDate(new Date(new Date().getTime() + (billingOption.method ? 7 : 3) * 24 * 60 * 60 * 1000)),
+    planName: "Free Trial",
+    startDate: formatDate(new Date()),
+    endDate: calculateEndDate(billingOption.method),
     provider: "Stripe",
-    billing_period: billingOption.method ? "Yearly" : "Monthly"
+    billingPeriod: billingOption.method ? "Yearly" : "Monthly",
   });
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    let subscriptionId = localStorage.getItem("subscriptionId");
+    if (subscriptionId) {
+      navigate("/cat-assistant");
+    }
+  }, [navigate]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  ): void => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
+      setError(prev => ({ ...prev, general: "Payment system not initialized" }));
       return;
     }
 
-    setIsLoading(true);
-    dispatch(setLoading(true));
-
     try {
+      setIsLoading(true);
+      dispatch(setLoading(true));
+
       const paymentMade = localStorage.getItem("paymentMade");
 
       if (paymentMade) {
         await dispatch(createSubscriptionAsync({
           id: _subscriptionId,
           plan: formData.planName,
-          end_date: formData.end_date,
-          start_date: formData.start_date,
+          end_date: formData.endDate,
+          start_date: formData.startDate,
           provider: formData.provider,
-          billing_period: formData.billing_period
+          billing_period: formData.billingPeriod
         })).unwrap();
 
+        localStorage.removeItem("paymentMade");
         navigate("/progress");
-        return;
       }
 
       const { paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
-        card: elements.getElement(CardNumberElement)!,
+        card: elements.getElement(
+          CardNumberElement
+        ) as StripeCardNumberElement,
         billing_details: {
           name: formData.fullName,
           email: userInfo.email || localStorage.getItem("email"),
@@ -139,20 +197,19 @@ const PaymentForm = () => {
         await dispatch(createSubscriptionAsync({
           id: subscriptionId,
           plan: formData.planName,
-          end_date: formData.end_date,
-          start_date: formData.start_date,
+          end_date: formData.endDate,
+          start_date: formData.startDate,
           provider: formData.provider,
-          billing_period: formData.billing_period
+          billing_period: formData.billingPeriod
         })).unwrap();
 
         navigate("/progress");
       }
 
-    } catch (err: any) {
-      setError({
-        ...error,
-        general: err.message || "Payment failed. Please try again.",
-      });
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
+      setError(prev => ({ ...prev, general: errorMessage }));
+      console.error("Payment processing error:", err);
     } finally {
       setIsLoading(false);
       dispatch(setLoading(false));
@@ -161,29 +218,6 @@ const PaymentForm = () => {
 
   const handleCancel = () => {
     navigate("/paymentmethod");
-  };
-
-  const cardElementOptions = {
-    style: {
-      base: {
-        color: "#32325d",
-        fontFamily: 'Inter, "Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: window.innerWidth < 640 ? "16px" : "20px",
-        lineHeight: "normal",
-        fontWeight: 500,
-        "::placeholder": {
-          color: "#B8B9BC",
-        },
-      },
-      invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a",
-      },
-      complete: {
-        color: "#28a745", // Example completion color
-      },
-    },
   };
 
   return (
@@ -225,7 +259,7 @@ const PaymentForm = () => {
               </label>
               <CardNumberElement
                 className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                options={cardElementOptions}
+                options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
               />
             </div>
 
@@ -236,7 +270,7 @@ const PaymentForm = () => {
                 </label>
                 <CardExpiryElement
                   className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={cardElementOptions}
+                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
                 />
               </div>
               <div>
@@ -245,7 +279,7 @@ const PaymentForm = () => {
                 </label>
                 <CardCvcElement
                   className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={cardElementOptions}
+                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
                 />
               </div>
             </div>
@@ -320,7 +354,7 @@ const PaymentForm = () => {
 };
 
 const PaymentDetail = (props: JSX.IntrinsicAttributes) => (
-  <Elements stripe={stripePromise}>
+  <Elements stripe={STRIPE_PROMISE}>
     <PaymentForm {...props} />
   </Elements>
 );

@@ -9,8 +9,6 @@ const LoadingOverlay = () => {
     });
 
     const isLoading = useSelector((state: RootState) => state.ui.loading);
-    console.log('Is Loading:', isLoading);
-
     if (!isLoading) return null;
 
     return (

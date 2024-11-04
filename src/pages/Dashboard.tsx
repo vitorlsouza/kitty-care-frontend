@@ -1,22 +1,51 @@
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../Redux/features/userSlice";
 import { useAppDispatch } from "../Redux/hooks";
 
+// Navigation items configuration
+const NAV_ITEMS = [
+  { path: "/login", label: "Login" },
+  { path: "/signup", label: "Signup" },
+  { path: "/priceselection", label: "Price Selection" },
+  { path: "/paymentmethod", label: "Payment Method" },
+  { path: "/paymentdetail", label: "Payment Detail" },
+  { path: "/cat-assistant", label: "Chatroom" },
+  { path: "/cat-profile", label: "Profile" },
+  { path: "/progress", label: "Go to Progress" },
+] as const;
+
+/**
+ * Dashboard component that displays navigation links and logout functionality
+ */
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
   return (
-    <div className="w-full h-[700px] flex flex-col items-center justify-center gap-3">
-      <a href="/login" className="text-xl">Login</a>
-      <a href="/signup" className="text-xl">Signup</a>
-      <a href="/priceselection" className="text-xl">Price Selection</a>
-      <a href="/paymentmethod" className="text-xl">Payment Method</a>
-      <a href="/paymentdetail" className="text-xl">Payment Detail</a>
-      <a href="/cat-assistant" className="text-xl">Chatroom</a>
-      <a href="/cat-profile" className="text-xl">Profile</a>
-      <a href="/progress" className="text-xl">Go to Progress</a>
-      <span className="text-xl" onClick={()=>{dispatch(logout()); navigate("/login");}}>Logout</span>
-    </div>
+    <nav className="w-full min-h-[700px] flex flex-col items-center justify-center gap-4">
+      {NAV_ITEMS.map(({ path, label }) => (
+        <Link
+          key={path}
+          to={path}
+          className="text-xl hover:text-primary transition-colors"
+        >
+          {label}
+        </Link>
+      ))}
+
+      <button
+        onClick={handleLogout}
+        className="text-xl hover:text-red-500 transition-colors cursor-pointer"
+      >
+        Logout
+      </button>
+    </nav>
   );
 };
 

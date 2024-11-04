@@ -1,11 +1,10 @@
 export interface UIState {
   loading: boolean;
-  // ... other UI state
 }
 
 export const SET_LOADING = 'SET_LOADING';
 
-interface SetLoadingAction {
+export interface SetLoadingAction {
   type: typeof SET_LOADING;
   payload: boolean;
 }
