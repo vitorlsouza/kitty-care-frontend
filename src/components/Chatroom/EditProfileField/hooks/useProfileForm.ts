@@ -60,7 +60,7 @@ export const useProfileForm = () => {
         })
       ).unwrap();
 
-      navigate("/dashboard");
+      navigate("/cat-assistant");
     } catch (error) {
       console.error("Failed to update cat profile:", error);
     } finally {
