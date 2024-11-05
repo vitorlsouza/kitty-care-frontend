@@ -18,7 +18,7 @@ const SwitchMethod = () => {
 
   return (
     <div className="w-full text-justify">
-      <label className="flex gap-[16px] items-center cursor-pointer mt-20">
+      <label className="flex gap-[16px] items-center cursor-pointer mt-5 sm:mt-20">
         <span
           className={`text-[14px] sm:text-[18px] text-black capitalize  ${
             billingOption.method ? "font-medium opacity-60" : "font-bold"
