@@ -17,7 +17,7 @@ export const LoginForm: FC<LoginFormProps> = ({
         >
             <TextInput
                 name="email"
-                // label="Email"
+                label="Email"
                 type="email"
                 placeholder="name@email.com"
                 className={error.email ? 'border-red-500' : ''}
@@ -28,7 +28,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 
             <TextInput
                 name="password"
-                // label="Password"
+                label="Password"
                 type="password"
                 placeholder="Password (8+ characters)"
                 className={error.password ? 'border-red-500' : ''}
