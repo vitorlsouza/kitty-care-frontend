@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from "../Redux/hooks";
 import { changeMethod } from "../Redux/features/billingSlice";
+import ReactPixel from 'react-facebook-pixel';
 
 // Components
 import Layout from "../components/Layout";
@@ -101,6 +102,8 @@ export const Signup: React.FC = () => {
 
   // Handle plan selection from URL
   useEffect(() => {
+    ReactPixel.track('ViewContent');
+
     const planSelection = urlParams.get('planSelection');
     if (planSelection) {
       const isYearly = planSelection.toLowerCase() === "yearly";
