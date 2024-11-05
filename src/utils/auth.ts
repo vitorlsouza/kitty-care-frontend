@@ -1,24 +1,73 @@
 import { AuthToken } from './types';
 
 export const setAuthToken = (authData: AuthToken) => {
+  localStorage.setItem('email', authData.email);
   localStorage.setItem('token', authData.token);
   // Convert expiresIn to timestamp
   const expiresAt = new Date().getTime() + parseExpirationTime(authData.expiresIn);
   localStorage.setItem('expiresAt', expiresAt.toString());
+  if(authData.photo)  localStorage.setItem('photo', authData.photo);
 };
 
-export const clearAuthToken = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('expiresAt');
+export const clearTokens = () => {
+  const keysToRemove = [
+    "token",
+    "expiresAt",
+    "catId",
+    "ConversationId",
+    "activity_level",
+    "age",
+    "breed",
+    "check_in_period",
+    "country",
+    "dietary_restrictions",
+    "gender",
+    "goals",
+    "issues_faced",
+    "items",
+    "medical_conditions",
+    "medications",
+    "required_progress",
+    "selectedDate",
+    "medical_history",
+    "target_weight",
+    "training_days",
+    "unit",
+    "weight",
+    "zipcode",
+    "food_bowls",
+    "treats",
+    "playtime",
+    "subscriptionId",
+    "goals",
+    "issues_identified",
+    "required_progress",
+    "paymentMade",
+    "catFormData"
+  ];
+
+  keysToRemove.forEach((key) => localStorage.removeItem(key));
 };
 
-export const isAuthenticated = (): boolean => {
+export const isAuthenticated = (): null | any => {
   const token = localStorage.getItem('token');
   const expiresAt = localStorage.getItem('expiresAt');
   
-  if (!token || !expiresAt) return false;
+  if (!token || !expiresAt) return null;
   
-  return new Date().getTime() < parseInt(expiresAt);
+  const isValid = new Date().getTime() < parseInt(expiresAt);
+  if(!isValid) return null;
+  
+  try {
+    // Get user info from token
+    const payload = token.split('.')[1];
+    const user = JSON.parse(atob(payload));
+    
+    return user;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
 };
 
 // Helper to parse expiration time (e.g., "1h" to milliseconds)

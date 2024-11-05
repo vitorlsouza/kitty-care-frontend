@@ -1,14 +1,17 @@
-import ChatroomLayout from "../components/Chatroom/Layout";
-import SideBar from "../components/Chatroom/SideBar";
-import EditProfileField from "../components/Chatroom/EditProfileField";
-
-const Profile = () => {
+import { FC } from 'react';
+import { ChatroomLayout, SideBar, EditProfileField } from '../components/Chatroom';
+/**
+ * Profile page component that displays user profile editing interface
+ * within the chatroom layout structure
+ */
+const Profile: FC = () => {
   return (
-    <div className="w-full h-full">
-      <ChatroomLayout />
-      <SideBar />
-      <EditProfileField />
-    </div>
+    <main className="w-full h-full flex">
+      <ChatroomLayout>
+        <SideBar />
+        <EditProfileField />
+      </ChatroomLayout>
+    </main>
   );
 };
 

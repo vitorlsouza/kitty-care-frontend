@@ -1,80 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import NavigationButtons from "../NavigationButtons";
+import GoalCard from "./components/GoalCard";
+import { useGoals } from "./hooks/useGoals";
+import { GOALS, MAX_GOALS } from "./constants/goals";
 
 interface Panel02Props {
   nextStep: () => void;
   previousStep: () => void;
 }
 
+/**
+ * Panel02 Component
+ * Allows users to select up to three goals for their cat's improvement
+ */
 const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
-
-  const goals = [
-    {
-      title: "Scratching Less",
-      description:
-        "Help reduce unwanted scratching behavior on furniture or walls.",
-    },
-    {
-      title: "Lose Weight",
-      description:
-        "Assist in achieving a healthy weight for your cat through diet and activity.",
-    },
-    {
-      title: "Improve Lifestyle",
-      description:
-        "Provide a more enriched and stimulating environment for your cat.",
-    },
-    {
-      title: "Train Cat",
-      description:
-        "Teach your cat new behaviors, from basic commands to advanced tricks.",
-    },
-    {
-      title: "Better Litter Box Habits",
-      description: "Improve your cat’s litter box usage and reduce accidents.",
-    },
-    {
-      title: "Reduce Anxiety",
-      description:
-        "Help your cat manage stress, anxiety, or aggression in different situations.",
-    },
-    {
-      title: "Increase Playtime",
-      description:
-        "Encourage more active play and improve your cat’s physical health.",
-    },
-    {
-      title: "Socialization",
-      description:
-        "Help your cat become more comfortable around other pets or people.",
-    },
-  ];
-
-  const handleGoalSelect = (goal: string) => {
-    if (selectedGoals.includes(goal)) {
-      setSelectedGoals(selectedGoals.filter((g) => g !== goal));
-    } else if (selectedGoals.length < 3) {
-      setSelectedGoals([...selectedGoals, goal]);
-    }
-  };
-
-  const handleNext = () => {
-    nextStep();
-  };
-
-  // Load previously saved goals from local storage when the component mounts
-  useEffect(() => {
-    const storedGoals = localStorage.getItem("goals");
-    if (storedGoals) {
-      setSelectedGoals(storedGoals.split(","));
-    }
-  }, []);
-
-  // Update local storage whenever selectedGoals changes
-  useEffect(() => {
-    localStorage.setItem("goals", selectedGoals.join(","));
-  }, [selectedGoals]);
+  const { selectedGoals, handleGoalSelect } = useGoals();
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
@@ -83,31 +23,25 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
           Let's Choose Some Goals For Your Cat!
         </h1>
         <p className="text-md text-darkGray p-5">
-          Select up to 3 goals to focus on for your cat's health and happiness.
+          Select up to {MAX_GOALS} goals to focus on for your cat's health and happiness.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
-        {goals.map((goal) => (
-          <div
+        {GOALS.map((goal) => (
+          <GoalCard
             key={goal.title}
-            onClick={() => handleGoalSelect(goal.title)}
-            className={`cursor-pointer border-2 border-lightGray2 py-8 px-6 rounded-lg text-left transition-colors ${
-              selectedGoals.includes(goal.title)
-                ? "bg-primaryBlue text-white"
-                : "border-gray-300 hover:bg-primaryBlue hover:text-white"
-            }`}
-          >
-            <h3 className="text-lg mb-1.5">{goal.title}</h3>
-            <p className="text-sm opacity-80">{goal.description}</p>
-          </div>
+            goal={goal}
+            isSelected={selectedGoals.includes(goal.title)}
+            onSelect={handleGoalSelect}
+          />
         ))}
       </div>
 
       <NavigationButtons
-        nextStep={handleNext} // Call handleNext to proceed to the next step
+        nextStep={nextStep}
         previousStep={previousStep}
-        isNextDisabled={selectedGoals.length < 3}
+        isNextDisabled={selectedGoals.length < MAX_GOALS}
       />
     </div>
   );

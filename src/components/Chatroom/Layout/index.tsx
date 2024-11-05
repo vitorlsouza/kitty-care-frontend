@@ -1,52 +1,57 @@
+import { FC } from 'react';
 import TopCorner from "/assets/svg/TopCorner.svg";
 import BottomCorner from "/assets/svg/BottomCorner.svg";
-import { useEffect, useRef } from "react";
-import { useAppDispatch } from "../../../Redux/hooks";
-import { fetchCatsAsync } from "../../../Redux/features/catsSlice";
-import { createConversationAsync, fetchConversationsAsync } from "../../../Redux/features/chatSlice";
+import { ChatroomLayoutProps } from './types';
+import { LAYOUT_CONSTANTS } from './constants';
+import { CornerImage } from './CornerImage';
 
-const ChatroomLayout = () => {
-  const dispatch = useAppDispatch();
-  const isInitialized = useRef(false);
-
-  useEffect(() => {
-    if (isInitialized.current) return;
-    isInitialized.current = true;
-
-    const element = document.querySelector('[data-id="mainLY"]');
-    if (element) element.remove();
-
-    dispatch(fetchConversationsAsync())
-      .unwrap()
-      .then((result) => {
-        if (!result) {
-          dispatch(createConversationAsync());
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching conversations:', error);
-        dispatch(createConversationAsync());
-      });
-
-    dispatch(fetchCatsAsync());
-  }, [dispatch]);
-
+/**
+ * ChatroomLayout component that provides the common layout structure
+ * for the chatroom interface. It includes decorative corner images
+ * and maintains proper z-indexing for content layering.
+ *
+ * @component
+ * @param {ReactNode} children - The content to be rendered within the layout
+ * @returns {JSX.Element} The rendered ChatroomLayout component
+ */
+const ChatroomLayout: FC<ChatroomLayoutProps> = ({ children }) => {
   return (
-    <>
-      <div className="w-screen h-screen flex flex-col justify-between fixed bg-[#FAF6F3] -z-50 top-0 right-0">
+    <div className="relative w-screen h-screen">
+      {/* Background container with corner decorations */}
+      <div
+        className="w-screen h-screen flex flex-col justify-between fixed -z-50 top-0 right-0"
+        style={{ backgroundColor: LAYOUT_CONSTANTS.BACKGROUND_COLOR }}
+        aria-hidden="true"
+      >
+        {/* Top corner decoration */}
         <div className="flex justify-end top-0">
-          <div className="w-1/4 h-1/4 sm:w-auto">
-            <img src={TopCorner} alt="TopCorner" />
+          <div className="w-1/4 h-1/4 md:w-auto lg:w-auto transition-all duration-300">
+            <CornerImage
+              src={TopCorner}
+              alt="Top decorative corner"
+              className="w-full h-auto"
+            />
           </div>
         </div>
+
+        {/* Bottom corner decoration */}
         <div className="flex justify-end items-end">
-          <div className="w-1/3 sm:w-auto">
-            <img src={BottomCorner} alt="BottomCorner" />
+          <div className="w-1/3 md:w-auto lg:w-auto transition-all duration-300">
+            <CornerImage
+              src={BottomCorner}
+              alt="Bottom decorative corner"
+              className="w-full h-auto"
+            />
           </div>
         </div>
       </div>
-    </>
+
+      {/* Main content container */}
+      <div className="relative z-10 w-full h-full">
+        {children}
+      </div>
+    </div>
   );
 };
-
 export default ChatroomLayout;
+

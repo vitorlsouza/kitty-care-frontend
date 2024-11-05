@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { createPlanAPI, updatePlanAPI } from "../../services/api";
+import { createPlanAPI, removePlanAPI, updatePlanAPI } from "../../services/api";
 import { BillingState, PlanState } from "../../utils/types";
-import { setAuthToken, clearAuthToken } from "../../utils/auth";
+import { clearTokens } from "../../utils/auth";
+import { RootState } from "../../Redux/store";
 
 const initialState: BillingState = {
-  method: true,
-  price: 0,
+  method: true, // "true" for annual, "false" for monthly
+  price: 299.99,
   daily: 0.82,
   monthly: 49.99,
   yearly: 299.99,
@@ -43,15 +44,27 @@ export const updatePlanAsync = createAsyncThunk(
   }
 );
 
+export const removePlanAsync = createAsyncThunk(
+  "billing/removePlan",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await removePlanAPI();
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 export const billingSlice = createSlice({
   name: "billing",
   initialState,
   reducers: {
-    createPlan: (state, action: PayloadAction<Partial<BillingState>>) => {
-      return { ...state, ...action.payload };
+    changeMethod: (state, action: PayloadAction<Partial<BillingState>>) => {
+      return { ...state, ...action.payload, price: action.payload.method ? state.yearly : state.monthly };
     },
     logout: () => {
-      clearAuthToken();
+      clearTokens();
       return initialState;
     },
   },
@@ -62,10 +75,6 @@ export const billingSlice = createSlice({
       })
       .addCase(createPlanAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || "1h",
-          });
           Object.assign(state, {
             status: "succeeded",
             isAuthenticated: true,
@@ -81,10 +90,6 @@ export const billingSlice = createSlice({
       })
       .addCase(updatePlanAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || "1h",
-          });
           Object.assign(state, {
             status: "succeeded",
             isAuthenticated: true,
@@ -98,5 +103,8 @@ export const billingSlice = createSlice({
   },
 });
 
-export const { createPlan, logout } = billingSlice.actions;
+export const { changeMethod, logout } = billingSlice.actions;
 export default billingSlice.reducer;
+
+// Add this selector
+export const selectBilling = (state: RootState) => state.billing;

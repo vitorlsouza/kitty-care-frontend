@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { signUpAPI, loginAPI } from '../../services/api';
 import { LoginState, SignupState, UserState } from '../../utils/types';
-import { setAuthToken, clearAuthToken } from '../../utils/auth';
+import { setAuthToken, clearTokens } from '../../utils/auth';
+import { fetchCatsAsync } from './catsSlice';
+import { fetchSubscriptionsAsync } from './subscriptionSlice';
 
 const initialState: UserState = {
   first_name: '',
@@ -18,6 +20,12 @@ export const signUpUserAsync = createAsyncThunk(
   async (userData: SignupState, { rejectWithValue }) => {
     try {
       const response = await signUpAPI(userData);
+      setAuthToken({
+        token: response.token,
+        expiresIn: response.expiresIn || '1h',
+        email: userData.email,
+        photo: response.photo || ''
+      });
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -27,9 +35,29 @@ export const signUpUserAsync = createAsyncThunk(
 
 export const loginUserAsync = createAsyncThunk(
   'user/loginUser',
-  async (credentials: LoginState, { rejectWithValue }) => {
+  async (credentials: LoginState, { rejectWithValue, dispatch }) => {
     try {
       const response = await loginAPI(credentials);
+
+      setAuthToken({
+        token: response.token,
+        expiresIn: response.expiresIn || '1h',
+        email: credentials.email,
+        photo: response.photo || ''
+      });
+
+      try {
+        await dispatch(fetchSubscriptionsAsync(response.token)).unwrap();
+      } catch (error) {
+        // Silently ignore any errors from fetchSubscriptionsAsync
+      }
+
+      try {
+        await dispatch(fetchCatsAsync(response.token)).unwrap();
+      } catch (error) {
+        // Silently ignore any errors from fetchCatsAsync
+      }
+
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -46,7 +74,7 @@ export const userSlice = createSlice({
       return { ...state, ...action.payload };
     },
     logout: () => {
-      clearAuthToken();
+      clearTokens();
       return initialState;
     },
   },
@@ -57,10 +85,6 @@ export const userSlice = createSlice({
       })
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
-          });
           Object.assign(state, {
             status: 'succeeded',
             isAuthenticated: true
@@ -76,10 +100,6 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         if (action.payload?.token) {
-          setAuthToken({
-            token: action.payload.token,
-            expiresIn: action.payload.expiresIn || '1h'
-          });
           Object.assign(state, {
             status: 'succeeded',
             isAuthenticated: true

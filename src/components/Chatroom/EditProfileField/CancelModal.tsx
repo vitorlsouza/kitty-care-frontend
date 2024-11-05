@@ -1,20 +1,40 @@
 import React from "react";
 import TopCorner from "/assets/svg/TopCorner.svg";
 import BottomCorner from "/assets/svg/BottomCorner.svg";
+import { useAppDispatch } from "../../../Redux/hooks";
+import { deleteSubscriptionAsync } from "../../../Redux/features/subscriptionSlice";
+import { useNavigate } from "react-router-dom";
+import { setLoading } from "../../../store/ui/actions";
 
 interface CancelModalProps {
-  finalDate: string;
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 
 const CancelModal: React.FC<CancelModalProps> = ({
-  finalDate,
   isOpen,
   onClose,
   onConfirm,
 }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleConfirm = async () => {
+    dispatch(setLoading(true));
+
+    try {
+      await dispatch(deleteSubscriptionAsync()).unwrap();
+      onConfirm();
+      navigate("/priceselection");
+    } catch (error) {
+      console.error("Failed to cancel subscription:", error);
+      // Optionally handle error (show error message, etc.)
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -48,15 +68,13 @@ const CancelModal: React.FC<CancelModalProps> = ({
           Cancel Subscription?
         </h2>
 
-        <p className="text-base sm:text-[20px] font-medium text-[#404040] mt-4 sm:mt-6 w-[396px]">
-          <div>You have X days left in your subscription.</div>
-          <div>Your subscription will end on</div>
-          <div>{finalDate}.</div>
+        <p className="text-base sm:text-[20px] font-medium text-[#404040] mt-4 sm:mt-6 w-[280px] sm:w-[396px]">
+          Are you sure you want to cancel your subscription? We'll miss you!
         </p>
 
         <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-[10px] justify-end mt-[20px] sm:mt-9 sm:mb-8">
           <button
-            onClick={onConfirm}
+            onClick={handleConfirm}
             className="w-full sm:w-auto rounded-[20px] bg-[#0061EF] hover:bg-[#0061EF]/80 active:bg-[#0061EF]/60 px-[42px] py-[14px] text-white font-semibold flex items-center justify-center"
           >
             Yes, Cancel

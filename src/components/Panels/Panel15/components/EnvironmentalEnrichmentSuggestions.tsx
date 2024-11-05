@@ -1,6 +1,6 @@
 import React from "react";
 
-import Tip from "../Tip";
+import Tip from "../../Tip";
 
 const EnvironmentalEnrichmentSuggestions: React.FC = () => {
   return (
@@ -21,16 +21,16 @@ const EnvironmentalEnrichmentSuggestions: React.FC = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-2">
           <div className="flex flex-col items-center justify-center">
-            <div className="bg-primaryBlue flex items-center justify-center w-48 h-40 py-6 border-2 border-pearlBush rounded-3xl">
+            <div className="bg-primaryBlue flex items-center justify-center w-44 py-6 border-2 border-pearlBush rounded-3xl">
               <img
                 src="/assets/Dumble.png"
                 alt="no-dumble"
-                className="object-contain w-20 h-24"
+                className="object-contain h-30"
               />
             </div>
             <div className="border border-pearlBush p-3 rounded-xl w-full">
               <p className="font-inter text-xs text-black text-left">
-                You have a scratching post
+                Scratching post
               </p>
 
               <div className="mt-3 flex items-end justify-between">
@@ -49,11 +49,11 @@ const EnvironmentalEnrichmentSuggestions: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <div className="bg-primaryBlue flex items-center justify-center w-48 h-40 py-6 border-2 border-pearlBush rounded-3xl">
+            <div className="bg-primaryBlue flex items-center justify-center w-44 py-6 border-2 border-pearlBush rounded-3xl">
               <img
                 src="/assets/rat.png"
                 alt="no-dumble"
-                className="object-contain w-20 h-24"
+                className="object-contain h-30"
               />
             </div>
             <div className="border border-pearlBush p-3 rounded-xl w-full">

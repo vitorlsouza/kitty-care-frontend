@@ -1,19 +1,10 @@
-import { useState } from "react";
 import GooglePayButton from "@google-pay/button-react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../Redux/hooks";
+import { RootState } from "../../Redux/store";
 
 const GooglePayBtn = () => {
-  // @ts-ignore
-  const [billingOption, setBillingOption] = useState({
-    method: true,
-    price: 0,
-    daily: 0.82,
-    monthly: 49.99,
-    yearly: 299.99,
-    trustOption: true,
-    nostringOption: true,
-    saveOption: true,
-  });
+  const billingOption = useAppSelector((state: RootState) => state.billing);
 
   const navigate = useNavigate();
 
@@ -37,8 +28,9 @@ const GooglePayBtn = () => {
             tokenizationSpecification: {
               type: "PAYMENT_GATEWAY",
               parameters: {
-                gateway: "example",
-                gatewayMerchantId: "exampleGatewayMerchantId",
+                gateway: "stripe",
+                "stripe:version": "2024-10-28.acacia",
+                "stripe:publishableKey": import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
               },
             },
           },
@@ -53,6 +45,8 @@ const GooglePayBtn = () => {
             ? billingOption.yearly.toString()
             : billingOption.monthly.toString(),
           currencyCode: "USD",
+          checkoutOption: "COMPLETE_IMMEDIATE_PURCHASE",
+
         },
       }}
       onLoadPaymentData={handleGooglePayPayment}

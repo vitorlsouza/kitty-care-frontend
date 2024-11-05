@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PaymentMethod from "./pages/PaymentMethod";
 import PaymentDetail from "./pages/PaymentDetail";
-import Progress from "./pages/Progess";
+import Progress from "./pages/Progress.tsx";
 import Chatroom from "./pages/Chatroom";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { useEffect } from "react";
 import { useAppDispatch } from "./Redux/hooks";
-import { logout } from "./Redux/features/userSlice";
+import { logout, signUpUser } from "./Redux/features/userSlice";
 import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
 import Profile from "./pages/Profile.tsx";
+import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -21,24 +21,31 @@ function App() {
   useEffect(() => {
     // Check authentication status periodically
     const checkAuth = () => {
-      if (!isAuthenticated()) {
+      const auth = isAuthenticated();
+
+      if (!auth) {
         dispatch(logout());
       }
+      else {
+        dispatch(signUpUser({ email: auth?.email, first_name: auth?.full_name?.split(" ")[0], last_name: auth?.full_name?.split(" ")[1] }));
+      }
     };
+    checkAuth();
 
     const interval = setInterval(checkAuth, 60000); // Check every minute
     return () => clearInterval(interval);
   }, [dispatch]);
 
   return (
-    <Router>
-      <Layout>
+    <>
+      <LoadingOverlay />
+      <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={
+          <Route path="/dashboard" element={
             <ProtectedRoute>
-              <Home />
+              <Dashboard />
             </ProtectedRoute>
           } />
           <Route path="/priceselection" element={
@@ -66,19 +73,19 @@ function App() {
               <Chatroom />
             </ProtectedRoute>
           } />
-          <Route path="/profile" element={
+          <Route path="/cat-profile" element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
           } />
           <Route path="/*" element={
             <ProtectedRoute>
-              <Home />
+              <Dashboard />
             </ProtectedRoute>
           } />
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </>
   );
 }
 

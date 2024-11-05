@@ -1,6 +1,10 @@
+import { ChangeEvent } from "react";
+
 export interface AuthToken {
   token: string;
   expiresIn: string;
+  email: string;
+  photo?: string;
 }
 
 export interface UserState {
@@ -50,26 +54,39 @@ export interface LoginState {
   password: string;
 }
 
+export interface ProfileState {
+  name: string;
+  breed: string;
+  gender: string;
+  color: string;
+  medicalHistory: string;
+  dietaryPreferences: string;
+  status: string;
+  error: string;
+}
+
 export interface TextInputProps {
   name: string;
-  label: string;
-  type: string;
-  placeholder: string;
+  label?: string;
+  type?: string;
+  placeholder?: string;
   className?: string;
   error?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  'aria-label'?: string;
 }
 
 export interface LogBtnByProps {
   src: string;
   alt: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export interface ToggleProps {
-  name?: string;
-  value?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  value: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface UserInfo {
@@ -96,4 +113,19 @@ export interface LocalStorage {
   bearerToken: string;
   catId: string;
   conversationId: string;
+  subscriptionId: string;
+}
+
+export interface SubscriptionState {
+  id: string;
+  plan: string;
+  end_date: string;
+  start_date: string;
+  provider: string;
+  billing_period: string;
+}
+
+export interface Goal {
+  title: string;
+  description: string;
 }

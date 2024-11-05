@@ -21,6 +21,12 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
     if (!input.trim()) return;
 
     setError("");
+    setInput("");
+
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = '66px';
+    }
 
     const newMessage = {
       content: input,
@@ -29,9 +35,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
 
     dispatch(addMessage(newMessage));
 
-    const cats = localStorage.getItem('cats');
-    const catId = cats ? JSON.parse(cats)[0].id : "";
-
+    const catId = localStorage.getItem('catId');
     if (!catId) {
       setError("No cat found. Please try again later.");
       return;
@@ -47,8 +51,6 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
     } catch (err: any) {
       setError(err.message || "Failed to send message");
     }
-
-    setInput("");
   };
 
   return (
@@ -62,16 +64,20 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
         <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute -top-[80%]`}>
           <RiveAnimation src="riv/V2/Typing_animation.riv" />
         </div>
-        <input
+        <textarea
           aria-label="Chat message input"
           role="textbox"
-          className="w-full text-[14px] sm:text-[16px] p-[22px] sm:p-6 border-2 rounded-[20px] bg-[#F3EDE8] text-opacity-30 font-semibold focus:outline-none"
+          rows={1}
+          className="w-full h-auto text-[14px] sm:text-[16px] p-[22px] sm:p-6 sm:pr-24 border-2 rounded-[20px] bg-[#F3EDE8] text-opacity-30 font-semibold focus:outline-none resize-none overflow-y-hidden min-h-[66px] max-h-[150px]"
           placeholder="Type your question... Meow it out!"
           onChange={(e) => {
             setInput(e.target.value);
+            e.target.style.height = 'auto';
+            e.target.style.height = `${Math.min(e.target.scrollHeight, 150)}px`;
           }}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
               handleSubmit(e);
             }
           }}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import {
   Elements,
@@ -8,82 +8,30 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-
-import { loadStripe } from "@stripe/stripe-js";
+import { getCode } from "country-list";
+import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
+import { getClientSecretKey } from "../services/api";
+import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
+import { setLoading } from "../store/ui/actions";
+import Layout from "../components/Layout";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Constants
+const STRIPE_PROMISE = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const PaymentForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const [error, setError] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    general: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    expiryMonth: "",
-    expiryYear: "",
-    securityCode: "",
-    passcodeKey: "",
-    country: "",
-    state: "",
-    postalCode: "",
-  });
-
-  const navigate = useNavigate();
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const result = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-complete`,
-        },
-      });
-
-      if (result.error) {
-        setError({ ...error, general: result.error?.message || "" });
-      }
-      navigate("/progress");
-    } catch (err) {
-      setError({ ...error, general: "An unexpected error occurred." });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCancel = () => {
-    navigate("/paymentmethod");
-  };
-
-  const cardElementOptions = {
+const PAYMENT_CONFIG = {
+  TRIAL_DAYS: {
+    MONTHLY: 3,
+    YEARLY: 7,
+  },
+  PRICES: {
+    MONTHLY: 49.99,
+    YEARLY: 299.99,
+  },
+  CARD_ELEMENT_OPTIONS: {
     style: {
       base: {
         color: "#32325d",
@@ -101,142 +49,315 @@ const PaymentForm = () => {
         iconColor: "#fa755a",
       },
       complete: {
-        color: "#28a745", // Example completion color
+        color: "#28a745",
       },
     },
+  },
+};
+
+// Types
+interface PaymentFormData {
+  fullName: string;
+  country: string;
+  state: string;
+  postalCode: string;
+  planName: string;
+  startDate: string;
+  endDate: string;
+  provider: string;
+  billingPeriod: string;
+}
+
+interface PaymentFormError {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  general: string;
+}
+
+const formatDate = (date: Date): string => {
+  return date.toISOString().split("T")[0];
+};
+
+const calculateEndDate = (isYearly: boolean): string => {
+  const trialDays = isYearly ? PAYMENT_CONFIG.TRIAL_DAYS.YEARLY : PAYMENT_CONFIG.TRIAL_DAYS.MONTHLY;
+  return formatDate(
+    new Date(new Date().getTime() + trialDays * 24 * 60 * 60 * 1000)
+  );
+};
+
+const PaymentForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const billingOption = useAppSelector((state: RootState) => state.billing);
+  const userInfo = useAppSelector((state: RootState) => state.user);
+
+  const [_subscriptionId, setSubscriptionId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<PaymentFormError>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    general: "",
+  });
+
+  const [formData, setFormData] = useState<PaymentFormData>({
+    fullName: "",
+    country: "",
+    state: "",
+    postalCode: "",
+    planName: "Free Trial",
+    startDate: formatDate(new Date()),
+    endDate: calculateEndDate(billingOption.method),
+    provider: "Stripe",
+    billingPeriod: billingOption.method ? "Yearly" : "Monthly",
+  });
+
+  useEffect(() => {
+    let subscriptionId = localStorage.getItem("subscriptionId");
+    if (subscriptionId) {
+      navigate("/cat-assistant");
+    }
+  }, [navigate]);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      setError(prev => ({ ...prev, general: "Payment system not initialized" }));
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      dispatch(setLoading(true));
+
+      const paymentMade = localStorage.getItem("paymentMade");
+
+      if (paymentMade) {
+        await dispatch(createSubscriptionAsync({
+          id: _subscriptionId,
+          plan: formData.planName,
+          end_date: formData.endDate,
+          start_date: formData.startDate,
+          provider: formData.provider,
+          billing_period: formData.billingPeriod
+        })).unwrap();
+
+        localStorage.removeItem("paymentMade");
+        navigate("/progress");
+      }
+
+      const { paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(
+          CardNumberElement
+        ) as StripeCardNumberElement,
+        billing_details: {
+          name: formData.fullName,
+          email: userInfo.email || localStorage.getItem("email"),
+          address: {
+            country: getCode(formData.country),
+            state: formData.state,
+            postal_code: formData.postalCode,
+          },
+        },
+      });
+
+      const trial_end = (billingOption.method ? 7 : 3) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
+      const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
+
+
+      const { subscriptionId, success } = await getClientSecretKey({
+        name: formData.fullName,
+        email: userInfo.email || localStorage.getItem("email"),
+        paymentMethodId: paymentMethod?.id,
+        priceId,
+        trial_end
+      });
+      setSubscriptionId(subscriptionId);
+
+      if (success) {
+        localStorage.setItem("paymentMade", "true");
+
+        await dispatch(createSubscriptionAsync({
+          id: subscriptionId,
+          plan: formData.planName,
+          end_date: formData.endDate,
+          start_date: formData.startDate,
+          provider: formData.provider,
+          billing_period: formData.billingPeriod
+        })).unwrap();
+
+        navigate("/progress");
+      }
+
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
+      setError(prev => ({ ...prev, general: errorMessage }));
+      console.error("Payment processing error:", err);
+    } finally {
+      setIsLoading(false);
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handleCancel = () => {
+    navigate("/paymentmethod");
   };
 
   return (
-    <div className="flex flex-col sm:flex-row sm:px-[332px] justify-between">
-      <div className="m-auto sm:m-0 w-[359px] sm:w-[432px] max-w-[90%]">
-        <SwitchMethod />
-      </div>
-      <div className="m-auto sm:m-0 my-2">
-        <div className="w-[343px] px-[21px] py-[20px] sm:w-[610px] sm:px-[50px] sm:py-[44px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <div>
-              <div className="text-center text-[40px] font-semibold capitalize">
-                $0 Today
-              </div>
-              <div className="text-center text-[18px] font-medium opacity-60 text-black">
-                $0.00 for 7-day free trial; converts to $299.99 annually
-                renewing subscription.
-              </div>
-            </div>
-            <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                Full Name on Card
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleInputChange}
-                className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                required
-              />
-            </div>
-
-            <div className="rounded-lg overflow-hidden">
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                Card Number
-              </label>
-              <CardNumberElement
-                className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                options={cardElementOptions}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
+    <Layout>
+      <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
+        <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
+          <SwitchMethod />
+        </div>
+        <div className="m-auto w-full sm:m-0">
+          <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <div>
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Expiry Month
-                </label>
-                <CardExpiryElement
-                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={cardElementOptions}
-                />
+                <div className="text-center text-[40px] font-semibold capitalize">
+                  ${0} Today
+                </div>
+                <div className="text-center text-[18px] font-medium opacity-60 text-black">
+                  {billingOption.method
+                    ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+                    : "$0.00 for 3-day free trial; converts to $49.99 annually renewing subscription."}
+                </div>
               </div>
               <div>
                 <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Security Code
-                </label>
-                <CardCvcElement
-                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={cardElementOptions}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                Country
-              </label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
-                className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  State
+                  Full Name on Card
                 </label>
                 <input
                   type="text"
-                  name="state"
-                  value={formData.state}
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  placeholder="Enter your full name"
                   required
                 />
               </div>
 
+              <div className="rounded-lg overflow-hidden">
+                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                  Card Number
+                </label>
+                <CardNumberElement
+                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    Expiry Month
+                  </label>
+                  <CardExpiryElement
+                    className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                    options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+                  />
+                </div>
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    Security Code
+                  </label>
+                  <CardCvcElement
+                    className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
+                    options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Postal Code
+                  Country
                 </label>
                 <input
                   type="text"
-                  name="postalCode"
-                  value={formData.postalCode}
+                  name="country"
+                  value={formData.country}
                   onChange={handleInputChange}
-                  className="border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                  placeholder="Select country"
                   required
                 />
               </div>
-            </div>
 
-            <div className="flex justify-center gap-4">
-              <button
-                disabled={!stripe || isLoading}
-                className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={!stripe || isLoading}
-                className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
-              >
-                {isLoading ? "Submitting..." : "Submit"}
-              </button>
-            </div>
-          </form>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                    Postal Code
+                  </label>
+                  <input
+                    type="text"
+                    name="postalCode"
+                    value={formData.postalCode}
+                    onChange={handleInputChange}
+                    className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-center gap-4">
+                <button
+                  disabled={!stripe || isLoading}
+                  className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!stripe || isLoading}
+                  className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
+                >
+                  {isLoading ? "Submitting..." : "Submit"}
+                </button>
+              </div>
+            </form>
+            <div className="text-red-500">{error.general}</div>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
 const PaymentDetail = (props: JSX.IntrinsicAttributes) => (
-  <Elements stripe={stripePromise}>
+  <Elements stripe={STRIPE_PROMISE}>
     <PaymentForm {...props} />
   </Elements>
 );
