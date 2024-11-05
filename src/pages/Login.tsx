@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import { changeMethod } from '../Redux/features/billingSlice';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../Redux/hooks';
+import ReactPixel from 'react-facebook-pixel';
+
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +14,8 @@ const Login: React.FC = () => {
 
   // Handle plan selection from URL
   useEffect(() => {
+    ReactPixel.track('ViewContent');
+
     const planSelection = urlParams.get('planSelection');
     if (planSelection) {
       const isYearly = planSelection.toLowerCase() === "yearly";
