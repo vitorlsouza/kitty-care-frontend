@@ -6,7 +6,7 @@ import CancelModal from "./CancelModal";
 import { useProfileForm } from "./hooks/useProfileForm";
 import { BREED_OPTIONS, GENDER_OPTIONS } from "./constants";
 import { ProfileInfo } from "./types";
-import KittyLogo from "../../KittyLogo";
+import Header from "../../Header";
 
 const EditProfileField = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +21,7 @@ const EditProfileField = () => {
 
   return (
     <div className="max-w-full sm:w-[1130px] p-2 pb-6 mx-auto">
-      <KittyLogo/>
+      <Header />
 
       <main className="px-4">
         <section className="text-center mb-6">
@@ -164,10 +164,9 @@ const ActionButtons = ({
   <div className="flex gap-[10px] sm:gap-[30px] justify-start flex-col sm:flex-row-reverse">
     <button
       className={`h-[55px] px-[42px] py-[14px] rounded-[20px] border
-        ${
-          isFormValid
-            ? "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700"
-            : "bg-[#D1D6E2] text-[#898B90]"
+        ${isFormValid
+          ? "bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700"
+          : "bg-[#D1D6E2] text-[#898B90]"
         }`}
       onClick={onSave}
     >

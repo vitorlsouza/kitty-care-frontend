@@ -4,7 +4,7 @@ import { updateConversationAsync } from "../../../Redux/features/chatSlice";
 import InputField from "./InputField";
 import MessageBoxes from "./MessageBoxes";
 import ErrorMessage from "./ErrorMessage";
-import Header from "./Header";
+import Header from "../../Header";
 import type { ChatFieldProps } from "./types";
 
 const ChatField: React.FC<ChatFieldProps> = () => {
