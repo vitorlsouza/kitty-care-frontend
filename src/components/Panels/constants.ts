@@ -52,6 +52,7 @@ export const VALIDATION_PATTERNS = {
     "unit",
     "weight",
     "zipcode",
+    "catFormData"
   ] as const;
 
   export const CAT_BREEDS = [

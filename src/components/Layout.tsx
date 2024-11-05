@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import layout from "/assets/png/layout.png";
 import layoutMobile from "/assets/png/layoutMobile.png";
-import KittyLogo from "./KittyLogo";
+import Header from "./Header";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,16 +11,28 @@ interface BackgroundProps {
   className?: string;
 }
 
-// Preload background images
-const preloadImages = () => {
-  const images = [layout, layoutMobile];
-  images.forEach((src) => {
+// Preload background images with promise handling
+const preloadImage = (src: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
+    img.onload = () => resolve();
+    img.onerror = reject;
     img.src = src;
   });
 };
 
-// Background component extracted for better organization and reusability
+const preloadImages = async () => {
+  try {
+    await Promise.all([
+      preloadImage(layout),
+      preloadImage(layoutMobile)
+    ]);
+  } catch (error) {
+    console.error('Error preloading images:', error);
+  }
+};
+
+// Background component with improved loading strategy
 const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
   <div
     className={`w-full h-full fixed top-0 left-0 -z-10 bg-[#FAF6F3] ${className}`}
@@ -32,14 +44,35 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
         <img
           src={layoutMobile}
           alt="Decorative background pattern"
-          className="w-full h-full"
+          className="w-full h-full object-cover"
           loading="eager"
           fetchPriority="high"
+          decoding="async"
         />
       </picture>
     </div>
   </div>
 );
+
+// Add this to your head section
+const addPreloadLinks = () => {
+  const head = document.head;
+  const preloadLinks = [
+    { href: layout, media: '(min-width: 640px)' },
+    { href: layoutMobile, media: '(max-width: 639px)' }
+  ];
+
+  preloadLinks.forEach(({ href, media }) => {
+    if (!head.querySelector(`link[href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = href;
+      if (media) link.media = media;
+      head.appendChild(link);
+    }
+  });
+};
 
 /**
  * Layout component that wraps the main content of the application
@@ -52,9 +85,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isChatroom = pathname === "/cat-assistant";
   const isProfile = pathname === "/cat-profile";
 
-  // Preload images when component mounts
   useEffect(() => {
+    // Add preload links as soon as possible
+    addPreloadLinks();
+    // Preload images
     preloadImages();
+
+    // Cleanup function to remove preload links when component unmounts
+    return () => {
+      const links = document.head.querySelectorAll('link[rel="preload"][as="image"]');
+      links.forEach(link => link.remove());
+    };
   }, []);
 
   // Only return children for chatroom and profile pages
@@ -66,7 +107,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="w-screen relative">
       <main role="main" className="min-h-screen">
         <div className="w-full">
-          <KittyLogo />
+          <Header />
           <div className="flex-1">{children}</div>
           <div className="w-full h-5" aria-hidden="true" />
         </div>

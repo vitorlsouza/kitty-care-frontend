@@ -1,5 +1,4 @@
 import { useState } from "react";
-import KittyLogo from "/assets/svg/KittyLogo.svg";
 import CustomDropdown from "./CustomDropdown";
 import CustomInput from "./CustomInput";
 import CustomTextArea from "./CustomTextArea";
@@ -7,6 +6,7 @@ import CancelModal from "./CancelModal";
 import { useProfileForm } from "./hooks/useProfileForm";
 import { BREED_OPTIONS, GENDER_OPTIONS } from "./constants";
 import { ProfileInfo } from "./types";
+import Header from "../../Header";
 
 const EditProfileField = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,11 +22,7 @@ const EditProfileField = () => {
 
   return (
     <div className="max-w-full sm:w-[1130px] p-2 pb-6 mx-auto">
-      <header className="w-full h-[120px] flex justify-center items-center">
-        <a href="/dashboard">
-          <img src={KittyLogo} alt="KittyLogo" />
-        </a>
-      </header>
+      <Header />
 
       <main className="px-4">
         <section className="text-center mb-6">

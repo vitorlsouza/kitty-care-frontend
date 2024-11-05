@@ -18,7 +18,7 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
           <div className="flex flex-col items-center bg-lightPearl px-16 py-8 border-2 border-pearlBush rounded-3xl">
             <div className="bg-lightGray rounded-xl px-4 py-2 text-center mb-6">
               <h1 className="font-inter text-base font-semibold text-black leading-[28px]">
-                Daily Food Intake Suggestion
+                Daily Food Intake
               </h1>
             </div>
             <div className="flex flex-col items-center justify-center mb-6">
@@ -42,7 +42,8 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
                 type="range"
                 min="1"
                 max="3"
-                defaultValue={parseInt(foodBowls)}
+                value={parseInt(foodBowls)}
+                readOnly
                 className="flex-grow mx-2 appearance-none h-2 bg-gray-300 rounded-full accent-[#F4A623] cursor-pointer"
               />
               <span className="text-black font-medium text-sm">3</span>

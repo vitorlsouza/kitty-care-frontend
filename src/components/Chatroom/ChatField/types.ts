@@ -7,5 +7,5 @@ export interface ErrorMessageProps {
 }
 
 export interface HeaderProps {
-  // Add props if needed
+  className?: string;
 } 

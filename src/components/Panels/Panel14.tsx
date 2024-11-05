@@ -84,7 +84,7 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
           onClick={() => {
             navigate("/cat-assistant");
           }}
-          className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
+          className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"
         >
           Start Your Journey
         </button>
