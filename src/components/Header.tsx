@@ -16,12 +16,12 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
     <div className="w-full h-fit flex justify-center items-center">
       <div>
         {/* <a href="/"> */}
-          <header
-            className={`w-[400px] h-[200px] sm:w-[900px] sm:mt-0 -mb-20 m-auto relative ${className}`}
-            data-testid="kitty-logo"
-          >
-            <KittyLogo />
-          </header>
+        <header
+          className={`w-[400px] h-[200px] sm:w-[900px] sm:mt-0 -mb-20 m-auto relative ${className}`}
+          data-testid="kitty-logo"
+        >
+          <KittyLogo />
+        </header>
         {/* </a> */}
       </div>
     </div >

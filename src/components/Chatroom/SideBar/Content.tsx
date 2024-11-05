@@ -13,7 +13,7 @@ interface ContentProps {
   handleHover: (id: string) => void;
   /** ID of currently hovered item */
   onHover: string;
-  children?:ReactNode;
+  children?: ReactNode;
 }
 
 /**
@@ -56,7 +56,7 @@ const Content: FC<ContentProps> = ({
       onClick={onClick}
       role={onClick ? 'button' : 'none'}
     >
-      <div>{content}</div>
+      <p>{content}</p>
       {children}
     </Element>
   );
