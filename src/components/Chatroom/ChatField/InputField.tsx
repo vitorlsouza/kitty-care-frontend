@@ -62,7 +62,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
       )}
       <div className="w-full flex items-center relative">
         <div className={`h-20 ${onTyping ? "w-20" : "w-0"} absolute -top-[80%]`}>
-          <RiveAnimation src="riv/V2/Typing_animation.riv" />
+          <RiveAnimation src="riv/V2/Typing_animation.riv" autoplay={true} />
         </div>
         <textarea
           aria-label="Chat message input"
