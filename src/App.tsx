@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     // Initialize Facebook Pixel
     ReactPixel.init('1245735489886653');
-    ReactPixel.pageView();
+    // ReactPixel.pageView();
 
     // Check authentication status periodically
     const checkAuth = () => {

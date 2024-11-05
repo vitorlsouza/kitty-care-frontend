@@ -1,4 +1,4 @@
-import ReactPixel from 'react-facebook-pixel';
+// import ReactPixel from 'react-facebook-pixel';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../Redux/features/userSlice";
 import { useAppDispatch } from "../Redux/hooks";
@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Track ViewContent when dashboard loads
-    ReactPixel.track('ViewContent');
+    // ReactPixel.track('ViewContent');
   }, []);
 
   return (
