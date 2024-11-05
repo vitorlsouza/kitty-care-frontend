@@ -1,18 +1,20 @@
-const CollapseBtn = ({ handleClick }: { handleClick: () => void }) => {
+interface CollapseBtnProps {
+  handleClick: () => void;
+}
+
+const CollapseBtn: React.FC<CollapseBtnProps> = ({ handleClick }) => {
   return (
-    <div
+    <button
       className="relative"
-      onClick={() => {
-        handleClick();
-      }}
+      onClick={handleClick}
+      aria-label="Collapse sidebar"
+      type="button"
     >
-      <div className={`w-16 h-16 rounded-2xl rotate-45 bg-[#FAF6F3]`}>
-        {/* <div
-          className={`hidden sm:block w-16 h-16 rounded-2xl bg-black opacity-20`}
-        ></div> */}
-      </div>
-      <span className="absolute top-1/2 left-1/2 -translate-x-7 -translate-y-5 text-2xl">{`‹`}</span>
-    </div>
+      <div className="w-16 h-16 rounded-2xl rotate-45 bg-[#FAF6F3]" />
+      <span className="absolute top-1/2 left-1/2 -translate-x-7 -translate-y-5 text-2xl">
+        ‹
+      </span>
+    </button>
   );
 };
 

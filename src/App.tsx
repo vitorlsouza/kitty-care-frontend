@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PaymentMethod from "./pages/PaymentMethod";
 import PaymentDetail from "./pages/PaymentDetail";
-import Progress from "./pages/Progess";
+import Progress from "./pages/Progress.tsx";
 import Chatroom from "./pages/Chatroom";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { useEffect } from "react";
@@ -15,6 +14,7 @@ import { isAuthenticated } from "./utils/auth";
 import PriceSelection from "./pages/PriceSelection.tsx";
 import Profile from "./pages/Profile.tsx";
 import ReactPixel from 'react-facebook-pixel';
+import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -42,8 +42,9 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Router>
-      <Layout>
+    <>
+      <LoadingOverlay />
+      <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -77,7 +78,7 @@ function App() {
               <Chatroom />
             </ProtectedRoute>
           } />
-          <Route path="/profile" element={
+          <Route path="/cat-profile" element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
@@ -88,8 +89,8 @@ function App() {
             </ProtectedRoute>
           } />
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </>
   );
 }
 

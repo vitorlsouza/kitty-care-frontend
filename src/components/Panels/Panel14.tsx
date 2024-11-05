@@ -1,25 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Panel14Props, OverviewSectionProps } from "./types/panel.types";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import Suggestions from "./Panel15/components/Suggestions";
+import { useNavigate } from "react-router-dom";
+const LOCAL_STORAGE_KEYS = {
+  GOALS: 'goals',
+  ISSUES_FACED: 'issues_faced',
+  REQUIRED_PROGRESS: 'required_progress',
+} as const;
 
-interface Panel14Props {
-  nextStep: () => void;
-  previousStep: () => void;
-}
+const OverviewSection: React.FC<OverviewSectionProps> = ({ title, items }) => {
+  if (!items || (Array.isArray(items) && items.length === 0)) return null;
 
-const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
-  const [keyBarriers, setKeyBarriers] = useState<string[]>([]);
-  const [progressFocus, setProgressFocus] = useState<string[]>([]);
+  console.log(title, items);
 
-  useEffect(() => {
-    const selectedGoals = JSON.parse(JSON.parse(localStorage.getItem('goals') || '[]'));
-    const keyBarriers = JSON.parse(JSON.parse(localStorage.getItem('issues_faced') || '[]'));
-    const progressFocus = JSON.parse(localStorage.getItem('required_progress') || '[]');
+  return (
+    <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
+      <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit">
+        {title}
+      </h3>
+      <div className="flex flex-wrap justify-center md:justify-start gap-2">
+        {Array.isArray(items) ? (
+          items.map((item, idx) => (
+            <span
+              key={idx}
+              className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
+            >
+              {item}
+            </span>
+          ))
+        ) : (
+          <span className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray">
+            {items}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+};
 
-    setSelectedGoals(selectedGoals);
-    setKeyBarriers(keyBarriers);
-    setProgressFocus(progressFocus);
-  }, []);
+const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
+  const navigate = useNavigate();
 
+  const [selectedGoals] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.GOALS, []);
+  const [keyBarriers] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.ISSUES_FACED, []);
+  const [progressFocus] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.REQUIRED_PROGRESS, "");
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
@@ -28,7 +53,7 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           Congratulations! Your Custom Care Plan Is Ready
         </h1>
         <p className="text-sm md:text-base lg:text-lg text-darkGray px-8 md:mx-36 lg:mx-72">
-          Here’s a quick overview of your personalized care plan for your cat
+          Here's a quick overview of your personalized care plan for your cat
           based on the goals and preferences you shared.
         </p>
       </div>
@@ -40,67 +65,13 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           </span>
         </div>
 
-        {
-          selectedGoals.length > 0 && (
-            <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
-              <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
-                Selected Goals
-              </h3>
-
-              <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                {selectedGoals.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )
-        }
-
-        {
-          keyBarriers.length > 0 && (
-            <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
-              <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
-                Key Barriers Identified
-              </h3>
-
-              <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                {keyBarriers.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )
-        }
-
-        {
-          progressFocus.length > 0 && (
-            <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
-              <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit ">
-                Progress Focus
-              </h3>
-
-              <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                <span
-                  className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
-                >
-                  {progressFocus}
-                </span>
-              </div>
-            </div>
-          )
-        }
-
+        <OverviewSection title="Selected Goals" items={selectedGoals} />
+        <OverviewSection title="Key Barriers Identified" items={keyBarriers} />
+        <OverviewSection title="Progress Focus" items={progressFocus} />
       </div>
+
+      <Suggestions horizontal />
+
       <div className="flex justify-center mt-8 gap-2">
         <button
           onClick={previousStep}
@@ -109,10 +80,13 @@ const Panel14: React.FC<Panel14Props> = ({ nextStep, previousStep }) => {
           {"<"} Back
         </button>
         <button
-          onClick={nextStep}
-          className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
+          // onClick={nextStep}
+          onClick={() => {
+            navigate("/cat-assistant");
+          }}
+          className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"
         >
-          See My Report
+          Start Your Journey
         </button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createPlanAPI, removePlanAPI, updatePlanAPI } from "../../services/api";
 import { BillingState, PlanState } from "../../utils/types";
 import { clearTokens } from "../../utils/auth";
+import { RootState } from "../../Redux/store";
 
 const initialState: BillingState = {
   method: true, // "true" for annual, "false" for monthly
@@ -104,3 +105,6 @@ export const billingSlice = createSlice({
 
 export const { changeMethod, logout } = billingSlice.actions;
 export default billingSlice.reducer;
+
+// Add this selector
+export const selectBilling = (state: RootState) => state.billing;

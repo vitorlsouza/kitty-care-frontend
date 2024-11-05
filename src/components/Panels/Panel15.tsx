@@ -1,15 +1,11 @@
 import React from "react";
-import Suggestions from "./Panel15Components/Suggestions";
-import Timeline from "./Panel15Components/Timeline";
-import DateSelection from "./Panel15Components/DateSelection";
-import EnvironmentalEnrichmentSuggestions from "./Panel15Components/EnvironmentalEnrichmentSuggestions";
-import GoalSummary from "./Panel15Components/GoalSummary";
+import Suggestions from "./Panel15/components/Suggestions";
+// import Timeline from "./Panel15/components/Timeline";
+// import DateSelection from "./Panel15/components/DateSelection";
+// import EnvironmentalEnrichmentSuggestions from "./Panel15/components/EnvironmentalEnrichmentSuggestions";
+import GoalSummary from "./Panel15/components/GoalSummary";
 import { useNavigate } from "react-router-dom";
-
-interface Panel15Props {
-  previousStep: () => void;
-}
-
+import { Panel15Props } from "../../types/panel.types";
 const Panel15: React.FC<Panel15Props> = () => {
 
   const navigate = useNavigate();
@@ -28,21 +24,22 @@ const Panel15: React.FC<Panel15Props> = () => {
         </p>
       </div>
       <div className="flex flex-col lg:flex-row lg:space-x-8 items-center lg:items-start justify-center">
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8 mb-8 lg:mb-0">
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8 mb-8 lg:mb-0 align-center">
           <GoalSummary />
-          <Suggestions />
+
         </div>
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8">
-          <Timeline />
+          <Suggestions />
+          {/* <Timeline />
           <DateSelection />
-          <EnvironmentalEnrichmentSuggestions />
+          <EnvironmentalEnrichmentSuggestions /> */}
         </div>
       </div>
 
       <div className="flex justify-center mt-8">
         <button
           onClick={() => navigate("/cat-assistant")}
-          className="bg-primaryBlue text-white px-6 py-2 rounded-full hover:bg-opacity-90 text-base lg:text-lg"
+          className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
         >
           Explore My Plan
         </button>

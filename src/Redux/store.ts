@@ -1,9 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, Reducer } from '@reduxjs/toolkit';
 import userReducer from './features/userSlice';
 import chatReducer from './features/chatSlice';
 import catsReducer from './features/catsSlice';
 import billingReducer from './features/billingSlice';
 import subscriptionReducer from './features/subscriptionSlice';
+import { uiReducer } from '../store/ui/reducer';
+import { UIState, SetLoadingAction } from '../store/ui/types';
+import { AnyAction } from 'redux';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +15,7 @@ export const store = configureStore({
     cats: catsReducer,
     billing: billingReducer,
     subscription: subscriptionReducer,
+    ui: uiReducer as Reducer<UIState, SetLoadingAction | AnyAction>,  
   },
 });
 
