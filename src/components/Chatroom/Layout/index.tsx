@@ -16,7 +16,7 @@ import { CornerImage } from './CornerImage';
  */
 const ChatroomLayout: FC<ChatroomLayoutProps> = ({ children }) => {
   return (
-    <div className="relative w-screen h-screen">
+    <div className="relative w-full sm:w-screen h-screen">
       {/* Background container with corner decorations */}
       <div
         className="w-screen h-screen flex flex-col justify-between fixed -z-50 top-0 right-0"
