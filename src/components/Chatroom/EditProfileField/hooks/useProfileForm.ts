@@ -1,17 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../Redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { updateCatAsync } from "../../../../Redux/features/catsSlice";
 import { setLoading } from "../../../../store/ui/actions";
-import { ProfileInfo, PhotoData } from '../types';
-import { INITIAL_PROFILE_STATE } from '../constants';
+import { ProfileInfo, PhotoData } from "../types";
+import { INITIAL_PROFILE_STATE } from "../constants";
 
 export const useProfileForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [photo, setPhoto] = useState<File>();
-  const [profileInfo, setProfileInfo] = useState<ProfileInfo>(INITIAL_PROFILE_STATE);
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo>(
+    INITIAL_PROFILE_STATE
+  );
+  const [dataChanged, setDataChanged] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(profileInfo);
+
+    if (profileInfo === INITIAL_PROFILE_STATE) setDataChanged(false);
+    else setDataChanged(true);
+  }, [photo, profileInfo]);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -21,13 +31,12 @@ export const useProfileForm = () => {
 
   const isFormValid = (): boolean => {
     return !!(
-      photo &&
-      Object.values(profileInfo).every(value => value.trim() !== "")
+      photo && Object.values(profileInfo).every((value) => value.trim() !== "")
     );
   };
 
   const handleInputChange = (field: keyof ProfileInfo) => (value: string) => {
-    setProfileInfo(prev => ({ ...prev, [field]: value }));
+    setProfileInfo((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleProfileUpdate = async () => {
@@ -42,16 +51,18 @@ export const useProfileForm = () => {
       const photoData: PhotoData = {
         buffer,
         mimetype: photo.type,
-        originalname: photo.name
+        originalname: photo.name,
       };
 
-      await dispatch(updateCatAsync({
-        data: { ...profileInfo, photo: photoData }
-      })).unwrap();
+      await dispatch(
+        updateCatAsync({
+          data: { ...profileInfo, photo: photoData },
+        })
+      ).unwrap();
 
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
-      console.error('Failed to update cat profile:', error);
+      console.error("Failed to update cat profile:", error);
     } finally {
       dispatch(setLoading(false));
     }
@@ -60,9 +71,10 @@ export const useProfileForm = () => {
   return {
     photo,
     profileInfo,
+    dataChanged,
     handlePhotoChange,
     handleInputChange,
     handleProfileUpdate,
-    isFormValid
+    isFormValid,
   };
-}; 
+};

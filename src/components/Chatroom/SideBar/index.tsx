@@ -90,15 +90,17 @@ const SideBar = () => {
           {[
             { id: "Logout", src: Logout, onClick: handleLogout },
             { id: "Profile", src: Profile },
-          ].map((item) => (
-            <Icon
-              id={item.id}
-              onHover={onHover}
-              src={item.src}
-              handleHover={(id) => setOnHover(id)}
-              isOpen={isOpen}
-              onClick={item?.onClick}
-            />
+          ].map((item, index) => (
+            <div key={index}>
+              <Icon
+                id={item.id}
+                onHover={onHover}
+                src={item.src}
+                handleHover={(id) => setOnHover(id)}
+                isOpen={isOpen}
+                onClick={item?.onClick}
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -114,8 +116,9 @@ const SideBar = () => {
 
       <div className="block sm:hidden text-black text-base font-medium">
         <div
-          className={`h-screen fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${isOpen ? `w-screen py-[32px]` : `w-0 py-0`
-            }`}
+          className={`h-screen fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${
+            isOpen ? `w-screen py-[32px]` : `w-0 py-0`
+          }`}
         >
           <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
             <div className="flex flex-col gap-10">
@@ -166,13 +169,13 @@ const SideBar = () => {
                   id={"Logout"}
                   onHover={onHover}
                   src={Logout}
-                  handleHover={() => { }}
+                  handleHover={() => {}}
                   isOpen={isOpen}
                 />
                 <Content
                   id="Logout"
                   content="Logout"
-                  handleHover={() => { }}
+                  handleHover={() => {}}
                   onHover={onHover}
                 />
               </div>
@@ -182,13 +185,13 @@ const SideBar = () => {
                     id={"Profile"}
                     onHover={onHover}
                     src={Profile}
-                    handleHover={() => { }}
+                    handleHover={() => {}}
                     isOpen={isOpen}
                   />
                   <Content
                     id="Profile"
                     content={`Welcome ${userInfo.first_name}`}
-                    handleHover={() => { }}
+                    handleHover={() => {}}
                     onHover={onHover}
                   />
                 </div>
