@@ -68,7 +68,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
           aria-label="Chat message input"
           role="textbox"
           rows={1}
-          className="w-full h-auto text-[14px] sm:text-[16px] p-[22px] sm:p-6 sm:pr-24 border-2 rounded-[20px] bg-[#F3EDE8] text-opacity-30 font-semibold focus:outline-none resize-none overflow-y-hidden min-h-[66px] max-h-[150px]"
+          className="w-full h-auto text-[14px] sm:text-[16px] !p-[20px] sm:p-6 sm:pr-24 border-2 rounded-[20px] bg-[#F3EDE8] text-opacity-30 font-semibold focus:outline-none resize-none overflow-y-hidden min-h-[66px] max-h-[150px]"
           placeholder="Type your question... Meow it out!"
           onChange={(e) => {
             setInput(e.target.value);
