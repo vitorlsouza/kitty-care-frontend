@@ -1,9 +1,25 @@
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from "../Redux/hooks";
+import { changeMethod } from "../Redux/features/billingSlice";
+
+// Components
+import Layout from "../components/Layout";
 import TextInput from "../components/Login/Input";
 import SwitchMethod from "../components/Payments/SwitchMethod";
+import { SignupHeader } from "../components/Signup/SignupHeader";
+import { TermsCheckbox } from "../components/Signup/TermsCheckbox";
+import { SubmitButton } from "../components/Signup/SubmitButton";
+
+// Hooks
 import { useSignupForm, FormErrors } from "../hooks/useSignupForm";
-import Layout from "../components/Layout";
+
+// Constants
+const REDIRECT_PATHS = {
+  PRICE_SELECTION: "/priceselection",
+  PROGRESS: "/progress",
+  CAT_ASSISTANT: "/cat-assistant"
+} as const;
 
 interface SignupFormProps {
   error: FormErrors;
@@ -14,85 +30,14 @@ interface SignupFormProps {
   handleSubmit: (event: React.FormEvent) => void;
 }
 
-const Signup = () => {
-  const navigate = useNavigate();
-  const urlParams = new URLSearchParams(window.location.search);
-
-  const {
-    error,
-    isLoading,
-    checked,
-    setChecked,
-    handleChange,
-    handleSubmit,
-  } = useSignupForm();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
-    const subscriptionId = localStorage.getItem("subscriptionId");
-    const catId = localStorage.getItem("catId");
-
-    if (!subscriptionId || subscriptionId === "undefined") {
-      navigate("/priceselection?" + urlParams.toString());
-    } else if (!catId || catId === "undefined") {
-      navigate("/progress");
-    } else {
-      navigate('/cat-assistant');
-    }
-  }, [navigate, urlParams]);
-
-  return (
-    <Layout>
-      <div className="w-full">
-        <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
-          <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
-            <SwitchMethod />
-          </div>
-          <div className="m-auto w-full sm:m-0">
-            <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px] sm:px-[104px] sm:py-[40px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-              <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">
-                <SignupHeader urlParams={urlParams} />
-                <SignupForm
-                  error={error}
-                  isLoading={isLoading}
-                  checked={checked}
-                  setChecked={setChecked}
-                  handleChange={handleChange}
-                  handleSubmit={handleSubmit}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Layout>
-  );
-};
-
-const SignupHeader = ({ urlParams }: { urlParams: URLSearchParams; }) => (
-  <div className="text-center">
-    <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
-      Sign up
-    </h2>
-    <div className="text-base sm:text-lg font-medium">
-      Already have an account?{" "}
-      <span className="text-[#0061EF]">
-        <a href={`/login?${urlParams.toString()}`}>Login</a>
-      </span>
-    </div>
-  </div>
-);
-
-const SignupForm = ({
+const SignupForm: React.FC<SignupFormProps> = ({
   error,
   isLoading,
   checked,
   setChecked,
   handleChange,
   handleSubmit,
-}: SignupFormProps) => (
+}) => (
   <form onSubmit={handleSubmit} className="w-full h-full flex-col justify-between">
     <TextInput
       label=""
@@ -130,47 +75,82 @@ const SignupForm = ({
       onChange={handleChange}
       error={error.password}
     />
-
     <TermsCheckbox checked={checked} setChecked={setChecked} />
-
     {error.general && (
       <div className="text-red-500 text-sm text-center mt-2">
         {error.general}
       </div>
     )}
-
     <SubmitButton isLoading={isLoading} />
   </form>
 );
 
-const TermsCheckbox = ({ checked, setChecked }: { checked: boolean; setChecked: (checked: boolean) => void; }) => (
-  <div className="flex my-3 gap-2" onClick={() => setChecked(!checked)}>
-    <div className="w-6 h-6">
-      <input type="checkbox" className="w-full h-full" checked={checked} readOnly />
-    </div>
-    <div className="text-[#898B90]">
-      I agree to the{" "}
-      <a className="text-black font-semibold" href="https://kitty-care.webflow.io/terms-of-use" target="_blank" rel="noopener noreferrer">
-        Terms of Conditions
-      </a> and{" "}
-      <a className="text-black font-semibold" href="https://www.kittycareapp.com/privacy-policy" target="_blank" rel="noopener noreferrer">
-        Privacy Policy.
-      </a>
-    </div>
-  </div>
-);
+export const Signup: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const urlParams = new URLSearchParams(window.location.search);
 
-const SubmitButton = ({ isLoading }: { isLoading: boolean; }) => (
-  <div className="my-3">
-    <div className="w-full h-[52px] my-10">
-      <input
-        type="submit"
-        className="w-full h-[55px] text-base sm:text-xl border-2 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 cursor-pointer disabled:bg-blue-400"
-        value={isLoading ? "Creating account..." : "Create account"}
-        disabled={isLoading}
-      />
-    </div>
-  </div>
-);
+  const {
+    error,
+    isLoading,
+    checked,
+    setChecked,
+    handleChange,
+    handleSubmit,
+  } = useSignupForm();
+
+  // Handle plan selection from URL
+  useEffect(() => {
+    const planSelection = urlParams.get('planSelection');
+    if (planSelection) {
+      const isYearly = planSelection.toLowerCase() === "yearly";
+      dispatch(changeMethod({ method: isYearly }));
+    }
+  }, [dispatch, urlParams]);
+
+  // Handle authentication and navigation
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    const subscriptionId = localStorage.getItem("subscriptionId");
+    const catId = localStorage.getItem("catId");
+
+    if (!subscriptionId || subscriptionId === "undefined") {
+      navigate(`${REDIRECT_PATHS.PRICE_SELECTION}?${urlParams.toString()}`);
+    } else if (!catId || catId === "undefined") {
+      navigate(REDIRECT_PATHS.PROGRESS);
+    } else {
+      navigate(REDIRECT_PATHS.CAT_ASSISTANT);
+    }
+  }, [navigate, urlParams]);
+
+  return (
+    <Layout>
+      <div className="w-full">
+        <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
+          <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
+            <SwitchMethod />
+          </div>
+          <div className="m-auto w-full sm:m-0">
+            <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px] sm:px-[104px] sm:py-[40px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+              <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">
+                <SignupHeader urlParams={urlParams} />
+                <SignupForm
+                  error={error}
+                  isLoading={isLoading}
+                  checked={checked}
+                  setChecked={setChecked}
+                  handleChange={handleChange}
+                  handleSubmit={handleSubmit}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+};
 
 export default Signup;

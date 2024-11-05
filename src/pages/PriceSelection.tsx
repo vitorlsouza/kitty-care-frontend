@@ -40,8 +40,6 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
     const planSelection = urlParams.get('planSelection');
 
     if (planSelection) {
-      const isYearly = planSelection.toLowerCase() === "yearly";
-      dispatch(changeMethod({ method: isYearly }));
       navigate(ROUTES.PAYMENT_METHOD);
     }
   };
