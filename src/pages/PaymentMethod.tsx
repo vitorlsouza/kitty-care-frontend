@@ -5,6 +5,8 @@ import { RootState } from '../Redux/store';
 import PayMethodBtn from '../components/Payments/PayMethodBtn';
 import SwitchMethod from '../components/Payments/SwitchMethod';
 import Layout from '../components/Layout';
+import ReactPixel from 'react-facebook-pixel';
+
 
 /**
  * PaymentMethod component handles the payment method selection page
@@ -20,6 +22,9 @@ const PaymentMethod = () => {
     if (subscriptionId) {
       navigate('/cat-assistant');
     }
+
+    // Track InitiateCheckout when payment method page loads
+    ReactPixel.track('InitiateCheckout');
   }, [navigate]);
 
   const getPricingText = (): string => {

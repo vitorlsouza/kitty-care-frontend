@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+// import ReactPixel from 'react-facebook-pixel';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../Redux/features/userSlice";
 import { useAppDispatch } from "../Redux/hooks";
+import { useEffect } from 'react';
+import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
 
 // Navigation items configuration
@@ -22,6 +24,11 @@ const NAV_ITEMS = [
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Track ViewContent when dashboard loads
+    // ReactPixel.track('ViewContent');
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
