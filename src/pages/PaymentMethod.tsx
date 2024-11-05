@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../Redux/hooks';
-import { RootState } from '../Redux/store';
-import PayMethodBtn from '../components/Payments/PayMethodBtn';
-import SwitchMethod from '../components/Payments/SwitchMethod';
-import Layout from '../components/Layout';
-import ReactPixel from 'react-facebook-pixel';
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
+import PayMethodBtn from "../components/Payments/PayMethodBtn";
+import SwitchMethod from "../components/Payments/SwitchMethod";
+import Layout from "../components/Layout";
+import ReactPixel from "react-facebook-pixel";
 
 /**
  * PaymentMethod component handles the payment method selection page
@@ -18,19 +17,19 @@ const PaymentMethod = () => {
 
   // Check for existing subscription and redirect if found
   useEffect(() => {
-    const subscriptionId = localStorage.getItem('subscriptionId');
+    const subscriptionId = localStorage.getItem("subscriptionId");
     if (subscriptionId) {
-      navigate('/cat-assistant');
+      navigate("/cat-assistant");
     }
 
     // Track InitiateCheckout when payment method page loads
-    ReactPixel.track('InitiateCheckout');
+    ReactPixel.track("InitiateCheckout");
   }, [navigate]);
 
   const getPricingText = (): string => {
     return billingOption.method
-      ? '$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription.'
-      : '$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription.';
+      ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+      : "$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription.";
   };
 
   return (
@@ -58,10 +57,7 @@ const PaymentMethod = () => {
 
                 {/* Payment Methods Section */}
                 <div className="w-full h-full flex flex-col justify-between gap-[30px]">
-                  <PayMethodBtn
-                    payBy="card"
-                    onClick={() => navigate('/paymentdetail')}
-                  />
+                  <PayMethodBtn onClick={() => navigate("/paymentdetail")} />
 
                   {/* Footer Section */}
                   <div>
