@@ -4,7 +4,7 @@ import { TextInputProps } from '../../utils/types';
 
 // Extract styles to constants for better maintainability
 const STYLES = {
-  container: 'my-[30px] flex flex-col gap-[20px] h-auto',
+  container: 'mt-[30px] flex gap-[10px] flex-col h-auto',
   label: 'text-base sm:text-xl font-bold sm:font-medium ml-[24px]',
   inputWrapper: 'w-full h-[52px] relative',
   input: 'w-full h-[55px] p-auto sm:py-4 px-[24px] text-base sm:text-xl border-2 rounded-lg',
