@@ -42,7 +42,7 @@ const PaymentMethod = () => {
           </div>
 
           {/* Payment Options Section */}
-          <div className="m-auto sm:m-0 my-2">
+          <div className="m-auto sm:m-0 my-2 sm:mt-32">
             <div className="w-[343px] px-[21px] py-[47px] sm:w-[608px] sm:px-[85px] sm:py-[100px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
               <div className="w-full h-full flex flex-col items-center justify-between">
                 {/* Header Section */}

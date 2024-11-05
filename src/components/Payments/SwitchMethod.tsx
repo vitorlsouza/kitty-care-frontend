@@ -44,7 +44,7 @@ const SwitchMethod = () => {
         <br />
         Kitty Care's Expert Advice For
       </div>
-      <div className="text-[36px] sm:text-[58px] font-semibold text-[#0061EF] mt-3">
+      <div className={`text-[36px] sm:text-[58px] font-semibold ${billingOption.method ? "text-orange-400" : "text-[#0061EF]"} mt-3`}>
         ${0} Today
       </div>
       <div className="text-xl sm:text-2xl font-semibold leading-normal w-full">
