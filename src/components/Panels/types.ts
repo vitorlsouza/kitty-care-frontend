@@ -20,15 +20,11 @@ export interface CatWeightFormErrors {
 export interface CatFormData {
   gender: string | null;
   age: string;
-  country: string;
-  zipcode: string;
 }
 
 export interface FormErrors {
   gender: string;
   age: string;
-  country: string;
-  zipcode: string;
 }
 
 export interface PanelProps {
