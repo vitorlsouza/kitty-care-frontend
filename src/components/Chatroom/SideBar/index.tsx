@@ -54,7 +54,7 @@ const SideBar = () => {
   };
 
   return (
-    <div id="sideBar" className="fixed h-screen flex z-20">
+    <div id="sideBar" className="fixed h-dvh flex z-20">
       <div className="hidden sm:flex relative my-12 ml-12 w-auto h-[90%] bg-[#FADFC9] rounded-2xl p-[18px] flex-col justify-between">
         <div className="absolute top-[72px] -right-[17%] -translate-x-1 -z-10 hover:cursor-pointer">
           <ExtendBtn handleClick={() => setIsOpen(true)} />

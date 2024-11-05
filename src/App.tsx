@@ -46,6 +46,11 @@ function App() {
       <LoadingOverlay />
       <Router>
         <Routes>
+          <Route path="/" element={
+            <ProtectedRoute>
+              <Chatroom />
+            </ProtectedRoute>
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={
@@ -85,7 +90,7 @@ function App() {
           } />
           <Route path="/*" element={
             <ProtectedRoute>
-              <Dashboard />
+              <div>Not found</div>
             </ProtectedRoute>
           } />
         </Routes>
