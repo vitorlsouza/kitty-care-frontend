@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 interface ContentProps {
   /** The text content to display */
@@ -13,6 +13,7 @@ interface ContentProps {
   handleHover: (id: string) => void;
   /** ID of currently hovered item */
   onHover: string;
+  children?:ReactNode;
 }
 
 /**
@@ -25,6 +26,7 @@ const Content: FC<ContentProps> = ({
   onClick,
   handleHover,
   onHover,
+  children
 }) => {
   const isHovered = onHover === id;
 
@@ -34,7 +36,6 @@ const Content: FC<ContentProps> = ({
     'px-[26px]',
     'text-left',
     'h-[70px]',
-    'overflow-hidden',
     'leading-10',
     'text-black',
     'sm:text-[#625042]',
@@ -49,13 +50,14 @@ const Content: FC<ContentProps> = ({
   return (
     <Element
       id={id}
-      className={`${baseClasses} ${hoverClasses} ${className}`.trim()}
+      className={`${baseClasses} ${hoverClasses} ${className} flex w-full items-center justify-between`.trim()}
       onMouseEnter={() => handleHover(id)}
       onMouseLeave={() => handleHover('')}
       onClick={onClick}
       role={onClick ? 'button' : 'none'}
     >
-      {content}
+      <div>{content}</div>
+      {children}
     </Element>
   );
 };
