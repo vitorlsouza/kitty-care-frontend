@@ -19,6 +19,7 @@ import MiniBtn from "/assets/svg/MiniBtn.svg";
 import { logout } from "../../../Redux/features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../../Redux/hooks";
 import { RootState } from "../../../Redux/store";
+// import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +28,7 @@ const SideBar = () => {
   const userInfo = useAppSelector((state: RootState) => state.user);
 
   const dispatch = useAppDispatch();
+  // const navigate = useNavigate();
 
   const sideBarRef = useRef(null);
   useEffect(() => {
@@ -87,21 +89,23 @@ const SideBar = () => {
           </div> */}
         </div>
         <div className="flex flex-col gap-4">
-          {[
-            { id: "Logout", src: Logout, onClick: handleLogout },
-            { id: "Profile", src: Profile },
-          ].map((item, index) => (
-            <div key={index}>
+            <Icon
+              id="Logout"
+              onHover={onHover}
+              src={Logout}
+              handleHover={(id) => setOnHover(id)}
+              isOpen={isOpen}
+              onClick={handleLogout}
+            />
+            <a href="/cat-profile">
               <Icon
-                id={item.id}
+                id="Profile"
                 onHover={onHover}
-                src={item.src}
+                src={Profile}
                 handleHover={(id) => setOnHover(id)}
                 isOpen={isOpen}
-                onClick={item?.onClick}
               />
-            </div>
-          ))}
+            </a>
         </div>
       </div>
 
@@ -249,20 +253,21 @@ const SideBar = () => {
                 onClick={handleLogout}
                 onHover={onHover}
               />
-              <div className="w-full flex items-center justify-between">
-                <Content
-                  id="Profile"
-                  content={`Welcome ${userInfo.first_name}`}
-                  handleHover={(id) => setOnHover(id)}
-                  onHover={onHover}
-                />
-                <div className="py-5 mx-5 tooltip">
-                  <span className="tooltiptext">Edit</span>
-                  <a href="/cat-profile">
-                    <img src={Edit} alt="Edit" />
-                  </a>
+              <a href="/cat-profile">
+                <div className="w-full flex items-center justify-between">
+                  <Content
+                    id="Profile"
+                    content={`Welcome ${userInfo.first_name}`}
+                    handleHover={(id) => setOnHover(id)}
+                    onHover={onHover}
+                  >
+                    <div className="py-5 mx-5 tooltip">
+                      <span className="tooltiptext -mt-1 text-base font-medium">Edit</span>
+                      <img src={Edit} alt="Edit" />
+                    </div>
+                  </Content>
                 </div>
-              </div>
+              </a>
             </div>
             <div className="absolute top-32 -right-[52px] -translate-x-1 z-10 hover:cursor-pointer">
               <CollapseBtn handleClick={() => setIsOpen(false)} />
