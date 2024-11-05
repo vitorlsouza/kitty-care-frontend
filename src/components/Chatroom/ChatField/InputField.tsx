@@ -54,7 +54,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
   };
 
   return (
-    <div className="w-full pt-7">
+    <div className="w-full">
       {error && (
         <div className="text-red-500 text-sm text-center mb-2">
           {error}
@@ -91,7 +91,7 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
           <HiOutlineArrowRight className="text-md sm:text-2xl" />
         </button>
       </div>
-      <div className="w-[210px] sm:w-full m-auto text-center font-bold sm:font-semibold text-[14px] sm:text-lg mt-4">
+      <div className="sm:w-full m-auto text-center md:font-bold text-[10px] sm:text-[14px] sm:text-lg mt-2">
         Chat with a vet 24/7 for advice and consultations
       </div>
     </div>
