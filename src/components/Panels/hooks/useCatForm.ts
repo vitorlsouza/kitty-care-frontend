@@ -3,15 +3,11 @@ import { useState, useEffect } from 'react';
 interface CatFormData {
   gender: string;
   age: string;
-  country: string;
-  zipcode: string;
 }
 
 interface CatFormErrors {
   gender?: string;
   age?: string;
-  country?: string;
-  zipcode?: string;
 }
 
 export const useCatForm = (nextStep: () => void) => {
@@ -21,8 +17,6 @@ export const useCatForm = (nextStep: () => void) => {
     return savedData ? JSON.parse(savedData) : {
       gender: '',
       age: '',
-      country: '',
-      zipcode: ''
     };
   });
 
@@ -33,8 +27,6 @@ export const useCatForm = (nextStep: () => void) => {
     localStorage.setItem('catFormData', JSON.stringify(formData));
     localStorage.setItem('gender', formData.gender);
     localStorage.setItem('age', formData.age);
-    localStorage.setItem('country', formData.country);
-    localStorage.setItem('zipcode', formData.zipcode);
   }, [formData]);
 
   const validate = () => {
@@ -47,14 +39,6 @@ export const useCatForm = (nextStep: () => void) => {
     if (!formData.age) {
       newErrors.age = 'Please enter your cat\'s age';
     }
-    
-    if (!formData.country) {
-      newErrors.country = 'Please enter your country';
-    }
-    
-    if (!formData.zipcode) {
-      newErrors.zipcode = 'Please enter your zip/postal code';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -66,7 +50,7 @@ export const useCatForm = (nextStep: () => void) => {
     }
   };
 
-  const isValid = formData.gender && formData.age && formData.country && formData.zipcode;
+  const isValid = formData.gender && formData.age;
 
   return {
     formData,

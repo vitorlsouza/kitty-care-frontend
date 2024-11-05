@@ -4,8 +4,6 @@ export interface CatFormData {
   activity_level: string | null;
   gender: string | null;
   age: number;
-  country: string | null;
-  zipcode: string | null;
   breed: string | null;
   weight: number;
   target_weight: number;
