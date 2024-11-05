@@ -6,7 +6,6 @@ const TOGGLE_BASE_CLASSES = [
   "w-[56px]",
   "sm:w-14",
   "h-7",
-  "bg-[#FFA500]",
   "rounded-full",
   "peer",
   "dark:bg-gray-700",
@@ -58,7 +57,7 @@ const Toggle = ({ name, value, onChange }: ToggleProps) => {
         aria-label={name}
       />
       <div
-        className={`${TOGGLE_BASE_CLASSES} ${TOGGLE_FOCUS_CLASSES} ${TOGGLE_SLIDER_CLASSES}`}
+        className={`${value ? "bg-orange-400" : "bg-blue-500"} ${TOGGLE_BASE_CLASSES} ${TOGGLE_FOCUS_CLASSES} ${TOGGLE_SLIDER_CLASSES}`}
       />
     </label>
   );
