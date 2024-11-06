@@ -184,27 +184,29 @@ const SideBar = () => {
                   onHover={onHover}
                 />
               </div>
-              <div className="w-full flex items-center justify-between">
-                <div className="flex items-center">
-                  <Icon
-                    id={"Profile"}
-                    onHover={onHover}
-                    src={Profile}
-                    handleHover={() => { }}
-                    isOpen={isOpen}
-                  />
-                  <Content
-                    id="Profile"
-                    content={`Welcome ${userInfo.first_name}`}
-                    handleHover={() => { }}
-                    onHover={onHover}
-                  />
+              <a href="/cat-profile">
+                <div className="w-full flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Icon
+                      id={"Profile"}
+                      onHover={onHover}
+                      src={Profile}
+                      handleHover={() => { }}
+                      isOpen={isOpen}
+                    />
+                    <Content
+                      id="Profile"
+                      content={`Welcome ${userInfo.first_name}`}
+                      handleHover={() => { }}
+                      onHover={onHover}
+                    />
+                  </div>
+                  <div className="py-5 mx-5 tooltip">
+                    <span className="tooltiptext">Edit</span>
+                    <img src={Edit} alt="Edit" />
+                  </div>
                 </div>
-                <div className="py-5 mx-5 tooltip">
-                  <span className="tooltiptext">Edit</span>
-                  <img src={Edit} alt="Edit" />
-                </div>
-              </div>
+              </a>
             </div>
           </div>
           <div className="absolute top-32 -right-[47px] -translate-x-1 z-10 hover:cursor-pointer">
