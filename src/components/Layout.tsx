@@ -49,7 +49,7 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
       <img
         src={layoutTL}
         alt="Top left decorative pattern"
-        className="absolute top-0 left-0 w-auto h-auto max-w-[50%]"
+        className="absolute top-0 left-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
         loading="eager"
         fetchPriority="high"
         decoding="async"
@@ -59,7 +59,7 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
       <img
         src={layoutTR}
         alt="Top right decorative pattern"
-        className="absolute top-0 right-0 w-auto h-auto max-w-[50%]"
+        className="absolute top-0 right-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
         loading="eager"
         fetchPriority="high"
         decoding="async"
@@ -69,7 +69,7 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
       <img
         src={layoutBL}
         alt="Bottom left decorative pattern"
-        className="absolute bottom-0 left-0 w-auto h-auto max-w-[50%]"
+        className="absolute bottom-0 left-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
         loading="eager"
         fetchPriority="high"
         decoding="async"
@@ -79,7 +79,7 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
       <img
         src={layoutBR}
         alt="Bottom right decorative pattern"
-        className="absolute bottom-0 right-0 w-auto h-auto max-w-[50%]"
+        className="absolute bottom-0 right-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
         loading="eager"
         fetchPriority="high"
         decoding="async"
