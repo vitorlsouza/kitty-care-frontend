@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../Redux/hooks';
-import { RootState } from '../Redux/store';
-import PayMethodBtn from '../components/Payments/PayMethodBtn';
-import SwitchMethod from '../components/Payments/SwitchMethod';
-import Layout from '../components/Layout';
-import ReactPixel from 'react-facebook-pixel';
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../Redux/hooks";
+import { RootState } from "../Redux/store";
+import PayMethodBtn from "../components/Payments/PayMethodBtn";
+import SwitchMethod from "../components/Payments/SwitchMethod";
+import Layout from "../components/Layout";
+import ReactPixel from "react-facebook-pixel";
 
 /**
  * PaymentMethod component handles the payment method selection page
@@ -18,19 +17,19 @@ const PaymentMethod = () => {
 
   // Check for existing subscription and redirect if found
   useEffect(() => {
-    const subscriptionId = localStorage.getItem('subscriptionId');
+    const subscriptionId = localStorage.getItem("subscriptionId");
     if (subscriptionId) {
-      navigate('/cat-assistant');
+      navigate("/cat-assistant");
     }
 
     // Track InitiateCheckout when payment method page loads
-    ReactPixel.track('InitiateCheckout');
+    ReactPixel.track("InitiateCheckout");
   }, [navigate]);
 
   const getPricingText = (): string => {
     return billingOption.method
-      ? '$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription.'
-      : '$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription.';
+      ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+      : "$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription.";
   };
 
   return (
@@ -43,7 +42,7 @@ const PaymentMethod = () => {
           </div>
 
           {/* Payment Options Section */}
-          <div className="m-auto sm:m-0 my-2">
+          <div className="m-auto sm:m-0 my-2 sm:mt-32">
             <div className="w-[343px] px-[21px] py-[47px] sm:w-[608px] sm:px-[85px] sm:py-[100px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
               <div className="w-full h-full flex flex-col items-center justify-between">
                 {/* Header Section */}
@@ -58,10 +57,7 @@ const PaymentMethod = () => {
 
                 {/* Payment Methods Section */}
                 <div className="w-full h-full flex flex-col justify-between gap-[30px]">
-                  <PayMethodBtn
-                    payBy="card"
-                    onClick={() => navigate('/paymentdetail')}
-                  />
+                  <PayMethodBtn onClick={() => navigate("/paymentdetail")} />
 
                   {/* Footer Section */}
                   <div>

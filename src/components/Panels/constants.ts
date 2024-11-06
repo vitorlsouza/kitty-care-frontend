@@ -1,16 +1,7 @@
-export const VALIDATION_PATTERNS = {
-    COUNTRY: /^[A-Za-z\s]+$/,
-    ZIP_CODE: /^[a-zA-Z0-9\s]+$/,
-  };
-  
   export const ERROR_MESSAGES = {
     GENDER_REQUIRED: "Please select your cat's gender",
     AGE_REQUIRED: "Please enter your cat's age",
     AGE_INVALID: "Age must be a number greater than zero",
-    COUNTRY_REQUIRED: "Please enter your country",
-    COUNTRY_INVALID: "Country must not contain numbers or special characters",
-    ZIP_REQUIRED: "Please enter a zip/postal code",
-    ZIP_INVALID: "Zip code must be alphanumeric",
     BREED_REQUIRED: "Please select your cat's breed",
     WEIGHT_INVALID: "Please enter a valid weight for your cat (e.g., 8.5)",
     UNIT_REQUIRED: "Please select the weight unit",
@@ -20,8 +11,6 @@ export const VALIDATION_PATTERNS = {
   export const STORAGE_KEYS = {
     GENDER: 'gender',
     AGE: 'age',
-    COUNTRY: 'country',
-    ZIP_CODE: 'zipcode',
   };
   
   export const FEATURE_LIST = [
@@ -36,7 +25,6 @@ export const VALIDATION_PATTERNS = {
     "age",
     "breed",
     "check_in_period",
-    "country",
     "dietary_restrictions",
     "gender",
     "goals",
@@ -51,7 +39,6 @@ export const VALIDATION_PATTERNS = {
     "training_days",
     "unit",
     "weight",
-    "zipcode",
     "catFormData"
   ] as const;
 

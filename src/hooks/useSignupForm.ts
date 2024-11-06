@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../Redux/hooks';
 import { signUpUserAsync } from '../Redux/features/userSlice';
-import { validateUserInfo } from '../utils/validation';
+import { validatePassword, validateUserInfo } from '../utils/validation';
 import { setLoading } from '../store/ui/actions';
 
 export interface UserInfo {
@@ -54,6 +54,8 @@ export const useSignupForm = () => {
       delete newErrors.general;
       return newErrors;
     });
+    if(value === "") return;
+    if(name === "password") setError({...error, password: validatePassword(value)})
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -7,12 +7,6 @@ import { Panel11Props } from "../../types/panel.types";
 const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
   const { formData, updateFormField, isFormValid } = useMedicalHistory();
 
-  const handleSubmit = () => {
-    if (isFormValid()) {
-      nextStep();
-    }
-  };
-
   const renderFormField = (
     label: string,
     placeholder: string,
@@ -71,26 +65,6 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
         {renderFormField("Dietary Restrictions", "Enter food allergies", "dietaryRestrictions")}
         {renderFormField("Surgery History", "Enter recent surgeries", "surgeryHistory")}
       </div>
-
-      <div className="flex flex-col items-center mt-8">
-        <button
-          onClick={handleSubmit}
-          className={`px-8 py-2 rounded-full text-white ${isFormValid()
-              ? "bg-primaryBlue hover:bg-primaryBlue"
-              : "bg-gray-300 cursor-not-allowed"
-            }`}
-          disabled={!isFormValid()}
-        >
-          Submit Medical History
-        </button>
-        <p className="text-sm text-darkGray mt-4 font-light px-8 md:mx-12 lg:mx-36">
-          If your cat has no medical history, you can{" "}
-          <span className="text-primaryBlue cursor-pointer" onClick={nextStep}>
-            skip this step
-          </span>
-        </p>
-      </div>
-
       <NavigationButtons
         nextStep={nextStep}
         previousStep={previousStep}

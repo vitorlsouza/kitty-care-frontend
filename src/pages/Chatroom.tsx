@@ -14,7 +14,7 @@ const Chatroom: FC = () => {
   useSubscriptionCheck();
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-[100dvh]">
       <ChatroomLayout>
         <SideBar />
         <ChatField />

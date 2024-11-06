@@ -7,8 +7,11 @@ import { useProfileForm } from "./hooks/useProfileForm";
 import { BREED_OPTIONS, GENDER_OPTIONS } from "./constants";
 import { ProfileInfo } from "./types";
 import Header from "../../Header";
+import { useSubscriptionCheck } from "../../../hooks/useSubscriptionCheck";
 
 const EditProfileField = () => {
+  useSubscriptionCheck();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     photo,

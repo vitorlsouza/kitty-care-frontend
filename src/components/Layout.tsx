@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
-import layout from "/assets/png/layout.png";
-import layoutMobile from "/assets/png/layoutMobile.png";
 import Header from "./Header";
+
+// Update image imports
+import layoutTR from "/assets/png/layout-tr.png";
+import layoutTL from "/assets/png/layout-tl.png";
+import layoutBR from "/assets/png/layout-br.png";
+import layoutBL from "/assets/png/layout-bl.png";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,8 +28,10 @@ const preloadImage = (src: string): Promise<void> => {
 const preloadImages = async () => {
   try {
     await Promise.all([
-      preloadImage(layout),
-      preloadImage(layoutMobile)
+      preloadImage(layoutTR),
+      preloadImage(layoutTL),
+      preloadImage(layoutBR),
+      preloadImage(layoutBL)
     ]);
   } catch (error) {
     console.error('Error preloading images:', error);
@@ -39,17 +45,45 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
     data-testid="layout-background"
   >
     <div className="w-full h-full relative">
-      <picture>
-        <source media="(min-width: 640px)" srcSet={layout} />
-        <img
-          src={layoutMobile}
-          alt="Decorative background pattern"
-          className="w-full h-full object-cover"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-        />
-      </picture>
+      {/* Top-Left Layout */}
+      <img
+        src={layoutTL}
+        alt="Top left decorative pattern"
+        className="absolute top-0 left-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
+
+      {/* Top-Right Layout */}
+      <img
+        src={layoutTR}
+        alt="Top right decorative pattern"
+        className="absolute top-0 right-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
+
+      {/* Bottom-Left Layout */}
+      <img
+        src={layoutBL}
+        alt="Bottom left decorative pattern"
+        className="absolute bottom-0 left-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
+
+      {/* Bottom-Right Layout */}
+      <img
+        src={layoutBR}
+        alt="Bottom right decorative pattern"
+        className="absolute bottom-0 right-0 w-auto h-auto max-w-[50%] sm:max-w-[40%]"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
     </div>
   </div>
 );
@@ -58,17 +92,18 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
 const addPreloadLinks = () => {
   const head = document.head;
   const preloadLinks = [
-    { href: layout, media: '(min-width: 640px)' },
-    { href: layoutMobile, media: '(max-width: 639px)' }
+    { href: layoutTL },
+    { href: layoutTR },
+    { href: layoutBL },
+    { href: layoutBR }
   ];
 
-  preloadLinks.forEach(({ href, media }) => {
+  preloadLinks.forEach(({ href }) => {
     if (!head.querySelector(`link[href="${href}"]`)) {
       const link = document.createElement('link');
       link.rel = 'preload';
       link.as = 'image';
       link.href = href;
-      if (media) link.media = media;
       head.appendChild(link);
     }
   });

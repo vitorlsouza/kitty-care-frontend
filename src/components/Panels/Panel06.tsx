@@ -57,39 +57,6 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
           />
           {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
         </div>
-
-        {/* Country Input */}
-        <div className="text-center">
-          <p className="text-md font-medium mb-2">
-            Which country do you live? <span className="text-red-500">*</span>
-          </p>
-          <input
-            type="text"
-            value={formData.country}
-            onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-            placeholder="Enter your country"
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
-          />
-          {errors.country && <p className="text-red-500 text-sm">{errors.country}</p>}
-        </div>
-
-        {/* Zip Code Input */}
-        <div className="text-center">
-          <p className="text-md font-medium mb-2">
-            Zip/Postal Code <span className="text-red-500">*</span>
-          </p>
-          <input
-            type="text"
-            value={formData.zipcode}
-            onChange={(e) => setFormData({ ...formData, zipcode: e.target.value })}
-            placeholder="Enter zip/postal code"
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
-          />
-          <p className="text-sm text-mediumGray mt-2 px-4 md:px-6 lg:px-12">
-            This can help make insights about your cat based on the area you live in.
-          </p>
-          {errors.zipcode && <p className="text-red-500 text-sm">{errors.zipcode}</p>}
-        </div>
       </div>
 
       <NavigationButtons

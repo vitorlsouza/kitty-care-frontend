@@ -14,8 +14,6 @@ const useCreateCat = () => {
       activity_level: localStorage.getItem('activity_level'),
       gender: localStorage.getItem('gender'),
       age: parseInt(localStorage.getItem('age') || '0'),
-      country: localStorage.getItem('country'),
-      zipcode: localStorage.getItem('zipcode'),
       breed: localStorage.getItem('breed'),
       weight: parseFloat(localStorage.getItem('weight') || '0'),
       target_weight: parseFloat(localStorage.getItem('target_weight') || '0'),

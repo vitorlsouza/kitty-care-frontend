@@ -23,7 +23,7 @@ const MessageBoxes: React.FC<MessageBoxesProps> = ({ messageList, response }) =>
     <div className="flex flex-col flex-1 w-full overflow-y-auto overflow-x-hidden">
       {messageList.length > 0 ? (
         <>
-          <div className="flex-grow ">
+          <div className="flex-grow">
             <div className="flex flex-col">
               <div>
                 {messageList.map((message, index) => (
@@ -35,13 +35,13 @@ const MessageBoxes: React.FC<MessageBoxesProps> = ({ messageList, response }) =>
                         }`}
                     >
                       {!message.role && (
-                        <span className="w-6 h-6 sm:w-8 sm:h-8 flex justify-center items-center rounded-full bg-[#FFA500]">
+                        <span className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0 flex justify-center items-center rounded-full bg-[#FFA500]">
                           <img src={CatinChat} alt="CatinChat" />
                         </span>
                       )}
                       <span
                         className={`${message.role ? "w-full" : "w-[90%]"
-                          } text-[14px] sm:text-[18px] font-medium`}
+                          } text-[14px] sm:text-[18px] font-medium break-words whitespace-pre-wrap`}
                       >
                         {message.content}
                       </span>
@@ -51,10 +51,10 @@ const MessageBoxes: React.FC<MessageBoxesProps> = ({ messageList, response }) =>
                 {response && (
                   <div className="w-full">
                     <div className="w-[90%] sm:w-2/3 rounded-2xl p-6 sm:p-8 my-2 sm:my-4 flex gap-4 bg-[#FADFC9]">
-                      <span className="w-6 h-6 sm:w-8 sm:h-8 flex justify-center items-center rounded-full bg-[#FFA500]">
+                      <span className="w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0 flex justify-center items-center rounded-full bg-[#FFA500]">
                         <img src={CatinChat} alt="CatinChat" />
                       </span>
-                      <span className="w-[90%] text-[14px] sm:text-[18px] font-medium">
+                      <span className="w-[90%] text-[14px] sm:text-[18px] font-medium break-words whitespace-pre-wrap">
                         {response}
                       </span>
                     </div>

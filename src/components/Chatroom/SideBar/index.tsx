@@ -89,23 +89,23 @@ const SideBar = () => {
           </div> */}
         </div>
         <div className="flex flex-col gap-4">
+          <Icon
+            id="Logout"
+            onHover={onHover}
+            src={Logout}
+            handleHover={(id) => setOnHover(id)}
+            isOpen={isOpen}
+            onClick={handleLogout}
+          />
+          <a href="/cat-profile">
             <Icon
-              id="Logout"
+              id="Profile"
               onHover={onHover}
-              src={Logout}
+              src={Profile}
               handleHover={(id) => setOnHover(id)}
               isOpen={isOpen}
-              onClick={handleLogout}
             />
-            <a href="/cat-profile">
-              <Icon
-                id="Profile"
-                onHover={onHover}
-                src={Profile}
-                handleHover={(id) => setOnHover(id)}
-                isOpen={isOpen}
-              />
-            </a>
+          </a>
         </div>
       </div>
 
@@ -120,11 +120,12 @@ const SideBar = () => {
 
       <div className="block sm:hidden text-black text-base font-medium">
         <div
-          className={`h-screen fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${
-            isOpen ? `w-screen py-[32px]` : `w-0 py-0`
-          }`}
+          className={`h-[100dvh] fixed top-0 left-0 bg-[#FADFC9] transition-all duration-500 overflow-hidden ${isOpen
+            ? `w-[80%] pb-[env(safe-area-inset-bottom,20px)]`
+            : `w-0`
+            }`}
         >
-          <div className="w-screen h-full flex flex-col justify-between pt-[36px] px-[16px]">
+          <div className="w-full h-full flex flex-col justify-between px-[16px] pt-[max(env(safe-area-inset-top),36px)] pb-[max(env(safe-area-inset-bottom,24px),24px)]">
             <div className="flex flex-col gap-10">
               <div className="flex">
                 <a href="/cat-assistant">
@@ -173,37 +174,39 @@ const SideBar = () => {
                   id={"Logout"}
                   onHover={onHover}
                   src={Logout}
-                  handleHover={() => {}}
+                  handleHover={() => { }}
                   isOpen={isOpen}
                 />
                 <Content
                   id="Logout"
                   content="Logout"
-                  handleHover={() => {}}
+                  handleHover={() => { }}
                   onHover={onHover}
                 />
               </div>
-              <div className="w-full flex items-center justify-between">
-                <div className="flex items-center">
-                  <Icon
-                    id={"Profile"}
-                    onHover={onHover}
-                    src={Profile}
-                    handleHover={() => {}}
-                    isOpen={isOpen}
-                  />
-                  <Content
-                    id="Profile"
-                    content={`Welcome ${userInfo.first_name}`}
-                    handleHover={() => {}}
-                    onHover={onHover}
-                  />
+              <a href="/cat-profile">
+                <div className="w-full flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Icon
+                      id={"Profile"}
+                      onHover={onHover}
+                      src={Profile}
+                      handleHover={() => { }}
+                      isOpen={isOpen}
+                    />
+                    <Content
+                      id="Profile"
+                      content={`Welcome ${userInfo.first_name}`}
+                      handleHover={() => { }}
+                      onHover={onHover}
+                    />
+                  </div>
+                  <div className="py-5 mx-5 tooltip">
+                    <span className="tooltiptext">Edit</span>
+                    <img src={Edit} alt="Edit" />
+                  </div>
                 </div>
-                <div className="py-5 mx-5 tooltip">
-                  <span className="tooltiptext">Edit</span>
-                  <img src={Edit} alt="Edit" />
-                </div>
-              </div>
+              </a>
             </div>
           </div>
           <div className="absolute top-32 -right-[47px] -translate-x-1 z-10 hover:cursor-pointer">
@@ -213,7 +216,7 @@ const SideBar = () => {
       </div>
 
       <div
-        className={`hidden sm:flex transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex-col justify-between 
+        className={`hidden sm:flex transition-all duration-500 my-12 h-[90%] bg-[#F5D7BF] rounded-2xl flex-col justify-between
           ${isOpen ? `w-[333px] py-[18px]` : `w-0 py-0`}`}
         ref={sideBarRef}
       >
