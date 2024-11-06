@@ -16,9 +16,14 @@ export const validateName = (name: string, fieldName: string): string => {
 export const validatePassword = (password: string): string => {
   if (!password) return "Password is required";
   if (password.length < 8) return "Password must be at least 8 characters";
-  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/.test(password)) {
-    return "Password must contain at least one uppercase letter, one lowercase letter, and one number";
-  }
+  if (!/(?=.*[a-z])/.test(password))
+    return "Password must contain at least one lowercase letter";
+  if (!/(?=.*[A-Z])/.test(password))
+    return "Password must contain at least one uppercase letter";
+  if (!/(?=.*\d)/.test(password))
+    return "Password must contain at least one number";
+  if (!/(?=.*[!@#$%^&*])/.test(password))
+    return "Password must contain at least one special character";
   return "";
 };
 
@@ -35,6 +40,6 @@ export const validateUserInfo = (userInfo: UserInfo, isChecked: boolean) => {
     errors.general = "Please accept the Terms and Privacy Policy";
   }
 
-  const isValid = !Object.values(errors).some(error => error !== "");
+  const isValid = !Object.values(errors).some((error) => error !== "");
   return { isValid, errors };
-}; 
+};
