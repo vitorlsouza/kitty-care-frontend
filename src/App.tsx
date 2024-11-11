@@ -15,6 +15,8 @@ import PriceSelection from "./pages/PriceSelection.tsx";
 import Profile from "./pages/Profile.tsx";
 import ReactPixel from 'react-facebook-pixel';
 import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
+import ForgotPassword from "./pages/ForgotPassword.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -53,6 +55,8 @@ function App() {
           } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
