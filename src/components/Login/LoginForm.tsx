@@ -11,7 +11,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full flex flex-col gap-4"
+            className="w-full flex flex-col gap-2"
             noValidate
             aria-label="Login form"
         >
@@ -46,6 +46,8 @@ export const LoginForm: FC<LoginFormProps> = ({
                     {error.general}
                 </div>
             )}
+
+            <a href="/forgot-password" className='block sm:inline text-[#0061EF] mt-4 font-medium text-base'>Forget password?</a>
 
             <button
                 type="submit"
