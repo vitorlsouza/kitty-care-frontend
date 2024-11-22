@@ -4,14 +4,12 @@ import TextInput from '../components/Login/Input';
 import { useNavigate } from 'react-router-dom';
 import { useRive, UseRiveParameters } from 'rive-react';
 import styles from '../components/LoadingOverlay/LoadingOverlay.module.css';
-import axios from 'axios';
-// Constants
+import { requestForgotPasswordAPI } from '../services/api';
+
 const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
   src: 'riv/V2/Pulse_kitty.riv',
   autoplay: true,
 };
-
-const baseURL = import.meta.env.VITE_BASE_API_URL || 'https://kittycare-nodejs.vercel.app';
 
 const ForgotPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,22 +22,14 @@ const ForgotPassword: React.FC = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await fetch(`${baseURL}/api/supabase/password-reset/request`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }), // here is param.
-      });
+      const response = await requestForgotPasswordAPI(email);
 
-      const data = await response.json();
-
-      if (data.success) {
-        setMessage(data.message);
-        navigate('/sent-mail')
+      if (response.success) {
+        setMessage(response.message);
+        navigate('/sent-mail');
       } else {
         setIsLoading(false);
-        setMessage('Error: ' + data.message);
+        setMessage('Error: ' + response.message);
       }
     } catch (error: unknown) {
       setIsLoading(false);
@@ -49,7 +39,6 @@ const ForgotPassword: React.FC = () => {
         setMessage('An unknown error occurred');
       }
     }
-    console.log('Form submitted');
   };
 
   if (isLoading) return (
