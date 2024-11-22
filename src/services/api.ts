@@ -345,4 +345,34 @@ export const deleteStripeSubscriptionAPI = async (subscriptionId: string) => {
   }
 };
 
+export const requestForgotPasswordAPI = async (email: string) => {
+  
+  try {
+    const response = await API.post('/api/supabase/password-reset/request', { email }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to reset password');
+  }
+}
+
+export const requestResetPasswordAPI = async (token: string, newPassword: string) => {
+  try {
+    const response = await API.post('/api/supabase/password-reset/reset', {
+      token,
+      newPassword,
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to reset password');
+  }
+}
 export default baseURL;
