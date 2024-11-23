@@ -2,7 +2,7 @@ import React from "react";
 import { FEATURE_LIST } from "./constants";
 import { FeatureItem } from "./components/FeatureItem";
 import { useLocalStorageCleanup } from "./hooks/useLocalStorageCleanup";
-import RevenueTracking from "../RevenueTracking";
+import VWORevenueTracking from "../VWORevenueTracking";
 
 interface Panel01Props {
   nextStep: () => void;
@@ -17,7 +17,7 @@ const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
 
   return (
     <>
-      <RevenueTracking />
+      <VWORevenueTracking />
       <div className="relative flex flex-col items-center justify-start px-4 py-2 md:p-4 globalBackground">
         <div className="w-full max-w-4xl mx-auto">
           {/* Welcome Message */}

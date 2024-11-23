@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const RevenueTracking = () => {
+const VWORevenueTracking = () => {
   useEffect(() => {
     // Dynamically inject the script
     const script = document.createElement("script");
@@ -20,4 +20,4 @@ const RevenueTracking = () => {
   return null; // This component doesn't render any visible content
 };
 
-export default RevenueTracking;
+export default VWORevenueTracking;
