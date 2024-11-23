@@ -26,6 +26,7 @@
     "react-facebook-pixel": "^1.0.4",
     "react-icons": "^5.3.0",
     "react-redux": "^9.1.2",
+    "react-responsive": "^10.0.0",
     "react-router-dom": "^6.27.0",
     "rive-react": "^4.15.0",
     "uuid": "^11.0.2"
