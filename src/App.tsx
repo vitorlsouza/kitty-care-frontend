@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from 'react-helmet-async';
+import PageHead from './components/PageHead';
 import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -45,7 +47,8 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <HelmetProvider>
+      <PageHead />
       <LoadingOverlay />
       <Router>
         <Routes>
@@ -101,7 +104,17 @@ function App() {
           } />
         </Routes>
       </Router>
-    </>
+
+      {/* Google Tag Manager (noscript) */}
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-P9FML3PS"
+          height="0"
+          width="0"
+          style={{ display: 'none', visibility: 'hidden' }}
+        />
+      </noscript>
+    </HelmetProvider>
   );
 }
 

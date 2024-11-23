@@ -88,27 +88,6 @@ const Background: React.FC<BackgroundProps> = ({ className = "" }) => (
   </div>
 );
 
-// Add this to your head section
-const addPreloadLinks = () => {
-  const head = document.head;
-  const preloadLinks = [
-    { href: layoutTL },
-    { href: layoutTR },
-    { href: layoutBL },
-    { href: layoutBR }
-  ];
-
-  preloadLinks.forEach(({ href }) => {
-    if (!head.querySelector(`link[href="${href}"]`)) {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = href;
-      head.appendChild(link);
-    }
-  });
-};
-
 /**
  * Layout component that wraps the main content of the application
  * Provides consistent layout structure and background across pages
@@ -121,8 +100,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isProfile = pathname === "/cat-profile";
 
   useEffect(() => {
-    // Add preload links as soon as possible
-    addPreloadLinks();
     // Preload images
     preloadImages();
 
