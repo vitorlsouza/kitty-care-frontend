@@ -135,15 +135,15 @@ export const Signup: React.FC = () => {
   return (
     <Layout>
       {isShowPaywall && isMobile ? (
-        <div className='flex flex-col gap-6 w-full p-[16px] h-auto'>
+        <div className='flex flex-col gap-6 w-full p-[16px_16px] h-[100vh] overflow-hidden'>
           <div className='flex flex-col gap-2 text-center'>
             <h1 className='text-black [leading-trim:both] [text-edge:cap] font-inter text-[24px] font-bold capitalize'>Get KittyCare Today</h1>
             <p className='text-[#404040] text-center [leading-trim:both] [text-edge:cap] font-inter text-[18px] font-medium leading-[1.3]'>
               Unlock every exclusive feature - for $0 right now
             </p>
           </div>
-          <div className='flex flex-col gap-[20px] w-full rounded-[22px] border-2 border-[#DBCEC4] bg-[#F3EDE8] p-[0_24px_24px_24px]'>
-            <h3 className='w-full bg-[#FFA500] rounded-b-[14px] px-[20px] py-[8px] text-black text-center [leading-trim:both] [text-edge:cap] font-inter text-sm font-semibold leading-[1.4]'>
+          <div className='flex flex-col gap-[20px] w-full rounded-[22px] border-2 border-[#DBCEC4] bg-[#F3EDE8] p-[0_48px_24px_48px]'>
+            <h3 className='w-full bg-[#FFA500] rounded-b-[14px] px-[28px] py-[8px] text-black text-center [leading-trim:both] [text-edge:cap] font-inter text-sm font-semibold leading-[1.4]'>
               Why KittyCare?
             </h3>
             <ul className='flex flex-col gap-[16px] text-sm text-black'>
