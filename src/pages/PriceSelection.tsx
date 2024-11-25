@@ -72,8 +72,8 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
             <h1 className="text-[30px] sm:text-[40px] font-semibold capitalize">
               Care For Your Cat, Care For Yourself
             </h1>
-            <p className="text-[16px] sm:text-[18px] font-medium w-[425px] m-auto opacity-60">
-              Simplify cat care, reduce stress, and enjoy a happier bond with KittyCare
+            <p className="text-[16px] sm:text-[18px] font-medium m-auto opacity-60">
+              Simplify cat care, reduce stress, and enjoy a <br/>happier bond with KittyCare
             </p>
           </section>
 
@@ -115,7 +115,7 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
                 <span className="hidden sm:inline mx-2">-</span>
                 <button
                   onClick={handleCancel}
-                  className="block sm:inline hover:underline"
+                  className="block sm:inline hover:underline mx-auto"
                 >
                   Cancel Anytime
                 </button>
