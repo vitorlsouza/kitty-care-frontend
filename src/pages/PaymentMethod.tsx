@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../Redux/hooks";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
 import PayMethodBtn from "../components/Payments/PayMethodBtn";
 import SwitchMethod from "../components/Payments/SwitchMethod";
 import Layout from "../components/Layout";
 import ReactPixel from "react-facebook-pixel";
+import { useMediaQuery } from "react-responsive";
+import { updateBillingOption } from "../Redux/features/billingSlice";
 
 /**
  * PaymentMethod component handles the payment method selection page
@@ -14,6 +16,8 @@ import ReactPixel from "react-facebook-pixel";
 const PaymentMethod = () => {
   const navigate = useNavigate();
   const billingOption = useAppSelector((state: RootState) => state.billing);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const dispatch = useAppDispatch();
 
   // Check for existing subscription and redirect if found
   useEffect(() => {
@@ -26,6 +30,12 @@ const PaymentMethod = () => {
     ReactPixel.track("InitiateCheckout");
   }, [navigate]);
 
+  useEffect(() => {
+    if (isMobile) {
+      dispatch(updateBillingOption({ method: false }));
+    }
+  }, [isMobile, dispatch]);
+
   const getPricingText = (): string => {
     return billingOption.method
       ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
@@ -37,9 +47,11 @@ const PaymentMethod = () => {
       <div className="w-full">
         <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
           {/* Billing Switch Section */}
-          <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
-            <SwitchMethod />
-          </div>
+          {!isMobile && (
+            <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
+              <SwitchMethod />
+            </div>
+          )}
 
           {/* Payment Options Section */}
           <div className="m-auto sm:m-0 my-2 sm:mt-32">

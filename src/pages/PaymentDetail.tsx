@@ -19,6 +19,8 @@ import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
 import ReactPixel from 'react-facebook-pixel';
 import { setLoading } from "../store/ui/actions";
 import Layout from "../components/Layout";
+import { useMediaQuery } from "react-responsive";
+import { updateBillingOption } from "../Redux/features/billingSlice";
 
 // Constants
 const STRIPE_PROMISE = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -93,6 +95,7 @@ const PaymentForm = () => {
   const elements = useElements();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   const billingOption = useAppSelector((state: RootState) => state.billing);
   const userInfo = useAppSelector((state: RootState) => state.user);
@@ -125,6 +128,12 @@ const PaymentForm = () => {
       navigate("/cat-assistant");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (isMobile) {
+      dispatch(updateBillingOption({ method: false }));
+    }
+  }, [isMobile, dispatch]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -232,9 +241,11 @@ const PaymentForm = () => {
   return (
     <Layout>
       <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
-        <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
-          <SwitchMethod />
-        </div>
+        {!isMobile && (
+          <div className="m-auto sm:m-0 max-w-[90%] sm:w-1/2">
+            <SwitchMethod />
+          </div>
+        )}
         <div className="m-auto w-full sm:m-0">
           <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[104px] sm:py-[70px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -245,7 +256,7 @@ const PaymentForm = () => {
                 <div className="text-center text-[18px] font-medium opacity-60 text-black">
                   {billingOption.method
                     ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
-                    : "$0.00 for 3-day free trial; converts to $49.99 annually renewing subscription."}
+                    : "$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription."}
                 </div>
               </div>
               <div>

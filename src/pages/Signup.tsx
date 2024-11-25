@@ -135,7 +135,7 @@ export const Signup: React.FC = () => {
   return (
     <Layout>
       {isShowPaywall && isMobile ? (
-        <div className='flex flex-col gap-6 w-full p-[16px_16px] h-[100vh] overflow-hidden'>
+        <div className='flex flex-col gap-6 w-full p-[16px_16px] h-auto overflow-hidden'>
           <div className='flex flex-col gap-2 text-center'>
             <h1 className='text-black [leading-trim:both] [text-edge:cap] font-inter text-[24px] font-bold capitalize'>Get KittyCare Today</h1>
             <p className='text-[#404040] text-center [leading-trim:both] [text-edge:cap] font-inter text-[18px] font-medium leading-[1.3]'>

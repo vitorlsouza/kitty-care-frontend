@@ -67,6 +67,10 @@ export const billingSlice = createSlice({
       clearTokens();
       return initialState;
     },
+    updateBillingOption(state, action) {
+      const { method } = action.payload;
+      state.method = method; // Update the method
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -103,7 +107,7 @@ export const billingSlice = createSlice({
   },
 });
 
-export const { changeMethod, logout } = billingSlice.actions;
+export const { changeMethod, logout, updateBillingOption } = billingSlice.actions;
 export default billingSlice.reducer;
 
 // Add this selector
