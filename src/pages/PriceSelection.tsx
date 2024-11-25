@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { changeMethod, removePlanAsync } from "../Redux/features/billingSlice";
 import { selectBilling } from "../Redux/features/billingSlice";
 import Layout from "../components/Layout";
-
+import { useMediaQuery } from "react-responsive";
 // Constants
 const SUBSCRIPTION_STORAGE_KEY = 'subscriptionId';
 const ROUTES = {
@@ -22,11 +22,16 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const billingOption = useAppSelector(selectBilling);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   useEffect(() => {
     handleSubscriptionCheck();
     handlePlanSelectionFromURL();
   }, [dispatch, navigate]);
+
+  useEffect(() => {
+    if(isMobile) navigate('/paymentmethod')
+  }, [isMobile])
 
   const handleSubscriptionCheck = () => {
     const subscriptionId = localStorage.getItem(SUBSCRIPTION_STORAGE_KEY);
