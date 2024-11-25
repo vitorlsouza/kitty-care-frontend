@@ -132,12 +132,34 @@ export const Signup: React.FC = () => {
     }
   }, [navigate, urlParams]);
 
-  useEffect(()=> {
-    if(isMobile) {
-      const layoutBGImgs = document.querySelectorAll('[data-testid="layout-background"] img');
-      layoutBGImgs?.forEach((img) => img.remove());
+  useEffect(() => {
+    if (isMobile) {
+      const layoutBackground = document.querySelector('[data-testid="layout-background"]') as HTMLElement;
+
+      if (layoutBackground) {
+        const images = layoutBackground.querySelectorAll<HTMLImageElement>('img');
+
+        images.forEach((img) => {
+          img.style.display = 'none'; // Hides the element completely
+        });
+      }
     }
   }, [isMobile])
+
+  const handleClickPaywall = () => {
+    setIsShowPaywall(false);
+    if (isMobile) {
+      const layoutBackground = document.querySelector('[data-testid="layout-background"]') as HTMLElement;
+
+      if (layoutBackground) {
+        const images = layoutBackground.querySelectorAll<HTMLImageElement>('img');
+
+        images.forEach((img) => {
+          img.style.display = 'block'; // Hides the element completely
+        });
+      }
+    }
+  }
 
   return (
     <Layout>
@@ -209,7 +231,7 @@ export const Signup: React.FC = () => {
           <div className='flex flex-col gap-[10px]'>
             <button
               className="w-full h-[50px] text-base bg-blue-600 text-white rounded-2xl hover:bg-blue-700 active:bg-blue-800 transition-colors duration-200"
-              onClick={() => setIsShowPaywall(false)}
+              onClick={handleClickPaywall}
             >
               Try For Free
             </button>
