@@ -253,11 +253,13 @@ const PaymentForm = () => {
                 <div className="text-center text-[40px] font-semibold capitalize">
                   ${0} Today
                 </div>
-                <div className="text-center text-[18px] font-medium opacity-60 text-black">
-                  {billingOption.method
-                    ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
-                    : "$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription."}
-                </div>
+                {!isMobile && (
+                  <div className="text-center text-[18px] font-medium opacity-60 text-black">
+                    {billingOption.method
+                      ? "$0.00 for 7-day free trial; converts to $299.99 annually renewing subscription."
+                      : "$0.00 for 3-day free trial; converts to $49.99 monthly renewing subscription."}
+                  </div>
+                )}
               </div>
               <div>
                 <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">

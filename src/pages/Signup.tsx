@@ -132,6 +132,13 @@ export const Signup: React.FC = () => {
     }
   }, [navigate, urlParams]);
 
+  useEffect(()=> {
+    if(isMobile) {
+      const layoutBGImgs = document.querySelectorAll('[data-testid="layout-background"] img');
+      layoutBGImgs?.forEach((img) => img.remove());
+    }
+  }, [isMobile])
+
   return (
     <Layout>
       {isShowPaywall && isMobile ? (
