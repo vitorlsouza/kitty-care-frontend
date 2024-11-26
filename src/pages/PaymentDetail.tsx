@@ -71,14 +71,6 @@ interface PaymentFormData {
   billingPeriod: string;
 }
 
-interface PaymentFormError {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  general: string;
-}
-
 const formatDate = (date: Date): string => {
   return date.toISOString().split("T")[0];
 };
@@ -102,13 +94,7 @@ const PaymentForm = () => {
 
   const [_subscriptionId, setSubscriptionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<PaymentFormError>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    general: "",
-  });
+  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState<PaymentFormData>({
     fullName: "",
@@ -149,7 +135,7 @@ const PaymentForm = () => {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      setError(prev => ({ ...prev, general: "Payment system not initialized" }));
+      setError("Payment system not initialized");
       return;
     }
 
@@ -224,10 +210,15 @@ const PaymentForm = () => {
         navigate("/progress");
       }
 
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
-      setError(prev => ({ ...prev, general: errorMessage }));
-      console.error("Payment processing error:", err);
+    } catch (error: any) {
+      const errorMessage = error.message || "An unexpected error occurred";
+
+      if (errorMessage == "Get client secret key failed") {
+        setError("Invalid card details");
+      } else {
+        setError(errorMessage);
+      }
+      console.error("Payment processing error:", error.message);
     } finally {
       setIsLoading(false);
       dispatch(setLoading(false));
@@ -351,6 +342,7 @@ const PaymentForm = () => {
                   />
                 </div>
               </div>
+              <div className="text-red-500 text-center text-base">{error}</div>
 
               <div className="flex justify-center gap-4">
                 <button
@@ -369,7 +361,6 @@ const PaymentForm = () => {
                 </button>
               </div>
             </form>
-            <div className="text-red-500">{error.general}</div>
           </div>
         </div>
       </div>
