@@ -15,15 +15,26 @@ export const validateName = (name: string, fieldName: string): string => {
 
 export const validatePassword = (password: string): string => {
   if (!password) return "Password is required";
-  if (password.length < 8) return "Password must be at least 8 characters";
-  if (!/(?=.*[a-z])/.test(password))
-    return "Password must contain at least one lowercase letter";
-  if (!/(?=.*[A-Z])/.test(password))
-    return "Password must contain at least one uppercase letter";
-  if (!/(?=.*\d)/.test(password))
-    return "Password must contain at least one number";
-  if (!/(?=.*[!@#$%^&*])/.test(password))
-    return "Password must contain at least one special character";
+  
+  if (password.length < 8) {
+    return "Password must be at least 8 characters long";
+  }
+  
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password);
+
+  const missing = [];
+  if (!hasLowerCase) missing.push("lowercase letter");
+  if (!hasUpperCase) missing.push("uppercase letter");
+  if (!hasNumber) missing.push("number");
+  if (!hasSpecialChar) missing.push("special character");
+
+  if (missing.length > 0) {
+    return `Password must include at least one ${missing.join(", ")}`;
+  }
+
   return "";
 };
 
