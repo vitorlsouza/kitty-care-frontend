@@ -37,17 +37,17 @@ export const LoginForm: FC<LoginFormProps> = ({
                 aria-invalid={!!error.password}
             />
 
+            <a href="/forgot-password" className='block sm:inline text-[#0061EF] mt-4 font-medium text-base'>Forget password?</a>
+
             {error.general && (
                 <div
-                    className="text-red-500 text-sm text-center"
+                    className="text-red-500 text-base text-center mt-4"
                     role="alert"
                     aria-live="polite"
                 >
                     {error.general}
                 </div>
             )}
-
-            <a href="/forgot-password" className='block sm:inline text-[#0061EF] mt-4 font-medium text-base'>Forget password?</a>
 
             <button
                 type="submit"

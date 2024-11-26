@@ -14,7 +14,7 @@ const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
 const ForgotPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { RiveComponent } = useRive(RIVE_ANIMATION_CONFIG);
 
@@ -25,18 +25,17 @@ const ForgotPassword: React.FC = () => {
       const response = await requestForgotPasswordAPI(email);
 
       if (response.success) {
-        setMessage(response.message);
         navigate('/sent-mail');
       } else {
         setIsLoading(false);
-        setMessage('Error: ' + response.message);
+        setError(response.message);
       }
     } catch (error: unknown) {
       setIsLoading(false);
       if (error instanceof Error) {
-        setMessage('Network error: ' + error.message);
+        setError('Network error: ' + error.message);
       } else {
-        setMessage('An unknown error occurred');
+        setError('An unknown error occurred');
       }
     }
   };
@@ -52,7 +51,7 @@ const ForgotPassword: React.FC = () => {
         {RiveComponent && <RiveComponent />}
       </div>
     </div>
-  )
+  );
 
   return (
     <Layout>
@@ -77,6 +76,7 @@ const ForgotPassword: React.FC = () => {
             placeholder="name@email.com"
             onChange={(e) => setEmail(e.target.value)}
           />
+          {error && <p className='text-red-500 text-base mt-4 text-center'>{error}</p>}
           <button
             type="submit"
             className="w-full h-[55px] mt-6 text-base sm:text-xl 
@@ -90,7 +90,6 @@ const ForgotPassword: React.FC = () => {
             Send Reset Link
           </button>
         </form>
-        {message && <p className='text-red-500'>{message}</p>}
         <div className='flex w-full justify-between text-center mt-5'>
           <a href="/login" className='flex px-4 py-3 hover:bg-gray-100 rounded-lg text-[#0061EF] font-medium text-base'>Login</a>
           <a href="/signup" className='flex px-4 py-3 hover:bg-gray-100 rounded-lg text-[#0061EF] font-medium text-base'>Sign up</a>
