@@ -80,7 +80,7 @@ export const useSignupForm = () => {
     } catch (err: any) {
       setError(prev => ({
         ...prev,
-        general: err.message || "Signup failed. Please try again.",
+        general: err || "Signup failed. Please try again.",
       }));
     } finally {
       setIsLoading(false);
