@@ -73,7 +73,7 @@ export const useLoginForm = () => {
     } catch (err: any) {
       setError({
         ...error,
-        general: err.message || 'Login failed. Please try again.',
+        general: err || 'Login failed. Please try again.',
       });
     } finally {
       setIsLoading(false);
