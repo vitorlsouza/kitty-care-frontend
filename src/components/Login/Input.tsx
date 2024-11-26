@@ -10,7 +10,7 @@ const STYLES = {
   input: 'w-full h-[55px] p-auto sm:py-4 px-[24px] text-base sm:text-xl border-2 rounded-lg',
   toggleButton: 'absolute right-3 top-[55%] transform -translate-y-1/2 border-none hover:border-none focus:outline-none bg-transparent',
   icon: 'h-5 w-5 text-gray-500',
-  errorText: 'text-red-500 text-sm font-medium ms-6 -mt-[6px] relative'
+  errorText: 'text-red-500 text-base text-base text-center ms-6 -mt-[6px] relative'
 } as const;
 
 const TextInput = ({

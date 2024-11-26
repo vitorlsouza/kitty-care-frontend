@@ -79,7 +79,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
     />
     <TermsCheckbox checked={checked} setChecked={setChecked} />
     {error.general && (
-      <div className="text-red-500 text-sm text-center mt-2">
+      <div className="text-red-500 text-base text-center mt-2">
         {error.general}
       </div>
     )}
@@ -144,7 +144,7 @@ export const Signup: React.FC = () => {
         });
       }
     }
-  }, [isMobile])
+  }, [isMobile]);
 
   const handleClickPaywall = () => {
     setIsShowPaywall(false);
@@ -159,7 +159,7 @@ export const Signup: React.FC = () => {
         });
       }
     }
-  }
+  };
 
   return (
     <Layout>
