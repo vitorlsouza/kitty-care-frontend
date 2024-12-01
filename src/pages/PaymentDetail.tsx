@@ -148,6 +148,7 @@ const PaymentForm = () => {
       if (paymentMade) {
         await dispatch(createSubscriptionAsync({
           id: _subscriptionId,
+          email: userInfo.email || localStorage.getItem("email"),
           plan: formData.planName,
           end_date: formData.endDate,
           start_date: formData.startDate,
@@ -157,6 +158,7 @@ const PaymentForm = () => {
 
         localStorage.removeItem("paymentMade");
         navigate("/progress");
+        dispatch(setLoading(false));
       }
 
       const { paymentMethod } = await stripe.createPaymentMethod({
@@ -195,6 +197,7 @@ const PaymentForm = () => {
 
         await dispatch(createSubscriptionAsync({
           id: subscriptionId,
+          email: userInfo.email || localStorage.getItem("email"),
           plan: formData.planName,
           end_date: formData.endDate,
           start_date: formData.startDate,
@@ -208,6 +211,8 @@ const PaymentForm = () => {
         });
 
         navigate("/progress");
+        dispatch(setLoading(false));
+
       }
 
     } catch (error: any) {

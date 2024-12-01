@@ -11,6 +11,7 @@ interface SubscriptionStateWithStatus extends SubscriptionState {
 
 const initialState: SubscriptionStateWithStatus = {
   id: '',
+  email: '',
   plan: '',
   end_date: '',
   start_date: '',
@@ -94,6 +95,7 @@ export const subscriptionSlice = createSlice({
             status: 'succeeded',
             isAuthenticated: true,
             id: action.payload.id,
+            email: action.payload.email,
             plan: action.payload.plan,
             end_date: action.payload.end_date,
             start_date: action.payload.start_date,
@@ -116,6 +118,7 @@ export const subscriptionSlice = createSlice({
         if (action.payload) {
           Object.assign(state, {
             id: action.payload.id,
+            email: action.payload.email,
             plan: action.payload.plan,
             end_date: action.payload.end_date,
             start_date: action.payload.start_date,
