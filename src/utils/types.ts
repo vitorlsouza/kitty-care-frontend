@@ -118,6 +118,7 @@ export interface LocalStorage {
 
 export interface SubscriptionState {
   id: string;
+  email: string | null;
   plan: string;
   end_date: string;
   start_date: string;
