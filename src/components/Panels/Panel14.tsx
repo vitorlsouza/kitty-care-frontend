@@ -12,8 +12,6 @@ const LOCAL_STORAGE_KEYS = {
 const OverviewSection: React.FC<OverviewSectionProps> = ({ title, items }) => {
   if (!items || (Array.isArray(items) && items.length === 0)) return null;
 
-  console.log(title, items);
-
   return (
     <div className="flex flex-col md:flex-row items-center md:items-start justify-center space-y-2 md:space-y-0 mb-4 mt-3 md:mt-5">
       <h3 className="bg-primaryYellow text-black font-medium px-3 py-2 rounded-2xl text-left md:mr-3 md:w-auto w-fit">
@@ -80,9 +78,11 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
           {"<"} Back
         </button>
         <button
-          // onClick={nextStep}
+          // onClick={() => {
+          //   navigate("/cat-assistant");
+          // }}
           onClick={() => {
-            navigate("/cat-assistant");
+            navigate("/signup");
           }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"
         >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PawAnimation from '../PawPrintAnimation';
 import NavigationButtons from '../NavigationButtons';
-import useCreateCat from '../../hooks/useCreateCat';
+import useCatRecommendations from '../../hooks/useCatRecommendations';
 
 interface Panel13Props {
   nextStep: () => void;
@@ -12,12 +12,12 @@ const LOADING_DELAY = 3000;
 
 const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const { createCat } = useCreateCat();
+  const { getCatRecommendations } = useCatRecommendations();
 
   useEffect(() => {
     const initializeCat = async () => {
       try {
-        const success = await createCat();
+        const success = await getCatRecommendations();
         if (success) {
           setTimeout(() => {
             setIsLoading(false);
@@ -31,7 +31,7 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
     };
 
     initializeCat();
-  }, [createCat, nextStep]);
+  }, [getCatRecommendations, nextStep]);
 
   return (
     <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">

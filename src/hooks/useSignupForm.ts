@@ -4,6 +4,8 @@ import { useAppDispatch } from '../Redux/hooks';
 import { signUpUserAsync } from '../Redux/features/userSlice';
 import { validatePassword, validateUserInfo } from '../utils/validation';
 import { setLoading } from '../store/ui/actions';
+import { createCatAsync } from '../Redux/features/catsSlice';
+import { collectFormData } from '../utils/auth';
 
 export interface UserInfo {
   first_name: string;
@@ -73,6 +75,9 @@ export const useSignupForm = () => {
         last_name: userInfo.last_name.trim(),
         email: userInfo.email.trim(),
       })).unwrap();
+
+      const formData = collectFormData();
+      await dispatch(createCatAsync(formData)).unwrap();
 
       setUserInfo(initialUserInfo);
       setError(initialErrors);
