@@ -20,12 +20,14 @@ export const signUpUserAsync = createAsyncThunk(
   async (userData: SignupState, { rejectWithValue }) => {
     try {
       const response = await signUpAPI(userData);
+
       setAuthToken({
         token: response.token,
         expiresIn: response.expiresIn || '1h',
         email: userData.email,
         photo: response.photo || ''
       });
+      
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);

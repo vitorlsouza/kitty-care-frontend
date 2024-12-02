@@ -157,7 +157,8 @@ const PaymentForm = () => {
         })).unwrap();
 
         localStorage.removeItem("paymentMade");
-        navigate("/progress");
+        // navigate("/progress");
+        navigate("/cat-assistant");
         dispatch(setLoading(false));
       }
 
@@ -210,7 +211,8 @@ const PaymentForm = () => {
           currency: 'USD'
         });
 
-        navigate("/progress");
+        // navigate("/progress");
+        navigate("/cat-assistant");
         dispatch(setLoading(false));
 
       }

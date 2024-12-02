@@ -83,9 +83,9 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/progress" element={
-            <ProtectedRoute>
-              <Progress />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Progress />
+            // </ProtectedRoute>
           } />
           <Route path="/cat-assistant" element={
             <ProtectedRoute>

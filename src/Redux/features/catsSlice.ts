@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCatsAPI, createCatAPI, updateCatAPI } from '../../services/api';
+import { getCatsAPI, createCatAPI, updateCatAPI, getCatRecommendationsAPI } from '../../services/api';
 
 interface Cat {
   id: string;
@@ -99,6 +99,25 @@ export const updateCatAsync = createAsyncThunk(
     try {
       const catId = localStorage.getItem('catId');
       const response = await updateCatAPI(data, catId);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getCatRecommendationsAsync = createAsyncThunk(
+  'cats/getCatRecommendations',
+  async (catDetails: any, { rejectWithValue }) => {
+    try {
+      const response = await getCatRecommendationsAPI(catDetails);
+
+      localStorage.setItem(`catId`, JSON.stringify(0));
+
+      localStorage.setItem(`food_bowls`, JSON.stringify(response.food_bowls));
+      localStorage.setItem(`treats`, JSON.stringify(response.treats));
+      localStorage.setItem(`playtime`, JSON.stringify(response.playtime));
+      
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message);
