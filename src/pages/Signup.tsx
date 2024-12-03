@@ -16,12 +16,12 @@ import { SubmitButton } from "../components/Signup/SubmitButton";
 // Hooks
 import { useSignupForm, FormErrors } from "../hooks/useSignupForm";
 
-// Constants
-const REDIRECT_PATHS = {
-  PRICE_SELECTION: "/priceselection",
-  PROGRESS: "/progress",
-  CAT_ASSISTANT: "/cat-assistant"
-} as const;
+// // Constants
+// const REDIRECT_PATHS = {
+//   PRICE_SELECTION: "/priceselection",
+//   PROGRESS: "/progress",
+//   CAT_ASSISTANT: "/cat-assistant"
+// } as const;
 
 interface SignupFormProps {
   error: FormErrors;
@@ -120,16 +120,18 @@ export const Signup: React.FC = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    const subscriptionId = localStorage.getItem("subscriptionId");
-    const catId = localStorage.getItem("catId");
+    navigate('/confirm-signup');
 
-    if (!subscriptionId || subscriptionId === "undefined") {
-      navigate(`${REDIRECT_PATHS.PRICE_SELECTION}?${urlParams.toString()}`);
-    } else if (!catId || catId === "undefined") {
-      navigate(REDIRECT_PATHS.PROGRESS);
-    } else {
-      navigate(REDIRECT_PATHS.CAT_ASSISTANT);
-    }
+    // const subscriptionId = localStorage.getItem("subscriptionId");
+    // const catId = localStorage.getItem("catId");
+
+    // if (!subscriptionId || subscriptionId === "undefined") {
+    //   navigate(`${REDIRECT_PATHS.PRICE_SELECTION}?${urlParams.toString()}`);
+    // } else if (!catId || catId === "undefined") {
+    //   navigate(REDIRECT_PATHS.PROGRESS);
+    // } else {
+    //   navigate(REDIRECT_PATHS.CAT_ASSISTANT);
+    // }
   }, [navigate, urlParams]);
 
   useEffect(() => {
