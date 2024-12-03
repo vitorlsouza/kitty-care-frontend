@@ -62,6 +62,15 @@ export const getCatsAPI = async (token: string) => {
   }
 };
 
+export const getCatRecommendationsAPI = async (catDetails: any) => {
+  try {
+    const response = await API.post('/api/openai/recommendations', catDetails);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to get cat suggestions');
+  }
+};
+
 export const updateConversationAPI = async ({ id, messages }: { id: string; messages: Message[] }) => {
   try {
     const token = localStorage.getItem('token');

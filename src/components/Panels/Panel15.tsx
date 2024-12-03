@@ -38,7 +38,13 @@ const Panel15: React.FC<Panel15Props> = () => {
 
       <div className="flex justify-center mt-8">
         <button
-          onClick={() => navigate("/cat-assistant")}
+          onClick={() => {
+            if (localStorage.getItem("email")) {
+              navigate("/cat-assistant");
+            } else {
+              navigate("/signup");
+            }
+          }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
         >
           Explore My Plan

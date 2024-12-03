@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PawAnimation from '../PawPrintAnimation';
 import NavigationButtons from '../NavigationButtons';
+import useCatRecommendations from '../../hooks/useCatRecommendations';
 import useCreateCat from '../../hooks/useCreateCat';
 
 interface Panel13Props {
@@ -12,12 +13,19 @@ const LOADING_DELAY = 3000;
 
 const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const { getCatRecommendations } = useCatRecommendations();
   const { createCat } = useCreateCat();
 
   useEffect(() => {
     const initializeCat = async () => {
       try {
-        const success = await createCat();
+        let success;
+        if (localStorage.getItem("email")) {
+          success = await createCat();
+        } else {
+          success = await getCatRecommendations();
+        }
+
         if (success) {
           setTimeout(() => {
             setIsLoading(false);
@@ -31,7 +39,7 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
     };
 
     initializeCat();
-  }, [createCat, nextStep]);
+  }, [getCatRecommendations, nextStep]);
 
   return (
     <div className="w-full max-w-md lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">

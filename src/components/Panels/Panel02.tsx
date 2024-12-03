@@ -14,7 +14,7 @@ interface Panel02Props {
  * Allows users to select up to three goals for their cat's improvement
  */
 const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
-  const { selectedGoals, handleGoalSelect } = useGoals();
+  const { selectedGoals, handleGoalSelect, handleNext } = useGoals(nextStep);
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
@@ -39,7 +39,7 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleNext}
         previousStep={previousStep}
         isNextDisabled={selectedGoals.length < MAX_GOALS}
       />

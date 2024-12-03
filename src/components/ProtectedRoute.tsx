@@ -49,6 +49,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   // Render children if authenticated
   return <>{children}</>;
 };
-
 // Prevent unnecessary re-renders
 export default React.memo(ProtectedRoute);
+
