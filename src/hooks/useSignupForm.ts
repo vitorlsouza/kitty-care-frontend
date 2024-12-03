@@ -76,8 +76,10 @@ export const useSignupForm = () => {
         email: userInfo.email.trim(),
       })).unwrap();
 
-      const formData = collectFormData();
-      await dispatch(createCatAsync(formData)).unwrap();
+      if (localStorage.getItem("catId")) {
+        const formData = collectFormData();
+        await dispatch(createCatAsync(formData)).unwrap();
+      }
 
       setUserInfo(initialUserInfo);
       setError(initialErrors);

@@ -44,7 +44,8 @@ export const clearTokens = () => {
     "issues_identified",
     "required_progress",
     "paymentMade",
-    "catFormData"
+    "catFormData",
+    "email"
   ];
 
   keysToRemove.forEach((key) => localStorage.removeItem(key));

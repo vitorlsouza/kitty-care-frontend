@@ -78,11 +78,12 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
           {"<"} Back
         </button>
         <button
-          // onClick={() => {
-          //   navigate("/cat-assistant");
-          // }}
           onClick={() => {
-            navigate("/signup");
+            if (localStorage.getItem("email")) {
+              navigate("/cat-assistant");
+            } else {
+              navigate("/signup");
+            }
           }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"
         >

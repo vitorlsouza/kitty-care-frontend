@@ -158,8 +158,11 @@ const PaymentForm = () => {
         })).unwrap();
 
         localStorage.removeItem("paymentMade");
-        // navigate("/progress");
-        navigate("/cat-assistant");
+        if (localStorage.getItem("catId")) {
+          navigate("/cat-assistant");
+        } else {
+          navigate("/progress");
+        }
         dispatch(setLoading(false));
       }
 
@@ -214,8 +217,12 @@ const PaymentForm = () => {
 
         <VWORevenueTracking />;
 
-        // navigate("/progress");
-        navigate("/cat-assistant");
+        if (localStorage.getItem("catId")) {
+          navigate("/cat-assistant");
+        } else {
+          navigate("/progress");
+        }
+
         dispatch(setLoading(false));
 
       }

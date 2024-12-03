@@ -94,7 +94,6 @@ export const Signup: React.FC = () => {
   const [isShowPaywall, setIsShowPaywall] = useState(true);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
-
   const {
     error,
     isLoading,
@@ -122,16 +121,16 @@ export const Signup: React.FC = () => {
 
     // navigate('/confirm-signup');
 
-    // const subscriptionId = localStorage.getItem("subscriptionId");
-    // const catId = localStorage.getItem("catId");
+    const subscriptionId = localStorage.getItem("subscriptionId");
+    const catId = localStorage.getItem("catId");
 
-    // if (!subscriptionId || subscriptionId === "undefined") {
-    //   navigate(`${REDIRECT_PATHS.PRICE_SELECTION}?${urlParams.toString()}`);
-    // } else if (!catId || catId === "undefined") {
-    //   navigate(REDIRECT_PATHS.PROGRESS);
-    // } else {
-    //   navigate(REDIRECT_PATHS.CAT_ASSISTANT);
-    // }
+    if (!subscriptionId || subscriptionId === "undefined") {
+      navigate(`/priceselection?${urlParams.toString()}`);
+    } else if (!catId || catId === "undefined") {
+      navigate("/progress");
+    } else {
+      navigate("/cat-assistant");
+    }
   }, [navigate, urlParams]);
 
   useEffect(() => {
