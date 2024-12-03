@@ -20,6 +20,7 @@ import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import EmailSentSuccess from "./pages/EmailSentSuccess.tsx";
+import SignUpConfirm from "./pages/SignUpConfirm.tsx";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -62,6 +63,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/sent-mail" element={<EmailSentSuccess />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/confirm-signup" element={<SignUpConfirm />} />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />
