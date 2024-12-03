@@ -212,7 +212,7 @@ const PaymentForm = () => {
           currency: 'USD'
         });
 
-        VWORevenueTracking();
+        <VWORevenueTracking />;
 
         // navigate("/progress");
         navigate("/cat-assistant");
