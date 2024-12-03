@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CatBreed, WeightUnit, WEIGHT_REGEX } from '../constants/catBreeds';
 
 interface CatWeightFormErrors {
@@ -13,37 +13,16 @@ interface UseCatWeightFormProps {
 }
 
 export const useCatWeightForm = ({ onSubmit }: UseCatWeightFormProps) => {
-  const [breed, setBreed] = useState<CatBreed | null>(null);
-  const [weight, setWeight] = useState<string>("");
-  const [unit, setUnit] = useState<WeightUnit>("Lbs");
-  const [targetWeight, setTargetWeight] = useState<string>("");
+  const [breed, setBreed] = useState<CatBreed | null>(localStorage.getItem("breed") as CatBreed);
+  const [weight, setWeight] = useState<string>(localStorage.getItem("weight") || "");
+  const [unit, setUnit] = useState<WeightUnit>(localStorage.getItem("unit") as WeightUnit || "Lbs");
+  const [targetWeight, setTargetWeight] = useState<string>(localStorage.getItem("target_weight") || "");
   const [errors, setErrors] = useState<CatWeightFormErrors>({
     breed: "",
     weight: "",
     unit: "",
     targetWeight: "",
   });
-
-  useEffect(() => {
-    // Load stored values
-    const storedBreed = localStorage.getItem("breed") as CatBreed;
-    const storedWeight = localStorage.getItem("weight");
-    const storedUnit = localStorage.getItem("unit") as WeightUnit;
-    const storedTargetWeight = localStorage.getItem("target_weight");
-
-    if (storedBreed) setBreed(storedBreed);
-    if (storedWeight) setWeight(storedWeight);
-    if (storedUnit) setUnit(storedUnit);
-    if (storedTargetWeight) setTargetWeight(storedTargetWeight);
-  }, []);
-
-  useEffect(() => {
-    // Save values to localStorage
-    if (breed) localStorage.setItem("breed", breed);
-    if (weight) localStorage.setItem("weight", parseFloat(weight).toFixed(2));
-    if (unit) localStorage.setItem("unit", unit);
-    if (targetWeight) localStorage.setItem("target_weight", parseFloat(targetWeight).toFixed(2));
-  }, [breed, weight, unit, targetWeight]);
 
   const validateForm = (): boolean => {
     const newErrors = {
@@ -80,6 +59,11 @@ export const useCatWeightForm = ({ onSubmit }: UseCatWeightFormProps) => {
 
   const handleSubmit = () => {
     if (validateForm()) {
+      localStorage.setItem("breed", breed || "");
+      localStorage.setItem("weight", weight || "");
+      localStorage.setItem("unit", unit || "");
+      localStorage.setItem("target_weight", targetWeight || "");
+
       onSubmit();
     }
   };
