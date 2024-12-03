@@ -16,12 +16,12 @@ import { SubmitButton } from "../components/Signup/SubmitButton";
 // Hooks
 import { useSignupForm, FormErrors } from "../hooks/useSignupForm";
 
-// Constants
-const REDIRECT_PATHS = {
-  PRICE_SELECTION: "/priceselection",
-  PROGRESS: "/progress",
-  CAT_ASSISTANT: "/cat-assistant"
-} as const;
+// // Constants
+// const REDIRECT_PATHS = {
+//   PRICE_SELECTION: "/priceselection",
+//   PROGRESS: "/progress",
+//   CAT_ASSISTANT: "/cat-assistant"
+// } as const;
 
 interface SignupFormProps {
   error: FormErrors;

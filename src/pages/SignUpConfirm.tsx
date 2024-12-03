@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom'; // or useParams if needed
 import Layout from '../components/Layout';
-// import axios from '../utils/axios';
-
-type Status = 'loading' | 'success' | 'error';
 
 // Constants
 const REDIRECT_PATHS = {
