@@ -8,7 +8,15 @@ import { useCatForm } from './hooks/useCatForm';
  * Collects basic information about the user's cat including gender, age, location
  */
 const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
-  const { formData, setFormData, errors, handleSubmit, isValid } = useCatForm(nextStep);
+  const {
+    gender,
+    setGender,
+    age,
+    setAge,
+    errors,
+    handleSubmit,
+    isValid
+  } = useCatForm(nextStep);
 
   return (
     <div className="w-full max-w-md lg:max-w-lg p-4 lg:p-6 mx-auto font-inter">
@@ -31,9 +39,9 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
             {['Male', 'Female'].map((option) => (
               <button
                 key={option}
-                className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${formData.gender === option ? 'bg-primaryBlue text-white' : 'border-gray-300'
+                className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${gender === option ? 'bg-primaryBlue text-white' : 'border-gray-300'
                   }`}
-                onClick={() => setFormData({ ...formData, gender: option })}
+                onClick={() => setGender(option)}
                 type="button"
               >
                 {option}
@@ -50,8 +58,8 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
           </p>
           <input
             type="number"
-            value={formData.age}
-            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+            value={age || ''}
+            onChange={(e) => setAge(`${e.target.value}`)}
             placeholder="Enter your cat's age"
             className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
           />

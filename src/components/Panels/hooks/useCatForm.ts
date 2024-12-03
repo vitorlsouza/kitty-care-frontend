@@ -1,9 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-interface CatFormData {
-  gender: string;
-  age: string;
-}
 
 interface CatFormErrors {
   gender?: string;
@@ -11,32 +7,19 @@ interface CatFormErrors {
 }
 
 export const useCatForm = (nextStep: () => void) => {
-  // Initialize form data from localStorage or with default values
-  const [formData, setFormData] = useState<CatFormData>(() => {
-    const savedData = localStorage.getItem('catFormData');
-    return savedData ? JSON.parse(savedData) : {
-      gender: '',
-      age: '',
-    };
-  });
+  const [gender, setGender] = useState<string>(localStorage.getItem('gender') || '');
+  const [age, setAge] = useState<string>(localStorage.getItem('age') || '');
 
   const [errors, setErrors] = useState<CatFormErrors>({});
-
-  // Save to localStorage whenever formData changes
-  useEffect(() => {
-    localStorage.setItem('catFormData', JSON.stringify(formData));
-    localStorage.setItem('gender', formData.gender);
-    localStorage.setItem('age', formData.age);
-  }, [formData]);
 
   const validate = () => {
     const newErrors: CatFormErrors = {};
     
-    if (!formData.gender) {
+    if (!gender) {
       newErrors.gender = 'Please select your cat\'s gender';
     }
     
-    if (!formData.age) {
+    if (!age) {
       newErrors.age = 'Please enter your cat\'s age';
     }
 
@@ -46,15 +29,20 @@ export const useCatForm = (nextStep: () => void) => {
 
   const handleSubmit = () => {
     if (validate()) {
+      localStorage.setItem('gender', gender || '');
+      localStorage.setItem('age', age || '');
+
       nextStep();
     }
   };
 
-  const isValid = formData.gender && formData.age;
+  const isValid = gender && age;
 
   return {
-    formData,
-    setFormData,
+    gender,
+    setGender,
+    age,
+    setAge,
     errors,
     handleSubmit,
     isValid
