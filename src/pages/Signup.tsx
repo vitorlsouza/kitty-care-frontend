@@ -120,7 +120,7 @@ export const Signup: React.FC = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    navigate('/confirm-signup');
+    // navigate('/confirm-signup');
 
     // const subscriptionId = localStorage.getItem("subscriptionId");
     // const catId = localStorage.getItem("catId");
