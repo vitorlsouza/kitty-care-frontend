@@ -36,7 +36,6 @@ function AppContent() {
       const auth = isAuthenticated();
 
       if (!auth) {
-        console.log('App logging out');
         dispatch(logout());
       } else {
         dispatch(signUpUser({
