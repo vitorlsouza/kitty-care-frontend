@@ -21,6 +21,7 @@ import { setLoading } from "../store/ui/actions";
 import Layout from "../components/Layout";
 import { useMediaQuery } from "react-responsive";
 import { updateBillingOption } from "../Redux/features/billingSlice";
+import VWORevenueTracking from "../components/VWORevenueTracking";
 
 // Constants
 const STRIPE_PROMISE = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -210,6 +211,8 @@ const PaymentForm = () => {
           value: billingOption.price,
           currency: 'USD'
         });
+
+        VWORevenueTracking();
 
         // navigate("/progress");
         navigate("/cat-assistant");
