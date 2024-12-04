@@ -20,7 +20,7 @@ const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) => {
 
   // Initialize Rive animation
   const { rive, RiveComponent } = useRive({
-    src: "/assets/riv-files/Graph_kitty.riv",
+    src: "/assets/riv-files/graph_kitty_V5.riv",
     stateMachines: "State Machine 1",
     autoplay: true,
     onLoad: () => setIsRiveLoaded(true),
@@ -96,8 +96,8 @@ interface AnimationSectionProps {
 }
 
 const AnimationSection: React.FC<AnimationSectionProps> = ({ RiveComponent, isLoaded }) => (
-  <div className="flex justify-center">
-    {!isLoaded && <div>Loading animation...</div>}
+  <div className="flex flex-col justify-center items-center">
+    {!isLoaded && <div className="p-10 text-center m-auto w-full">Loading animation...</div>}
     <RiveComponent style={{ width: "845px", height: "280px" }} />
   </div>
 );

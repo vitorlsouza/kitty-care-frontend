@@ -65,6 +65,16 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
         {renderFormField("Dietary Restrictions", "Enter food allergies", "dietaryRestrictions")}
         {renderFormField("Surgery History", "Enter recent surgeries", "surgeryHistory")}
       </div>
+
+      <div className="flex flex-col items-center mt-8 text-center">
+        <p className="text-sm text-darkGray mt-4 font-light px-8 md:mx-12 lg:mx-36">
+          If your cat has no medical history, you can{" "}
+          <span className="text-primaryBlue cursor-pointer" onClick={nextStep}>
+            skip this step
+          </span>
+        </p>
+      </div>
+
       <NavigationButtons
         nextStep={nextStep}
         previousStep={previousStep}
