@@ -33,7 +33,7 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
               <span className="bg-primaryBlue text-white px-3 py-1 rounded-full font-bold text-xs">
                 Recommended
               </span>{" "}
-              {foodBowls} cups of food per day based on your cat’s current weight and target
+              {foodBowls} { foodBowls === "1" ? "cup" : "cups"} of food per day based on your cat’s current weight and target
               weight.
             </p>
             <div className="flex items-center w-full px-6">
@@ -73,10 +73,10 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
             </div>
             <div className="flex flex-col items-center justify-center">
               <h1 className="font-inter text-base font-semibold text-black leading-[28px]">
-                {treats} Treats/Day
+                {treats} {parseInt(treats) === 1 ? "Treat" : "Treats"}/Day
               </h1>
               <p className="text-center font-inter font-medium text-black text-sm">
-                No more than {treats} treats per day to help manage weight.
+                No more than {treats} {parseInt(treats) === 1 ? "treat" : "treats"} per day to help manage weight.
               </p>
             </div>
           </div>

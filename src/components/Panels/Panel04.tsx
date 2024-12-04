@@ -57,11 +57,14 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      <DescriptionCarousel
-        currentIndex={currentDescription}
-        items={carouselData}
-      />
-
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h2 className="text-black text-2xl md:text-3xl font-bold mb-2">
+          What's Standing in Your Way?
+        </h2>
+        <p className="text-sm max-w-lg mx-auto mt-2 text-darkGray leading-relaxed">
+          Select all the barriers that may be making it difficult to reach your cat's goals.
+        </p>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
         {challengeOptions.map((goal) => (
           <div
