@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import NavigationButtons from '../NavigationButtons';
-import DescriptionCarousel from './components/DescriptionCarousel';
-import { carouselData, challengeOptions } from './constants/panel04Data';
+import { challengeOptions } from './constants/panel04Data';
 
 interface Panel04Props {
   nextStep: () => void;
@@ -9,11 +8,9 @@ interface Panel04Props {
 }
 
 const MAX_SELECTIONS = 3;
-const CAROUSEL_INTERVAL = 3000;
 const STORAGE_KEY = 'issues_faced';
 
 const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
-  const [currentDescription, setCurrentDescription] = useState(0);
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
 
   // Load saved goals from localStorage
@@ -22,17 +19,6 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
     if (storedGoals) {
       setSelectedGoals(JSON.parse(storedGoals));
     }
-  }, []);
-
-  // Handle carousel rotation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDescription((prev) =>
-        prev === carouselData.length - 1 ? 0 : prev + 1
-      );
-    }, CAROUSEL_INTERVAL);
-
-    return () => clearInterval(interval);
   }, []);
 
   const handleGoalSelect = useCallback((goal: string) => {
@@ -57,7 +43,7 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      <div className="flex flex-col items-center justify-center mb-6">
+      <div className="flex flex-col items-center justify-center mb-6 text-center">
         <h2 className="text-black text-2xl md:text-3xl font-bold mb-2">
           What's Standing in Your Way?
         </h2>
