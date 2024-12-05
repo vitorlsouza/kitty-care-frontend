@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import PageHead from './components/PageHead';
 import Dashboard from "./pages/Dashboard.tsx";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import SignupV2 from "./pages/SignupV2.tsx";
 import PaymentMethod from "./pages/PaymentMethod";
 import PaymentDetail from "./pages/PaymentDetail";
 import Progress from "./pages/Progress.tsx";
@@ -21,6 +22,8 @@ import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import EmailSentSuccess from "./pages/EmailSentSuccess.tsx";
 import SignUpConfirm from "./pages/SignUpConfirm.tsx";
+import PaymentMethodV2 from "./pages/PaymentMethodV2.tsx";
+import PaymentDetailV2 from "./pages/PaymentDetailV2.tsx";
 
 // Create an AppContent component that will use the Router hooks
 function AppContent() {
@@ -57,12 +60,17 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/" element={
-        <ProtectedRoute>
-          <Chatroom />
-        </ProtectedRoute>
+        import.meta.env.VITE_FLOW_TYPE === "V2" ? (
+          <Navigate to="/progress" replace />
+        ) : (
+          <ProtectedRoute>
+            <Chatroom />
+          </ProtectedRoute>
+        )
       } />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/signupV2" element={<SignupV2 />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/sent-mail" element={<EmailSentSuccess />} />
       <Route path="/reset-password" element={<ResetPassword />} />
@@ -72,6 +80,7 @@ function AppContent() {
           <Dashboard />
         </ProtectedRoute>
       } />
+
       <Route path="/priceselection" element={
         <ProtectedRoute>
           <PriceSelection />
@@ -82,16 +91,29 @@ function AppContent() {
           <PaymentMethod />
         </ProtectedRoute>
       } />
+      <Route path="/paymentmethodV2" element={
+        <ProtectedRoute>
+          <PaymentMethodV2 />
+        </ProtectedRoute>
+      } />
       <Route path="/paymentdetail" element={
         <ProtectedRoute>
           <PaymentDetail />
         </ProtectedRoute>
       } />
-      <Route path="/progress" element={
-        // <ProtectedRoute>
-        <Progress />
-        // </ProtectedRoute>
+      <Route path="/paymentdetailV2" element={
+        <ProtectedRoute>
+          <PaymentDetailV2 />
+        </ProtectedRoute>
       } />
+      <Route path="/progress" element={
+        import.meta.env.VITE_FLOW_TYPE !== "V2" ? (
+          <ProtectedRoute>
+            <Progress />
+          </ProtectedRoute>
+        ) : (
+          <Progress />
+        )} />
       <Route path="/cat-assistant" element={
         <ProtectedRoute>
           <Chatroom />
