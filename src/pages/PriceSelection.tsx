@@ -10,7 +10,7 @@ import { useMediaQuery } from "react-responsive";
 const SUBSCRIPTION_STORAGE_KEY = 'subscriptionId';
 const ROUTES = {
   CAT_ASSISTANT: '/cat-assistant',
-  PAYMENT_METHOD: '/paymentmethod',
+  PAYMENT_METHOD: `${import.meta.env.VITE_FLOW_TYPE === "V2" ? "/paymentmethodV2" : "/paymentmethod"}`,
 } as const;
 
 // Types
@@ -30,7 +30,7 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    if(isMobile) navigate('/paymentmethod')
+    if(isMobile) navigate(ROUTES.PAYMENT_METHOD)
   }, [isMobile])
 
   const handleSubscriptionCheck = () => {
