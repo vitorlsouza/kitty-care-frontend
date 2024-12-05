@@ -82,7 +82,8 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
             if (localStorage.getItem("email")) {
               navigate("/cat-assistant");
             } else {
-              navigate("/signup");
+
+              navigate(`${import.meta.env.VITE_FLOW_TYPE === "V2" ? "/signupV2" : "/signup"}`);
             }
           }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"
