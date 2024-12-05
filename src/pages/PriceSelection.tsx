@@ -22,7 +22,6 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const billingOption = useAppSelector(selectBilling);
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   useEffect(() => {
     handleSubscriptionCheck();
@@ -30,8 +29,8 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    if(isMobile) navigate(ROUTES.PAYMENT_METHOD)
-  }, [isMobile])
+    navigate(ROUTES.PAYMENT_METHOD)
+  }, [])
 
   const handleSubscriptionCheck = () => {
     const subscriptionId = localStorage.getItem(SUBSCRIPTION_STORAGE_KEY);
