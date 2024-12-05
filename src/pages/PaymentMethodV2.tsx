@@ -54,7 +54,7 @@ const PaymentMethodV2 = () => {
                   3-Day Access for $0
                 </h2>
                 <div className="text-base sm:text-lg font-medium mb-10">
-                  Unlock all the exclusive features of KittyCare at zero cost to your for the first three days. $49.99 per month once your trial has expired.
+                  Unlock all the exclusive features of KittyCare at zero cost to you for the first three days. $49.99 per month once your trial has expired.
                 </div>
               </div>
 

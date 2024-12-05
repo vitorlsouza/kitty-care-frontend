@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import PageHead from './components/PageHead';
 import Dashboard from "./pages/Dashboard.tsx";
@@ -61,7 +61,7 @@ function AppContent() {
     <Routes>
       <Route path="/" element={
         import.meta.env.VITE_FLOW_TYPE === "V2" ? (
-          <Progress />
+          <Navigate to="/progress" replace />
         ) : (
           <ProtectedRoute>
             <Chatroom />
@@ -80,7 +80,7 @@ function AppContent() {
           <Dashboard />
         </ProtectedRoute>
       } />
-      
+
       <Route path="/priceselection" element={
         <ProtectedRoute>
           <PriceSelection />
@@ -106,13 +106,14 @@ function AppContent() {
           <PaymentDetailV2 />
         </ProtectedRoute>
       } />
-      {import.meta.env.VITE_FLOW_TYPE !== "V2" && (
-        <Route path="/progress" element={
+      <Route path="/progress" element={
+        import.meta.env.VITE_FLOW_TYPE !== "V2" ? (
           <ProtectedRoute>
             <Progress />
           </ProtectedRoute>
-        } />
-      )}
+        ) : (
+          <Progress />
+        )} />
       <Route path="/cat-assistant" element={
         <ProtectedRoute>
           <Chatroom />

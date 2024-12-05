@@ -264,11 +264,11 @@ const PaymentForm = () => {
                     Guaranteed <b>safe & secure</b> checkout
                   </div>
                   <div className="flex items-center justify-between ">
-                    <RiVisaFill className="animate-blink text-[50px] sm:text-[80px]" color="#0061EF" />
-                    <FaCcMastercard className="animate-blink text-[50px] sm:text-[80px]" color="#ef4444" />
-                    <FaCcAmex className="animate-blink text-[50px] sm:text-[80px]" color="#0ea5e9" />
-                    <LiaCcJcb className="animate-blink text-[50px] sm:text-[80px]" color="#8b5cf6" />
-                    <FaCcDiscover className="animate-blink text-[50px] sm:text-[80px]" color="#075985" />
+                    <RiVisaFill className="text-[50px] sm:text-[80px]" color="#0061EF" />
+                    <FaCcMastercard className="text-[50px] sm:text-[80px]" color="#ef4444" />
+                    <FaCcAmex className="text-[50px] sm:text-[80px]" color="#0ea5e9" />
+                    <LiaCcJcb className="text-[50px] sm:text-[80px]" color="#8b5cf6" />
+                    <FaCcDiscover className="text-[50px] sm:text-[80px]" color="#075985" />
                   </div>
 
                 </div>

@@ -122,7 +122,7 @@ export const SignupV2: React.FC = () => {
     const subscriptionId = localStorage.getItem("subscriptionId");
 
     if (!subscriptionId || subscriptionId === "undefined") {
-      navigate(`/priceselection?${urlParams.toString()}`);
+      navigate(`/paymentmethodV2?${urlParams.toString()}`);
     } else {
       navigate("/cat-assistant");
     }
