@@ -96,9 +96,9 @@ interface AnimationSectionProps {
 }
 
 const AnimationSection: React.FC<AnimationSectionProps> = ({ RiveComponent, isLoaded }) => (
-  <div className="flex flex-col justify-center items-center">
+  <div className="flex flex-col justify-center items-center w-[345px] sm:w-[875px] mx-auto">
     {!isLoaded && <div className="p-10 text-center m-auto w-full">Loading animation...</div>}
-    <RiveComponent style={{ width: "845px", height: "280px" }} />
+    <RiveComponent style={{ width: "100%", height: "280px" }} />
   </div>
 );
 
