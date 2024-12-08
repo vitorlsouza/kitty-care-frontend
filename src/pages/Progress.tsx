@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 
 // Constants
 const MAX_STEPS = 15;
-const MIN_STEP = 1;
+const MIN_STEP = 2;
 
 const Progress = () => {
   // Initialize state based on localStorage

@@ -1,12 +1,12 @@
 export const MEDICAL_CONDITIONS = [
-  "diabetes",
-  "obesity",
-  "allergies",
-  "arthritis",
-  "urinary tract issues",
-  "dental problems",
-  "respiratory issues",
-  "other",
+  "Diabetes",
+  "Obesity",
+  "Allergies",
+  "Arthritis",
+  "Urinary tract issues",
+  "Dental problems",
+  "Respiratory issues",
+  "Other",
 ] as const;
 
 export const STORAGE_KEYS = {

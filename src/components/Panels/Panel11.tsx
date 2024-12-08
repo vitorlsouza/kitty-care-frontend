@@ -44,7 +44,7 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
           <select
             value={formData.medicalCondition || ""}
             onChange={(e) => updateFormField("medicalCondition", e.target.value)}
-            className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
+            className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full capitalize focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
           >
             <option value="" disabled className="bg-lightWhite text-sm">
               Select a condition
@@ -53,7 +53,7 @@ const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
               <option
                 key={condition}
                 value={condition}
-                className="bg-lightWhite text-sm"
+                className="bg-lightWhite text-sm capitalize"
               >
                 {condition}
               </option>

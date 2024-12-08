@@ -77,7 +77,7 @@ const PaymentMethod = () => {
                       Applicable VAT, sales or other applicable taxes may apply.
                     </div>
                     <div className="text-[#0061EF] text-center text-[18px] font-semibold underline cursor-pointer">
-                      Cancel anytime
+                      Cancel anytime.
                     </div>
                   </div>
                 </div>
