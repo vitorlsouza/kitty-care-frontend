@@ -7,7 +7,6 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-import { getCode } from "country-list";
 import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
 import { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +23,8 @@ import VWORevenueTracking from "../components/VWORevenueTracking";
 import { FaCcAmex, FaCcDiscover, FaCcMastercard, FaUserLock } from "react-icons/fa";
 import { RiVisaFill } from "react-icons/ri";
 import { LiaCcJcb } from "react-icons/lia";
+import { allCountries } from "country-region-data";
+import Select from "react-select";
 
 // Constants
 const STRIPE_PROMISE = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -98,6 +99,8 @@ const PaymentForm = () => {
   const [_subscriptionId, setSubscriptionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [states, setStates] = useState([{value: "", label: ""}]);
+
 
   const [formData, setFormData] = useState<PaymentFormData>({
     fullName: "",
@@ -110,6 +113,13 @@ const PaymentForm = () => {
     provider: "Stripe",
     billingPeriod: billingOption.method ? "Yearly" : "Monthly",
   });
+
+  const countryOptions = allCountries.map(([name, slug, region]) => ({
+    value: slug, // Using CountrySlug as the value
+    label: name, // Using CountryName as the label
+    region: region
+  }));
+
 
   useEffect(() => {
     let subscriptionId = localStorage.getItem("subscriptionId");
@@ -134,9 +144,23 @@ const PaymentForm = () => {
     }));
   };
 
+  const handleCountryChange = (selectedOption: any) => {
+    const selectedCountry = selectedOption.value;
+    setFormData({ ...formData, country: selectedCountry, state: "" });
+    console.log("@@@@", selectedOption.region);
+    
+    setStates(selectedOption.region.map(([label, value]: [string, string]) => ({
+      label,
+      value,
+    })));
+  };
+
+  const handleStateChange = (selectedOption: any) => {
+    setFormData({ ...formData, state: selectedOption.value });
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!stripe || !elements) {
       setError("Payment system not initialized");
       return;
@@ -177,7 +201,7 @@ const PaymentForm = () => {
           name: formData.fullName,
           email: userInfo.email || localStorage.getItem("email"),
           address: {
-            country: getCode(formData.country),
+            country: formData.country,
             state: formData.state,
             postal_code: formData.postalCode,
           },
@@ -242,6 +266,7 @@ const PaymentForm = () => {
       setIsLoading(false);
       dispatch(setLoading(false));
     }
+    
   };
 
   const handleCancel = () => {
@@ -324,14 +349,16 @@ const PaymentForm = () => {
                 <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                   Country
                 </label>
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                <Select
+                  options={countryOptions}
+                  value={
+                    formData.country
+                      ? { value: formData.country, label: countryOptions.find((option) => option.value === formData.country)?.label }
+                      : null
+                  }
+                  onChange={handleCountryChange}
                   placeholder="Select country"
-                  required
+                  isSearchable
                 />
               </div>
 
@@ -340,18 +367,22 @@ const PaymentForm = () => {
                   <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
                     State
                   </label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={formData.state}
-                    onChange={handleInputChange}
-                    className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                    required
+                  <Select
+                    options={states}
+                    value={
+                      formData.state 
+                      ? { value: formData.state, label: states.find((option) => option.value === formData.state)?.label } 
+                      : null
+                    }
+                    onChange={handleStateChange}
+                    placeholder="State"
+                    isDisabled={!formData.country}
+                    isSearchable
                   />
                 </div>
 
                 <div>
-                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                  <label className="ms-3 mb-[10px] block text-base rounded-lg  sm:text-[20px] font-medium text-black">
                     Postal Code
                   </label>
                   <input
@@ -359,7 +390,7 @@ const PaymentForm = () => {
                     name="postalCode"
                     value={formData.postalCode}
                     onChange={handleInputChange}
-                    className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
+                    className="border text-base sm:text-[20px] px-2 py-[8px] h-[38px] rounded-sm border-[#898B90] items-center w-full"
                     required
                   />
                 </div>

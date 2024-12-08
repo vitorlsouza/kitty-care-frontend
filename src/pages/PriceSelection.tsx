@@ -89,7 +89,7 @@ const PriceSelection: React.FC<PriceSelectionProps> = () => {
               >
                 <PriceSelectBox
                   checked={billingOption.method}
-                  method={true}
+                  method={false}
                   isBest={true}
                   annual={billingOption.yearly}
                   daily={billingOption.daily}

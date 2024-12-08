@@ -91,9 +91,6 @@ const InputField = ({ onTyping, messageList }: InputFieldProps) => {
           <HiOutlineArrowRight className="text-md sm:text-2xl" />
         </button>
       </div>
-      <div className="sm:w-full m-auto text-center md:font-bold text-[10px] sm:text-[14px] sm:text-lg mt-2">
-        Chat with a vet 24/7 for advice and consultations
-      </div>
     </div>
   );
 };
