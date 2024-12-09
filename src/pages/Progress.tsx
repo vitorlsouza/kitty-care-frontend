@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import * as Panels from '../components/Panels';
 import ProgressBar from '../components/ProgressBar';
 import Layout from '../components/Layout';
@@ -17,6 +17,7 @@ const Progress = () => {
     setCurrentStep((prevStep) => {
       const nextStep = prevStep + 1;
       // Skip step 14
+      window.scrollTo(0, 0);
       return nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
     });
   };
@@ -28,6 +29,21 @@ const Progress = () => {
       return newPrevStep === 14 ? 13 : Math.max(newPrevStep, MIN_STEP);
     });
   };
+
+  useEffect(() => {
+    // Select elements with the 'top-left' and 'top-right' classes
+    const topLeftElement = document.querySelector('.top-left') as HTMLElement;
+    const topRightElement = document.querySelector('.top-right') as HTMLElement;
+
+    // Hide the elements
+    if (topLeftElement) {
+      topLeftElement.style.display = 'none';
+    }
+
+    if (topRightElement) {
+      topRightElement.style.display = 'none';
+    }
+  }, [])
 
   // Memoized panel mapping to prevent recreation on each render
   const panelMap = useMemo(() => ({

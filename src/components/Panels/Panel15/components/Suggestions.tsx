@@ -42,7 +42,7 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
                 type="range"
                 min="1"
                 max="3"
-                value={parseInt(foodBowls)}
+                value={parseFloat(foodBowls)}
                 readOnly
                 className="flex-grow mx-2 appearance-none h-2 bg-gray-300 rounded-full accent-[#F4A623] cursor-pointer"
               />
@@ -73,10 +73,10 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
             </div>
             <div className="flex flex-col items-center justify-center">
               <h1 className="font-inter text-base font-semibold text-black leading-[28px]">
-                {treats} {parseInt(treats) === 1 ? "Treat" : "Treats"}/Day
+                {treats} {parseFloat(treats) === 1 ? "Treat" : "Treats"}/Day
               </h1>
               <p className="text-center font-inter font-medium text-black text-sm">
-                No more than {treats} {parseInt(treats) === 1 ? "treat" : "treats"} per day to help manage weight.
+                No more than {treats} {parseFloat(treats) === 1 ? "treat" : "treats"} per day to help manage weight.
               </p>
             </div>
           </div>
