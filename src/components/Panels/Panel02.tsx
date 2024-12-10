@@ -1,5 +1,4 @@
 import React from "react";
-import NavigationButtons from "../NavigationButtons";
 import GoalCard from "./components/GoalCard";
 import { useGoals } from "./hooks/useGoals";
 import { GOALS, MAX_GOALS } from "./constants/goals";
@@ -13,7 +12,7 @@ interface Panel02Props {
  * Panel02 Component
  * Allows users to select up to three goals for their cat's improvement
  */
-const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
+const Panel02: React.FC<Panel02Props> = ({ nextStep }) => {
   const { selectedGoals, handleGoalSelect, handleNext } = useGoals(nextStep);
 
   return (
@@ -37,12 +36,21 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
           />
         ))}
       </div>
+      <div className="flex justify-center mt-8 sm:mt-10">
+        <button
+          onClick={handleNext}
+          className="bg-primaryBlue text-white px-6 sm:px-8 py-2 sm:py-3 rounded-2xl hover:bg-opacity-90 transition-opacity"
+          aria-label="Start onboarding process"
+        >
+          Get Started
+        </button>
+      </div>
 
-      <NavigationButtons
+      {/* <NavigationButtons
         nextStep={handleNext}
         previousStep={previousStep}
         isNextDisabled={selectedGoals.length < MAX_GOALS}
-      />
+      /> */}
     </div>
   );
 };
