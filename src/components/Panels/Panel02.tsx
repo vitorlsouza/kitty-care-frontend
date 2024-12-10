@@ -5,6 +5,7 @@ import { GOALS, MAX_GOALS } from "./constants/goals";
 
 interface Panel02Props {
   nextStep: () => void;
+  previousStep: () => void;
 }
 
 /**
