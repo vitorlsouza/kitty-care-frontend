@@ -1,19 +1,17 @@
 import React from "react";
-import NavigationButtons from "../NavigationButtons";
 import GoalCard from "./components/GoalCard";
 import { useGoals } from "./hooks/useGoals";
 import { GOALS, MAX_GOALS } from "./constants/goals";
 
 interface Panel02Props {
   nextStep: () => void;
-  previousStep: () => void;
 }
 
 /**
  * Panel02 Component
  * Allows users to select up to three goals for their cat's improvement
  */
-const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
+const Panel02: React.FC<Panel02Props> = ({ nextStep }) => {
   const { selectedGoals, handleGoalSelect, handleNext } = useGoals(nextStep);
 
   return (
