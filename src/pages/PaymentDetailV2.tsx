@@ -124,7 +124,7 @@ const PaymentForm = () => {
   useEffect(() => {
     let subscriptionId = localStorage.getItem("subscriptionId");
     if (subscriptionId) {
-      navigate("/cat-assistant");
+      navigate("/progress");
     }
   }, [navigate]);
 
@@ -185,7 +185,7 @@ const PaymentForm = () => {
 
         localStorage.removeItem("paymentMade");
         if (localStorage.getItem("catId")) {
-          navigate("/cat-assistant");
+          navigate("/progress");
         } else {
           navigate("/");
         }
@@ -243,11 +243,11 @@ const PaymentForm = () => {
 
         <VWORevenueTracking />;
 
-        if (localStorage.getItem("catId")) {
-          navigate("/cat-assistant");
-        } else {
+        // if (localStorage.getItem("catId")) {
+        //   navigate("/cat-assistant");
+        // } else {
           navigate("/progress");
-        }
+        // }
 
         dispatch(setLoading(false));
 
