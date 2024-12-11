@@ -114,15 +114,21 @@ export const Signup: React.FC = () => {
     }
   }, [dispatch, urlParams]);
 
+  useEffect(() => {
+    const catId = localStorage.getItem("catId");
+    
+    if (!catId) {
+      navigate('/progress')
+      return;
+    }
+  }, [])
+
   // Handle authentication and navigation
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-
-    // navigate('/confirm-signup');
-
+    
     const subscriptionId = localStorage.getItem("subscriptionId");
-    // const catId = localStorage.getItem("catId");
 
     if (!subscriptionId || subscriptionId === "undefined") {
       navigate(`/priceselectionV2?${urlParams.toString()}`);
