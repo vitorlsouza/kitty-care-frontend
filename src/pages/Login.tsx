@@ -34,7 +34,7 @@ const Login: React.FC = () => {
             <div className="text-base sm:text-lg font-medium">
               New to KittyCare?{' '}
               <span className="block sm:inline text-[#0061EF]">
-                <a href={`/${import.meta.env.VITE_FLOW_TYPE === 'V2' ? 'signupV2' : 'signup'}?${urlParams.toString()}`}>Sign up for free</a>
+                <a href={`/signup?${urlParams.toString()}`}>Sign up for free</a>
               </span>
             </div>
           </div>
