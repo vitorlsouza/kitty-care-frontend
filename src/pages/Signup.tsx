@@ -8,7 +8,7 @@ import { useMediaQuery } from 'react-responsive';
 // Components
 import Layout from "../components/Layout";
 import TextInput from "../components/Login/Input";
-import SwitchMethod from "../components/Payments/SwitchMethod";
+// import SwitchMethod from "../components/Payments/SwitchMethod";
 import { SignupHeader } from "../components/Signup/SignupHeader";
 import { TermsCheckbox } from "../components/Signup/TermsCheckbox";
 import { SubmitButton } from "../components/Signup/SubmitButton";
@@ -114,20 +114,24 @@ export const Signup: React.FC = () => {
     }
   }, [dispatch, urlParams]);
 
+  useEffect(() => {
+    const catId = localStorage.getItem("catId");
+    
+    if (!catId) {
+      navigate('/progress')
+      return;
+    }
+  }, [])
+
   // Handle authentication and navigation
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-
-    // navigate('/confirm-signup');
-
+    
     const subscriptionId = localStorage.getItem("subscriptionId");
-    const catId = localStorage.getItem("catId");
 
     if (!subscriptionId || subscriptionId === "undefined") {
-      navigate(`/priceselection?${urlParams.toString()}`);
-    } else if (!catId || catId === "undefined") {
-      navigate("/progress");
+      navigate(`/priceselectionV2?${urlParams.toString()}`);
     } else {
       navigate("/cat-assistant");
     }
@@ -167,9 +171,11 @@ export const Signup: React.FC = () => {
       {isShowPaywall && isMobile ? (
         <div className='flex flex-col gap-6 w-full p-[16px_16px] h-auto overflow-hidden'>
           <div className='flex flex-col gap-2 text-center'>
-            <h1 className='text-black [leading-trim:both] [text-edge:cap] font-inter text-[24px] font-bold capitalize'>Get KittyCare Today</h1>
+            <h1 className='text-black [leading-trim:both] [text-edge:cap] font-inter text-[24px] font-bold capitalize'>
+              See Your Cat's Results Now
+            </h1>
             <p className='text-[#404040] text-center [leading-trim:both] [text-edge:cap] font-inter text-[18px] font-medium leading-[1.3]'>
-              Unlock every exclusive feature - for $0 right now
+              Unlock results and exclusive features - for $0 right now
             </p>
           </div>
           <div className='flex flex-col gap-[20px] w-full rounded-[22px] border-2 border-[#DBCEC4] bg-[#F3EDE8] p-[0_48px_24px_48px]'>
@@ -244,11 +250,11 @@ export const Signup: React.FC = () => {
       ) : (
         <div className="w-full">
           <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[140px]">
-            {!isMobile && (
+            {/* {!isMobile && (
               <div className="m-auto sm:m-0 max-w-[90%] sm:w-full">
                 <SwitchMethod />
               </div>
-            )}
+            )} */}
             <div className="m-auto w-full sm:m-0">
               <div className="max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px] sm:px-[104px] sm:py-[40px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
                 <div className="w-full sm:w-full m-auto h-full flex flex-col items-center justify-between">

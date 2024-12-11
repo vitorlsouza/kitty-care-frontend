@@ -3,6 +3,7 @@ import PawAnimation from '../PawPrintAnimation';
 import NavigationButtons from '../NavigationButtons';
 import useCatRecommendations from '../../hooks/useCatRecommendations';
 import useCreateCat from '../../hooks/useCreateCat';
+import { useNavigate } from 'react-router-dom';
 
 interface Panel13Props {
   nextStep: () => void;
@@ -15,6 +16,7 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { getCatRecommendations } = useCatRecommendations();
   const { createCat } = useCreateCat();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initializeCat = async () => {
@@ -29,7 +31,8 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
         if (success) {
           setTimeout(() => {
             setIsLoading(false);
-            nextStep();
+            // nextStep();
+            navigate('/signup')
           }, LOADING_DELAY);
         }
       } catch (error) {
