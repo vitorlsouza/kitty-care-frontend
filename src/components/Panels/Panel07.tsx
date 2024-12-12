@@ -110,19 +110,30 @@ const WeightInput: React.FC<WeightInputProps> = ({
     </p>
     <div className="flex justify-center items-center space-x-4 lg:space-x-0 lg:gap-2">
       <UnitButton unit="Lbs" selectedUnit={unit} onSelect={setUnit} />
-      <input
-        type="text"
-        value={weight}
+      <select
+        value={weight || ''}
         onChange={(e) => setWeight(e.target.value)}
-        placeholder="Weight"
         className="w-full lg:w-28 border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-sm"
-      />
+      >
+        <option value="" disabled>
+          Select weight
+        </option>
+        {Array.from({ length: 40 }, (_, i) => {
+          const weightValue = (i + 1) * 0.5; // Increment by 0.5
+          return (
+            <option key={weightValue} value={weightValue}>
+              {unit === "Lbs" ? weightValue : (weightValue * 0.453592).toFixed(1)} {unit}
+            </option>
+          );
+        })}
+      </select>
       <UnitButton unit="Kg" selectedUnit={unit} onSelect={setUnit} />
     </div>
     {errors.weight && <p className="text-red-500 text-sm">{errors.weight}</p>}
     {errors.unit && <p className="text-red-500 text-sm">{errors.unit}</p>}
   </div>
 );
+
 
 interface TargetWeightInputProps {
   targetWeight: string;
@@ -139,13 +150,23 @@ const TargetWeightInput: React.FC<TargetWeightInputProps> = ({
     <p className="text-md font-medium mb-2">
       Target Weight <span className="text-red-500">*</span>
     </p>
-    <input
-      type="text"
-      value={targetWeight}
+    <select
+      value={targetWeight || ''}
       onChange={(e) => setTargetWeight(e.target.value)}
-      placeholder="Enter cat's ideal target weight"
       className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
-    />
+    >
+      <option value="" disabled>
+        Select target weight
+      </option>
+      {Array.from({ length: 40 }, (_, i) => {
+        const weightValue = (i + 1) * 0.5; // Increment by 0.5
+        return (
+          <option key={weightValue} value={weightValue}>
+            {weightValue} lbs / {(weightValue * 0.453592).toFixed(1)} Kg
+          </option>
+        );
+      })}
+    </select>
     <p className="text-xs text-mediumGray mt-2 px-6 md:px-8">
       Tip: If you're unsure, we can help determine the ideal weight based
       on breed and activity level. Example: 8.5 lbs or 3.6 Kg
@@ -153,6 +174,7 @@ const TargetWeightInput: React.FC<TargetWeightInputProps> = ({
     {error && <p className="text-red-500 text-sm">{error}</p>}
   </div>
 );
+
 
 interface UnitButtonProps {
   unit: WeightUnit;
