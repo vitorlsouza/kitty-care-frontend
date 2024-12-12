@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
+import { fetchOrCreatePlan } from "../../services/api";
+import { useAppSelector } from "../../Redux/hooks";
+import { RootState } from "../../Redux/store";
 
 interface SubscriberDetails {
   name: {
@@ -23,25 +26,41 @@ interface SubscriberDetails {
 }
 
 const PayPalSubscriptionBtn: React.FC = () => {
-  const [subscriberDetails, setSubscriberDetails] = useState<SubscriberDetails | null>(null);
+  const [planId, setPlanId] = useState<string | null>(null);
+  const billingOption = useAppSelector((state: RootState) => state.billing);
 
+  useEffect(() => {
+    const payPeriod = billingOption.method ? "Annual" : "Monthly";
+    (async () => {
+      try {
+        const id = await fetchOrCreatePlan(payPeriod);
+        setPlanId(id);
+      } catch (error) {
+        console.error("Error fetching or creating plan:", error);
+      }
+    })();
+  }, []);
+
+  // Handle subscription approval
   const handleApprove = async (_data: any, actions: any) => {
     try {
-      // Fetch the subscription details after approval
-      const details = await actions.subscription.get();
+      const subscriptionDetails = await actions.subscription.get();
+      console.log("Subscription approved:", subscriptionDetails);
 
-      // Extract and type the subscriber details
-      const subscriberInfo: SubscriberDetails = {
-        name: details.subscriber.name,
-        email_address: details.subscriber.email_address,
-        shipping_address: details.subscriber.shipping_address,
+      // Optionally, send subscription details to your backend for processing
+      const subscriberDetails : SubscriberDetails = {
+        name: subscriptionDetails.subscriber.name,
+        email_address: subscriptionDetails.subscriber.email_address,
+        shipping_address: subscriptionDetails.subscriber.shipping_address,
       };
-
-      // Update state
-      setSubscriberDetails(subscriberInfo);
-      console.log("Subscription approved! Subscriber details:", subscriberInfo);
+      // await axios.post(`${backendURL}/create-subscription`, {
+      //   planId,
+      //   subscriberDetails,
+      // });
+      console.log("@#@#@#@#@#@#@", subscriberDetails);
+      
     } catch (error) {
-      console.error("Error fetching subscription details:", error);
+      console.error("Error during subscription approval:", error);
     }
   };
 
@@ -53,11 +72,11 @@ const PayPalSubscriptionBtn: React.FC = () => {
         components: "buttons",
       }}
     >
-      <div>
+      {planId ? (
         <PayPalButtons
           createSubscription={(_data, actions) => {
             return actions.subscription.create({
-              plan_id: "P-5ML4271244454362WXNWU5NQ", // Replace with your Plan ID
+              plan_id: planId,
             });
           }}
           onApprove={handleApprove}
@@ -68,8 +87,10 @@ const PayPalSubscriptionBtn: React.FC = () => {
             label: "subscribe",
           }}
           fundingSource={FUNDING.PAYPAL}
-        />        
-      </div>
+        />
+      ) : (
+        <p className="text-center">Loading PayPal Button...</p>
+      )}
     </PayPalScriptProvider>
   );
 };

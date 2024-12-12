@@ -355,7 +355,7 @@ export const deleteStripeSubscriptionAPI = async (subscriptionId: string) => {
 };
 
 export const requestForgotPasswordAPI = async (email: string) => {
-  
+
   try {
     const response = await API.post('/api/supabase/password-reset/request', { email }, {
       headers: {
@@ -385,20 +385,56 @@ export const requestResetPasswordAPI = async (token: string, newPassword: string
   }
 }
 
-export const getPayPalPlans = async() => {
-  
+
+// Check if the plan exists and create it if not
+export const fetchOrCreatePlan = async (planPeriod: "Monthly" | "Annual") => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.get("/api/payments/paypal/plans", {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const plans = response.data.plans;
+
+    // Check if the desired plan exists
+    const existingPlan = plans.find(
+      (plan: any) =>
+        plan.name === `${planPeriod} Subscription Plan` && plan.status === "ACTIVE"
+    );
+
+    if (existingPlan) {
+      console.log("Existing plan found:", existingPlan.id);
+      return existingPlan.id;
+    } else {
+      // Create the plan if it doesn't exist
+      console.log("Creating a new plan...");
+      const createResponse = await API.post("/api/payments/paypal/plans", planPeriod, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+      return createResponse.data.plan.id;
+    }
+  } catch (error) {
+    console.error("Error fetching or creating plan:", error);
+  }
+};
+
+export const createPayPalSubscription = async () => {
+
 }
 
-export const createPayPalPlan = async() => {
+export const cancelPayPalSubscription = async () => {
 
-}
-
-export const createPayPalSubscription = async() => {
-  
-}
-
-export const cancelPayPalSubscription = async() => {
-  
 }
 
 export default baseURL;
