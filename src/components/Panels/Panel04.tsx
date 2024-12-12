@@ -7,7 +7,7 @@ interface Panel04Props {
   previousStep: () => void;
 }
 
-const MAX_SELECTIONS = 3;
+const MAX_SELECTIONS = 1;
 const STORAGE_KEY = 'issues_faced';
 
 const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {

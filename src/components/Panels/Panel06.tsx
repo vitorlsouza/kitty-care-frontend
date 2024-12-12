@@ -56,15 +56,23 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
           <p className="text-md font-medium mb-2">
             How old is your cat? <span className="text-red-500">*</span>
           </p>
-          <input
-            type="number"
+          <select
             value={age || ''}
-            onChange={(e) => setAge(`${e.target.value}`)}
-            placeholder="Enter your cat's age"
+            onChange={(e) => setAge(e.target.value)}
             className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
-          />
+          >
+            <option value="" disabled>
+              Select your cat's age
+            </option>
+            {Array.from({ length: 24 }, (_, i) => (
+              <option key={i} value={i+1}>
+                {i + 1} {i + 1 === 1 ? 'year' : 'years'}
+              </option>
+            ))}
+          </select>
           {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
         </div>
+
       </div>
 
       <NavigationButtons

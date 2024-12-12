@@ -35,4 +35,4 @@ export const GOALS: Goal[] = [
   },
 ];
 
-export const MAX_GOALS = 3; 
+export const MAX_GOALS = 1; 
