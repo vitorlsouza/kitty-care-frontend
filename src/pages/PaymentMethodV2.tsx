@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import ReactPixel from "react-facebook-pixel";
 import { useMediaQuery } from "react-responsive";
 import { updateBillingOption } from "../Redux/features/billingSlice";
+import PayPalSubscriptionBtn from "../components/Payments/PayPalSubscriptionBtn";
 
 /**
  * PaymentMethodV2 component handles the payment method selection page
@@ -44,24 +45,24 @@ const PaymentMethodV2 = () => {
               Start Your Free Trial
             </h1>
             <p className='text-[#404040] text-center [leading-trim:both] [text-edge:cap] font-inter text-[18px] sm:text-[22px] font-medium leading-[1.3]'>
-            Begin speaking with an expert to discuss your cat's personalized plan.
+              Begin speaking with an expert to discuss your cat's personalized plan.
             </p>
           </div>
           <div className="w-[343px] px-[21px] py-[47px] sm:w-[608px] sm:px-[85px] sm:py-[80px] mx-auto h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
             <div className="w-full h-full flex flex-col items-center justify-between">
               <div className="text-center">
-                <h2 className="text-[22px] sm:text-[36px] font-semibold mb-4">
+                <h2 className="text-[22px] sm:text-[36px] font-semibold mb-6">
                   3-Day Access for $0
                 </h2>
-                <div className="text-base sm:text-lg font-medium mb-10">
+                <div className="text-base sm:text-lg font-medium mb-4">
                   Unlock all the exclusive features of KittyCare <b>at zero cost</b> to you for the first three days. $49.99 per month once your trial has expired.
                 </div>
               </div>
 
               {/* Payment Methods Section */}
-              <div className="w-full h-full flex flex-col justify-between gap-[30px]">
+              <div className="w-full h-full flex flex-col justify-between gap-[20px]">
                 <PayMethodBtn onClick={() => navigate("/paymentdetailV2")} />
-
+                <PayPalSubscriptionBtn />
                 {/* Footer Section */}
                 <div>
                   <div className="text-[14px] font-semibold opacity-60 text-center">
