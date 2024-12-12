@@ -384,4 +384,21 @@ export const requestResetPasswordAPI = async (token: string, newPassword: string
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to reset password');
   }
 }
+
+export const getPayPalPlans = async() => {
+  
+}
+
+export const createPayPalPlan = async() => {
+
+}
+
+export const createPayPalSubscription = async() => {
+  
+}
+
+export const cancelPayPalSubscription = async() => {
+  
+}
+
 export default baseURL;
