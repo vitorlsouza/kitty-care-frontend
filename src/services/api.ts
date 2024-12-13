@@ -385,9 +385,48 @@ export const requestResetPasswordAPI = async (token: string, newPassword: string
   }
 }
 
+// Check if the product exists and create it if not
+export const fetchOrCreateProduct = async () => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.get("/api/payments/paypal/products", {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const products = response.data.products;
+
+    if (response.data.totalItems) {
+      console.log("Existing products found:", products[0].id);
+      return products[0].id;
+
+    } else {
+      console.log("two", response.data.totalItems);
+
+      // Create the plan if it doesn't exist
+      const createResponse = await API.post("/api/payments/paypal/product", {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+
+      return createResponse.data.product.id;
+    }
+  } catch (error) {
+    console.error("Error fetching or creating plan:", error);
+  }
+};
 
 // Check if the plan exists and create it if not
-export const fetchOrCreatePlan = async (planPeriod: "Monthly" | "Annual") => {
+export const fetchOrCreatePlan = async (planPeriod: "Monthly" | "Annual", productID: any) => {
   try {
     // Fetch plans from the backend
     const token = localStorage.getItem('token');
@@ -415,8 +454,8 @@ export const fetchOrCreatePlan = async (planPeriod: "Monthly" | "Annual") => {
       return existingPlan.id;
     } else {
       // Create the plan if it doesn't exist
-      console.log("Creating a new plan...");
-      const createResponse = await API.post("/api/payments/paypal/plans", planPeriod, {
+      console.log("Creating a new plan...", planPeriod);
+      const createResponse = await API.post("/api/payments/paypal/plan", { planPeriod, productID }, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -429,8 +468,30 @@ export const fetchOrCreatePlan = async (planPeriod: "Monthly" | "Annual") => {
   }
 };
 
-export const createPayPalSubscription = async () => {
+export const createPayPalSubscription = async (planId: string | null, subscriberDetails: any) => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
 
+    const response = await API.post("/api/payments/paypal/subscription", { planId, subscriberDetails }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const subscription = response.data.subscription;
+
+    if (subscription.id) {
+      return subscription;
+    }
+
+  } catch (error) {
+    console.error("Error fetching or creating subscription on paypal:", error);
+  }
 }
 
 export const cancelPayPalSubscription = async () => {

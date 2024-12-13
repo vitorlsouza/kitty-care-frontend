@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons, FUNDING } from "@paypal/react-paypal-js";
-import { fetchOrCreatePlan } from "../../services/api";
-import { useAppSelector } from "../../Redux/hooks";
+import { createPayPalSubscription, fetchOrCreatePlan, fetchOrCreateProduct } from "../../services/api";
+import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import { RootState } from "../../Redux/store";
+import { createSubscriptionAsync } from "../../Redux/features/subscriptionSlice";
 
 interface SubscriberDetails {
   name: {
@@ -25,15 +26,61 @@ interface SubscriberDetails {
   };
 }
 
+const PAYMENT_CONFIG = {
+  TRIAL_DAYS: {
+    MONTHLY: 3,
+    YEARLY: 7,
+  },
+  PRICES: {
+    MONTHLY: 49.99,
+    YEARLY: 299.99,
+  },
+  CARD_ELEMENT_OPTIONS: {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: 'Inter, "Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: window.innerWidth < 640 ? "16px" : "20px",
+        lineHeight: "normal",
+        fontWeight: 500,
+        "::placeholder": {
+          color: "#B8B9BC",
+        },
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a",
+      },
+      complete: {
+        color: "#28a745",
+      },
+    },
+  },
+};
+
+const formatDate = (date: Date): string => {
+  return date.toISOString().split("T")[0];
+};
+
+const calculateEndDate = (isYearly: boolean): string => {
+  const trialDays = isYearly ? PAYMENT_CONFIG.TRIAL_DAYS.YEARLY : PAYMENT_CONFIG.TRIAL_DAYS.MONTHLY;
+  return formatDate(
+    new Date(new Date().getTime() + trialDays * 24 * 60 * 60 * 1000)
+  );
+};
+
 const PayPalSubscriptionBtn: React.FC = () => {
   const [planId, setPlanId] = useState<string | null>(null);
   const billingOption = useAppSelector((state: RootState) => state.billing);
+  const dispatch = useAppDispatch();
 
+  const payPeriod = billingOption.method ? "Monthly" : "Annual";
   useEffect(() => {
-    const payPeriod = billingOption.method ? "Annual" : "Monthly";
     (async () => {
       try {
-        const id = await fetchOrCreatePlan(payPeriod);
+        const productID = await fetchOrCreateProduct();
+        const id = await fetchOrCreatePlan(payPeriod, productID);
         setPlanId(id);
       } catch (error) {
         console.error("Error fetching or creating plan:", error);
@@ -48,17 +95,26 @@ const PayPalSubscriptionBtn: React.FC = () => {
       console.log("Subscription approved:", subscriptionDetails);
 
       // Optionally, send subscription details to your backend for processing
-      const subscriberDetails : SubscriberDetails = {
+      const subscriberDetails: SubscriberDetails = {
         name: subscriptionDetails.subscriber.name,
         email_address: subscriptionDetails.subscriber.email_address,
         shipping_address: subscriptionDetails.subscriber.shipping_address,
       };
-      // await axios.post(`${backendURL}/create-subscription`, {
-      //   planId,
-      //   subscriberDetails,
-      // });
-      console.log("@#@#@#@#@#@#@", subscriberDetails);
+
+      const subscription = await createPayPalSubscription(planId, subscriberDetails);
       
+      if (subscription.id) {
+        await dispatch(createSubscriptionAsync({
+          id: subscription.id,
+          email: subscriptionDetails.subscriber.email_address || localStorage.getItem("email"),
+          plan: payPeriod,
+          end_date: calculateEndDate(billingOption.method),
+          start_date: subscription.start_time,
+          provider: "PayPal",
+          billing_period: payPeriod
+        })).unwrap();
+      }
+
     } catch (error) {
       console.error("Error during subscription approval:", error);
     }
@@ -67,8 +123,8 @@ const PayPalSubscriptionBtn: React.FC = () => {
   return (
     <PayPalScriptProvider
       options={{
-        clientId: import.meta.env.VITE_CLIENT_ID,
-        vault: true, 
+        clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
+        vault: true,
         components: "buttons",
       }}
     >
@@ -95,3 +151,4 @@ const PayPalSubscriptionBtn: React.FC = () => {
   );
 };
 export default PayPalSubscriptionBtn;
+
