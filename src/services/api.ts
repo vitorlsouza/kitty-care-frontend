@@ -355,7 +355,7 @@ export const deleteStripeSubscriptionAPI = async (subscriptionId: string) => {
 };
 
 export const requestForgotPasswordAPI = async (email: string) => {
-  
+
   try {
     const response = await API.post('/api/supabase/password-reset/request', { email }, {
       headers: {
@@ -384,4 +384,118 @@ export const requestResetPasswordAPI = async (token: string, newPassword: string
     throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to reset password');
   }
 }
+
+// Check if the product exists and create it if not
+export const fetchOrCreateProduct = async () => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.get("/api/payments/paypal/products", {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const products = response.data.products;
+
+    if (response.data.totalItems) {
+      console.log("Existing products found:", products[0].id);
+      return products[0].id;
+
+    } else {
+      console.log("two", response.data.totalItems);
+
+      // Create the plan if it doesn't exist
+      const createResponse = await API.post("/api/payments/paypal/product", {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+
+      return createResponse.data.product.id;
+    }
+  } catch (error) {
+    console.error("Error fetching or creating plan:", error);
+  }
+};
+
+// Check if the plan exists and create it if not
+export const fetchOrCreatePlan = async (planPeriod: "Monthly" | "Annual", productID: any) => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.get("/api/payments/paypal/plans", {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const plans = response.data.plans;
+
+    // Check if the desired plan exists
+    const existingPlan = plans.find(
+      (plan: any) =>
+        plan.name === `${planPeriod} Subscription Plan` && plan.status === "ACTIVE"
+    );
+
+    if (existingPlan) {
+      console.log("Existing plan found:", existingPlan.id);
+      return existingPlan.id;
+    } else {
+      // Create the plan if it doesn't exist
+      console.log("Creating a new plan...", planPeriod);
+      const createResponse = await API.post("/api/payments/paypal/plan", { planPeriod, productID }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+      return createResponse.data.plan.id;
+    }
+  } catch (error) {
+    console.error("Error fetching or creating plan:", error);
+  }
+};
+
+export const createPayPalSubscription = async (planId: string | null, subscriberDetails: any) => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
+
+    const response = await API.post("/api/payments/paypal/subscription", { planId, subscriberDetails }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    const subscription = response.data.subscription;
+
+    if (subscription.id) {
+      return subscription;
+    }
+
+  } catch (error) {
+    console.error("Error fetching or creating subscription on paypal:", error);
+  }
+}
+
+export const cancelPayPalSubscription = async () => {
+
+}
+
 export default baseURL;
