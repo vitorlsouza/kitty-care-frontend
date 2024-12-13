@@ -350,7 +350,7 @@ export const deleteStripeSubscriptionAPI = async (subscriptionId: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to delete subscription');
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to delete subscription on stripe');
   }
 };
 
@@ -494,8 +494,26 @@ export const createPayPalSubscription = async (planId: string | null, subscriber
   }
 }
 
-export const cancelPayPalSubscription = async () => {
+export const cancelPayPalSubscription = async (subscriptionID: string) => {
+  try {
+    // Fetch plans from the backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("User Not Authenticated");
+    }
 
+    const response = await API.post(`/api/payments/paypal/subscription/${subscriptionID}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+    return response.data;
+
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.response?.data?.message || 'Failed to delete subscription on paypal');
+  }
 }
 
 export default baseURL;
