@@ -31,8 +31,20 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
         </p>
       </header>
 
-      <div className="space-y-4 mx-16">
+      <div className="space-y-4 mx-10">
         {/* Gender Selection */}
+        <div className='text-center'>
+          <p className="text-md font-medium mb-2">
+            Please tell us your cat's name <span className="text-red-500">*</span>
+          </p>
+          <input
+            type='text'
+            value={catName || ''}
+            onChange={(e) => setCatName(e.target.value)}
+            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm mb-2'
+            placeholder={'Input your cat\'s name'} />
+          {errors.catName && <p className="text-red-500 text-sm">{errors.catName}</p>}
+        </div>
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Select your cat's gender <span className="text-red-500">*</span>
@@ -55,12 +67,7 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
 
         {/* Name & Age Input */}
         <div className="text-center">
-          <input
-            type='text'
-            value={catName || ''}
-            onChange={(e) => setCatName(e.target.value)}
-            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm mb-2'
-            placeholder={'Input your cat\'s Name'} />
+
           <select
             value={age || ''}
             onChange={(e) => setAge(e.target.value)}

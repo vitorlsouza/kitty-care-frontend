@@ -23,7 +23,7 @@ const Panel03: React.FC<Panel03Props> = ({ nextStep, previousStep }) => {
           Let's Choose Some Goals For Your Cat!
         </h1>
         <p className="text-md text-darkGray p-5">
-          Select goals to focus on for your can’t health and happiness.
+          Select goals to focus on for your cat's health and happiness.
         </p>
       </div>
 
