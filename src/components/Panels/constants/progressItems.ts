@@ -9,53 +9,74 @@ export interface ProgressItem {
 export const PROGRESS_ITEMS: ProgressItem[] = [
   {
     id: 1,
-    title: "Weight Loss",
-    description: "Help my cat achieve a healthier weight.",
+    title: "Healthy Skin and Coat",
+    description:
+      "Improve my cat's skin health and reduce issues like excessive scratching or irritation.",
     popupTitle: "Great Choice!",
     popupDescription:
-      "Helping your cat lose weight will improve their overall health, increase their energy, and may extend their life expectancy.",
+      "Improve my cat's skin health and reduce issues like excessive scratching or irritation.",
   },
   {
     id: 2,
-    title: "Socialization",
+    title: "Increased Mobility",
     description:
-      "Improve my cat's comfort and interactions with other pets or people.",
+      "Help my cat stay active and maintain healthy joints and muscles.",
     popupTitle: "Perfect!",
     popupDescription:
-      "Improving your cat's social skills will help them feel more comfortable around people, pets, and new environments.",
+      "Help my cat stay active and maintain healthy joints and muscles.",
   },
   {
     id: 3,
-    title: "Litter Box Use",
-    description: "Ensure my cat consistently uses the litter box.",
+    title: "Kidney & Liver Health Support",
+    description:
+      "Monitor and improve my cat's kidney and liver function to ensure better overall health.",
     popupTitle: "Excellent Choice!",
     popupDescription:
-      "Focusing on litter box habits can significantly reduce stress for both you and your cat, ensuring a cleaner, happier home.",
+      "Monitor and improve my cat's kidney and liver function to ensure better overall health.",
   },
   {
     id: 4,
-    title: "Reduced Scratching",
+    title: "Managing Chronic Illness",
     description:
-      "Stop my cat from scratching furniture or other inappropriate surfaces.",
+      "Help manage my cat’s chronic condition like diabetes or thyroid disease.",
     popupTitle: "Great Pick!",
     popupDescription:
       "Focused progress on reducing scratching can improve your cat's well-being and protect your furniture from damage.",
   },
   {
     id: 5,
-    title: "Increased Playtime",
-    description: "Encourage more active and engaging play for my cat.",
+    title: "Pain Management and Comfort",
+    description:
+      "Relieve my cat's discomfort and improve their quality of life.",
     popupTitle: "Fantastic!",
     popupDescription:
       "Increasing playtime will help your cat stay active, burn off energy, and improve both physical and mental health.",
   },
   {
     id: 6,
-    title: "Reduced Anxiety",
+    title: "Lump or Tumor Monitoring",
     description:
-      "Help my cat feel more relaxed and reduce stress or anxious behaviors.",
+      "Keep track of any lumps or tumors and support their treatment.",
     popupTitle: "Smart Choice!",
     popupDescription:
       "Reducing anxiety can lead to a happier, calmer cat, and also help improve their behavior and response to changes in their environment.",
   },
-]; 
+  {
+    id: 7,
+    title: "Immune System Support",
+    description:
+      "Strengthen my cat’s immune system to fight off infections or illnesses.",
+    popupTitle: "Smart Choice!",
+    popupDescription:
+      "Reducing anxiety can lead to a happier, calmer cat, and also help improve their behavior and response to changes in their environment.",
+  },
+  {
+    id: 8,
+    title: "Recovery from Surgery or Illness",
+    description:
+      "Support my cat during recovery from surgery or a recent illness.",
+    popupTitle: "Smart Choice!",
+    popupDescription:
+      "Reducing anxiety can lead to a happier, calmer cat, and also help improve their behavior and response to changes in their environment.",
+  },
+];
