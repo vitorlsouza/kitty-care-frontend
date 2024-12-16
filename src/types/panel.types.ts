@@ -5,7 +5,7 @@ export interface MedicalHistoryForm {
   surgeryHistory: string;
 }
 
-export interface Panel11Props {
+export interface Panel02Props {
   nextStep: () => void;
   previousStep: () => void;
 } 

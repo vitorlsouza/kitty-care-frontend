@@ -39,7 +39,8 @@
     "training_days",
     "unit",
     "weight",
-    "catFormData"
+    "catFormData",
+    "cat_name"
   ] as const;
 
   export const CAT_BREEDS = [

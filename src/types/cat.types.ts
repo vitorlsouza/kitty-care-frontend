@@ -1,4 +1,5 @@
 export interface CatFormData {
+  name: string | null;
   goals: string | null;
   issues_faced: string | null;
   activity_level: string | null;

@@ -29,13 +29,13 @@ const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
         <h1 className="font-bold text-2xl lg:text-3xl mb-2">
           Tell Us More About Your Cat's Breed and Weight
         </h1>
-        <p className="text-md text-darkGray mx-12">
+        <p className="text-md text-darkGray mx-6">
           To better understand your cat's needs, please share their breed,
           current weight, and target weight.
         </p>
       </div>
 
-      <div className="space-y-4 mx-16">
+      <div className="space-y-4 mx-6">
         <BreedSelect breed={breed} setBreed={setBreed} error={errors.breed} />
         <WeightInput
           weight={weight}

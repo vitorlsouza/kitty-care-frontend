@@ -37,7 +37,7 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ title, items }) => {
   );
 };
 
-const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
+const Panel14: React.FC<Panel14Props> = () => {
   const navigate = useNavigate();
 
   const [selectedGoals] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.GOALS, []);
@@ -48,12 +48,8 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
       <div className="text-center mb-6 lg:mb-8">
         <h1 className="font-bold text-xl md:text-2xl lg:text-3xl mb-2 mx-8 md:mx-40 lg:mx-80">
-          Congratulations! Your Custom Care Plan Is Ready
+        Thanks for Subscribing!
         </h1>
-        <p className="text-sm md:text-base lg:text-lg text-darkGray px-8 md:mx-36 lg:mx-72">
-          Here's a quick overview of your personalized care plan for your cat
-          based on the goals and preferences you shared.
-        </p>
       </div>
 
       <div className="rounded-3xl mx-4 p-6 border-2 border-lightGray bg-lightWhite relative text-center md:mx-8 lg:mx-28">
@@ -72,12 +68,6 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
 
       <div className="flex justify-center mt-8 gap-2">
         <button
-          onClick={previousStep}
-          className="w-full h-[55px] md:w-[115px] md:h-[40px] py-2 bg-transparent text-mediumGray border border-mediumGray rounded-2xl hover:text-white hover:border-none hover:bg-primaryBlue"
-        >
-          {"<"} Back
-        </button>
-        <button
           onClick={() => {
             if (localStorage.getItem("email")) {
               navigate("/cat-assistant");
@@ -88,7 +78,7 @@ const Panel14: React.FC<Panel14Props> = ({ previousStep }) => {
           }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"
         >
-          Start Your Journey
+          Chat With Expert Now
         </button>
       </div>
     </div>

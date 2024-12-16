@@ -9,6 +9,8 @@ import { useCatForm } from './hooks/useCatForm';
  */
 const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
   const {
+    catName,
+    setCatName,
     gender,
     setGender,
     age,
@@ -51,11 +53,14 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
           {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
         </div>
 
-        {/* Age Input */}
+        {/* Name & Age Input */}
         <div className="text-center">
-          <p className="text-md font-medium mb-2">
-            How old is your cat? <span className="text-red-500">*</span>
-          </p>
+          <input
+            type='text'
+            value={catName || ''}
+            onChange={(e) => setCatName(e.target.value)}
+            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm mb-2'
+            placeholder={'Input your cat\'s Name'} />
           <select
             value={age || ''}
             onChange={(e) => setAge(e.target.value)}
@@ -65,7 +70,7 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
               Select your cat's age
             </option>
             {Array.from({ length: 24 }, (_, i) => (
-              <option key={i} value={i+1}>
+              <option key={i} value={i + 1}>
                 {i + 1} {i + 1 === 1 ? 'year' : 'years'}
               </option>
             ))}

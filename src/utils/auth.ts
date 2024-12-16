@@ -18,6 +18,7 @@ export const clearTokens = () => {
     "ConversationId",
     "activity_level",
     "age",
+    "cat_name",
     "breed",
     "check_in_period",
     "country",
@@ -88,6 +89,7 @@ const parseExpirationTime = (expiresIn: string): number => {
 
 export const collectFormData = (): CatFormData => {
   return {
+    name: localStorage.getItem('cat_name'),
     goals: localStorage.getItem('goals'),
     issues_faced: localStorage.getItem('issues_faced'),
     activity_level: localStorage.getItem('activity_level'),

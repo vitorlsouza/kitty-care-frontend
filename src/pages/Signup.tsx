@@ -114,27 +114,27 @@ export const Signup: React.FC = () => {
     }
   }, [dispatch, urlParams]);
 
-  useEffect(() => {
-    const catId = localStorage.getItem("catId");
+  // useEffect(() => {
+  //   const catId = localStorage.getItem("catId");
     
-    if (!catId) {
-      navigate('/progress')
-      return;
-    }
-  }, [])
+  //   if (!catId) {
+  //     navigate('/progress')
+  //     return;
+  //   }
+  // }, [])
 
   // Handle authentication and navigation
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
     
-    const subscriptionId = localStorage.getItem("subscriptionId");
+    // const subscriptionId = localStorage.getItem("subscriptionId");
 
-    if (!subscriptionId || subscriptionId === "undefined") {
-      navigate(`/priceselectionV2?${urlParams.toString()}`);
-    } else {
-      navigate("/cat-assistant");
-    }
+    // if (!subscriptionId || subscriptionId === "undefined") {
+    //   navigate(`/priceselectionV2?${urlParams.toString()}`);
+    // } else {
+      navigate("/progress");
+    // }
   }, [navigate, urlParams]);
 
   useEffect(() => {

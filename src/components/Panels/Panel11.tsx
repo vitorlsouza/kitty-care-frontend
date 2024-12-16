@@ -1,87 +1,105 @@
-import React from "react";
-import { MEDICAL_CONDITIONS } from "./constants/medicalConditions";
-import { useMedicalHistory } from "./hooks/useMedicalHistory";
+import React, { useEffect, useState, useCallback } from "react";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import { motion, AnimatePresence } from "framer-motion";
 import NavigationButtons from "../NavigationButtons";
-import { Panel11Props } from "../../types/panel.types";
+import {
+  PANEL_DATA,
+  ANIMATION_INTERVAL,
+  RIVE_ANIMATION_VALUE,
+  PanelDescription
+} from "./constants/panel03Data";
 
-const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
-  const { formData, updateFormField, isFormValid } = useMedicalHistory();
+interface Panel03Props {
+  previousStep: () => void;
+  nextStep: () => void;
+}
 
-  const renderFormField = (
-    label: string,
-    placeholder: string,
-    field: keyof typeof formData
-  ) => (
-    <div className="text-center">
-      <label className="block text-sm font-medium mb-0.5">{label}</label>
-      <input
-        type="text"
-        value={formData[field] || ''}
-        onChange={(e) => updateFormField(field, e.target.value)}
-        placeholder={placeholder}
-        className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
-      />
-    </div>
-  );
+const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) => {
+  const [currentDescription, setCurrentDescription] = useState<number>(0);
+  const [isRiveLoaded, setIsRiveLoaded] = useState<boolean>(false);
+
+  // Initialize Rive animation
+  const { rive, RiveComponent } = useRive({
+    src: "/assets/riv-files/graph_kitty_V5.riv",
+    stateMachines: "State Machine 1",
+    autoplay: true,
+    onLoad: () => setIsRiveLoaded(true),
+  });
+
+  const riveInput = useStateMachineInput(rive, "State Machine 1", "Number 1");
+
+  // Handle description rotation
+  const rotateDescription = useCallback(() => {
+    setCurrentDescription((prev) =>
+      prev === PANEL_DATA.length - 1 ? 0 : prev + 1
+    );
+  }, []);
+
+  // Set up animation interval
+  useEffect(() => {
+    const interval = setInterval(rotateDescription, ANIMATION_INTERVAL);
+    return () => clearInterval(interval);
+  }, [rotateDescription]);
+
+  // Initialize Rive input
+  useEffect(() => {
+    if (riveInput) {
+      riveInput.value = RIVE_ANIMATION_VALUE;
+    }
+  }, [riveInput]);
 
   return (
-    <div className="w-full max-w-md lg:max-w-2xl mx-auto p-4 lg:p-6 font-inter">
-      <div className="text-center mb-6">
-        <h1 className="font-bold text-2xl mb-2 mx-4 md:mx-2 px-4 lg:px-0 md:px-0">
-          Any Medical History We Should Be Aware Of?
-        </h1>
-        <p className="text-sm lg:text-md text-darkGray mx-4 px-5 lg:px-8">
-          Let us know about any medical conditions or special needs your cat has
-          so we can tailor our advice to their health.
-        </p>
-      </div>
-
-      <div className="space-y-4 lg:px-44">
-        <div className="text-center">
-          <label className="block text-sm font-medium mb-0.5">
-            Medical Conditions
-          </label>
-          <select
-            value={formData.medicalCondition || ""}
-            onChange={(e) => updateFormField("medicalCondition", e.target.value)}
-            className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full capitalize focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
-          >
-            <option value="" disabled className="bg-lightWhite text-sm">
-              Select a condition
-            </option>
-            {MEDICAL_CONDITIONS.map((condition) => (
-              <option
-                key={condition}
-                value={condition}
-                className="bg-lightWhite text-sm capitalize"
-              >
-                {condition}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {renderFormField("Medications", "Enter current medication", "medication")}
-        {renderFormField("Dietary Restrictions", "Enter food allergies", "dietaryRestrictions")}
-        {renderFormField("Surgery History", "Enter recent surgeries", "surgeryHistory")}
-      </div>
-
-      <div className="flex flex-col items-center mt-8 text-center">
-        <p className="text-sm text-darkGray mt-4 font-light px-8 md:mx-12 lg:mx-36">
-          If your cat has no medical history, you can{" "}
-          <span className="text-primaryBlue cursor-pointer" onClick={nextStep}>
-            skip this step
-          </span>
-        </p>
-      </div>
-
+    <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
+      <DescriptionSection currentDescription={PANEL_DATA[currentDescription]} />
+      <AnimationSection
+        RiveComponent={RiveComponent}
+        isLoaded={isRiveLoaded}
+      />
       <NavigationButtons
         nextStep={nextStep}
         previousStep={previousStep}
-        isNextDisabled={!isFormValid()}
+        isNextDisabled={false}
       />
     </div>
   );
 };
 
-export default Panel11;
+interface DescriptionSectionProps {
+  currentDescription: PanelDescription;
+}
+
+const DescriptionSection: React.FC<DescriptionSectionProps> = ({ currentDescription }) => (
+  <div className="h-[224px] md:h-36 flex items-center justify-center md:mx-24 md:px-8 relative">
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={currentDescription.id}
+        initial={{ opacity: 0, x: 10 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -10 }}
+        transition={{ duration: 0.5 }}
+        className="absolute w-full text-center"
+      >
+        <h2 className="text-2xl font-semibold">
+          {currentDescription.title}
+        </h2>
+        <p className="text-md max-w-2xl mx-auto mt-4 text-darkGray">
+          {currentDescription.description}
+        </p>
+      </motion.div>
+    </AnimatePresence>
+  </div>
+);
+
+interface AnimationSectionProps {
+  RiveComponent: React.ComponentType<any>;
+  isLoaded: boolean;
+}
+
+const AnimationSection: React.FC<AnimationSectionProps> = ({ RiveComponent, isLoaded }) => (
+  <div className="flex flex-col justify-center items-center w-[345px] sm:w-[875px] mx-auto">
+    {!isLoaded && <div className="p-10 text-center m-auto w-full">Loading animation...</div>}
+    <RiveComponent style={{ width: "100%", height: "280px" }} />
+  </div>
+);
+
+export default Panel03;

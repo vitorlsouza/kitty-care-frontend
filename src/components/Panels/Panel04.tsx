@@ -7,7 +7,7 @@ interface Panel04Props {
   previousStep: () => void;
 }
 
-const MAX_SELECTIONS = 1;
+const MAX_SELECTIONS = 10;
 const STORAGE_KEY = 'issues_faced';
 
 const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
@@ -72,7 +72,7 @@ const Panel04: React.FC<Panel04Props> = ({ nextStep, previousStep }) => {
       <NavigationButtons
         nextStep={handleNext}
         previousStep={previousStep}
-        isNextDisabled={selectedGoals.length < MAX_SELECTIONS}
+        isNextDisabled={selectedGoals.length === 0}
       />
     </div>
   );

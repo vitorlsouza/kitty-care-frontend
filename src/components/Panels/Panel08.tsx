@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 import { PROGRESS_ITEMS } from "./constants/progressItems";
 import { ProgressCard } from "./components/ProgressCard";
+import { useNavigate } from "react-router-dom";
 
 interface Panel08Props {
   nextStep: () => void;
@@ -11,8 +12,16 @@ interface Panel08Props {
 
 const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
   const [selectedProgress, setSelectedProgress] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   // Load saved progress from localStorage
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/signup');
+      return;
+    };
+  }, [])
   useEffect(() => {
     const storedProgress = localStorage.getItem("required_progress");
     if (storedProgress) {

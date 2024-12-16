@@ -12,34 +12,23 @@ const Panel15: React.FC<Panel15Props> = () => {
 
   return (
     <div className="w-full lg:max-w-4xl mx-auto p-4 lg:p-6 font-inter">
-      <div className="text-center mb-8">
+      <div className="text-center">
         <h1 className="font-bold text-xl lg:text-3xl mb-2">
-          Your Cat’s Personalized Plan & Insights Let’s Keep Your Cat Healthy
-          and Happy!
+          Thanks for Subscribing!
         </h1>
-        <p className="text-sm lg:text-md text-darkGray max-w-2xl mx-auto">
-          Here’s your cat’s custom care plan based on everything you’ve told us.
-          We’ve tailored this to help you and your cat reach your goals. Let’s
-          dive into the details!
-        </p>
       </div>
       <div className="flex flex-col lg:flex-row lg:space-x-8 items-center lg:items-start justify-center">
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8 mb-8 lg:mb-0 align-center">
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8 mb-2 lg:mb-0 align-center">
           <GoalSummary />
-
         </div>
-        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start space-y-8">
+        <div className="w-full lg:w-1/2 flex flex-col gap-2 items-center lg:items-start space-y-8">
           <Suggestions />
-          {/* <Timeline />
-          <DateSelection />
-          <EnvironmentalEnrichmentSuggestions /> */}
         </div>
       </div>
-
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-2">
         <button
           onClick={() => {
-            if (localStorage.getItem("email")) {
+            if (localStorage.getItem("email") && localStorage.getItem('subscriptionId')) {
               navigate("/cat-assistant");
             } else {
               navigate("/signup");
@@ -47,7 +36,7 @@ const Panel15: React.FC<Panel15Props> = () => {
           }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 text-base lg:text-lg"
         >
-          Explore My Plan
+          Chat With Expert Now
         </button>
       </div>
     </div>
