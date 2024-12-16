@@ -41,7 +41,7 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
             type='text'
             value={catName || ''}
             onChange={(e) => setCatName(e.target.value)}
-            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm mb-2'
+            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
             placeholder={'Input your cat\'s name'} />
           {errors.catName && <p className="text-red-500 text-sm">{errors.catName}</p>}
         </div>
@@ -67,7 +67,6 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
 
         {/* Name & Age Input */}
         <div className="text-center">
-
           <select
             value={age || ''}
             onChange={(e) => setAge(e.target.value)}
