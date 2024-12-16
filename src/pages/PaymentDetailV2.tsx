@@ -16,13 +16,12 @@ import { getClientSecretKey } from "../services/api";
 import { createSubscriptionAsync } from "../Redux/features/subscriptionSlice";
 import ReactPixel from 'react-facebook-pixel';
 import { setLoading } from "../store/ui/actions";
-import Layout from "../components/Layout";
 import { useMediaQuery } from "react-responsive";
 import { updateBillingOption } from "../Redux/features/billingSlice";
 import VWORevenueTracking from "../components/VWORevenueTracking";
-import { FaCcAmex, FaCcDiscover, FaCcMastercard, FaUserLock } from "react-icons/fa";
-import { RiVisaFill } from "react-icons/ri";
-import { LiaCcJcb } from "react-icons/lia";
+// import { FaCcAmex, FaCcDiscover, FaCcMastercard, FaUserLock } from "react-icons/fa";
+// import { RiVisaFill } from "react-icons/ri";
+// import { LiaCcJcb } from "react-icons/lia";
 import { allCountries } from "country-region-data";
 import Select from "react-select";
 
@@ -99,7 +98,7 @@ const PaymentForm = () => {
   const [_subscriptionId, setSubscriptionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [states, setStates] = useState([{value: "", label: ""}]);
+  const [states, setStates] = useState([{ value: "", label: "" }]);
 
 
   const [formData, setFormData] = useState<PaymentFormData>({
@@ -122,7 +121,7 @@ const PaymentForm = () => {
 
 
   useEffect(() => {
-    let subscriptionId = localStorage.getItem("subscriptionId");
+    const subscriptionId = localStorage.getItem("subscriptionId");
     if (subscriptionId) {
       navigate("/progress");
     }
@@ -147,8 +146,7 @@ const PaymentForm = () => {
   const handleCountryChange = (selectedOption: any) => {
     const selectedCountry = selectedOption.value;
     setFormData({ ...formData, country: selectedCountry, state: "" });
-    console.log("@@@@", selectedOption.region);
-    
+
     setStates(selectedOption.region.map(([label, value]: [string, string]) => ({
       label,
       value,
@@ -246,7 +244,7 @@ const PaymentForm = () => {
         // if (localStorage.getItem("catId")) {
         //   navigate("/cat-assistant");
         // } else {
-          navigate("/progress");
+        navigate("/progress");
         // }
 
         dispatch(setLoading(false));
@@ -266,7 +264,7 @@ const PaymentForm = () => {
       setIsLoading(false);
       dispatch(setLoading(false));
     }
-    
+
   };
 
   const handleCancel = () => {
@@ -274,150 +272,147 @@ const PaymentForm = () => {
   };
 
   return (
-    <Layout>
-      <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
-        <div className="m-auto w-full sm:m-0">
-          <div className="relative max-w-[90%] m-auto px-[21px] py-[47px] sm:w-[610px]  sm:px-[64px] sm:py-[50px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
-            <p className="absolute top-[-16px] right-[-20px] text-[16px] sm:text-[18px] bg-slate-800 text-white rounded-lg p-3">
-              <small>Powered by</small> <big><b>stripe</b></big>
-            </p>
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <div>
-                <div className="text-center text-[#334155] text-[15px] sm:text-[24px] capitalize mb-4">
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-400">
-                    <FaUserLock className="text-2xl sm:text-4xl" />
-                    Guaranteed <b>safe & secure</b> checkout
-                  </div>
-                  <div className="flex items-center justify-between ">
-                    <RiVisaFill className="text-[50px] sm:text-[80px]" color="#0061EF" />
-                    <FaCcMastercard className="text-[50px] sm:text-[80px]" color="#ef4444" />
-                    <FaCcAmex className="text-[50px] sm:text-[80px]" color="#0ea5e9" />
-                    <LiaCcJcb className="text-[50px] sm:text-[80px]" color="#8b5cf6" />
-                    <FaCcDiscover className="text-[50px] sm:text-[80px]" color="#075985" />
-                  </div>
-
-                </div>
-
-              </div>
-              <div>
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Full Name on Card
-                </label>
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  className="border text-base sm:text-[20px] px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center w-full"
-                  placeholder="Enter your full name"
-                  required
-                />
-              </div>
-
-              <div className="rounded-lg overflow-hidden">
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Card Number
-                </label>
-                <CardNumberElement
-                  className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                  options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                    Expiry Month
-                  </label>
-                  <CardExpiryElement
-                    className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                    options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
-                  />
-                </div>
-                <div>
-                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                    Security Code
-                  </label>
-                  <CardCvcElement
-                    className="grid border px-6 py-[14px] h-[55px] rounded-lg border-[#898B90] items-center"
-                    options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                  Country
-                </label>
-                <Select
-                  options={countryOptions}
-                  value={
-                    formData.country
-                      ? { value: formData.country, label: countryOptions.find((option) => option.value === formData.country)?.label }
-                      : null
-                  }
-                  onChange={handleCountryChange}
-                  placeholder="Select country"
-                  isSearchable
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
-                    State
-                  </label>
-                  <Select
-                    options={states}
-                    value={
-                      formData.state 
-                      ? { value: formData.state, label: states.find((option) => option.value === formData.state)?.label } 
-                      : null
-                    }
-                    onChange={handleStateChange}
-                    placeholder="State"
-                    isDisabled={!formData.country}
-                    isSearchable
-                  />
-                </div>
-
-                <div>
-                  <label className="ms-3 mb-[10px] block text-base rounded-lg  sm:text-[20px] font-medium text-black">
-                    Postal Code
-                  </label>
-                  <input
-                    type="text"
-                    name="postalCode"
-                    value={formData.postalCode}
-                    onChange={handleInputChange}
-                    className="border text-base sm:text-[20px] px-2 py-[8px] h-[38px] rounded-sm border-[#898B90] items-center w-full"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="text-red-500 text-center text-base">{error}</div>
-
-              <div className="flex justify-center gap-4">
-                <button
-                  disabled={!stripe || isLoading}
-                  className="text-[#898B90] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px]"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={!stripe || isLoading}
-                  className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] h-[55px] items-center text-center border-[#898B90] border rounded-[20px] bg-[#0061EF]"
-                >
-                  {isLoading ? "Submitting..." : "Submit"}
-                </button>
-              </div>
-            </form>
+    <>
+      {/* <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
+        <div className="m-auto w-full sm:m-0"> */}
+      <div className="relative w-full m-auto px-[21px] py-[47px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
+        <p className="absolute top-[-16px] right-[-20px] text-[16px] sm:text-[18px] bg-slate-800 text-white rounded-lg p-3">
+          <small>Powered by</small> <big><b>stripe</b></big>
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          {/* <div className="text-center text-[#334155] text-[15px] sm:text-[24px] capitalize mb-4">
+            <div className="flex justify-between items-center pb-2 border-b border-slate-400">
+              <FaUserLock className="text-2xl sm:text-4xl" />
+              Guaranteed <b>safe & secure</b> checkout
+            </div>
+            <div className="flex items-center justify-between ">
+              <RiVisaFill className="text-[50px] sm:text-[80px]" color="#0061EF" />
+              <FaCcMastercard className="text-[50px] sm:text-[80px]" color="#ef4444" />
+              <FaCcAmex className="text-[50px] sm:text-[80px]" color="#0ea5e9" />
+              <LiaCcJcb className="text-[50px] sm:text-[80px]" color="#8b5cf6" />
+              <FaCcDiscover className="text-[50px] sm:text-[80px]" color="#075985" />
+            </div>
+          </div> */}
+          <h1 className="text-center text-2xl font-bold pb-2 border-b border-gray-300 w-full">Pay with Card</h1>
+          <div>
+            <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+              Full Name on Card
+            </label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleInputChange}
+              className="border text-base sm:text-[20px] p-[10px_12px] rounded-lg border-[#898B90] items-center w-full"
+              placeholder="Enter your full name"
+              required
+            />
           </div>
-        </div>
+
+          <div className="rounded-lg overflow-hidden">
+            <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+              Card Number
+            </label>
+            <CardNumberElement
+              className="grid border p-[10px_12px] rounded-lg border-[#898B90] items-center"
+              options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                Expiry Month
+              </label>
+              <CardExpiryElement
+                className="grid border p-[10px_12px] rounded-lg border-[#898B90] items-center"
+                options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+              />
+            </div>
+            <div>
+              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                CVV
+              </label>
+              <CardCvcElement
+                className="grid border p-[10px_12px] rounded-lg border-[#898B90] items-center"
+                options={PAYMENT_CONFIG.CARD_ELEMENT_OPTIONS}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+              Country
+            </label>
+            <Select
+              options={countryOptions}
+              value={
+                formData.country
+                  ? { value: formData.country, label: countryOptions.find((option) => option.value === formData.country)?.label }
+                  : null
+              }
+              onChange={handleCountryChange}
+              placeholder="Select country"
+              isSearchable
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+                State
+              </label>
+              <Select
+                options={states}
+                value={
+                  formData.state
+                    ? { value: formData.state, label: states.find((option) => option.value === formData.state)?.label }
+                    : null
+                }
+                onChange={handleStateChange}
+                placeholder="State"
+                isDisabled={!formData.country}
+                isSearchable
+              />
+            </div>
+
+            <div>
+              <label className="ms-3 mb-[10px] block text-base rounded-lg  sm:text-[20px] font-medium text-black">
+                Postal Code
+              </label>
+              <input
+                type="text"
+                name="postalCode"
+                value={formData.postalCode}
+                onChange={handleInputChange}
+                className="border text-base sm:text-[20px] px-2 py-[8px] h-[38px] rounded-sm border-[#898B90] items-center w-full"
+                required
+              />
+            </div>
+          </div>
+          <div className="text-red-500 text-center text-base">{error}</div>
+
+          <div className="flex justify-center gap-4">
+            <button
+              disabled={!stripe || isLoading}
+              className="text-[#898B90] font-semibold text-[18px] w-[146px] py-2 md:h-[55px] items-center text-center border-[#898B90] border rounded-xl md:rounded-[20px]"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!stripe || isLoading}
+              className="text-[#FAF6F3] font-semibold text-[18px] w-[146px] py-2 md:h-[55px] items-center text-center border-[#898B90] border rounded-xl md:rounded-[20px] bg-[#0061EF]"
+            >
+              {isLoading ? "Submitting..." : "Submit"}
+            </button>
+          </div>
+        </form>
       </div>
-    </Layout>
+      {/* </div>
+      </div> */}
+    </>
   );
 };
 

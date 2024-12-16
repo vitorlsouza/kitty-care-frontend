@@ -39,7 +39,7 @@ export const useSignupForm = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const urlParams = new URLSearchParams(window.location.search);
+  // const urlParams = new URLSearchParams(window.location.search);
 
   const validateForm = () => {
     const { isValid, errors } = validateUserInfo(userInfo, checked);
@@ -83,7 +83,8 @@ export const useSignupForm = () => {
 
       setUserInfo(initialUserInfo);
       setError(initialErrors);
-      navigate('/priceselection?' + urlParams.toString());
+      navigate('/progress?step=8');
+      // navigate('/priceselection?' + urlParams.toString());
     } catch (err: any) {
       setError(prev => ({
         ...prev,

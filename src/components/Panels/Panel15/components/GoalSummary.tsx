@@ -29,7 +29,7 @@ const GoalSummary: React.FC = () => {
           ))}
       </div>
 
-      <div className="flex flex-col items-center bg-lightPearl px-16 py-8 border-2 border-pearlBush rounded-3xl">
+      <div className="flex flex-col items-center bg-lightPearl px-16 py-8 border-2 border-pearlBush rounded-3xl mb-2">
         <div className="bg-lightGray rounded-xl px-4 py-2 text-center mb-6">
           <h1 className="font-inter text-base font-semibold text-black leading-[28px]">
             Personalized Goals
