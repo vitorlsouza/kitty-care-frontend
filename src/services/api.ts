@@ -516,4 +516,40 @@ export const cancelPayPalSubscription = async (subscriptionID: string) => {
   }
 }
 
+interface OTPSignInResponse {
+  message: string;
+  email: string;
+}
+
+interface OTPVerifyResponse {
+  user: {
+    email: string;
+    user_metadata: {
+      avatar_url: string;
+    };
+  };
+  session: {
+    access_token: string;
+    expires_in: string;
+  };
+}
+
+export const signInWithOTPAPI = async (email: string): Promise<OTPSignInResponse> => {
+  try {
+    const response = await API.post('/api/supabase/signin-otp', { email });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to send OTP');
+  }
+};
+
+export const verifyOTPAPI = async (email: string, token: string): Promise<OTPVerifyResponse> => {
+  try {
+    const response = await API.post('/api/supabase/verify-otp', { email, token, type: 'email' });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to verify OTP');
+  }
+};
+
 export default baseURL;

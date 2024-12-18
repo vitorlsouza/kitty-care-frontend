@@ -2,10 +2,12 @@ import { CatFormData } from '../types/cat.types';
 import { AuthToken } from './types';
 
 export const setAuthToken = (authData: AuthToken) => {
+  console.log("setAuthToken", authData);
+
   localStorage.setItem('email', authData.email);
   localStorage.setItem('token', authData.token);
-  // Convert expiresIn to timestamp
-  const expiresAt = new Date().getTime() + parseExpirationTime(authData.expiresIn);
+  // Convert seconds to milliseconds by multiplying by 1000
+  const expiresAt = new Date().getTime() + (parseInt(authData.expiresIn) * 1000);
   localStorage.setItem('expiresAt', expiresAt.toString());
   if(authData.photo)  localStorage.setItem('photo', authData.photo);
 };

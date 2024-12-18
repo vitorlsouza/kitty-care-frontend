@@ -1,12 +1,10 @@
-export interface LoginFormErrors {
-    email: string;
-    password: string;
-    general: string;
-}
-
-export interface LoginFormProps {
-    error: LoginFormErrors;
+export interface OTPLoginFormProps {
+    error?: {
+        email?: string;
+        otp?: string;
+        general?: string;
+    };
     isLoading: boolean;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (e: React.ChangeEvent<HTMLFormElement>) => void;
+    handleEmailSubmit: (email: string) => Promise<boolean>;
+    handleOTPSubmit: (email: string, otp: string) => void;
 } 
