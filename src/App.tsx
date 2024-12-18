@@ -49,7 +49,7 @@ const ROUTES = {
   NOT_FOUND: '/*',
 };
 
-const ProtectedRouteWrapper: React.FC<{ children: React.ReactNode }> = React.memo(({ children }) => (
+const ProtectedRouteWrapper: React.FC<{ children: React.ReactNode; }> = React.memo(({ children }) => (
   <ProtectedRoute>{children}</ProtectedRoute>
 ));
 
