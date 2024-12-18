@@ -39,7 +39,7 @@ export interface FrequencyOption {
   isRecommended: boolean;
 }
 
-export interface Panel09Props {
+export interface Panel10Props {
   nextStep: () => void;
   previousStep: () => void;
 } 

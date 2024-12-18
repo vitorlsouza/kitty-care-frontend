@@ -77,7 +77,9 @@ const SignupForm: React.FC<SignupFormProps> = ({
       onChange={handleChange}
       error={error.password}
     />
-    <TermsCheckbox checked={checked} setChecked={setChecked} />
+    <div className="my-6">
+      <TermsCheckbox checked={checked} setChecked={setChecked} />
+    </div>
     {error.general && (
       <div className="text-red-500 text-base text-center mt-2">
         {error.general}
@@ -116,7 +118,7 @@ export const Signup: React.FC = () => {
 
   // useEffect(() => {
   //   const catId = localStorage.getItem("catId");
-    
+
   //   if (!catId) {
   //     navigate('/progress')
   //     return;
@@ -127,13 +129,13 @@ export const Signup: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    
+
     // const subscriptionId = localStorage.getItem("subscriptionId");
 
     // if (!subscriptionId || subscriptionId === "undefined") {
     //   navigate(`/priceselectionV2?${urlParams.toString()}`);
     // } else {
-      navigate("/progress");
+    navigate("/progress");
     // }
   }, [navigate, urlParams]);
 

@@ -4,6 +4,7 @@ import * as Panels from '../components/Panels';
 import ProgressBar from '../components/ProgressBar';
 import Layout from '../components/Layout';
 import PaymentModal from '../components/PaymentModal';
+import { useMediaQuery } from 'react-responsive';
 
 // Constants
 const MAX_STEPS = 15;
@@ -17,6 +18,7 @@ const Progress = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -49,9 +51,8 @@ const Progress = () => {
   const previousStep = () => {
     setCurrentStep((prevStep) => {
       const newPrevStep = prevStep - 1;
-      // Skip steps 11 and 14
       window.scrollTo(0, 0);
-      const updatedStep = newPrevStep === 11 ? 10 : newPrevStep === 14 ? 13 : Math.max(newPrevStep, MIN_STEP);
+      const updatedStep = newPrevStep === 14 ? 13 : Math.max(newPrevStep, MIN_STEP);
       // Update URL with new step
       navigate(`?step=${updatedStep}`, { replace: true });
       return updatedStep;
@@ -64,11 +65,11 @@ const Progress = () => {
     const topRightElement = document.querySelector('.top-right') as HTMLElement;
 
     // Hide the elements
-    if (topLeftElement) {
+    if (topLeftElement && isMobile) {
       topLeftElement.style.display = 'none';
     }
 
-    if (topRightElement) {
+    if (topRightElement && isMobile) {
       topRightElement.style.display = 'none';
     }
   }, []);
@@ -85,7 +86,7 @@ const Progress = () => {
     8: <Panels.Panel08 nextStep={nextStep} previousStep={previousStep} />,
     9: <Panels.Panel09 nextStep={nextStep} previousStep={previousStep} />,
     10: <Panels.Panel10 nextStep={nextStep} previousStep={previousStep} />,
-    // 11: <Panels.Panel11 nextStep={nextStep} previousStep={previousStep} />,
+    11: <Panels.Panel11 nextStep={nextStep} previousStep={previousStep} />,
     12: <Panels.Panel12 nextStep={nextStep} previousStep={previousStep} />,
     13: <Panels.Panel13 nextStep={nextStep} previousStep={previousStep} />,
     // 14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,

@@ -73,7 +73,7 @@ const Panel14: React.FC<Panel14Props> = () => {
               navigate("/cat-assistant");
             } else {
 
-              navigate(`${import.meta.env.VITE_FLOW_TYPE === "V2" ? "/signupV2" : "/signup"}`);
+              navigate("/signup");
             }
           }}
           className="bg-primaryBlue text-white px-6 py-2 rounded-2xl hover:bg-opacity-90"

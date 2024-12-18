@@ -4,7 +4,7 @@ interface TermsCheckboxProps {
 }
 
 export const TermsCheckbox: React.FC<TermsCheckboxProps> = ({ checked, setChecked }) => (
-    <div className="flex my-6 gap-2" onClick={() => setChecked(!checked)}>
+    <div className="flex gap-2" onClick={() => setChecked(!checked)}>
         <div className="w-6 h-6">
             <input
                 type="checkbox"
