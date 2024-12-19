@@ -99,13 +99,10 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
                         type="text"
                         placeholder="Enter 6-digit code"
                         className={error?.otp ? 'border-red-500' : ''}
-                        onChange={handleOTPChange}
                         value={otp}
+                        onChange={handleOTPChange}
                         error={error?.otp}
                         aria-invalid={!!error?.otp}
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        maxLength={6}
                     />
 
                     {error?.general && (

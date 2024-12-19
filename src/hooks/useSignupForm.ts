@@ -20,6 +20,7 @@ export interface FormErrors {
   email?: string;
   general?: string;
   otp?: string;
+  password?: string;
 }
 
 const initialUserInfo: UserInfo = {

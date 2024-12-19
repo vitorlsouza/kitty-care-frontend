@@ -10,7 +10,7 @@ interface SignupFormProps {
     setChecked: (checked: boolean) => void;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleEmailSubmit: (email: string) => Promise<boolean>;
-    handleOTPSubmit: (email: string) => Promise<void>;
+    handleOTPSubmit: (email: string, otp: string) => Promise<void>;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({

@@ -69,6 +69,7 @@ export interface TextInputProps {
   label?: string;
   type?: string;
   placeholder?: string;
+  value?: string;
   className?: string;
   error?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;

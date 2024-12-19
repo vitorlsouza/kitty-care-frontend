@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { signUpAPI, loginAPI, verifyOTPAPI, signUpWithOTPAPI } from '../../services/api';
+import { signUpAPI, loginAPI, verifyOTPAPI } from '../../services/api';
 import { LoginState, SignupState, UserState } from '../../utils/types';
 import { setAuthToken, clearTokens } from '../../utils/auth';
 import { fetchCatsAsync } from './catsSlice';
