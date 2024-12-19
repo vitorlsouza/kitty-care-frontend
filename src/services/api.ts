@@ -523,6 +523,7 @@ interface OTPSignInResponse {
 
 interface OTPVerifyResponse {
   user: {
+    id: string;
     email: string;
     user_metadata: {
       avatar_url: string;
@@ -549,6 +550,15 @@ export const verifyOTPAPI = async (email: string, token: string): Promise<OTPVer
     return response.data;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Failed to verify OTP');
+  }
+};
+
+export const signUpWithOTPAPI = async (userData: SignupState) => {
+  try {
+    const response = await API.post('/api/supabase/signup-otp', userData);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to sign up with OTP');
   }
 };
 

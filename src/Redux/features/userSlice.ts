@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { signUpAPI, loginAPI, verifyOTPAPI } from '../../services/api';
+import { signUpAPI, loginAPI, verifyOTPAPI, signUpWithOTPAPI } from '../../services/api';
 import { LoginState, SignupState, UserState } from '../../utils/types';
 import { setAuthToken, clearTokens } from '../../utils/auth';
 import { fetchCatsAsync } from './catsSlice';
@@ -9,7 +9,6 @@ const initialState: UserState = {
   first_name: '',
   last_name: '',
   email: '',
-  password: '',
   isAuthenticated: false,
   status: '',
   error: '',
@@ -26,6 +25,28 @@ export const signUpUserAsync = createAsyncThunk(
         expiresIn: response.expiresIn || '1h',
         email: userData.email,
         photo: response.photo || ''
+      });
+      
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const signUpUserWithOTPAsync = createAsyncThunk(
+  'user/signUpUserWithOTP',
+  async (credentials: SignupState, { rejectWithValue }) => {
+    try {
+      debugger;
+
+      let response = await verifyOTPAPI(credentials.email, credentials.token || '');
+      
+      setAuthToken({
+        token: response.session.access_token,
+        expiresIn: response.session.expires_in,
+        email: credentials.email,
+        photo: response.user.user_metadata?.avatar_url || ''
       });
       
       return response;

@@ -43,7 +43,6 @@ export const validateUserInfo = (userInfo: UserInfo, isChecked: boolean) => {
     first_name: validateName(userInfo.first_name, "First name"),
     last_name: validateName(userInfo.last_name, "Last name"),
     email: validateEmail(userInfo.email),
-    password: validatePassword(userInfo.password),
     general: "",
   };
 

@@ -11,7 +11,6 @@ export interface UserState {
   first_name: string;
   last_name: string;
   email: string;
-  password: string;
   isAuthenticated: boolean;
   status: string;
   error: string;
@@ -46,7 +45,7 @@ export interface SignupState {
   first_name: string;
   last_name: string;
   email: string;
-  password: string;
+  token?: string;
 }
 
 export interface LoginState {
@@ -93,7 +92,6 @@ export interface UserInfo {
   first_name: string;
   last_name: string;
   email: string;
-  password: string;
 }
 
 export interface ApplePayButtonProps {
