@@ -54,7 +54,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
             {!showOTPInput ? (
                 <form onSubmit={onEmailSubmit} className="w-full h-full flex-col justify-between">
                     <TextInput
-                        label=""
+                        label="First name"
                         name="first_name"
                         type="text"
                         placeholder="First name"
@@ -63,7 +63,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
                         error={error.first_name}
                     />
                     <TextInput
-                        label=""
+                        label="Last name"
                         name="last_name"
                         type="text"
                         placeholder="Last name"
@@ -72,15 +72,13 @@ const SignupForm: React.FC<SignupFormProps> = ({
                         error={error.last_name}
                     />
                     <TextInput
-                        label=""
+                        label="Email"
                         name="email"
                         type="email"
                         placeholder="name@email.com"
                         className={error.email ? "border-red-500" : ""}
-                        onChange={(e) => {
-                            handleEmailChange(e);
-                            handleChange(e);
-                        }}
+                        onChange={handleEmailChange}
+                        value={email}
                         error={error.email}
                     />
                     <TermsCheckbox checked={checked} setChecked={setChecked} />
@@ -96,7 +94,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
                                  hover:bg-blue-700 active:bg-blue-800
                                  disabled:bg-blue-400 disabled:cursor-not-allowed
                                  transition-colors duration-200"
-                        disabled={isLoading}
+                        disabled={isLoading || !checked}
                         aria-busy={isLoading}
                     >
                         {isLoading ? 'Sending code...' : 'Send OTP'}
@@ -123,7 +121,6 @@ const SignupForm: React.FC<SignupFormProps> = ({
                         placeholder="Enter 6-digit code"
                         className={error?.otp ? 'border-red-500' : ''}
                         onChange={handleOTPChange}
-                        value={otp}
                         error={error?.otp}
                         aria-invalid={!!error?.otp}
                     />
