@@ -17,7 +17,7 @@ const initialErrors: FormErrors = {
     newPassword: '',
     confirmPassword: '',
     response: ''
-}
+};
 
 const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
     src: 'riv/V2/Pulse_kitty.riv',
@@ -44,10 +44,10 @@ const ResetPassword: React.FC = () => {
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-    
+
         // Update form values
         setFormValues((prev) => ({ ...prev, [name]: value }));
-    
+
         // Handle new password validation
         if (name === "newPassword") {
             setError((prevError) => ({
@@ -55,7 +55,7 @@ const ResetPassword: React.FC = () => {
                 newPassword: validatePassword(value),
             }));
         }
-    
+
         // Handle confirm password validation
         if (name === "confirmPassword") {
             setFormValues((prev) => {
@@ -68,7 +68,7 @@ const ResetPassword: React.FC = () => {
             });
         }
     };
-    
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -80,14 +80,14 @@ const ResetPassword: React.FC = () => {
         if (token) {
             const response = await requestResetPasswordAPI(token, formValues.newPassword);
             if (response.success) {
-                setIsLoading(false)
+                setIsLoading(false);
                 navigate('/login');
             } else {
                 setError((prevError) => ({
                     ...prevError,
                     response: response.message,
                 }));
-                setIsLoading(false)
+                setIsLoading(false);
             }
         }
     };
@@ -104,7 +104,7 @@ const ResetPassword: React.FC = () => {
                     {RiveComponent && <RiveComponent />}
                 </div>
             </div>
-        )
+        );
     }
 
     return (

@@ -7,85 +7,12 @@ import { useMediaQuery } from 'react-responsive';
 
 // Components
 import Layout from "../components/Layout";
-import TextInput from "../components/Login/Input";
-// import SwitchMethod from "../components/Payments/SwitchMethod";
 import { SignupHeader } from "../components/Signup/SignupHeader";
-import { TermsCheckbox } from "../components/Signup/TermsCheckbox";
-import { SubmitButton } from "../components/Signup/SubmitButton";
+import SignupForm from "../components/Signup/SignupForm";
 
 // Hooks
-import { useSignupForm, FormErrors } from "../hooks/useSignupForm";
+import { useSignupForm } from "../hooks/useSignupForm";
 
-// // Constants
-// const REDIRECT_PATHS = {
-//   PRICE_SELECTION: "/priceselection",
-//   PROGRESS: "/progress",
-//   CAT_ASSISTANT: "/cat-assistant"
-// } as const;
-
-interface SignupFormProps {
-  error: FormErrors;
-  isLoading: boolean;
-  checked: boolean;
-  setChecked: (checked: boolean) => void;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (event: React.FormEvent) => void;
-}
-
-const SignupForm: React.FC<SignupFormProps> = ({
-  error,
-  isLoading,
-  checked,
-  setChecked,
-  handleChange,
-  handleSubmit,
-}) => (
-  <form onSubmit={handleSubmit} className="w-full h-full flex-col justify-between">
-    <TextInput
-      label=""
-      name="first_name"
-      type="text"
-      placeholder="First name"
-      className={error.first_name ? "border-red-500" : ""}
-      onChange={handleChange}
-      error={error.first_name}
-    />
-    <TextInput
-      label=""
-      name="last_name"
-      type="text"
-      placeholder="Last name"
-      className={error.last_name ? "border-red-500" : ""}
-      onChange={handleChange}
-      error={error.last_name}
-    />
-    <TextInput
-      label=""
-      name="email"
-      type="email"
-      placeholder="name@email.com"
-      className={error.email ? "border-red-500" : ""}
-      onChange={handleChange}
-      error={error.email}
-    />
-    <TextInput
-      label=""
-      name="password"
-      type="password"
-      placeholder="Password (8+ characters)"
-      className={error.password ? "border-red-500" : ""}
-      onChange={handleChange}
-      error={error.password}
-    />
-    <TermsCheckbox checked={checked} setChecked={setChecked} />
-    {error.general && (
-      <div className="text-red-500 text-base text-center mt-2">
-        {error.general}
-      </div>
-    )}
-    <SubmitButton isLoading={isLoading} />
-  </form>
-);
 
 export const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -100,7 +27,8 @@ export const Signup: React.FC = () => {
     checked,
     setChecked,
     handleChange,
-    handleSubmit,
+    handleEmailSubmit,
+    handleOTPSubmit,
   } = useSignupForm();
 
   // Handle plan selection from URL
@@ -116,7 +44,7 @@ export const Signup: React.FC = () => {
 
   // useEffect(() => {
   //   const catId = localStorage.getItem("catId");
-    
+
   //   if (!catId) {
   //     navigate('/progress')
   //     return;
@@ -127,13 +55,13 @@ export const Signup: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
-    
+
     // const subscriptionId = localStorage.getItem("subscriptionId");
 
     // if (!subscriptionId || subscriptionId === "undefined") {
     //   navigate(`/priceselectionV2?${urlParams.toString()}`);
     // } else {
-      navigate("/progress");
+    navigate("/progress");
     // }
   }, [navigate, urlParams]);
 
@@ -265,7 +193,8 @@ export const Signup: React.FC = () => {
                     checked={checked}
                     setChecked={setChecked}
                     handleChange={handleChange}
-                    handleSubmit={handleSubmit}
+                    handleEmailSubmit={handleEmailSubmit}
+                    handleOTPSubmit={handleOTPSubmit}
                   />
                 </div>
               </div>

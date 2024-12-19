@@ -2,10 +2,12 @@ import { CatFormData } from '../types/cat.types';
 import { AuthToken } from './types';
 
 export const setAuthToken = (authData: AuthToken) => {
+  console.log("setAuthToken", authData);
+
   localStorage.setItem('email', authData.email);
   localStorage.setItem('token', authData.token);
-  // Convert expiresIn to timestamp
-  const expiresAt = new Date().getTime() + parseExpirationTime(authData.expiresIn);
+  // Convert seconds to milliseconds by multiplying by 1000
+  const expiresAt = new Date().getTime() + (parseInt(authData.expiresIn) * 1000);
   localStorage.setItem('expiresAt', expiresAt.toString());
   if(authData.photo)  localStorage.setItem('photo', authData.photo);
 };
@@ -74,18 +76,18 @@ export const isAuthenticated = (): null | any => {
 };
 
 // Helper to parse expiration time (e.g., "1h" to milliseconds)
-const parseExpirationTime = (expiresIn: string): number => {
-  const unit = expiresIn.slice(-1);
-  const value = parseInt(expiresIn.slice(0, -1));
+// const parseExpirationTime = (expiresIn: string): number => {
+//   const unit = expiresIn.slice(-1);
+//   const value = parseInt(expiresIn.slice(0, -1));
   
-  switch (unit) {
-    case 'd': return value * 24 * 60 * 60 * 1000;
-    case 'h': return value * 60 * 60 * 1000;
-    case 'm': return value * 60 * 1000;
-    case 's': return value * 1000;
-    default: return 0;
-  }
-}; 
+//   switch (unit) {
+//     case 'd': return value * 24 * 60 * 60 * 1000;
+//     case 'h': return value * 60 * 60 * 1000;
+//     case 'm': return value * 60 * 1000;
+//     case 's': return value * 1000;
+//     default: return 0;
+//   }
+// }; 
 
 export const collectFormData = (): CatFormData => {
   return {

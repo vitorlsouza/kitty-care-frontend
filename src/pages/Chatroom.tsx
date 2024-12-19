@@ -4,7 +4,7 @@ import SideBar from '../components/Chatroom/SideBar';
 import ChatField from '../components/Chatroom/ChatField';
 import { useInitializeChatroom } from '../hooks/useInitializeChatroom';
 import { useSubscriptionCheck } from '../hooks/useSubscriptionCheck';
-import { useLocalStorageCleanup } from '../components/Panels/hooks/useLocalStorageCleanup';
+// import { useLocalStorageCleanup } from '../components/Panels/hooks/useLocalStorageCleanup';
 
 /**
  * Chatroom component that serves as the main chat interface.
@@ -13,7 +13,7 @@ import { useLocalStorageCleanup } from '../components/Panels/hooks/useLocalStora
 const Chatroom: FC = () => {
   useInitializeChatroom();
   useSubscriptionCheck();
-  useLocalStorageCleanup();
+  // useLocalStorageCleanup();
   return (
     <div className="w-full h-[100dvh]">
       <ChatroomLayout>
