@@ -38,8 +38,6 @@ export const signUpUserWithOTPAsync = createAsyncThunk(
   'user/signUpUserWithOTP',
   async (credentials: SignupState, { rejectWithValue }) => {
     try {
-      debugger;
-
       let response = await verifyOTPAPI(credentials.email, credentials.token || '');
       
       setAuthToken({

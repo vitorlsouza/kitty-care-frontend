@@ -101,8 +101,6 @@ export const useSignupForm = () => {
     setError({});
     setIsLoading(true);
 
-    debugger;
-
     try {
       await signUpWithOTPAPI({
         ...userInfo,
