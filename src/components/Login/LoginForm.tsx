@@ -51,7 +51,6 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
                         placeholder="name@email.com"
                         className={error?.email ? 'border-red-500' : ''}
                         onChange={handleEmailChange}
-                        value={email}
                         error={error?.email}
                         aria-invalid={!!error?.email}
                     />
@@ -76,7 +75,7 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
                         disabled={isLoading}
                         aria-busy={isLoading}
                     >
-                        {isLoading ? 'Sending code...' : 'Send login code'}
+                        {isLoading ? 'Sending code...' : 'Send OTP'}
                     </button>
                 </form>
             ) : (
@@ -99,7 +98,6 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
                         type="text"
                         placeholder="Enter 6-digit code"
                         className={error?.otp ? 'border-red-500' : ''}
-                        value={otp}
                         onChange={handleOTPChange}
                         error={error?.otp}
                         aria-invalid={!!error?.otp}

@@ -99,7 +99,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
                         disabled={isLoading}
                         aria-busy={isLoading}
                     >
-                        {isLoading ? 'Sending code...' : 'Send login code'}
+                        {isLoading ? 'Sending code...' : 'Send OTP'}
                     </button>
                 </form>
             ) : (
