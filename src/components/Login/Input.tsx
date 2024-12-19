@@ -19,7 +19,6 @@ const TextInput = ({
   type = 'text',
   placeholder,
   className = '',
-  value = '',
   error = '',
   onChange,
   'aria-label': ariaLabel,
@@ -56,7 +55,6 @@ const TextInput = ({
           type={inputType}
           placeholder={placeholder}
           onChange={handleInputChange}
-          value={value}
           aria-label={ariaLabel || label || name}
           aria-invalid={!!error}
           aria-describedby={error ? `${name}-error` : undefined}
