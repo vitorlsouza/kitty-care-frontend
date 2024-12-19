@@ -12,6 +12,7 @@ export interface UserInfo {
   first_name: string;
   last_name: string;
   email: string;
+  otp: string;
 }
 
 export interface FormErrors {
@@ -27,6 +28,7 @@ const initialUserInfo: UserInfo = {
   first_name: "",
   last_name: "",
   email: "",
+  otp: "",
 };
 
 const initialErrors: FormErrors = {};
