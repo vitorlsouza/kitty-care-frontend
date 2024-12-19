@@ -72,6 +72,7 @@ export interface TextInputProps {
   value?: string;
   className?: string;
   error?: string;
+  maxLength?: number;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   'aria-label'?: string;
 }

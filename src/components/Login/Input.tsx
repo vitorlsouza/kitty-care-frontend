@@ -21,6 +21,7 @@ const TextInput = ({
   className = '',
   error = '',
   onChange,
+  maxLength,
   'aria-label': ariaLabel,
 }: TextInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,6 +60,7 @@ const TextInput = ({
           aria-invalid={!!error}
           aria-describedby={error ? `${name}-error` : undefined}
           required
+          maxLength={maxLength}
         />
         {type === 'password' && (
           <button
