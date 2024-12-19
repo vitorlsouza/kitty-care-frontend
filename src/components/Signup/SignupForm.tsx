@@ -123,6 +123,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
                         placeholder="Enter 6-digit code"
                         className={error?.otp ? 'border-red-500' : ''}
                         onChange={handleOTPChange}
+                        value={otp}
                         error={error?.otp}
                         aria-invalid={!!error?.otp}
                     />
