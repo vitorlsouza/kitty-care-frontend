@@ -102,10 +102,7 @@ export const useSignupForm = () => {
     setIsLoading(true);
 
     try {
-      // remove the otp from userInfo
-      const { otp, ...rest } = userInfo;
       await signUpWithOTPAPI({
-        ...rest,
         first_name: userInfo.first_name.trim(),
         last_name: userInfo.last_name.trim(),
         email: email.trim(),
