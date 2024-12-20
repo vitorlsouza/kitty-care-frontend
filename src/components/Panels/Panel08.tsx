@@ -1,116 +1,105 @@
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, useState } from "react";
-import NavigationButtons from "../NavigationButtons";
-import { PROGRESS_ITEMS } from "./constants/progressItems";
-import { ProgressCard } from "./components/ProgressCard";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useRive, UseRiveParameters } from '@rive-app/react-canvas';
+
+import { TermsCheckbox } from "../Signup";
+import styles from '../../components/LoadingOverlay/LoadingOverlay.module.css';
 
 interface Panel08Props {
-  nextStep: () => void;
   previousStep: () => void;
+  nextStep: () => void;
 }
 
-const Panel08: React.FC<Panel08Props> = ({ nextStep, previousStep }) => {
-  const [selectedProgress, setSelectedProgress] = useState<number | null>(null);
-  const navigate = useNavigate();
+const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
+    src: 'riv/V2/Pulse_kitty.riv',
+    autoplay: true,
+};
 
-  // Load saved progress from localStorage
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/signup');
-      return;
-    };
-  }, [])
-  useEffect(() => {
-    const storedProgress = localStorage.getItem("required_progress");
-    if (storedProgress) {
-      const foundItem = PROGRESS_ITEMS.find(
-        (item) => item.title === storedProgress
-      );
-      if (foundItem) {
-        setSelectedProgress(foundItem.id);
-      }
-    }
-  }, []);
+const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
+  const [checked, setChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+      const { RiveComponent } = useRive(RIVE_ANIMATION_CONFIG);
+  
 
-  const handleCardSelect = (id: number) => {
-    const newProgress = id === selectedProgress ? null : id;
-    setSelectedProgress(newProgress);
 
-    const selectedItem = PROGRESS_ITEMS.find((item) => item.id === newProgress);
-    if (selectedItem) {
-      localStorage.setItem("required_progress", selectedItem.title);
-    } else {
-      localStorage.removeItem("required_progress");
-    }
-  };
-
-  const handleSubmit = () => {
-    if (selectedProgress !== null) {
-      nextStep();
-    }
-  };
-
-  const selectedPopup = selectedProgress !== null
-    ? PROGRESS_ITEMS.find((item) => item.id === selectedProgress)
-    : null;
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setIsLoading(true);
+    nextStep();
+  }
 
   return (
-    <main className="w-full max-w-2xl lg:max-w-6xl mx-auto p-6 relative">
-      <header className="text-center mb-8">
-        <h1 className="font-bold text-2xl lg:text-3xl mb-2">
-          What Progress is Most Important To You?
-        </h1>
-        <p className="text-sm text-darkGray max-w-2xl mx-auto">
-          Choose the most important area where you'd like to see progress for
-          your cat.
-        </p>
-      </header>
-
-      <section
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:mx-12"
-        role="radiogroup"
-        aria-label="Progress options"
-      >
-        {PROGRESS_ITEMS.map((item) => (
-          <ProgressCard
-            key={item.id}
-            item={item}
-            isSelected={selectedProgress === item.id}
-            onSelect={handleCardSelect}
-          />
-        ))}
-      </section>
-
-      <AnimatePresence>
-        {selectedPopup && (
-          <motion.aside
-            key={selectedPopup.id}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ duration: 0.3 }}
-            className="hidden md:flex absolute md:top-[-150px] md:right-[-20px] lg:top-[-150px] lg:right-0 bg-lightWhite mt-2 rounded-2xl md:w-64 lg:w-72 flex-col items-center border-2 border-pearlBush shadow-lg"
-            role="complementary"
-            aria-label="Selection feedback"
-          >
-            <h2 className="bg-primaryYellow text-black text-md font-semibold rounded-b-2xl px-4 py-1 mx-auto text-center">
-              {selectedPopup.popupTitle}
-            </h2>
-            <p className="text-xs leading-relaxed text-center px-4 pb-2">
-              {selectedPopup.popupDescription}
+    <>
+      {isLoading ? (
+        <div
+          className={styles.overlay}
+          role="alert"
+          aria-busy="true"
+          aria-label="Loading content"
+        >
+          <div className={styles.animationContainer}>
+            {RiveComponent && <RiveComponent />}
+          </div>
+        </div>
+      ) : (
+        <div className="w-full md:max-w-[540px] p-6 rounded-md mx-auto">
+          <header className="text-center mb-8">
+            <h1 className="font-bold text-2xl lg:text-3xl mb-2">
+              Tell Us About You
+            </h1>
+            <p className="text-sm text-darkGray max-w-2xl mx-auto">
+              Please provide some basic details about you so we can best help you.
             </p>
-          </motion.aside>
-        )}
-      </AnimatePresence>
+          </header>
+          <div className="flex flex-col gap-6 w-full">
+            <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
+                <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">First Name</label>
+                <input
+                  type='text'
+                  className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+                  placeholder={'First name'} />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">Last Name</label>
+                <input
+                  type='text'
+                  className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+                  placeholder={'Last name'} />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">Email</label>
+              <input
+                type='email'
+                className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+                placeholder={'Email'} />
+            </div>
+            <div className="px-2">
+              <TermsCheckbox checked={checked} setChecked={setChecked} />
+            </div>
+          </div>
 
-      <NavigationButtons
-        nextStep={handleSubmit}
-        previousStep={previousStep}
-        isNextDisabled={selectedProgress === null}
-      />
-    </main>
+          <div className="flex flex-col-reverse gap-2 md:gap-4 mx-8 md:mx-0 md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0">
+            <button
+              onClick={previousStep}
+              className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-transparent text-mediumGray border border-mediumGray hover:text-white hover:border-none hover:bg-primaryBlue"
+              aria-label="Go to previous step"
+            >
+              <span aria-hidden="true">{"<"}</span> Back
+            </button>
+
+            <button
+              onClick={handleSubmit}
+              disabled
+              className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-primaryBlue text-white hover:bg-opacity-90 disabled:bg-lightGray disabled:text-mediumGray disabled:cursor-not-allowed "
+              aria-label="Go to next step"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
