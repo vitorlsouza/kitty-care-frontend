@@ -60,7 +60,7 @@ const Login: React.FC = () => {
       // Check for subscription and redirect accordingly
       const subscriptionId = localStorage.getItem("subscriptionId");
       if (!subscriptionId || subscriptionId === "undefined") {
-        navigate(`/priceselection?${urlParams.toString()}`);
+        navigate(`/progress?${urlParams.toString()}`);
         return;
       }
 
