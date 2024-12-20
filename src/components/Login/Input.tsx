@@ -4,8 +4,8 @@ import { TextInputProps } from '../../utils/types';
 
 // Extract styles to constants for better maintainability
 const STYLES = {
-  container: 'mt-[30px] flex gap-[10px] flex-col h-auto',
-  label: 'text-base sm:text-xl font-bold sm:font-medium ml-[24px]',
+  container: 'mt-[20px] flex gap-[10px] flex-col h-auto',
+  label: 'text-base sm:text-xl font-bold sm:font-medium ',
   inputWrapper: 'w-full h-[52px] relative',
   input: 'w-full h-[55px] p-auto sm:py-4 px-[24px] text-base sm:text-xl border-2 rounded-lg',
   toggleButton: 'absolute right-3 top-[55%] transform -translate-y-1/2 border-none hover:border-none focus:outline-none bg-transparent',

@@ -83,7 +83,7 @@ export const useSignupForm = () => {
 
       setUserInfo(initialUserInfo);
       setError(initialErrors);
-      navigate('/progress?step=8');
+      navigate('/');
       // navigate('/priceselection?' + urlParams.toString());
     } catch (err: any) {
       setError(prev => ({

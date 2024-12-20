@@ -11,7 +11,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full flex flex-col gap-2"
+            className="w-full flex flex-col"
             noValidate
             aria-label="Login form"
         >

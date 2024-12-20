@@ -9,7 +9,7 @@ import Layout from "../components/Layout";
 const SUBSCRIPTION_STORAGE_KEY = 'subscriptionId';
 const ROUTES = {
   CAT_ASSISTANT: '/cat-assistant',
-  PAYMENT_METHOD: `${import.meta.env.VITE_FLOW_TYPE === "V2" ? "/paymentmethodV2" : "/paymentmethod"}`,
+  PAYMENT_METHOD: "/paymentmethod",
 } as const;
 
 // Types
