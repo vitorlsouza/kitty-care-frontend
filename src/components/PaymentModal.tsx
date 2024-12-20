@@ -26,13 +26,21 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         }
     }, [isMobile, dispatch]);
 
-
     useEffect(() => {
+        const checkSubscriptionStatus = () => {
+            const subscriptionId = localStorage.getItem('subscriptionId');
+            setIsSuccess(!!subscriptionId && subscriptionId !== 'null');
+        };
+
         ReactPixel.track("InitiateCheckout");
-        const subscriptionId = localStorage.getItem('subscriptionId');
-        if (subscriptionId) {
-            setIsSuccess(true);
-        }
+        checkSubscriptionStatus();
+
+        // Listen for changes in localStorage
+        window.addEventListener('storage', checkSubscriptionStatus);
+
+        return () => {
+            window.removeEventListener('storage', checkSubscriptionStatus);
+        };
     }, []);
 
     if (!isOpen) return null;
@@ -40,7 +48,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div className={`bg-white rounded-lg p-6 shadow-lg w-[380px] md:max-w-md md:w-full transition-all duration-300 h-auto`}>
-                {/* <h2 className="text-xl font-bold mb-4">{isSuccess ? 'Payment Successful!' : 'Select Payment Method'}</h2> */}
                 {!isSuccess ? (
                     <>
                         {!showCardFields ? (
@@ -54,11 +61,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
 
-                                {/* Payment Methods Section */}
                                 <div className="w-full h-full flex flex-col justify-between gap-[20px]">
                                     <PayMethodBtn onClick={() => setShowCardFields(true)} />
                                     <PayPalSubscriptionBtn />
-                                    {/* Footer Section */}
                                     <div>
                                         <div className="text-[14px] font-semibold opacity-60 text-center">
                                             Applicable VAT, sales or other applicable taxes may apply.
@@ -67,7 +72,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
                             </div>
-
                         ) : (
                             <PaymentDetailV2 />
                         )}
@@ -83,4 +87,4 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
     );
 };
 
-export default PaymentModal; 
+export default PaymentModal;
