@@ -28,12 +28,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
 
 
     useEffect(() => {
+        ReactPixel.track("InitiateCheckout");
         const subscriptionId = localStorage.getItem('subscriptionId');
         if (subscriptionId) {
             setIsSuccess(true);
         }
-        ReactPixel.track("InitiateCheckout");
-    }, []);
+    }, [isSuccess]);
 
     if (!isOpen) return null;
 
@@ -75,7 +75,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                 ) : (
                     <div className="mt-4 text-center">
                         <p className="text-lg">Thank you for your purchase!</p>
-                        <button onClick={(onClose)} className="mt-4 text-[#FAF6F3] font-semibold text-[18px] w-auto px-3 py-2 md:h-[55px] items-center text-center border-[#898B90] border rounded-xl md:rounded-[20px] bg-[#0061EF]">Confirm Subscription</button>
+                        <button onClick={(onClose)} className="mt-4 text-[#FAF6F3] font-semibold text-[18px] w-auto px-3 py-2 md:h-[55px] items-center text-center border-[#898B90] border rounded-xl bg-[#0061EF]">Confirm Subscription</button>
                     </div>
                 )}
             </div>

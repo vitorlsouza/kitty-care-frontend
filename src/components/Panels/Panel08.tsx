@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRive, UseRiveParameters } from '@rive-app/react-canvas';
 
 import { TermsCheckbox } from "../Signup";
 import styles from '../../components/LoadingOverlay/LoadingOverlay.module.css';
+import { useSignupForm } from "../../hooks/useSignupForm";
+import { OTPForm } from "../shared/OTPForm";
 
 interface Panel08Props {
   previousStep: () => void;
@@ -10,22 +12,54 @@ interface Panel08Props {
 }
 
 const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
-    src: 'riv/V2/Pulse_kitty.riv',
-    autoplay: true,
+  src: 'riv/V2/Pulse_kitty.riv',
+  autoplay: true,
 };
 
 const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
-  const [checked, setChecked] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-      const { RiveComponent } = useRive(RIVE_ANIMATION_CONFIG);
-  
+  const { RiveComponent } = useRive(RIVE_ANIMATION_CONFIG);
 
+  const {
+    error,
+    isLoading,
+    checked,
+    setChecked,
+    handleChange,
+    handleEmailSubmit,
+    handleOTPSubmit,
+  } = useSignupForm();
 
-  const handleSubmit = (e: any) => {
+  const [showOTPInput, setShowOTPInput] = useState(false);
+  const [otp, setOTP] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow numbers and limit to 6 digits
+    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setOTP(value);
+  };
+
+  const onEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    nextStep();
-  }
+    const success = await handleEmailSubmit(email);
+    if (success) {
+      setShowOTPInput(true);
+    }
+  };
+
+  const onOTPSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleOTPSubmit(email, otp);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) nextStep()
+  }, []);
 
   return (
     <>
@@ -50,53 +84,112 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
               Please provide some basic details about you so we can best help you.
             </p>
           </header>
-          <div className="flex flex-col gap-6 w-full">
-            <div className="flex gap-2">
-              <div className="flex flex-col gap-2">
-                <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">First Name</label>
-                <input
-                  type='text'
-                  className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-                  placeholder={'First name'} />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">Last Name</label>
-                <input
-                  type='text'
-                  className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-                  placeholder={'Last name'} />
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">Email</label>
-              <input
-                type='email'
-                className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-                placeholder={'Email'} />
-            </div>
-            <div className="px-2">
-              <TermsCheckbox checked={checked} setChecked={setChecked} />
-            </div>
-          </div>
+          {
+            !showOTPInput ? (
+              <form onSubmit={onEmailSubmit}>
+                <div className="flex flex-col gap-6 w-full">
+                  <div className="flex gap-2">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">First Name</label>
+                      <input
+                        type='text'
+                        name="first_name"
+                        className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+                        placeholder={'First name'}
+                        onChange={handleChange} />
+                      {error && (
+                        <div
+                          id={`${name}-error`}
+                          className="text-red-500 text-base text-center ms-6 -mt-[6px] relative"
+                          role="alert"
+                        >
+                          {error.first_name}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">Last Name</label>
+                      <input
+                        type='text'
+                        name="last_name"
+                        className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+                        placeholder={'Last name'}
+                        onChange={handleChange} />
+                      {error && (
+                        <div
+                          id={`${name}-error`}
+                          className="text-red-500 text-base text-center ms-6 -mt-[6px] relative"
+                          role="alert"
+                        >
+                          {error.last_name}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">Email</label>
+                    <input
+                      type='email'
+                      name="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+                      placeholder={'Email'} />
+                    {error && (
+                      <div
+                        id={`${name}-error`}
+                        className="text-red-500 text-base text-center ms-6 -mt-[6px] relative"
+                        role="alert"
+                      >
+                        {error.email}
+                      </div>
+                    )}
+                  </div>
+                  <div className="px-2">
+                    <TermsCheckbox checked={checked} setChecked={setChecked} />
+                    {error && (
+                      <div
+                        id={`${name}-error`}
+                        className="text-red-500 text-base text-center ms-6 -mt-[6px] relative"
+                        role="alert"
+                      >
+                        {error.general}
+                      </div>
+                    )}
+                  </div>
+                </div>
 
-          <div className="flex flex-col-reverse gap-2 md:gap-4 mx-8 md:mx-0 md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0">
-            <button
-              onClick={previousStep}
-              className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-transparent text-mediumGray border border-mediumGray hover:text-white hover:border-none hover:bg-primaryBlue"
-              aria-label="Go to previous step"
-            >
-              <span aria-hidden="true">{"<"}</span> Back
-            </button>
+                <div className="flex flex-col-reverse gap-2 md:gap-4 mx-8 md:mx-0 md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0">
+                  <button
+                    onClick={previousStep}
+                    className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-transparent text-mediumGray border border-mediumGray hover:text-white hover:border-none hover:bg-primaryBlue"
+                    aria-label="Go to previous step"
+                  >
+                    <span aria-hidden="true">{"<"}</span> Back
+                  </button>
 
-            <button
-              onClick={handleSubmit}
-              disabled
-              className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-primaryBlue text-white hover:bg-opacity-90 disabled:bg-lightGray disabled:text-mediumGray disabled:cursor-not-allowed "
-              aria-label="Go to next step"
-            >
-              Submit
-            </button>
-          </div>
+                  <button
+                    type="submit"
+                    disabled={isLoading || !checked}
+                    className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-primaryBlue text-white hover:bg-opacity-90 disabled:bg-lightGray disabled:text-mediumGray disabled:cursor-not-allowed "
+                    aria-label="Go to next step"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <OTPForm
+                email={email}
+                isLoading={isLoading}
+                error={error}
+                onOTPSubmit={onOTPSubmit}
+                onOTPChange={handleOTPChange}
+                onBackToEmail={() => setShowOTPInput(false)}
+              />
+            )
+          }
+
         </div>
       )}
     </>

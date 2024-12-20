@@ -37,7 +37,7 @@ const Progress = () => {
       const nextStep = prevStep + 1;
       // Skip steps 11 and 14
       window.scrollTo(0, 0);
-      const updatedStep = nextStep === 11 ? 12 : nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
+      const updatedStep = nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
       // Open modal if the updated step is 15
       if (updatedStep === 15) {
         setIsModalOpen(true);
