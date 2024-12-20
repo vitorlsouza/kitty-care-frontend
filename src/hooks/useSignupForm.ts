@@ -130,7 +130,7 @@ export const useSignupForm = () => {
         await dispatch(createCatAsync(formData)).unwrap();
       }
 
-      navigate(`/priceselection`);
+      navigate(`/progress?step=9`);
     } catch (err: any) {
       setError({
         general: err.message || 'Invalid verification code'
