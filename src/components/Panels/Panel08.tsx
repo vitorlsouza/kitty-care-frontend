@@ -5,6 +5,7 @@ import { TermsCheckbox } from "../Signup";
 import styles from '../../components/LoadingOverlay/LoadingOverlay.module.css';
 import { useSignupForm } from "../../hooks/useSignupForm";
 import { OTPForm } from "../shared/OTPForm";
+import { signInWithOTPAPI } from "../../services/api";
 
 interface Panel08Props {
   previousStep: () => void;
@@ -25,7 +26,6 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
     checked,
     setChecked,
     handleChange,
-    handleEmailSubmit,
     handleOTPSubmit,
   } = useSignupForm();
 
@@ -41,7 +41,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
 
   const onEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await handleEmailSubmit(email);
+    const success = await signInWithOTPAPI(email);
     if (success) {
       setShowOTPInput(true);
     }
@@ -58,7 +58,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) nextStep()
+    if (token) nextStep();
   }, []);
 
   return (
