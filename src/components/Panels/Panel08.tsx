@@ -5,7 +5,6 @@ import { TermsCheckbox } from "../Signup";
 import styles from '../../components/LoadingOverlay/LoadingOverlay.module.css';
 import { useSignupForm } from "../../hooks/useSignupForm";
 import { OTPForm } from "../shared/OTPForm";
-import { signInWithOTPAPI } from "../../services/api";
 
 interface Panel08Props {
   previousStep: () => void;
@@ -26,6 +25,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
     checked,
     setChecked,
     handleChange,
+    handleEmailSubmit,
     handleOTPSubmit,
   } = useSignupForm();
 
@@ -41,7 +41,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
 
   const onEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await signInWithOTPAPI(email);
+    const success = await handleEmailSubmit(email);
     if (success) {
       setShowOTPInput(true);
     }
@@ -174,7 +174,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
                     className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-primaryBlue text-white hover:bg-opacity-90 disabled:bg-lightGray disabled:text-mediumGray disabled:cursor-not-allowed "
                     aria-label="Go to next step"
                   >
-                    Submit
+                    {isLoading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </form>
