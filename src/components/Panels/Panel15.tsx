@@ -6,7 +6,8 @@ import Suggestions from "./Panel15/components/Suggestions";
 import GoalSummary from "./Panel15/components/GoalSummary";
 import { useNavigate } from "react-router-dom";
 import { Panel15Props } from "../../types/panel.types";
-const Panel15: React.FC<Panel15Props> = () => {
+
+const Panel15: React.FC<Panel15Props> = ({ openPaymentModal }) => {
 
   const navigate = useNavigate();
 
@@ -28,8 +29,11 @@ const Panel15: React.FC<Panel15Props> = () => {
       <div className="flex justify-center mt-2">
         <button
           onClick={() => {
+            debugger;
             if (localStorage.getItem("email") && localStorage.getItem('subscriptionId')) {
               navigate("/cat-assistant");
+            } else if (!localStorage.getItem('subscriptionId')) {
+              openPaymentModal?.();
             } else {
               navigate("/signup");
             }

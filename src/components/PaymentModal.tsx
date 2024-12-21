@@ -73,7 +73,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
                         ) : (
-                            <PaymentDetailV2 />
+                            <PaymentDetailV2 onClose={onClose} />
                         )}
                     </>
                 ) : (
