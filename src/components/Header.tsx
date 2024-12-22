@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
       <div>
         {/* <a href="/"> */}
         <header
-          className={`w-[400px] h-[180px] sm:h-[200px] sm:w-[900px] sm:mt-0 -mb-20 m-auto relative ${className}`}
+          className={`w-[400px] h-[240px] sm:h-[200px] sm:w-[900px] sm:mt-0 -mb-20 m-auto relative ${className}`}
           data-testid="kitty-logo"
         >
           <KittyLogo />
