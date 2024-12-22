@@ -66,12 +66,12 @@ const AppContent = () => {
   }, [location.pathname, dispatch]);
 
   const routes = [
-    { path: ROUTES.HOME, element: <Navigate to={ROUTES.PROGRESS} replace />},
+    { path: ROUTES.HOME, element: <Navigate to={ROUTES.PROGRESS} replace /> },
     { path: ROUTES.LOGIN, element: <Login /> },
     { path: ROUTES.SIGNUP, element: <Signup /> },
     { path: ROUTES.SENT_MAIL, element: <EmailSentSuccess /> },
     { path: ROUTES.CONFIRM_SIGNUP, element: <SignUpConfirm /> },
-    { path: ROUTES.PROGRESS, element: <Progress />},
+    { path: ROUTES.PROGRESS, element: <Progress /> },
     { path: ROUTES.DASHBOARD, element: <ProtectedRouteWrapper><Dashboard /></ProtectedRouteWrapper> },
     { path: ROUTES.PRICE_SELECTION, element: <ProtectedRouteWrapper><PriceSelection /></ProtectedRouteWrapper> },
     { path: ROUTES.CAT_ASSISTANT, element: <ProtectedRouteWrapper><Chatroom /></ProtectedRouteWrapper> },

@@ -11,5 +11,6 @@ export interface Panel02Props {
 } 
 
 export interface Panel15Props {
+  openPaymentModal?: () => void;
   previousStep?: () => void;  // Made optional since it's not currently used
 } 

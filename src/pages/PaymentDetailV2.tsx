@@ -8,7 +8,6 @@ import {
   CardCvcElement,
 } from "@stripe/react-stripe-js";
 import { loadStripe, StripeCardNumberElement } from "@stripe/stripe-js";
-import { JSX } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../Redux/hooks";
 import { RootState } from "../Redux/store";
@@ -85,7 +84,7 @@ const calculateEndDate = (isYearly: boolean): string => {
   );
 };
 
-const PaymentForm = () => {
+const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useAppDispatch();
@@ -157,7 +156,7 @@ const PaymentForm = () => {
     setFormData({ ...formData, state: selectedOption.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (onClose: () => void, e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!stripe || !elements) {
       setError("Payment system not initialized");
@@ -181,13 +180,20 @@ const PaymentForm = () => {
           billing_period: formData.billingPeriod
         })).unwrap();
 
-        localStorage.removeItem("paymentMade");
-        if (localStorage.getItem("catId")) {
-          navigate("/progress");
-        } else {
-          navigate("/");
-        }
+        // localStorage.removeItem("paymentMade");
+        // if (localStorage.getItem("catId") && localStorage.getItem("subscriptionId")) {
+        //   navigate("/cat-assistant");
+        // } else if (!localStorage.getItem("subscriptionId")) {
+        //   navigate("/payment-detail");
+        // } else if (!localStorage.getItem("catId")) {
+        //   navigate("/progress");
+        // } else {
+        //   navigate("/");
+        // }
+
         dispatch(setLoading(false));
+        onClose();
+        return;
       }
 
       const { paymentMethod } = await stripe.createPaymentMethod({
@@ -210,7 +216,6 @@ const PaymentForm = () => {
 
       const trial_end = (billingOption.method ? 7 : 3) * 24 * 3600 + Math.floor(new Date().getTime() / 1000);
       const priceId = billingOption.method ? import.meta.env.VITE_STRIPE_ANNUAL_PRICE_ID : import.meta.env.VITE_STRIPE_MONTHLY_PRICE_ID;
-
 
       const { subscriptionId, success } = await getClientSecretKey({
         name: formData.fullName,
@@ -241,14 +246,19 @@ const PaymentForm = () => {
 
         <VWORevenueTracking />;
 
-        // if (localStorage.getItem("catId")) {
+        // if (localStorage.getItem("catId") && localStorage.getItem("subscriptionId")) {
         //   navigate("/cat-assistant");
+        // } else if (!localStorage.getItem("subscriptionId")) {
+        //   navigate("/payment-detail");
+        // } else if (!localStorage.getItem("catId")) {
+        //   navigate("/progress");
         // } else {
-        navigate("/progress");
+        //   navigate("/");
         // }
 
         dispatch(setLoading(false));
-
+        onClose();
+        return;
       }
 
     } catch (error: any) {
@@ -279,7 +289,7 @@ const PaymentForm = () => {
         <p className="absolute top-[-16px] right-[-20px] text-[16px] sm:text-[18px] bg-slate-800 text-white rounded-lg p-3">
           <small>Powered by</small> <big><b>stripe</b></big>
         </p>
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={(e) => handleSubmit(onClose, e)} className="space-y-3">
           {/* <div className="text-center text-[#334155] text-[15px] sm:text-[24px] capitalize mb-4">
             <div className="flex justify-between items-center pb-2 border-b border-slate-400">
               <FaUserLock className="text-2xl sm:text-4xl" />
@@ -416,9 +426,9 @@ const PaymentForm = () => {
   );
 };
 
-const PaymentDetailV2 = (props: JSX.IntrinsicAttributes) => (
+const PaymentDetailV2 = ({ onClose }: { onClose: () => void; }) => (
   <Elements stripe={STRIPE_PROMISE}>
-    <PaymentForm {...props} />
+    <PaymentForm onClose={onClose} />
   </Elements>
 );
 

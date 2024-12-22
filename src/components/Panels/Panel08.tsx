@@ -58,7 +58,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) nextStep()
+    if (token) nextStep();
   }, []);
 
   return (
@@ -174,7 +174,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
                     className="w-full h-[55px] md:w-[115px] md:h-[40px] rounded-2xl bg-primaryBlue text-white hover:bg-opacity-90 disabled:bg-lightGray disabled:text-mediumGray disabled:cursor-not-allowed "
                     aria-label="Go to next step"
                   >
-                    Submit
+                    {isLoading ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </form>
