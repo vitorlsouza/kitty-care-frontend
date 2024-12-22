@@ -70,7 +70,7 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
           <select
             value={age || ''}
             onChange={(e) => setAge(e.target.value)}
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
+            className='w-full lg:w-3/4 border border-gray-300 bg-white px-4 h-12 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
           >
             <option value="" disabled>
               Select your cat's age
