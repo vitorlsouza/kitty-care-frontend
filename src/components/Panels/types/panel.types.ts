@@ -4,6 +4,7 @@ export interface PanelNavigationProps {
 }
 
 export interface Panel14Props extends PanelNavigationProps {
+  openPaymentModal: any
 }
 
 export interface OverviewSectionProps {

@@ -37,14 +37,14 @@ const Progress = () => {
       const nextStep = prevStep + 1;
       // Skip steps 11 and 14
       window.scrollTo(0, 0);
-      const updatedStep = nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
+      // const updatedStep = nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
       // Open modal if the updated step is 15
-      if (updatedStep === 15) {
+      if (nextStep === 14) {
         setIsModalOpen(true);
       }
       // Update URL with new step
-      navigate(`?step=${updatedStep}`, { replace: true });
-      return updatedStep;
+      navigate(`?step=${nextStep}`, { replace: true });
+      return nextStep;
     });
   };
 
@@ -56,10 +56,10 @@ const Progress = () => {
     setCurrentStep((prevStep) => {
       const newPrevStep = prevStep - 1;
       window.scrollTo(0, 0);
-      const updatedStep = newPrevStep === 14 ? 13 : Math.max(newPrevStep, MIN_STEP);
+      // const updatedStep = newPrevStep === 14 ? 13 : Math.max(newPrevStep, MIN_STEP);
       // Update URL with new step
-      navigate(`?step=${updatedStep}`, { replace: true });
-      return updatedStep;
+      navigate(`?step=${newPrevStep}`, { replace: true });
+      return newPrevStep;
     });
   };
 
@@ -93,8 +93,8 @@ const Progress = () => {
     11: <Panels.Panel11 nextStep={nextStep} previousStep={previousStep} />,
     12: <Panels.Panel12 nextStep={nextStep} previousStep={previousStep} />,
     13: <Panels.Panel13 nextStep={nextStep} previousStep={previousStep} />,
-    // 14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
-    15: <Panels.Panel15 previousStep={previousStep} openPaymentModal={openPaymentModal} />,
+    14: <Panels.Panel14 previousStep={previousStep} openPaymentModal={openPaymentModal}/>,
+    // 15: <Panels.Panel15 previousStep={previousStep} openPaymentModal={openPaymentModal} />,
   }), []);
 
   // Render current panel based on step
