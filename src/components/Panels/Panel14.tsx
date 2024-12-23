@@ -52,21 +52,7 @@ const Panel14: React.FC<Panel14Props> = ({ openPaymentModal }) => {
         </h1>
       </div>
 
-      <div className="rounded-3xl mx-4 p-6 border-2 border-lightGray bg-lightWhite relative text-center md:mx-8 lg:mx-28">
-        <div className="flex justify-center mb-4 absolute top-0 right-1/2 transform translate-x-1/2">
-          <span className="bg-primaryOrange text-black font-semibold text-center py-1 px-4 rounded-bl-2xl rounded-br-2xl text-sm md:text-lg border border-mediumGray">
-            Overview
-          </span>
-        </div>
-
-        <OverviewSection title="Selected Goals" items={selectedGoals} />
-        <OverviewSection title="Key Barriers Identified" items={keyBarriers} />
-        <OverviewSection title="Progress Focus" items={progressFocus} />
-      </div>
-
-      <Suggestions horizontal />
-
-      <div className="flex justify-center mt-8 gap-2">
+      <div className="flex justify-center my-8 gap-2">
         <button
           onClick={() => {
             if (localStorage.getItem("email") && localStorage.getItem('subscriptionId')) {
@@ -82,6 +68,22 @@ const Panel14: React.FC<Panel14Props> = ({ openPaymentModal }) => {
           Chat With Expert Now
         </button>
       </div>
+
+      <div className="rounded-3xl mx-4 p-6 border-2 border-lightGray bg-lightWhite relative text-center md:mx-8 lg:mx-28">
+        <div className="flex justify-center mb-4 absolute top-0 right-1/2 transform translate-x-1/2">
+          <span className="bg-primaryOrange text-black font-semibold text-center py-1 px-4 rounded-bl-2xl rounded-br-2xl text-sm md:text-lg border border-mediumGray">
+            Overview
+          </span>
+        </div>
+
+        <OverviewSection title="Selected Goals" items={selectedGoals} />
+        <OverviewSection title="Key Barriers Identified" items={keyBarriers} />
+        <OverviewSection title="Progress Focus" items={progressFocus} />
+      </div>
+
+      <Suggestions horizontal />
+
+      
     </div>
   );
 };
