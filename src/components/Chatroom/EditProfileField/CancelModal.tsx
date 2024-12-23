@@ -26,7 +26,7 @@ const CancelModal: React.FC<CancelModalProps> = ({
     try {
       await dispatch(deleteSubscriptionAsync()).unwrap();
       onConfirm();
-      navigate("/priceselection");
+      navigate("/progress");
     } catch (error) {
       console.error("Failed to cancel subscription:", error);
       // Optionally handle error (show error message, etc.)

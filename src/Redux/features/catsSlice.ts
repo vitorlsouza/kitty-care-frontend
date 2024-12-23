@@ -57,6 +57,12 @@ export const fetchCatsAsync = createAsyncThunk(
         if (highestIdCat) {
           localStorage.setItem('catId', highestIdCat.id);
           if (highestIdCat.food_bowls) localStorage.setItem('food_bowls', highestIdCat.food_bowls.toString());
+          if(highestIdCat.breed) localStorage.setItem('breed', highestIdCat.breed);
+          if(highestIdCat.gender) localStorage.setItem('gender', highestIdCat.gender);
+          if(highestIdCat.target_weight) localStorage.setItem('target_weight', highestIdCat.target_weight);
+          if(highestIdCat.medical_history) localStorage.setItem('medical_history', highestIdCat.medical_history);
+          if(highestIdCat.dietary_restrictions) localStorage.setItem('dietary_restrictions', highestIdCat.dietary_restrictions);
+          if(highestIdCat.name) localStorage.setItem('cat_name', highestIdCat.name);
           if (highestIdCat.treats) localStorage.setItem('treats', highestIdCat.treats.toString());
           if (highestIdCat.playtime) localStorage.setItem('playtime', highestIdCat.playtime.toString());
           if (highestIdCat.goals) localStorage.setItem('goals', highestIdCat.goals);
