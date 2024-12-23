@@ -29,7 +29,6 @@ export default {
       animation: {
         blink: 'blink 5s infinite',
       },
-      
     },
   },
   plugins: [],

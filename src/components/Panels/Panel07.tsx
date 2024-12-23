@@ -75,7 +75,7 @@ const BreedSelect: React.FC<BreedSelectProps> = ({ breed, setBreed, error }) => 
       <select
         value={breed ?? ""}
         onChange={(e) => setBreed(e.target.value as CatBreed)}
-        className="block w-full border border-gray-300 bg-white px-4 py-2 pr-8 rounded-full focus:border-primaryBlue focus:outline-none"
+        className='w-full lg:w-3/4 border border-gray-300 bg-white px-4 h-12 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
       >
         <option value="" disabled>Select breed</option>
         {CAT_BREEDS.map((b) => (
@@ -113,7 +113,7 @@ const WeightInput: React.FC<WeightInputProps> = ({
       <select
         value={weight || ''}
         onChange={(e) => setWeight(e.target.value)}
-        className="w-full lg:w-28 border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-sm"
+        className='w-full lg:w-3/4 border border-gray-300 bg-white px-4 h-12 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
       >
         <option value="" disabled>
           Select weight
@@ -153,7 +153,7 @@ const TargetWeightInput: React.FC<TargetWeightInputProps> = ({
     <select
       value={targetWeight || ''}
       onChange={(e) => setTargetWeight(e.target.value)}
-      className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
+      className='w-full lg:w-3/4 border border-gray-300 bg-white px-4 h-12 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
     >
       <option value="" disabled>
         Select target weight
