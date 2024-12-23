@@ -305,7 +305,7 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
           </div> */}
           <h1 className="text-center text-2xl font-bold pb-2 border-b border-gray-300 w-full">Pay with Card</h1>
           <div>
-            <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+            <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">
               Full Name on Card
             </label>
             <input
@@ -313,14 +313,14 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
               name="fullName"
               value={formData.fullName}
               onChange={handleInputChange}
-              className="border text-base sm:text-[20px] p-[10px_12px] rounded-lg border-[#898B90] items-center w-full"
+              className="border text-base sm:text-2xl p-[10px_12px] rounded-lg border-[#898B90] items-center w-full"
               placeholder="Enter your full name"
               required
             />
           </div>
 
           <div className="rounded-lg overflow-hidden">
-            <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+            <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">
               Card Number
             </label>
             <CardNumberElement
@@ -331,7 +331,7 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">
                 Expiry Month
               </label>
               <CardExpiryElement
@@ -340,7 +340,7 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
               />
             </div>
             <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">
                 CVV
               </label>
               <CardCvcElement
@@ -351,7 +351,7 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
           </div>
 
           <div>
-            <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+            <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">
               Country
             </label>
             <Select
@@ -369,7 +369,7 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="ms-3 mb-[10px] block text-base sm:text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">
                 State
               </label>
               <Select
@@ -387,15 +387,15 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
             </div>
 
             <div>
-              <label className="ms-3 mb-[10px] block text-base rounded-lg  sm:text-[20px] font-medium text-black">
+              <label className="ms-3 mb-[10px] block text-base rounded-lg  sm:text-2xl font-medium text-black">
                 Postal Code
               </label>
               <input
-                type="text"
+                type="tel"
                 name="postalCode"
                 value={formData.postalCode}
                 onChange={handleInputChange}
-                className="border text-base sm:text-[20px] px-2 py-[8px] h-[38px] rounded-sm border-[#898B90] items-center w-full"
+                className="border text-base sm:text-2xl px-2 py-[8px] h-[38px] rounded-sm border-[#898B90] items-center w-full"
                 required
               />
             </div>

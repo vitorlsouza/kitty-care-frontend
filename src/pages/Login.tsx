@@ -8,12 +8,19 @@ import ReactPixel from 'react-facebook-pixel';
 import { useNavigate } from 'react-router-dom';
 import { signInWithOTPAPI } from '../services/api';
 import { loginUserWithOTPAsync } from '../Redux/features/userSlice';
+import { useRive, UseRiveParameters } from '@rive-app/react-canvas';
+import styles from '../components/LoadingOverlay/LoadingOverlay.module.css';
 
 interface LoginError {
   email?: string;
   otp?: string;
   general?: string;
 }
+
+const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
+  src: 'riv/V2/Pulse_kitty.riv',
+  autoplay: true,
+};
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -83,20 +90,20 @@ const Login: React.FC = () => {
     }
   };
 
+  const { RiveComponent } = useRive(RIVE_ANIMATION_CONFIG);
+  const isPhone = window.innerWidth < 768;
+
   return (
     <Layout>
-      <div className="w-[343px] m-auto sm:w-[600px] max-w-[90%] px-[21px] py-[47px] sm:px-[100px] sm:py-[70px] bg-white border-2 rounded-3xl border-[#B8B8B8] mt-8">
+      <div className={`m-auto sm:w-[600px] max-w-[90%] px-[21px] sm:px-[100px] bg-white border-2 rounded-3xl border-[#B8B8B8] mt-8 ${isPhone ? 'py-[47px] sm:py-[70px] ' : 'pb-[47px] sm:pb-[70px]'}`}>
+        {!isPhone && <div className={`${styles.animationContainer} mx-auto h-[200px]`}>
+          {RiveComponent && <RiveComponent />}
+        </div>}
         <div className="w-full h-full flex flex-col items-center justify-center">
           <div className="text-center">
             <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
               Login
             </h2>
-            {/* <div className="text-base sm:text-lg font-medium">
-              New to KittyCare?{' '}
-              <span className="block sm:inline text-[#0061EF]">
-                <a href={`/signup?${urlParams.toString()}`}>Sign up for free</a>
-              </span>
-            </div> */}
           </div>
 
           <LoginForm
