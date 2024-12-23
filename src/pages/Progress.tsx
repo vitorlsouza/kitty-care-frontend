@@ -93,8 +93,8 @@ const Progress = () => {
     11: <Panels.Panel11 nextStep={nextStep} previousStep={previousStep} />,
     12: <Panels.Panel12 nextStep={nextStep} previousStep={previousStep} />,
     13: <Panels.Panel13 nextStep={nextStep} previousStep={previousStep} />,
-    // 14: <Panels.Panel14 nextStep={nextStep} previousStep={previousStep} />,
-    15: <Panels.Panel15 previousStep={previousStep} openPaymentModal={openPaymentModal} />,
+    // 14: <Panels.Panel14 previousStep={previousStep} openPaymentModal={openPaymentModal}/>,
+    15: <Panels.Panel14 previousStep={previousStep} openPaymentModal={openPaymentModal} />,
   }), []);
 
   // Render current panel based on step

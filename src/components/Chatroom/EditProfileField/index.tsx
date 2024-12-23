@@ -113,7 +113,7 @@ const FormFieldsSection = ({
   <div className="w-full">
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-[30px]">
       <CustomInput
-        label="Name"
+        label="Your cat's name"
         value={profileInfo.name}
         onChange={onInputChange("name")}
         placeholder="Enter your name"

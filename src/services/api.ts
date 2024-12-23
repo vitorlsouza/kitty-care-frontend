@@ -342,6 +342,8 @@ export const deleteStripeSubscriptionAPI = async (subscriptionId: string) => {
     if (!token) {
       throw new Error("User Not Authenticated");
     }
+    console.log('34343434343434343434');
+    
     const response = await API.delete(`/api/payments/stripe/subscription/${subscriptionId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
