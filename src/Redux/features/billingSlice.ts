@@ -5,8 +5,8 @@ import { clearTokens } from "../../utils/auth";
 import { RootState } from "../../Redux/store";
 
 const initialState: BillingState = {
-  method: true, // "true" for annual, "false" for monthly
-  price: 299.99,
+  method: false, // Changed to false for monthly default
+  price: 49.99,  // Changed to monthly price since it's the default
   daily: 0.82,
   monthly: 49.99,
   yearly: 299.99,
