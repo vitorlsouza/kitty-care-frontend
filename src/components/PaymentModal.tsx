@@ -45,6 +45,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
 
     if (!isOpen) return null;
 
+    const handleClose = () => {
+        setShowCardFields(false);
+    };
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div className={`bg-white rounded-3xl p-6 shadow-lg w-[380px] md:max-w-xl md:w-full transition-all duration-300 h-auto`}>
@@ -73,7 +77,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
                         ) : (
-                            <PaymentDetailV2 onClose={onClose} />
+                            <PaymentDetailV2 onCancel={handleClose} onClose={onClose} />
                         )}
                     </>
                 ) : (
