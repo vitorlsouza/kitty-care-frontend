@@ -254,9 +254,8 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
   };
 
   const handleCancel = () => {
-    navigate("/progress?step=1");
     onClose();
-    
+
   };
 
   return (
