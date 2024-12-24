@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import ReactPixel from "react-facebook-pixel";
 import { useMediaQuery } from "react-responsive";
 import { updateBillingOption } from "../Redux/features/billingSlice";
-import PayPalSubscriptionBtn from "../components/Payments/PayPalSubscriptionBtn";
+// import PayPalSubscriptionBtn from "../components/Payments/PayPalSubscriptionBtn";
 
 /**
  * PaymentMethodV2 component handles the payment method selection page
@@ -62,7 +62,7 @@ const PaymentMethodV2 = () => {
               {/* Payment Methods Section */}
               <div className="w-full h-full flex flex-col justify-between gap-[20px]">
                 <PayMethodBtn onClick={() => navigate("/paymentdetailV2")} />
-                <PayPalSubscriptionBtn />
+                {/* <PayPalSubscriptionBtn /> */}
                 {/* Footer Section */}
                 <div>
                   <div className="text-[14px] font-semibold opacity-60 text-center">
