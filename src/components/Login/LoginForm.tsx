@@ -12,9 +12,30 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
     const [email, setEmail] = useState('');
     const [showOTPInput, setShowOTPInput] = useState(false);
     const [otp, setOTP] = useState('');
+    const [emailError, setEmailError] = useState('');
+
+    const validateEmail = (email: string) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
+        if (!email) {
+            setEmailError('Email is required');
+            return false;
+        }
+        if (!emailRegex.test(email)) {
+            setEmailError('Please enter a valid email address');
+            return false;
+        }
+        setEmailError('');
+        return true;
+    };
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+        if (newEmail) {
+            validateEmail(newEmail);
+        } else {
+            setEmailError('');
+        }
     };
 
     const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +46,9 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
 
     const onEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!validateEmail(email)) {
+            return;
+        }
         const success = await handleEmailSubmit(email);
         if (success) {
             setShowOTPInput(true);
@@ -50,10 +74,10 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
                         label="Email"
                         type="email"
                         placeholder="name@email.com"
-                        className={error?.email ? 'border-red-500' : ''}
+                        className={emailError || error?.email ? 'border-red-500' : ''}
                         onChange={handleEmailChange}
-                        error={error?.email}
-                        aria-invalid={!!error?.email}
+                        error={emailError || error?.email}
+                        aria-invalid={!!(emailError || error?.email)}
                     />
 
                     {error?.general && (
