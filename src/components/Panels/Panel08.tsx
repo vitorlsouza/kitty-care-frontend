@@ -32,15 +32,37 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
   const [showOTPInput, setShowOTPInput] = useState(false);
   const [otp, setOTP] = useState('');
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
-  const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Only allow numbers and limit to 6 digits
-    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
-    setOTP(value);
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
+    if (!email) {
+      setEmailError('Email is required');
+      return false;
+    }
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    if (newEmail) {
+      validateEmail(newEmail);
+    } else {
+      setEmailError('');
+    }
   };
 
   const onEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateEmail(email)) {
+      return;
+    }
     const success = await handleEmailSubmit(email);
     if (success) {
       setShowOTPInput(true);
@@ -52,8 +74,10 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
     handleOTPSubmit(email, otp);
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+  const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow numbers and limit to 6 digits
+    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setOTP(value);
   };
 
   useEffect(() => {
@@ -75,7 +99,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full md:max-w-[540px] p-6 rounded-md mx-auto">
+        <div className="w-full md:max-w-lg p-6 rounded-md mx-auto">
           <header className="text-center mb-8">
             <h1 className="font-bold text-2xl lg:text-3xl mb-2">
               Tell Us About You
@@ -88,7 +112,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
             !showOTPInput ? (
               <form onSubmit={onEmailSubmit}>
                 <div className="flex flex-col gap-6 w-full">
-                  <div className="flex gap-2">
+                  <div className="flex justify-between">
                     <div className="flex flex-col gap-2">
                       <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">First Name</label>
                       <input
@@ -134,15 +158,14 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
                       value={email}
                       onChange={handleEmailChange}
                       className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-                      placeholder={'Email'} 
-                      required/>
-                    {error && (
+                      placeholder={'Email'}
+                      required />
+                    {(emailError || error?.email) && (
                       <div
-                        id={`${name}-error`}
                         className="text-red-500 text-base text-center ms-6 -mt-[6px] relative"
                         role="alert"
                       >
-                        {error.email}
+                        {emailError || error?.email}
                       </div>
                     )}
                   </div>

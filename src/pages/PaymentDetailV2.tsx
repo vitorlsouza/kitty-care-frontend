@@ -81,7 +81,7 @@ const calculateEndDate = (isYearly: boolean): string => {
   );
 };
 
-const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
+const PaymentForm = ({ onCancel, onClose }: { onCancel: () => void; onClose: () => void; }) => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useAppDispatch();
@@ -254,9 +254,7 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
   };
 
   const handleCancel = () => {
-    navigate("/progress?step=1");
-    onClose();
-    
+    onCancel();
   };
 
   return (
@@ -383,15 +381,13 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
           </div>
         </form>
       </div>
-      {/* </div>
-      </div> */}
     </>
   );
 };
 
-const PaymentDetailV2 = ({ onClose }: { onClose: () => void; }) => (
+const PaymentDetailV2 = ({ onCancel, onClose }: { onCancel: () => void; onClose: () => void; }) => (
   <Elements stripe={STRIPE_PROMISE}>
-    <PaymentForm onClose={onClose} />
+    <PaymentForm onCancel={onCancel} onClose={onClose} />
   </Elements>
 );
 
