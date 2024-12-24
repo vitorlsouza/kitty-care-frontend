@@ -77,7 +77,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                 </div>
                             </div>
                         ) : (
-                            <PaymentDetailV2 onCancel={handleClose} onClose={onClose} />
+                            <PaymentDetailV2 onCancel={handleClose} onClose={() => setIsSuccess(true)} />
                         )}
                     </>
                 ) : (
