@@ -6,9 +6,9 @@ import CollapseBtn from "./CollapseBtn";
 import Content from "./Content";
 
 import KittyCare from "/assets/svg/KittyCare.svg";
-import SmartKitty from "/assets/svg/SmartKitty.svg";
+import SmartKitty from "/assets/svg/chatcare.svg";
 // import Health from "/assets/svg/Health.svg";
-import MyPlan from "/assets/svg/MyPlan.svg";
+import MyPlan from "/assets/svg/report.svg";
 // import Settings from "/assets/svg/Settings.svg";
 import Logout from "/assets/svg/Logout.svg";
 import Profile from "/assets/svg/Profile.svg";
@@ -161,8 +161,8 @@ const SideBar = () => {
               </div>
               <div className="flex flex-col gap-4">
                 {[
-                  { id: "/cat-assistant", src: SmartKitty },
-                  { id: "/progress", src: MyPlan },
+                  { id: "/cat-assistant", src: SmartKitty, content: "Chat with Expert" },
+                  { id: "/progress", src: MyPlan, content: "Review Report" },
                   // { id: "MyPlan", src: MyPlan },
                   // { id: "Settings", src: Settings },
                 ].map((item) => (
@@ -176,7 +176,7 @@ const SideBar = () => {
                     />
                     <Content
                       id={item.id}
-                      content={item.id}
+                      content={item.content}
                       handleHover={() => { }}
                       onHover={onHover}
                       onClick={() => navigate(item.id)}

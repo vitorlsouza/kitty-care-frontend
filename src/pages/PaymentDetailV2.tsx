@@ -18,9 +18,6 @@ import { setLoading } from "../store/ui/actions";
 import { useMediaQuery } from "react-responsive";
 import { updateBillingOption } from "../Redux/features/billingSlice";
 import VWORevenueTracking from "../components/VWORevenueTracking";
-// import { FaCcAmex, FaCcDiscover, FaCcMastercard, FaUserLock } from "react-icons/fa";
-// import { RiVisaFill } from "react-icons/ri";
-// import { LiaCcJcb } from "react-icons/lia";
 import { allCountries } from "country-region-data";
 import Select from "react-select";
 
@@ -180,17 +177,6 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
           billing_period: formData.billingPeriod
         })).unwrap();
 
-        // localStorage.removeItem("paymentMade");
-        // if (localStorage.getItem("catId") && localStorage.getItem("subscriptionId")) {
-        //   navigate("/cat-assistant");
-        // } else if (!localStorage.getItem("subscriptionId")) {
-        //   navigate("/payment-detail");
-        // } else if (!localStorage.getItem("catId")) {
-        //   navigate("/progress");
-        // } else {
-        //   navigate("/");
-        // }
-
         dispatch(setLoading(false));
         onClose();
         return;
@@ -246,16 +232,6 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
 
         <VWORevenueTracking />;
 
-        // if (localStorage.getItem("catId") && localStorage.getItem("subscriptionId")) {
-        //   navigate("/cat-assistant");
-        // } else if (!localStorage.getItem("subscriptionId")) {
-        //   navigate("/payment-detail");
-        // } else if (!localStorage.getItem("catId")) {
-        //   navigate("/progress");
-        // } else {
-        //   navigate("/");
-        // }
-
         dispatch(setLoading(false));
         onClose();
         return;
@@ -278,31 +254,18 @@ const PaymentForm = ({ onClose }: { onClose: () => void; }) => {
   };
 
   const handleCancel = () => {
-    navigate("/paymentmethodV2");
+    navigate("/progress?step=1");
+    onClose();
+    
   };
 
   return (
     <>
-      {/* <div className="flex flex-col sm:flex-row justify-between max-w-[1200px] m-auto gap-6 sm:gap-[80px]">
-        <div className="m-auto w-full sm:m-0"> */}
       <div className="relative w-full m-auto px-[21px] py-[47px] h-auto bg-white border-2 rounded-3xl border-[#B8B8B8]">
         <p className="absolute top-[-16px] right-[-20px] text-[16px] sm:text-[18px] bg-slate-800 text-white rounded-lg p-3">
           <small>Powered by</small> <big><b>stripe</b></big>
         </p>
         <form onSubmit={(e) => handleSubmit(onClose, e)} className="space-y-3">
-          {/* <div className="text-center text-[#334155] text-[15px] sm:text-[24px] capitalize mb-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-400">
-              <FaUserLock className="text-2xl sm:text-4xl" />
-              Guaranteed <b>safe & secure</b> checkout
-            </div>
-            <div className="flex items-center justify-between ">
-              <RiVisaFill className="text-[50px] sm:text-[80px]" color="#0061EF" />
-              <FaCcMastercard className="text-[50px] sm:text-[80px]" color="#ef4444" />
-              <FaCcAmex className="text-[50px] sm:text-[80px]" color="#0ea5e9" />
-              <LiaCcJcb className="text-[50px] sm:text-[80px]" color="#8b5cf6" />
-              <FaCcDiscover className="text-[50px] sm:text-[80px]" color="#075985" />
-            </div>
-          </div> */}
           <h1 className="text-center text-2xl font-bold pb-2 border-b border-gray-300 w-full">Pay with Card</h1>
           <div>
             <label className="ms-3 mb-[10px] block text-base sm:text-2xl font-medium text-black">

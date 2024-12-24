@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Panel14Props, OverviewSectionProps } from "./types/panel.types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import Suggestions from "./Panel15/components/Suggestions";
@@ -39,6 +39,10 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ title, items }) => {
 
 const Panel14: React.FC<Panel14Props> = ({ openPaymentModal }) => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const subscriptionId = localStorage.getItem('subscriptionId');
+    if(!subscriptionId) openPaymentModal();
+  })
 
   const [selectedGoals] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.GOALS, []);
   const [keyBarriers] = useLocalStorage<string[] | string>(LOCAL_STORAGE_KEYS.ISSUES_FACED, []);

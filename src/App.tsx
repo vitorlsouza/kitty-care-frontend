@@ -66,7 +66,7 @@ const AppContent = () => {
   }, [location.pathname, dispatch]);
 
   const routes = [
-    { path: ROUTES.HOME, element: <Navigate to={ROUTES.PROGRESS} replace /> },
+    { path: ROUTES.HOME, element: <Navigate to={ROUTES.LOGIN} replace /> },
     { path: ROUTES.LOGIN, element: <Login /> },
     { path: ROUTES.SIGNUP, element: <Signup /> },
     { path: ROUTES.SENT_MAIL, element: <EmailSentSuccess /> },

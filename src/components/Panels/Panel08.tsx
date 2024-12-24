@@ -134,7 +134,8 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
                       value={email}
                       onChange={handleEmailChange}
                       className='w-full border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-                      placeholder={'Email'} />
+                      placeholder={'Email'} 
+                      required/>
                     {error && (
                       <div
                         id={`${name}-error`}
