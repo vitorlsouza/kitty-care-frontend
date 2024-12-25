@@ -70,12 +70,12 @@ const calculateEndDate = (isYearly: boolean): string => {
   );
 };
 
-const PayPalSubscriptionBtn: React.FC = () => {
+const PayPalSubscriptionBtn: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [planId, setPlanId] = useState<string | null>(null);
   const billingOption = useAppSelector((state: RootState) => state.billing);
   const dispatch = useAppDispatch();
 
-  const payPeriod = billingOption.method ? "Monthly" : "Annual";
+  const payPeriod = billingOption.method ? "Annual" : "Monthly";
   useEffect(() => {
     (async () => {
       try {
@@ -97,22 +97,33 @@ const PayPalSubscriptionBtn: React.FC = () => {
       // Optionally, send subscription details to your backend for processing
       const subscriberDetails: SubscriberDetails = {
         name: subscriptionDetails.subscriber.name,
-        email_address: subscriptionDetails.subscriber.email_address,
-        shipping_address: subscriptionDetails.subscriber.shipping_address,
+        email_address: subscriptionDetails.subscriber.email_address, // Added the missing comma here
+        shipping_address: {
+          name: {
+            full_name: `${subscriptionDetails.subscriber.name?.given_name} ${subscriptionDetails.subscriber.name?.surname}`
+          },
+          address: subscriptionDetails.subscriber.shipping_address.address
+        },
       };
 
       const subscription = await createPayPalSubscription(planId, subscriberDetails);
-      
+      console.log("subscription success on paypal", subscription);
+
+
       if (subscription.id) {
         await dispatch(createSubscriptionAsync({
-          id: subscription.id,
+          id: subscriptionDetails.id,
           email: subscriptionDetails.subscriber.email_address || localStorage.getItem("email"),
-          plan: payPeriod,
+          plan: "Free Trial",
           end_date: calculateEndDate(billingOption.method),
-          start_date: subscription.start_time,
+          start_date: subscriptionDetails.start_time,
           provider: "PayPal",
           billing_period: payPeriod
         })).unwrap();
+
+        console.log("created subscription transaction on supabase");
+        onClose();
+
       }
 
     } catch (error) {
