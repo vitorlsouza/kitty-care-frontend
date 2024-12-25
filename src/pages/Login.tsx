@@ -95,7 +95,7 @@ const Login: React.FC = () => {
 
   return (
     <Layout>
-      <div className={`m-auto sm:w-[600px] max-w-[90%] px-[21px] sm:px-[100px] bg-white border-2 rounded-3xl border-[#B8B8B8] mt-8 ${isPhone ? 'py-[47px] sm:py-[70px] ' : 'pb-[47px] sm:pb-[70px]'}`}>
+      <div className={`m-auto sm:w-[600px] max-w-[90%] px-[21px] sm:px-[80px] bg-white border-2 rounded-3xl border-[#B8B8B8] mt-8 ${isPhone ? 'py-[47px] sm:py-[70px] ' : 'pb-[47px] sm:pb-[70px]'}`}>
         {!isPhone && <div className={`${styles.animationContainer} mx-auto h-[200px]`}>
           {RiveComponent && <RiveComponent />}
         </div>}
@@ -104,7 +104,7 @@ const Login: React.FC = () => {
             <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
               Login
             </h2>
-            <p className='font-semibold text-lg md:text-xl'>If you haven't registered yet, go to <span className='text-blue-600 cursor-pointer' onClick={() => navigate('/progress')}>Sign Up</span></p>
+            <p className='font-semibold text-gray-500 text-md md:text-xl'>If you don't have account yet, go to <span className='text-blue-600 cursor-pointer' onClick={() => navigate('/progress')}>Sign Up</span></p>
           </div>
 
           <LoginForm

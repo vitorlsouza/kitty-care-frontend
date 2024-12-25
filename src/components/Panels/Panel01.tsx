@@ -1,6 +1,4 @@
 import React from "react";
-import { useLocalStorageCleanup } from "./hooks/useLocalStorageCleanup";
-
 
 interface Panel01Props {
   nextStep: () => void;
@@ -11,7 +9,7 @@ interface Panel01Props {
  * Shows feature highlights and prompts user to start the onboarding process
  */
 const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
-  useLocalStorageCleanup();
+  
   return (
     <div className="relative flex flex-col items-center justify-start px-4 py-2 md:p-4 globalBackground">
       <div className="w-full max-w-4xl mx-auto">

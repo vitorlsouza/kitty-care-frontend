@@ -40,7 +40,14 @@
     "unit",
     "weight",
     "catFormData",
-    "cat_name"
+    "cat_name",
+    "catId",
+    "email",
+    "token",
+    "conversationId",
+    "expiresAt",
+    "food_bowls",
+    "treats"
   ] as const;
 
   export const CAT_BREEDS = [

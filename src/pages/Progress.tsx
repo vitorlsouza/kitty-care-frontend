@@ -5,6 +5,7 @@ import ProgressBar from '../components/ProgressBar';
 import Layout from '../components/Layout';
 import PaymentModal from '../components/PaymentModal';
 import { useMediaQuery } from 'react-responsive';
+// import { useLocalStorageCleanup } from '../components/Panels/hooks/useLocalStorageCleanup';
 
 // Constants
 const MAX_STEPS = 15;
@@ -19,6 +20,8 @@ const Progress = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
+  // useLocalStorageCleanup();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);

@@ -7,7 +7,7 @@ import { useAppDispatch } from "../Redux/hooks";
 import { updateBillingOption } from "../Redux/features/billingSlice";
 
 import PayMethodBtn from './Payments/PayMethodBtn';
-// import PayPalSubscriptionBtn from './Payments/PayPalSubscriptionBtn';
+import PayPalSubscriptionBtn from './Payments/PayPalSubscriptionBtn';
 import PaymentDetailV2 from '../pages/PaymentDetailV2';
 import styles from './LoadingOverlay/LoadingOverlay.module.css';
 
@@ -84,7 +84,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
 
                                 <div className="w-full h-full flex flex-col justify-between gap-[20px]">
                                     <PayMethodBtn onClick={() => setShowCardFields(true)} />
-                                    {/* <PayPalSubscriptionBtn /> */}
+                                    <PayPalSubscriptionBtn onClose={() => setIsSuccess(true)} />
                                     <div>
                                         <div className="text-[14px] font-semibold opacity-60 text-center">
                                             Applicable VAT, sales or other applicable taxes may apply.
