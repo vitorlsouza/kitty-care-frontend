@@ -7,12 +7,12 @@ const Suggestions: React.FC<{ horizontal?: boolean; }> = ({ horizontal = false }
   const playtime = JSON.parse(localStorage.getItem("playtime") || "0");
 
   return (
-    <div className={`w-full ${horizontal ? 'mt-10' : 'max-w-lg'} p-6 rounded-lg mx-auto font-inter`}>
+    <div className={`w-full ${horizontal ? 'mt-4' : 'max-w-lg'} p-6 rounded-lg mx-auto font-inter`}>
       <h2 className="text-[20px] font-semibold text-center mb-4">
         Suggestions
       </h2>
 
-      <div className={`flex ${horizontal ? 'flex-col md:flex-row gap-20 md:justify-center' : 'flex-col'} items-center`}>
+      <div className={`flex gap-4 ${horizontal ? 'flex-col md:flex-row gap-20 md:justify-center' : 'flex-col'} items-center`}>
         {/* Food Intake Group */}
         <div className={`flex ${horizontal ? 'flex-col max-w-[318px] h-full' : 'flex-col'} gap-2`}>
           <div className="flex flex-col items-center bg-lightPearl px-16 py-8 border-2 border-pearlBush rounded-3xl">

@@ -8,4 +8,7 @@ export default defineConfig({
     port: 5173, // You can change the port if needed
   },
   assetsInclude: ['**/*.riv'],
+  optimizeDeps: {
+    include: ['@paypal/react-paypal-js'],
+  },
 });

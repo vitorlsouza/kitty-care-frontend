@@ -9,6 +9,8 @@ import { useCatForm } from './hooks/useCatForm';
  */
 const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
   const {
+    catName,
+    setCatName,
     gender,
     setGender,
     age,
@@ -29,8 +31,20 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
         </p>
       </header>
 
-      <div className="space-y-4 mx-16">
+      <div className="space-y-4 mx-10">
         {/* Gender Selection */}
+        <div className='text-center'>
+          <p className="text-md font-medium mb-2">
+            Please tell us your cat's name <span className="text-red-500">*</span>
+          </p>
+          <input
+            type='text'
+            value={catName || ''}
+            onChange={(e) => setCatName(e.target.value)}
+            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
+            placeholder={'Input your cat\'s name'} />
+          {errors.catName && <p className="text-red-500 text-sm">{errors.catName}</p>}
+        </div>
         <div className="text-center">
           <p className="text-md font-medium mb-2">
             Select your cat's gender <span className="text-red-500">*</span>
@@ -51,21 +65,18 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
           {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
         </div>
 
-        {/* Age Input */}
+        {/* Name & Age Input */}
         <div className="text-center">
-          <p className="text-md font-medium mb-2">
-            How old is your cat? <span className="text-red-500">*</span>
-          </p>
           <select
             value={age || ''}
             onChange={(e) => setAge(e.target.value)}
-            className="w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm"
+            className='w-full lg:w-3/4 border border-gray-300 bg-white px-4 h-12 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
           >
             <option value="" disabled>
               Select your cat's age
             </option>
             {Array.from({ length: 24 }, (_, i) => (
-              <option key={i} value={i+1}>
+              <option key={i} value={i + 1}>
                 {i + 1} {i + 1 === 1 ? 'year' : 'years'}
               </option>
             ))}

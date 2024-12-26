@@ -5,11 +5,12 @@ export interface MedicalHistoryForm {
   surgeryHistory: string;
 }
 
-export interface Panel11Props {
+export interface Panel02Props {
   nextStep: () => void;
   previousStep: () => void;
 } 
 
 export interface Panel15Props {
+  openPaymentModal?: () => void;
   previousStep?: () => void;  // Made optional since it's not currently used
 } 

@@ -35,7 +35,7 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
   }, [selectedActivity]);
 
   return (
-    <div className="w-full p-6 rounded-md mx-auto font-Inter">
+    <div className="mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-6">
         <h1 className="font-bold text-2xl md:text-3xl mb-2">
           What's Your Cat's Activity Level?
@@ -46,7 +46,7 @@ const Panel05: React.FC<Panel05Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:max-w-[1450px] mx-8 md:mx-12 lg:mx-36">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:max-w-[1450px] md:mx-12 lg:mx-36">
         {ACTIVITY_LEVELS.map((level) => (
           <ActivityCard
             key={level.id}

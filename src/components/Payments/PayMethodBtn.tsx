@@ -1,9 +1,6 @@
 const PayMethodBtn = ({ onClick }: { onClick: () => void }) => {
   return (
     <div className="cursor-pointer hover:shadow-sm active:shadow-lg" onClick={onClick}>
-      <label className="block sm:hidden mb-3 ms-5 font-semibold sm:font-normal text-[16px] sm:text-[18px]">
-        Credit or Debit Card
-      </label>
       <div className="h-[55px] w-full border border-[#898B90] rounded-lg flex justify-between items-center ps-5 pe-2">
         <label className="hidden sm:block text-[18px]">
           Credit or Debit Card

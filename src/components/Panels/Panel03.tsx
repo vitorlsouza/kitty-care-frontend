@@ -1,105 +1,59 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import GoalCard from "./components/GoalCard";
+import { useGoals } from "./hooks/useGoals";
+import { GOALS } from "./constants/goals";
 import NavigationButtons from "../NavigationButtons";
-import {
-  PANEL_DATA,
-  ANIMATION_INTERVAL,
-  RIVE_ANIMATION_VALUE,
-  PanelDescription
-} from "./constants/panel03Data";
 
 interface Panel03Props {
-  previousStep: () => void;
   nextStep: () => void;
+  previousStep: () => void;
 }
 
-const Panel03: React.FC<Panel03Props> = ({ previousStep, nextStep }) => {
-  const [currentDescription, setCurrentDescription] = useState<number>(0);
-  const [isRiveLoaded, setIsRiveLoaded] = useState<boolean>(false);
-
-  // Initialize Rive animation
-  const { rive, RiveComponent } = useRive({
-    src: "/assets/riv-files/graph_kitty_V5.riv",
-    stateMachines: "State Machine 1",
-    autoplay: true,
-    onLoad: () => setIsRiveLoaded(true),
-  });
-
-  const riveInput = useStateMachineInput(rive, "State Machine 1", "Number 1");
-
-  // Handle description rotation
-  const rotateDescription = useCallback(() => {
-    setCurrentDescription((prev) =>
-      prev === PANEL_DATA.length - 1 ? 0 : prev + 1
-    );
-  }, []);
-
-  // Set up animation interval
-  useEffect(() => {
-    const interval = setInterval(rotateDescription, ANIMATION_INTERVAL);
-    return () => clearInterval(interval);
-  }, [rotateDescription]);
-
-  // Initialize Rive input
-  useEffect(() => {
-    if (riveInput) {
-      riveInput.value = RIVE_ANIMATION_VALUE;
-    }
-  }, [riveInput]);
+/**
+ * Panel02 Component
+ * Allows users to select up to three goals for their cat's improvement
+ */
+const Panel03: React.FC<Panel03Props> = ({ nextStep, previousStep }) => {
+  const { selectedGoals, handleGoalSelect, handleNext } = useGoals(nextStep);
 
   return (
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
-      <DescriptionSection currentDescription={PANEL_DATA[currentDescription]} />
-      <AnimationSection
-        RiveComponent={RiveComponent}
-        isLoaded={isRiveLoaded}
-      />
+      <div className="font-Inter text-center mb-8">
+        <h1 className="font-bold text-3xl mb-2">
+          Let's Choose Some Goals For Your Cat!
+        </h1>
+        <p className="text-md text-darkGray p-5">
+          Select goals to focus on for your cat's health and happiness.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 w-3/4 mx-auto">
+        {GOALS.map((goal) => (
+          <GoalCard
+            key={goal.title}
+            goal={goal}
+            isSelected={selectedGoals.includes(goal.title)}
+            onSelect={handleGoalSelect}
+          />
+        ))}
+      </div>
+      {/* <div className="flex justify-center mt-8 sm:mt-10">
+        <button
+          onClick={handleNext}
+          className="bg-primaryBlue text-white px-6 sm:px-8 py-2 sm:py-3 rounded-2xl hover:bg-opacity-90 transition-opacity disabled:bg-slate-400 disabled:cursor-not-allowed"
+          aria-label="Start onboarding process"
+          disabled={selectedGoals.length === 0}
+        >
+          Next
+        </button>
+      </div> */}
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleNext}
         previousStep={previousStep}
-        isNextDisabled={false}
+        isNextDisabled={selectedGoals.length === 0}
       />
     </div>
   );
 };
-
-interface DescriptionSectionProps {
-  currentDescription: PanelDescription;
-}
-
-const DescriptionSection: React.FC<DescriptionSectionProps> = ({ currentDescription }) => (
-  <div className="h-[224px] md:h-36 flex items-center justify-center md:mx-24 md:px-8 relative">
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={currentDescription.id}
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -10 }}
-        transition={{ duration: 0.5 }}
-        className="absolute w-full text-center"
-      >
-        <h2 className="text-2xl font-semibold">
-          {currentDescription.title}
-        </h2>
-        <p className="text-md max-w-2xl mx-auto mt-4 text-darkGray">
-          {currentDescription.description}
-        </p>
-      </motion.div>
-    </AnimatePresence>
-  </div>
-);
-
-interface AnimationSectionProps {
-  RiveComponent: React.ComponentType<any>;
-  isLoaded: boolean;
-}
-
-const AnimationSection: React.FC<AnimationSectionProps> = ({ RiveComponent, isLoaded }) => (
-  <div className="flex flex-col justify-center items-center w-[345px] sm:w-[875px] mx-auto">
-    {!isLoaded && <div className="p-10 text-center m-auto w-full">Loading animation...</div>}
-    <RiveComponent style={{ width: "100%", height: "280px" }} />
-  </div>
-);
 
 export default Panel03;

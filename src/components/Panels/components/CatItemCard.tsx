@@ -11,7 +11,7 @@ const CatItemCard: React.FC<CatItemCardProps> = ({ item, isSelected, onSelect })
     return (
         <div
             onClick={() => onSelect(item.title)}
-            className={`flex items-start cursor-pointer border-2 p-4 lg:p-5 rounded-2xl transition-all duration-300 ${isSelected ? "border-primaryBlue bg-lightBlue" : "border-lightGray2"
+            className={`flex items-start cursor-pointer border-2 p-4 lg:p-5 rounded-2xl transition-all duration-300 items-center ${isSelected ? "border-primaryBlue bg-lightBlue" : "border-lightGray2"
                 }`}
         >
             <div className="w-12 h-12 bg-primaryBlue flex items-center justify-center rounded-lg mr-4">

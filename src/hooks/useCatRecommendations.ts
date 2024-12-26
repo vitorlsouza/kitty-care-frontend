@@ -9,6 +9,7 @@ const useCatRecommendations = () => {
 
   const collectFormData = (): CatFormData => {
     return {
+      name: localStorage.getItem('cat_name'),
       goals: localStorage.getItem('goals'),
       issues_faced: localStorage.getItem('issues_faced'),
       activity_level: localStorage.getItem('activity_level'),

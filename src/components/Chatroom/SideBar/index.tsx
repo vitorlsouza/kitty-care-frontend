@@ -6,9 +6,9 @@ import CollapseBtn from "./CollapseBtn";
 import Content from "./Content";
 
 import KittyCare from "/assets/svg/KittyCare.svg";
-// import SmartKitty from "/assets/svg/SmartKitty.svg";
+import SmartKitty from "/assets/svg/chatcare.svg";
 // import Health from "/assets/svg/Health.svg";
-// import MyPlan from "/assets/svg/MyPlan.svg";
+import MyPlan from "/assets/svg/report.svg";
 // import Settings from "/assets/svg/Settings.svg";
 import Logout from "/assets/svg/Logout.svg";
 import Profile from "/assets/svg/Profile.svg";
@@ -17,15 +17,17 @@ import KittyCareTextMobile from "/assets/svg/KittyCareTextMobile.svg";
 import Edit from "/assets/svg/Edit.svg";
 import MiniBtn from "/assets/svg/MiniBtn.svg";
 import { logout } from "../../../Redux/features/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../Redux/hooks";
-import { RootState } from "../../../Redux/store";
-// import { useNavigate } from "react-router-dom";
+import { useAppDispatch, } from "../../../Redux/hooks";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [onHover, setOnHover] = useState("");
 
-  const userInfo = useAppSelector((state: RootState) => state.user);
+  const token = localStorage.getItem('token');
+  const [firstName, setFirstName] = useState('');
+  const navigate = useNavigate();
+  if (!token) return null;
 
   const dispatch = useAppDispatch();
   // const navigate = useNavigate();
@@ -47,6 +49,17 @@ const SideBar = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    try {
+      // Get user info from token
+      const payload = token.split('.')[1];
+      const user = JSON.parse(atob(payload));
+      setFirstName(user.user_metadata.first_name)
+    } catch (error) {
+      console.error('Error decoding token:', error);
+    }
+  }, [])
 
   const handleLogout = () => {
     dispatch(logout());
@@ -71,22 +84,25 @@ const SideBar = () => {
               />
             </a>
           </div>
-          {/* <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
             {[
-              { id: "SmartKitty", src: SmartKitty },
-              { id: "Health", src: Health },
-              { id: "MyPlan", src: MyPlan },
-              { id: "Settings", src: Settings },
+              { id: "/cat-assistant", src: SmartKitty, content: 'Chat with Expert' },
+              { id: "/progress", src: MyPlan, content: 'Review Report' },
+              // { id: "MyPlan", src: MyPlan },
+              // { id: "Settings", src: Settings },
             ].map((item) => (
-              <Icon
-                id={item.id}
-                onHover={onHover}
-                src={item.src}
-                handleHover={(id) => setOnHover(id)}
-                isOpen={isOpen}
-              />
+              <a href={item.id}>
+                <Icon
+                  id={item.content}
+                  onHover={onHover}
+                  src={item.src}
+                  handleHover={(id) => setOnHover(id)}
+                  isOpen={isOpen}
+                />
+              </a>
+
             ))}
-          </div> */}
+          </div>
         </div>
         <div className="flex flex-col gap-4">
           <Icon
@@ -143,12 +159,12 @@ const SideBar = () => {
                   </div>
                 </a>
               </div>
-              {/* <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
                 {[
-                  { id: "SmartKitty", src: SmartKitty },
-                  { id: "Health", src: Health },
-                  { id: "MyPlan", src: MyPlan },
-                  { id: "Settings", src: Settings },
+                  { id: "/cat-assistant", src: SmartKitty, content: "Chat with Expert" },
+                  { id: "/progress", src: MyPlan, content: "Review Report" },
+                  // { id: "MyPlan", src: MyPlan },
+                  // { id: "Settings", src: Settings },
                 ].map((item) => (
                   <div className="flex items-center">
                     <Icon
@@ -160,13 +176,14 @@ const SideBar = () => {
                     />
                     <Content
                       id={item.id}
-                      content={item.id}
+                      content={item.content}
                       handleHover={() => { }}
                       onHover={onHover}
+                      onClick={() => navigate(item.id)}
                     />
                   </div>
                 ))}
-              </div> */}
+              </div>
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex items-center" onClick={handleLogout}>
@@ -196,7 +213,7 @@ const SideBar = () => {
                     />
                     <Content
                       id="Profile"
-                      content={`Welcome ${userInfo.first_name}`}
+                      content={`Welcome ${firstName}`}
                       handleHover={() => { }}
                       onHover={onHover}
                     />
@@ -232,21 +249,22 @@ const SideBar = () => {
                   </div>
                 </a>
               </div>
-              {/* <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
                 {[
-                  { id: "SmartKitty", content: "Smart-Kitty" },
-                  { id: "Health", content: "Health & Wellness" },
-                  { id: "MyPlan", content: "Planner" },
-                  { id: "Settings", content: "Settings" },
+                  { id: "/cat-assistant", content: "Chat With Expert" },
+                  { id: "/progress", content: "Review Report" },
+                  // { id: "MyPlan", content: "Planner" },
+                  // { id: "Settings", content: "Settings" },
                 ].map((item) => (
                   <Content
                     id={item.id}
                     content={item.content}
                     handleHover={(id) => setOnHover(id)}
+                    onClick={() => navigate(item.id)}
                     onHover={onHover}
                   />
                 ))}
-              </div> */}
+              </div>
             </div>
             <div className="flex flex-col gap-4">
               <Content
@@ -260,7 +278,7 @@ const SideBar = () => {
                 <div className="w-full flex items-center justify-between">
                   <Content
                     id="Profile"
-                    content={`Welcome ${userInfo.first_name}`}
+                    content={`Welcome ${firstName}`}
                     handleHover={(id) => setOnHover(id)}
                     onHover={onHover}
                   >

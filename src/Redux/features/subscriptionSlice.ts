@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { createSubscriptionAPI, getSubscriptionsAPI, deleteSubscriptionAPI, deleteStripeSubscriptionAPI } from '../../services/api';
+import { createSubscriptionAPI, getSubscriptionsAPI, deleteSubscriptionAPI, deleteStripeSubscriptionAPI, cancelPayPalSubscription } from '../../services/api';
 import { SubscriptionState } from '../../utils/types';
 import { clearTokens } from '../../utils/auth';
 
@@ -57,7 +57,16 @@ export const deleteSubscriptionAsync = createAsyncThunk(
       if (!subscriptionId) {
         throw new Error('No subscription ID found');
       }
-      await deleteStripeSubscriptionAPI(subscriptionId);
+
+      if (subscriptionId.startsWith('sub_')) {
+        // Call Stripe subscription delete API
+        await deleteStripeSubscriptionAPI(subscriptionId);
+      } else if (subscriptionId.startsWith('I-')) {
+        // Call PayPal subscription delete API
+        await cancelPayPalSubscription(subscriptionId);
+      } else {
+        throw new Error('Invalid subscription ID');
+      }
 
       await deleteSubscriptionAPI(subscriptionId);
       localStorage.removeItem('subscriptionId');

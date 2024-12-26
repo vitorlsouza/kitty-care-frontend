@@ -1,32 +1,34 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../Redux/hooks';
-import { signUpUserAsync } from '../Redux/features/userSlice';
-import { validatePassword, validateUserInfo } from '../utils/validation';
+import { signUpUserWithOTPAsync } from '../Redux/features/userSlice';
+import { validateUserInfo } from '../utils/validation';
 import { setLoading } from '../store/ui/actions';
 import { createCatAsync } from '../Redux/features/catsSlice';
 import { collectFormData } from '../utils/auth';
+import { signUpWithOTPAPI } from '../services/api';
 
 export interface UserInfo {
   first_name: string;
   last_name: string;
   email: string;
-  password: string;
+  otp: string;
 }
 
 export interface FormErrors {
   first_name?: string;
   last_name?: string;
   email?: string;
-  password?: string;
   general?: string;
+  otp?: string;
+  password?: string;
 }
 
 const initialUserInfo: UserInfo = {
   first_name: "",
   last_name: "",
   email: "",
-  password: "",
+  otp: "",
 };
 
 const initialErrors: FormErrors = {};
@@ -39,7 +41,7 @@ export const useSignupForm = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const urlParams = new URLSearchParams(window.location.search);
+  // const urlParams = new URLSearchParams(window.location.search);
 
   const validateForm = () => {
     const { isValid, errors } = validateUserInfo(userInfo, checked);
@@ -57,7 +59,6 @@ export const useSignupForm = () => {
       return newErrors;
     });
     if(value === "") return;
-    if(name === "password") setError({...error, password: validatePassword(value)})
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,7 +70,7 @@ export const useSignupForm = () => {
     setIsLoading(true);
 
     try {
-      await dispatch(signUpUserAsync({
+      await dispatch(signUpUserWithOTPAsync({
         ...userInfo,
         first_name: userInfo.first_name.trim(),
         last_name: userInfo.last_name.trim(),
@@ -83,7 +84,8 @@ export const useSignupForm = () => {
 
       setUserInfo(initialUserInfo);
       setError(initialErrors);
-      navigate('/priceselection?' + urlParams.toString());
+      navigate('/');
+      // navigate('/priceselection?' + urlParams.toString());
     } catch (err: any) {
       setError(prev => ({
         ...prev,
@@ -95,6 +97,49 @@ export const useSignupForm = () => {
     }
   };
 
+  const handleEmailSubmit = async (email: string) => {
+    setError({});
+    setIsLoading(true);
+
+    try {
+      await signUpWithOTPAPI({
+        first_name: userInfo.first_name.trim(),
+        last_name: userInfo.last_name.trim(),
+        email: email.trim(),
+      });
+      return true;
+    } catch (err: any) {
+      setError({
+        general: err.message || 'Failed to send verification code'
+      });
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOTPSubmit = async (email: string, token: string) => {
+    setError({});
+    setIsLoading(true);
+
+    try {
+      await dispatch(signUpUserWithOTPAsync({ email, first_name: userInfo.first_name.trim(), last_name: userInfo.last_name.trim(), token: token })).unwrap();
+
+      if (localStorage.getItem("catId")) {
+        const formData = collectFormData();
+        await dispatch(createCatAsync(formData)).unwrap();
+      }
+
+      navigate(`/progress?step=9`);
+    } catch (err: any) {
+      setError({
+        general: err.message || 'Invalid verification code'
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     userInfo,
     error,
@@ -103,5 +148,7 @@ export const useSignupForm = () => {
     setChecked,
     handleChange,
     handleSubmit,
+    handleEmailSubmit,
+    handleOTPSubmit,
   };
 }; 

@@ -54,6 +54,8 @@ body {
   z-index: 60;
   top: 20px;
   left: 120%;
+  word-wrap: unset;
+  white-space: nowrap;
 }
 
 .tooltip .tooltiptext::after {

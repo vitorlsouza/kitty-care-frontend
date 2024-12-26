@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../Redux/hooks";
 import { useNavigate } from "react-router-dom";
-import { updateCatAsync } from "../../../../Redux/features/catsSlice";
+import { fetchCatsAsync, updateCatAsync } from "../../../../Redux/features/catsSlice";
 import { setLoading } from "../../../../store/ui/actions";
 import { ProfileInfo, PhotoData } from "../types";
 import { INITIAL_PROFILE_STATE } from "../constants";
@@ -22,6 +22,20 @@ export const useProfileForm = () => {
     if (profileInfo === INITIAL_PROFILE_STATE) setDataChanged(false);
     else setDataChanged(true);
   }, [photo, profileInfo]);
+
+  useEffect(() => {
+    dispatch(fetchCatsAsync()).unwrap()
+  }, []);
+
+  useEffect(() => {
+    const name = localStorage.getItem('cat_name') || '';
+    const breed = localStorage.getItem('breed') || '';
+    const gender = localStorage.getItem('gender') || '';
+    const target_weight = localStorage.getItem('target_weight') || '';
+    const medical_history = localStorage.getItem('medical_history') || '';
+    const dietary_restrictions = localStorage.getItem('dietary_restrictions') || '';
+    setProfileInfo({...profileInfo, name, breed, gender, target_weight, medical_history, dietary_restrictions});
+  }, [])
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {

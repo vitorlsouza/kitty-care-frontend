@@ -1,48 +1,58 @@
 import React from "react";
-import { DaySelectionPanelProps } from "./types/daySelection";
-import { DAY_OPTIONS, TRAINING_DAYS_KEY } from "./constants/dayOptions";
-import { useDaySelection } from "./hooks/useDaySelection";
-import { DayCard } from "./components/DayCard";
+import { Panel10Props } from "./types";
+import { FREQUENCY_OPTIONS, LOCAL_STORAGE_KEY } from "./constants/frequencyOptions";
+import { useFrequencySelection } from "./hooks/useFrequencySelection";
+import { FrequencyCard } from "./components/FrequencyCard";
 import NavigationButtons from "../NavigationButtons";
 
-const Panel10: React.FC<DaySelectionPanelProps> = ({ nextStep, previousStep }) => {
-  const { selectedDays, handleDaySelect } = useDaySelection();
+/**
+ * Panel10 Component
+ * Allows users to select their preferred check-in frequency for their cat's care
+ */
+const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
+  const { selectedFrequency, handleCardSelect } = useFrequencySelection();
 
   const handleSubmit = () => {
-    if (selectedDays.length > 0) {
-      localStorage.setItem(TRAINING_DAYS_KEY, JSON.stringify(selectedDays));
+    if (selectedFrequency !== null) {
+      const selectedOption = FREQUENCY_OPTIONS.find(
+        (option) => option.id === selectedFrequency
+      );
+      if (selectedOption) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, selectedOption.title);
+      }
       nextStep();
     }
   };
 
   return (
-    <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
+    // <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto relative font-inter">
+    <div className="w-full md:max-w-7xl p-6 rounded-md mx-auto relative font-inter">
       <div className="text-center mb-6 lg:mb-8">
-        <h1 className="font-bold text-xl mb-2 mx-8 md:mx-40 lg:mx-80">
-          Pick Your Best Training Days
+        <h1 className="font-extrabold text-xl mb-2 md:mx-56 lg:mx-80">
+          How Often Do You Want to Check In With Your Cat?
         </h1>
-        <p className="text-sm text-darkGray px-8 md:mx-36 lg:mx-72">
-          Select the days when you're most likely to dedicate time to training
-          your cat. We recommend picking at least 2-3 days a week for best
-          results.
+        <p className="text-sm text-darkGray md:mx-44 lg:mx-72">
+          We recommend checking in at least 3 times a week to stay on top of
+          your cat's progress. How often would you like to receive reminders and
+          track your cat's care?
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-2 md:gap-2 mx-4 md:mx-32 lg:mx-60">
-        {DAY_OPTIONS.map((day) => (
-          <DayCard
-            key={day.id}
-            day={day}
-            isSelected={selectedDays.includes(day.day)}
-            onSelect={handleDaySelect}
+      <div role="radiogroup" className="space-y-1 md:mx-32 lg:mx-60">
+        {FREQUENCY_OPTIONS.map((option) => (
+          <FrequencyCard
+            key={option.id}
+            option={option}
+            isSelected={selectedFrequency === option.id}
+            onSelect={handleCardSelect}
           />
         ))}
       </div>
 
       <NavigationButtons
-        nextStep={handleSubmit}
         previousStep={previousStep}
-        isNextDisabled={selectedDays.length === 0}
+        nextStep={handleSubmit}
+        isNextDisabled={selectedFrequency === null}
       />
     </div>
   );

@@ -4,13 +4,13 @@ import { TextInputProps } from '../../utils/types';
 
 // Extract styles to constants for better maintainability
 const STYLES = {
-  container: 'mt-[30px] flex gap-[10px] flex-col h-auto',
-  label: 'text-base sm:text-xl font-bold sm:font-medium ml-[24px]',
+  container: 'mt-[20px] flex gap-[10px] flex-col h-auto',
+  label: 'text-base sm:text-xl font-bold sm:font-medium ',
   inputWrapper: 'w-full h-[52px] relative',
   input: 'w-full h-[55px] p-auto sm:py-4 px-[24px] text-base sm:text-xl border-2 rounded-lg',
   toggleButton: 'absolute right-3 top-[55%] transform -translate-y-1/2 border-none hover:border-none focus:outline-none bg-transparent',
   icon: 'h-5 w-5 text-gray-500',
-  errorText: 'text-red-500 text-base text-base text-center ms-6 -mt-[6px] relative'
+  errorText: 'text-red-500 text-base text-center ms-6 -mt-[6px] relative'
 } as const;
 
 const TextInput = ({
@@ -21,6 +21,7 @@ const TextInput = ({
   className = '',
   error = '',
   onChange,
+  maxLength,
   'aria-label': ariaLabel,
 }: TextInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -59,6 +60,7 @@ const TextInput = ({
           aria-invalid={!!error}
           aria-describedby={error ? `${name}-error` : undefined}
           required
+          maxLength={maxLength}
         />
         {type === 'password' && (
           <button

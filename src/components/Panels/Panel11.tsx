@@ -1,84 +1,48 @@
 import React from "react";
-import { MEDICAL_CONDITIONS } from "./constants/medicalConditions";
-import { useMedicalHistory } from "./hooks/useMedicalHistory";
+import { DaySelectionPanelProps } from "./types/daySelection";
+import { DAY_OPTIONS, TRAINING_DAYS_KEY } from "./constants/dayOptions";
+import { useDaySelection } from "./hooks/useDaySelection";
+import { DayCard } from "./components/DayCard";
 import NavigationButtons from "../NavigationButtons";
-import { Panel11Props } from "../../types/panel.types";
 
-const Panel11: React.FC<Panel11Props> = ({ nextStep, previousStep }) => {
-  const { formData, updateFormField, isFormValid } = useMedicalHistory();
+const Panel11: React.FC<DaySelectionPanelProps> = ({ nextStep, previousStep }) => {
+  const { selectedDays, handleDaySelect } = useDaySelection();
 
-  const renderFormField = (
-    label: string,
-    placeholder: string,
-    field: keyof typeof formData
-  ) => (
-    <div className="text-center">
-      <label className="block text-sm font-medium mb-0.5">{label}</label>
-      <input
-        type="text"
-        value={formData[field] || ''}
-        onChange={(e) => updateFormField(field, e.target.value)}
-        placeholder={placeholder}
-        className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
-      />
-    </div>
-  );
+  const handleSubmit = () => {
+    if (selectedDays.length > 0) {
+      localStorage.setItem(TRAINING_DAYS_KEY, JSON.stringify(selectedDays));
+      nextStep();
+    }
+  };
 
   return (
-    <div className="w-full max-w-md lg:max-w-2xl mx-auto p-4 lg:p-6 font-inter">
-      <div className="text-center mb-6">
-        <h1 className="font-bold text-2xl mb-2 mx-4 md:mx-2 px-4 lg:px-0 md:px-0">
-          Any Medical History We Should Be Aware Of?
+    <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
+      <div className="text-center mb-6 lg:mb-8">
+        <h1 className="font-bold text-xl mb-2 mx-8 md:mx-40 lg:mx-80">
+          Pick Your Best Training Days
         </h1>
-        <p className="text-sm lg:text-md text-darkGray mx-4 px-5 lg:px-8">
-          Let us know about any medical conditions or special needs your cat has
-          so we can tailor our advice to their health.
+        <p className="text-sm text-darkGray px-8 md:mx-36 lg:mx-72">
+          Select the days when you're most likely to dedicate time to training
+          your cat. We recommend picking at least 2-3 days a week for best
+          results.
         </p>
       </div>
 
-      <div className="space-y-4 lg:px-44">
-        <div className="text-center">
-          <label className="block text-sm font-medium mb-0.5">
-            Medical Conditions
-          </label>
-          <select
-            value={formData.medicalCondition || ""}
-            onChange={(e) => updateFormField("medicalCondition", e.target.value)}
-            className="w-full font-inter border border-gray-300 px-4 py-2 rounded-full capitalize focus:outline-none focus:border-primaryBlue placeholder:text-xs md:placeholder:text-sm text-sm placeholder:text-mediumGray"
-          >
-            <option value="" disabled className="bg-lightWhite text-sm">
-              Select a condition
-            </option>
-            {MEDICAL_CONDITIONS.map((condition) => (
-              <option
-                key={condition}
-                value={condition}
-                className="bg-lightWhite text-sm capitalize"
-              >
-                {condition}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {renderFormField("Medications", "Enter current medication", "medication")}
-        {renderFormField("Dietary Restrictions", "Enter food allergies", "dietaryRestrictions")}
-        {renderFormField("Surgery History", "Enter recent surgeries", "surgeryHistory")}
-      </div>
-
-      <div className="flex flex-col items-center mt-8 text-center">
-        <p className="text-sm text-darkGray mt-4 font-light px-8 md:mx-12 lg:mx-36">
-          If your cat has no medical history, you can{" "}
-          <span className="text-primaryBlue cursor-pointer" onClick={nextStep}>
-            skip this step
-          </span>
-        </p>
+      <div className="grid md:grid-cols-2 gap-2 md:gap-2 mx-auto md:max-w-4xl">
+        {DAY_OPTIONS.map((day) => (
+          <DayCard
+            key={day.id}
+            day={day}
+            isSelected={selectedDays.includes(day.day)}
+            onSelect={handleDaySelect}
+          />
+        ))}
       </div>
 
       <NavigationButtons
-        nextStep={nextStep}
+        nextStep={handleSubmit}
         previousStep={previousStep}
-        isNextDisabled={!isFormValid()}
+        isNextDisabled={selectedDays.length === 0}
       />
     </div>
   );
