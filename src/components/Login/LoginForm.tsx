@@ -100,7 +100,7 @@ export const LoginForm: FC<OTPLoginFormProps> = ({
                         disabled={isLoading}
                         aria-busy={isLoading}
                     >
-                        {isLoading ? 'Sending code...' : 'Send OTP'}
+                        {isLoading ? 'Sending code...' : 'Send Login Code'}
                     </button>
                 </form>
             ) : (

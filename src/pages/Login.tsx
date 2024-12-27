@@ -104,7 +104,7 @@ const Login: React.FC = () => {
             <h2 className="text-[28px] sm:text-[40px] font-semibold pb-4">
               Login
             </h2>
-            <p className='font-semibold text-gray-500 text-md md:text-xl'>If you don't have account yet, go to <span className='text-blue-600 cursor-pointer' onClick={() => navigate('/progress')}>Sign Up</span></p>
+            <p className='font-semibold text-gray-500 text-md md:text-xl'>Haven't made an account yet? <span className='text-blue-600 cursor-pointer' onClick={() => navigate('/progress')}>Sign Up now.</span></p>
           </div>
 
           <LoginForm
