@@ -51,6 +51,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         };
 
         ReactPixel.track("InitiateCheckout");
+        console.log('ReactPixel.track("InitiateCheckout");');
         checkSubscriptionStatus();
 
         window.addEventListener('storage', checkSubscriptionStatus);
