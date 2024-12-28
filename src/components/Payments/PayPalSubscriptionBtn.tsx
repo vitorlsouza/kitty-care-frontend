@@ -70,7 +70,7 @@ const calculateEndDate = (isYearly: boolean): string => {
   );
 };
 
-const PayPalSubscriptionBtn: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const PayPalSubscriptionBtn: React.FC<{ onClose: () => void; }> = ({ onClose }) => {
   const [planId, setPlanId] = useState<string | null>(null);
   const billingOption = useAppSelector((state: RootState) => state.billing);
   const dispatch = useAppDispatch();
@@ -123,7 +123,6 @@ const PayPalSubscriptionBtn: React.FC<{ onClose: () => void }> = ({ onClose }) =
 
         console.log("created subscription transaction on supabase");
         onClose();
-
       }
 
     } catch (error) {
