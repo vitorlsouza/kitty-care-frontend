@@ -1,5 +1,4 @@
 import React from "react";
-import { MEDICAL_CONDITIONS } from "./constants/medicalConditions";
 import { useMedicalHistory } from "./hooks/useMedicalHistory";
 import NavigationButtons from "../NavigationButtons";
 import { Panel02Props } from "../../types/panel.types";
@@ -37,7 +36,7 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
       </div>
 
       <div className="space-y-4 px-8 lg:px-40">
-        <div className="text-center">
+        {/* <div className="text-center">
           <label className="block text-sm font-medium mb-0.5">
             Medical Conditions
           </label>
@@ -59,20 +58,25 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
               </option>
             ))}
           </select>
-        </div>
-
+        </div> */}
+        {renderFormField("Medical Conditions", "Enter current medical conditions", "medicalCondition")}
         {renderFormField("Medications", "Enter current medication", "medication")}
         {renderFormField("Dietary Restrictions", "Enter food allergies", "dietaryRestrictions")}
         {renderFormField("Surgery History", "Enter recent surgeries", "surgeryHistory")}
       </div>
 
-      <div className="flex flex-col items-center mt-8 text-center">
+      {/* <div className="flex flex-col items-center mt-8 text-center">
         <p className="text-sm text-darkGray mt-4 font-light px-8 md:mx-12 lg:mx-36">
           If your cat has no medical history, you can{" "}
           <span className="text-primaryBlue cursor-pointer" onClick={nextStep}>
             skip this step
           </span>
         </p>
+      </div> */}
+      <div className="flex md:mx-7 justify-center px-8 lg:px-40 items-center mt-6 md:mb-6">
+        <button className="bg-primaryBlue mx-auto text-white hover:bg-opacity-90 w-full h-[55px] md:h-[40px] rounded-2xl" onClick={nextStep}>
+          Skip Step
+        </button>
       </div>
 
       <NavigationButtons

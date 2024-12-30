@@ -24,7 +24,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   isNextDisabled,
 }) => {
   return (
-    <div className="flex flex-col-reverse gap-2 md:gap-4 mx-8 md:mx-0 md:flex-row justify-center items-center mt-6 space-y-4 md:space-y-0">
+    <div className="flex flex-col-reverse gap-2 md:gap-4 mx-8 md:mx-0 md:flex-row justify-center items-center space-y-4 md:space-y-0">
       <button
         onClick={previousStep}
         className={backButtonStyles}
