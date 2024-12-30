@@ -8,58 +8,6 @@ interface Panel07Props {
   previousStep: () => void;
 }
 
-const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
-  const {
-    breed,
-    setBreed,
-    weight,
-    setWeight,
-    unit,
-    setUnit,
-    targetWeight,
-    setTargetWeight,
-    errors,
-    handleSubmit,
-    isFormValid,
-  } = useCatWeightForm({ onSubmit: nextStep });
-
-  return (
-    <div className="w-full max-w-md lg:max-w-lg p-4 lg:p-6 mx-auto">
-      <div className="text-center mb-6">
-        <h1 className="font-bold text-2xl lg:text-3xl mb-2">
-          Tell Us More About Your Cat's Breed and Weight
-        </h1>
-        <p className="text-md text-darkGray mx-6">
-          To better understand your cat's needs, please share their breed,
-          current weight, and target weight.
-        </p>
-      </div>
-
-      <div className="space-y-4 mx-6">
-        <BreedSelect breed={breed} setBreed={setBreed} error={errors.breed} />
-        <WeightInput
-          weight={weight}
-          setWeight={setWeight}
-          unit={unit}
-          setUnit={setUnit}
-          errors={{ weight: errors.weight, unit: errors.unit }}
-        />
-        <TargetWeightInput
-          targetWeight={targetWeight}
-          setTargetWeight={setTargetWeight}
-          error={errors.targetWeight}
-        />
-      </div>
-
-      <NavigationButtons
-        nextStep={handleSubmit}
-        previousStep={previousStep}
-        isNextDisabled={!isFormValid}
-      />
-    </div>
-  );
-};
-
 interface BreedSelectProps {
   breed: CatBreed | null;
   setBreed: (breed: CatBreed) => void;
@@ -71,7 +19,7 @@ const BreedSelect: React.FC<BreedSelectProps> = ({ breed, setBreed, error }) => 
     <p className="text-md font-medium mb-2">
       What breed is your cat? <span className="text-red-500">*</span>
     </p>
-    <div className="relative inline-block w-full lg:w-3/4">
+    <div className="relative inline-block w-full">
       <select
         value={breed ?? ""}
         onChange={(e) => setBreed(e.target.value as CatBreed)}
@@ -100,8 +48,6 @@ interface WeightInputProps {
 const WeightInput: React.FC<WeightInputProps> = ({
   weight,
   setWeight,
-  unit,
-  setUnit,
   errors,
 }) => (
   <div className="text-center">
@@ -109,7 +55,6 @@ const WeightInput: React.FC<WeightInputProps> = ({
       Weight of your cat? <span className="text-red-500">*</span>
     </p>
     <div className="flex justify-center items-center space-x-4 lg:space-x-0 lg:gap-2">
-      <UnitButton unit="Lbs" selectedUnit={unit} onSelect={setUnit} />
       <select
         value={weight || ''}
         onChange={(e) => setWeight(e.target.value)}
@@ -122,15 +67,13 @@ const WeightInput: React.FC<WeightInputProps> = ({
           const weightValue = (i + 1) * 0.5; // Increment by 0.5
           return (
             <option key={weightValue} value={weightValue}>
-              {unit === "Lbs" ? weightValue : (weightValue * 0.453592).toFixed(1)} {unit}
+              {weightValue} lbs / {(weightValue * 0.453592).toFixed(1)} Kg
             </option>
           );
         })}
       </select>
-      <UnitButton unit="Kg" selectedUnit={unit} onSelect={setUnit} />
     </div>
     {errors.weight && <p className="text-red-500 text-sm">{errors.weight}</p>}
-    {errors.unit && <p className="text-red-500 text-sm">{errors.unit}</p>}
   </div>
 );
 
@@ -175,21 +118,56 @@ const TargetWeightInput: React.FC<TargetWeightInputProps> = ({
   </div>
 );
 
+const Panel07: React.FC<Panel07Props> = ({ nextStep, previousStep }) => {
+  const {
+    breed,
+    setBreed,
+    weight,
+    setWeight,
+    unit,
+    setUnit,
+    targetWeight,
+    setTargetWeight,
+    errors,
+    handleSubmit,
+    isFormValid,
+  } = useCatWeightForm({ onSubmit: nextStep });
 
-interface UnitButtonProps {
-  unit: WeightUnit;
-  selectedUnit: WeightUnit;
-  onSelect: (unit: WeightUnit) => void;
-}
+  return (
+    <div className="w-full max-w-md lg:max-w-lg p-4 lg:p-6 mx-auto">
+      <div className="text-center mb-6">
+        <h1 className="font-bold text-2xl lg:text-3xl mb-2">
+          Tell Us More About Your Cat's Breed and Weight
+        </h1>
+        <p className="text-md text-darkGray mx-6">
+          To better understand your cat's needs, please share their breed,
+          current weight, and target weight.
+        </p>
+      </div>
 
-const UnitButton: React.FC<UnitButtonProps> = ({ unit, selectedUnit, onSelect }) => (
-  <button
-    onClick={() => onSelect(unit)}
-    className={`px-4 py-2 rounded-full border ${selectedUnit === unit ? "bg-primaryBlue text-white" : "border-gray-300"
-      }`}
-  >
-    {unit}
-  </button>
-);
+      <div className="space-y-4 mx-6 mb-6">
+        <BreedSelect breed={breed} setBreed={setBreed} error={errors.breed} />
+        <WeightInput
+          weight={weight}
+          setWeight={setWeight}
+          unit={unit}
+          setUnit={setUnit}
+          errors={{ weight: errors.weight, unit: errors.unit }}
+        />
+        <TargetWeightInput
+          targetWeight={targetWeight}
+          setTargetWeight={setTargetWeight}
+          error={errors.targetWeight}
+        />
+      </div>
+
+      <NavigationButtons
+        nextStep={handleSubmit}
+        previousStep={previousStep}
+        isNextDisabled={!isFormValid}
+      />
+    </div>
+  );
+};
 
 export default Panel07;
