@@ -16,7 +16,9 @@ const Panel01: React.FC<Panel01Props> = ({ nextStep }) => {
         {/* Welcome Message */}
         <header className="flex flex-col items-center justify-center w-full max-w-md md:mt-8 mx-auto text-center">
           <h1 className="text-2xl md:text-3xl font-bold text-black font-inter">
-            Does Your Cat Need Help?
+            Does Your Cat Need Help? 🐾
+            <br />
+            Take Our 2-Minute Quiz
           </h1>
           <p className="text-md md:text-lg font-light px-3 py-2 sm:px-5 sm:py-3 text-darkGray">
             Get instant insights into your cat’s health and start chatting with an expert in minutes. Tailored advice, personalized to your cat’s needs.
