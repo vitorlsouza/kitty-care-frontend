@@ -28,7 +28,7 @@ const Panel11: React.FC<DaySelectionPanelProps> = ({ nextStep, previousStep }) =
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-2 md:gap-2 mx-auto md:max-w-4xl">
+      <div className="grid md:grid-cols-2 gap-2 md:gap-2 mx-auto md:max-w-4xl mb-10">
         {DAY_OPTIONS.map((day) => (
           <DayCard
             key={day.id}

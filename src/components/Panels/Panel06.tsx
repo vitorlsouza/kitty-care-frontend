@@ -31,7 +31,7 @@ const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
         </p>
       </header>
 
-      <div className="space-y-4 mx-10">
+      <div className="space-y-4 mx-10 mb-6">
         {/* Gender Selection */}
         <div className='text-center'>
           <p className="text-md font-medium mb-2">

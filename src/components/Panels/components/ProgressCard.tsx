@@ -4,7 +4,7 @@ import { ProgressItem } from '../constants/progressItems';
 interface ProgressCardProps {
     item: ProgressItem;
     isSelected: boolean;
-    onSelect: (id: number) => void;
+    onSelect: (title: string) => void;
 }
 
 export const ProgressCard: React.FC<ProgressCardProps> = ({
@@ -14,7 +14,7 @@ export const ProgressCard: React.FC<ProgressCardProps> = ({
 }) => {
     return (
         <button
-            onClick={() => onSelect(item.id)}
+            onClick={() => onSelect(item.title)}
             className={`w-full text-left border-2 flex items-center justify-start h-28 md:h-24 px-4 sm:px-8 md:px-4 md:py-3 lg:py-5 rounded-2xl transition-all duration-300  ${isSelected ? "bg-primaryBlue text-white" : "border-gray-300"
                 }`}
             aria-pressed={isSelected}

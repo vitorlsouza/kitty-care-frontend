@@ -26,7 +26,7 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
 
   return (
     // <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto relative font-inter">
-    <div className="w-full md:max-w-7xl p-6 rounded-md mx-auto relative font-inter">
+    <div className="w-full md:max-w-7xl p-6 rounded-md mx-auto relative font-inter mb-10">
       <div className="text-center mb-6 lg:mb-8">
         <h1 className="font-extrabold text-xl mb-2 md:mx-56 lg:mx-80">
           How Often Do You Want to Check In With Your Cat?

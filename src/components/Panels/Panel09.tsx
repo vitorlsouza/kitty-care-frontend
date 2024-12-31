@@ -1,5 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import NavigationButtons from "../NavigationButtons";
 import { PROGRESS_ITEMS } from "./constants/progressItems";
 import { ProgressCard } from "./components/ProgressCard";
@@ -9,41 +8,31 @@ interface Panel09Props {
   previousStep: () => void;
 }
 
+const MAX_GOALS = 10;
+
 const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
-  const [selectedProgress, setSelectedProgress] = useState<number | null>(null);
-  useEffect(() => {
-    const storedProgress = localStorage.getItem("required_progress");
-    if (storedProgress) {
-      const foundItem = PROGRESS_ITEMS.find(
-        (item) => item.title === storedProgress
-      );
-      if (foundItem) {
-        setSelectedProgress(foundItem.id);
+  const [selectedProgress, setSelectedProgress] = useState<string[]>(JSON.parse(localStorage.getItem("required_progress") || '[]'));
+
+
+  const handleCardSelect = (progress: string) => {
+    setSelectedProgress(prev => {
+      if (prev.includes(progress)) {
+        return prev.filter((g) => g !== progress);
       }
-    }
-  }, []);
-
-  const handleCardSelect = (id: number) => {
-    const newProgress = id === selectedProgress ? null : id;
-    setSelectedProgress(newProgress);
-
-    const selectedItem = PROGRESS_ITEMS.find((item) => item.id === newProgress);
-    if (selectedItem) {
-      localStorage.setItem("required_progress", selectedItem.title);
-    } else {
-      localStorage.removeItem("required_progress");
-    }
+      if (prev.length < MAX_GOALS) {
+        return [...prev, progress];
+      }
+      return prev;
+    });
   };
 
   const handleSubmit = () => {
     if (selectedProgress !== null) {
+      localStorage.setItem("required_progress", JSON.stringify(selectedProgress));
+
       nextStep();
     }
   };
-
-  const selectedPopup = selectedProgress !== null
-    ? PROGRESS_ITEMS.find((item) => item.id === selectedProgress)
-    : null;
 
   return (
     <main className="w-full max-w-2xl lg:max-w-6xl mx-auto p-6 relative">
@@ -66,38 +55,16 @@ const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
           <ProgressCard
             key={item.id}
             item={item}
-            isSelected={selectedProgress === item.id}
+            isSelected={selectedProgress.includes(item.title)}
             onSelect={handleCardSelect}
           />
         ))}
       </section>
 
-      <AnimatePresence>
-        {selectedPopup && (
-          <motion.aside
-            key={selectedPopup.id}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ duration: 0.3 }}
-            className="hidden md:flex absolute md:top-[-150px] md:right-[-20px] lg:top-[-150px] lg:right-0 bg-lightWhite mt-2 rounded-2xl md:w-64 lg:w-72 flex-col items-center border-2 border-pearlBush shadow-lg"
-            role="complementary"
-            aria-label="Selection feedback"
-          >
-            <h2 className="bg-primaryYellow text-black text-md font-semibold rounded-b-2xl px-4 py-1 mx-auto text-center">
-              {selectedPopup.popupTitle}
-            </h2>
-            <p className="text-xs leading-relaxed text-center px-4 pb-2">
-              {selectedPopup.popupDescription}
-            </p>
-          </motion.aside>
-        )}
-      </AnimatePresence>
-
       <NavigationButtons
         nextStep={handleSubmit}
         previousStep={previousStep}
-        isNextDisabled={selectedProgress === null}
+        isNextDisabled={selectedProgress.length === 0}
       />
     </main>
   );

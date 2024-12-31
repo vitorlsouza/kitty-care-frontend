@@ -48,6 +48,12 @@ const Login: React.FC = () => {
       await signInWithOTPAPI(email);
       return true;
     } catch (err: any) {
+      if (err.message === "Signups not allowed for otp") {
+        setError({
+          general: "User not found"
+        });
+        return false;
+      }
       setError({
         general: err.message || 'Failed to send verification code'
       });

@@ -112,7 +112,7 @@ const Panel08: React.FC<Panel08Props> = ({ previousStep, nextStep }) => {
             !showOTPInput ? (
               <form onSubmit={onEmailSubmit}>
                 <div className="flex flex-col gap-6 w-full">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-2">
                     <div className="flex flex-col gap-2">
                       <label className="text-base sm:text-xl font-bold sm:font-medium ml-2">First Name</label>
                       <input
