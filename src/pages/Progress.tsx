@@ -5,6 +5,7 @@ import ProgressBar from '../components/ProgressBar';
 import Layout from '../components/Layout';
 import PaymentModal from '../components/PaymentModal';
 import { useMediaQuery } from 'react-responsive';
+import { isAuthenticated } from '../utils/auth';
 // import { useLocalStorageCleanup } from '../components/Panels/hooks/useLocalStorageCleanup';
 
 // Constants
@@ -16,7 +17,7 @@ const Progress = () => {
   const catId = localStorage.getItem('catId');
   const [currentStep, setCurrentStep] = useState(catId ? MAX_STEPS : MIN_STEP);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,11 +36,17 @@ const Progress = () => {
     }
   }, [location.search]);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (token) setIsAuthenticated(true);
-  }, [])
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   console.log("Token retrieved:", token); // Log the token value
+  
+  //   if (token) {
+  //     setIsAuthenticated(true);
+  //     console.log("User is authenticated");
+  //   } else {
+  //     console.log("User is not authenticated");
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem('currentStep', currentStep.toString());
