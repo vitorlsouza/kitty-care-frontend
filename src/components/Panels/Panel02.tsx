@@ -2,6 +2,7 @@ import React from "react";
 import { useMedicalHistory } from "./hooks/useMedicalHistory";
 import NavigationButtons from "../NavigationButtons";
 import { Panel02Props } from "../../types/panel.types";
+import { MEDICAL_CONDITIONS } from "./constants/medicalConditions";
 
 const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
   const { formData, updateFormField, isFormValid } = useMedicalHistory();
@@ -27,16 +28,16 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
     <div className="w-full max-w-md lg:max-w-2xl mx-auto p-4 lg:p-6 font-inter">
       <div className="text-center mb-6">
         <h1 className="font-bold text-2xl mb-2 mx-4 md:mx-2 px-3 lg:px-0 md:px-0">
-          Any Medical History We Should Be Aware Of?
+          Tell Our Experts About Your Cat's Medical History
+
         </h1>
         <p className="text-sm lg:text-md text-darkGray mx-4 px-4 lg:px-8">
-          Let us know about any medical conditions or special needs your cat has
-          so we can tailor our advice to their health.
+          Let our experts know about any medical conditions or special needs your cat has so we can provide you with the best advice.
         </p>
       </div>
 
       <div className="space-y-4 px-8 lg:px-40">
-        {/* <div className="text-center">
+        <div className="text-center">
           <label className="block text-sm font-medium mb-0.5">
             Medical Conditions
           </label>
@@ -58,8 +59,8 @@ const Panel02: React.FC<Panel02Props> = ({ nextStep, previousStep }) => {
               </option>
             ))}
           </select>
-        </div> */}
-        {renderFormField("Medical Conditions", "Enter current medical conditions", "medicalCondition")}
+        </div>
+        {/* {renderFormField("Medical Conditions", "Enter current medical conditions", "medicalCondition")} */}
         {renderFormField("Medications", "Enter current medication", "medication")}
         {renderFormField("Dietary Restrictions", "Enter food allergies", "dietaryRestrictions")}
         {renderFormField("Surgery History", "Enter recent surgeries", "surgeryHistory")}

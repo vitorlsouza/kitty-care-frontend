@@ -20,7 +20,7 @@ const Panel03: React.FC<Panel03Props> = ({ nextStep, previousStep }) => {
     <div className="w-full md:max-w-[1380px] p-6 rounded-md mx-auto">
       <div className="font-Inter text-center mb-8">
         <h1 className="font-bold text-3xl mb-2">
-          Let's Choose Some Goals For Your Cat!
+        Let's Choose Additional Goals For Your Cat!
         </h1>
         <p className="text-md text-darkGray p-5">
           Select goals to focus on for your cat's health and happiness.

@@ -39,10 +39,7 @@ export const useMedicalHistory = () => {
 
   const isFormValid = (): boolean => {
     return Boolean(
-      formData.medicalCondition &&
-      formData.medication &&
-      formData.dietaryRestrictions &&
-      formData.surgeryHistory
+      formData.medicalCondition
     );
   };
 

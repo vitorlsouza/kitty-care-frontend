@@ -1,12 +1,15 @@
 export const MEDICAL_CONDITIONS = [
-  "Diabetes",
-  "Obesity",
-  "Allergies",
+  "Kidney Disease",
   "Arthritis",
-  "Urinary tract issues",
-  "Dental problems",
-  "Respiratory issues",
+  "Cancer or Tumors",
+  "Dental Disease",
+  "Diabetes",
+  "Liver Disease",
+  "Ear Infections",
+  "Vision or Hearing Loss",
+  "Heart Disease",
   "Other",
+  "None"
 ] as const;
 
 export const STORAGE_KEYS = {

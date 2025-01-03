@@ -1,9 +1,15 @@
 export const CAT_BREEDS = [
-  "Domestic shorthair",
-  "Domestic longhair",
-  "Maine coon",
-  "Siamese",
+  "Domestic Shorthair",
   "Persian",
+  "Maine Coon",
+  "Siamese",
+  "Ragdoll",
+  "Bengal",
+  "British Shorthair",
+  "Sphynx",
+  "American Shorthair",
+  "Other",
+
 ] as const;
 
 export type CatBreed = (typeof CAT_BREEDS)[number];
