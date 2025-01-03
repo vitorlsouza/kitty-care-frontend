@@ -10,7 +10,6 @@ import PayMethodBtn from './Payments/PayMethodBtn';
 // import PayPalSubscriptionBtn from './Payments/PayPalSubscriptionBtn';
 import PaymentDetailV2 from '../pages/PaymentDetailV2';
 import styles from './LoadingOverlay/LoadingOverlay.module.css';
-import PayPalSubscriptionBtn from './Payments/PayPalSubscriptionBtn';
 
 const RIVE_ANIMATION_CONFIG: UseRiveParameters = {
     src: 'riv/V2/Pulse_kitty.riv',
@@ -109,12 +108,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
 
                                 <div className="w-full h-full flex flex-col justify-between gap-[10px]">
                                     <PayMethodBtn onClick={() => setShowCardFields(true)} />
-                                    <div className="flex items-center">
+                                    {/* <div className="flex items-center">
                                         <div className="flex-1 border-t border-gray-400"></div>
                                         <span className="mx-4 text-gray-500">or</span>
                                         <div className="flex-1 border-t border-gray-400"></div>
-                                    </div>
-                                    <PayPalSubscriptionBtn onClose={() => setIsSuccess(true)} />
+                                    </div> */}
+                                    {/* <PayPalSubscriptionBtn onClose={() => setIsSuccess(true)} /> */}
                                     <div>
                                         <div className="text-[14px] font-semibold opacity-60 text-center">
                                             Applicable VAT, sales or other applicable taxes may apply.
