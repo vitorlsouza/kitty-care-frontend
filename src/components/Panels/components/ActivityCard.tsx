@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityLevel } from '../constants/panel05Data';
+import { ActivityLevel } from '../constants/panel09Data';
 
 interface ActivityCardProps {
     level: ActivityLevel;
