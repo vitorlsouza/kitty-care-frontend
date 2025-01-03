@@ -10,8 +10,8 @@ export const GOALS: Goal[] = [
     description: "Assist in achieving a healthy weight for your cat through diet and activity.",
   },
   {
-    title: "Improve Lifestyle",
-    description: "Provide a more enriched and stimulating environment for your cat.",
+    title: "Improve Health",
+    description: "Provide a more comfortable and healthy lifestyle for your cat.",
   },
   {
     title: "Train Cat",

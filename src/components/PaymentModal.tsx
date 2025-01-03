@@ -74,17 +74,45 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                     <>
                         {!showCardFields ? (
                             <div className="w-full h-full flex flex-col items-center justify-between">
-                                <div className="text-center">
-                                    <h2 className="text-[22px] sm:text-[36px] font-semibold mb-6">
-                                        3-Day Access for $0
+                                <div>
+                                    <h2 className="text-[22px] sm:text-[36px] font-semibold mb-4 text-center">
+                                        Chat with an expert for $0 today
                                     </h2>
-                                    <div className="text-base sm:text-lg font-medium mb-4">
-                                        Unlock all the exclusive features of KittyCare <b>at zero cost</b> to you for the first three days. $49.99 per month once your trial has expired.
+                                    <div className="text-base sm:text-lg font-medium mb-4 text-center">
+                                        How your free trial works <br />
+                                        Try 3 days free, then $49.99/month.
                                     </div>
+                                    <ul className='flex flex-col gap-[16px] text-black ml-4 mb-4'>
+                                        <li className='flex gap-[10px]'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                                                <path d="M2.84766 9.6533C2.84766 6.07128 2.84766 4.28027 3.96803 3.16748C5.08841 2.05469 6.89162 2.05469 10.498 2.05469C14.1044 2.05469 15.9077 2.05469 17.0281 3.16748C18.1484 4.28027 18.1484 6.07128 18.1484 9.6533C18.1484 13.2353 18.1484 15.0263 17.0281 16.1391C15.9077 17.2519 14.1044 17.2519 10.498 17.2519C6.89162 17.2519 5.08841 17.2519 3.96803 16.1391C2.84766 15.0263 2.84766 13.2353 2.84766 9.6533Z" fill="#FFCE01" stroke="black" strokeWidth="1.19973" />
+                                                <path d="M7.2793 10.0533L9.29248 12.0528L13.7215 7.25391" stroke="black" strokeWidth="1.19973" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='w-[90%]'>
+                                                <b>Today</b><br />
+                                                Pay $0 today and unlock unlimited access to speak with experts 24/7.
+                                            </p>
+                                        </li>
+                                        <li className='flex gap-[10px]'>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" >
+                                                <path d="M2.84766 9.6533C2.84766 6.07128 2.84766 4.28027 3.96803 3.16748C5.08841 2.05469 6.89162 2.05469 10.498 2.05469C14.1044 2.05469 15.9077 2.05469 17.0281 3.16748C18.1484 4.28027 18.1484 6.07128 18.1484 9.6533C18.1484 13.2353 18.1484 15.0263 17.0281 16.1391C15.9077 17.2519 14.1044 17.2519 10.498 17.2519C6.89162 17.2519 5.08841 17.2519 3.96803 16.1391C2.84766 15.0263 2.84766 13.2353 2.84766 9.6533Z" fill="#FFCE01" stroke="black" strokeWidth="1.19973" />
+                                                <path d="M7.2793 10.0533L9.29248 12.0528L13.7215 7.25391" stroke="black" strokeWidth="1.19973" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <p className='w-[90%]'>
+                                                <b>Dietary Recommendations</b><br />
+                                                Get a personalized feeding and exercise regimen for your cat.
+                                            </p>
+                                        </li>
+                                    </ul>
                                 </div>
 
-                                <div className="w-full h-full flex flex-col justify-between gap-[20px]">
+                                <div className="w-full h-full flex flex-col justify-between gap-[10px]">
                                     <PayMethodBtn onClick={() => setShowCardFields(true)} />
+                                    {/* <div className="flex items-center">
+                                        <div className="flex-1 border-t border-gray-400"></div>
+                                        <span className="mx-4 text-gray-500">or</span>
+                                        <div className="flex-1 border-t border-gray-400"></div>
+                                    </div> */}
                                     {/* <PayPalSubscriptionBtn onClose={() => setIsSuccess(true)} /> */}
                                     <div>
                                         <div className="text-[14px] font-semibold opacity-60 text-center">

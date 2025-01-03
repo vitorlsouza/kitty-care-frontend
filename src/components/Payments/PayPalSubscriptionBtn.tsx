@@ -151,6 +151,7 @@ const PayPalSubscriptionBtn: React.FC<{ onClose: () => void; }> = ({ onClose }) 
             layout: "vertical",
             shape: "rect",
             label: "subscribe",
+            color: 'white'
           }}
           fundingSource={FUNDING.PAYPAL}
         />

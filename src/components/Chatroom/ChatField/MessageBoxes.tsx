@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import CatinChat from "/assets/svg/catInChat.svg";
-import RiveAnimation from "../../RiveAnimation";
 import { Message } from "../../../utils/types";
 
 interface MessageBoxesProps {
@@ -68,11 +67,12 @@ const MessageBoxes: React.FC<MessageBoxesProps> = ({ messageList, response }) =>
       ) : (
         <div className="flex h-full justify-center items-center">
           <div className="w-full h-10 mb-40">
-            <div className="h-[200px]">
-              <RiveAnimation src="riv/V2/Pulse_kitty.riv" autoplay={true} />
+            <div className="h-[200px] flex items-center justify-center">
+              <img src="/assets/png/chat-expert.png" width={200} height={200} />
+
             </div>
             <div className="w-full text-[18px] sm:text-[28px] font-bold sm:font-semibold text-center">
-              I'm your Purr-Sonal Cat Assistant, <br /> here to help you.
+              Hello, I'm your dedicated expert here to assist you.  <br /> Let me know your concerns below.
             </div>
           </div>
         </div>

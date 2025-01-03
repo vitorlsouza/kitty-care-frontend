@@ -1,72 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigationButtons from "../NavigationButtons";
-import { PROGRESS_ITEMS } from "./constants/progressItems";
-import { ProgressCard } from "./components/ProgressCard";
+import ActivityCard from "./components/ActivityCard";
+import { ACTIVITY_LEVELS, STORAGE_KEY } from "./constants/panel09Data";
 
 interface Panel09Props {
   nextStep: () => void;
   previousStep: () => void;
 }
 
-const MAX_GOALS = 10;
-
 const Panel09: React.FC<Panel09Props> = ({ nextStep, previousStep }) => {
-  const [selectedProgress, setSelectedProgress] = useState<string[]>(JSON.parse(localStorage.getItem("required_progress") || '[]'));
+  const [selectedActivity, setSelectedActivity] = useState<number | null>(null);
 
-
-  const handleCardSelect = (progress: string) => {
-    setSelectedProgress(prev => {
-      if (prev.includes(progress)) {
-        return prev.filter((g) => g !== progress);
-      }
-      if (prev.length < MAX_GOALS) {
-        return [...prev, progress];
-      }
-      return prev;
-    });
-  };
-
-  const handleSubmit = () => {
-    if (selectedProgress !== null) {
-      localStorage.setItem("required_progress", JSON.stringify(selectedProgress));
-
-      nextStep();
+  // Load saved activity level from localStorage
+  useEffect(() => {
+    const storedActivity = localStorage.getItem(STORAGE_KEY);
+    if (storedActivity) {
+      const activityId = ACTIVITY_LEVELS.find(
+        (level) => level.title === storedActivity
+      )?.id;
+      setSelectedActivity(activityId ?? null);
     }
-  };
+  }, []);
+
+  // Save selected activity level to localStorage
+  useEffect(() => {
+    if (selectedActivity !== null) {
+      const selectedLevel = ACTIVITY_LEVELS.find(
+        (level) => level.id === selectedActivity
+      );
+      if (selectedLevel) {
+        localStorage.setItem(STORAGE_KEY, selectedLevel.title);
+      }
+    }
+  }, [selectedActivity]);
 
   return (
-    <main className="w-full max-w-2xl lg:max-w-6xl mx-auto p-6 relative">
-      <header className="text-center mb-8">
-        <h1 className="font-bold text-2xl lg:text-3xl mb-2">
-          What Progress is Most Important To You?
+    <div className="mx-auto p-4 lg:p-6 font-inter">
+      <div className="text-center mb-6">
+        <h1 className="font-bold text-2xl md:text-3xl mb-2">
+          What's Your Cat's Activity Level?
         </h1>
-        <p className="text-sm text-darkGray max-w-2xl mx-auto">
-          Choose the most important area where you'd like to see progress for
-          your cat.
+        <p className="text-sm text-darkGray mx-8 md:mx-36 text-center px-4">
+          Select the option that best describes your cat's typical energy and
+          activity level.
         </p>
-      </header>
+      </div>
 
-      <section
-        className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:mx-12"
-        role="radiogroup"
-        aria-label="Progress options"
-      >
-        {PROGRESS_ITEMS.map((item) => (
-          <ProgressCard
-            key={item.id}
-            item={item}
-            isSelected={selectedProgress.includes(item.title)}
-            onSelect={handleCardSelect}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:max-w-[1450px] md:mx-12 lg:mx-36">
+        {ACTIVITY_LEVELS.map((level) => (
+          <ActivityCard
+            key={level.id}
+            level={level}
+            isSelected={selectedActivity === level.id}
+            onClick={() => setSelectedActivity(level.id)}
           />
         ))}
-      </section>
+      </div>
 
       <NavigationButtons
-        nextStep={handleSubmit}
+        nextStep={nextStep}
         previousStep={previousStep}
-        isNextDisabled={selectedProgress.length === 0}
+        isNextDisabled={!selectedActivity}
       />
-    </main>
+    </div>
   );
 };
 
