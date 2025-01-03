@@ -16,6 +16,7 @@ const Progress = () => {
   const catId = localStorage.getItem('catId');
   const [currentStep, setCurrentStep] = useState(catId ? MAX_STEPS : MIN_STEP);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,10 +35,26 @@ const Progress = () => {
     }
   }, [location.search]);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if (token) setIsAuthenticated(true);
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('currentStep', currentStep.toString());
+  }, [currentStep]);
+
   // Navigation handlers
   const nextStep = () => {
     setCurrentStep((prevStep) => {
       const nextStep = prevStep + 1;
+      // Check if the user is authenticated after step 3
+      if (nextStep > 3 && !isAuthenticated) {
+        // Redirect to authentication logic (e.g., show a modal or navigate to login)
+        alert('Please authenticate to continue.');
+        return prevStep; // Stay on the current step
+      }
       // Skip steps 11 and 14
       window.scrollTo(0, 0);
       const updatedStep = nextStep === 14 ? 15 : Math.min(nextStep, MAX_STEPS);
@@ -104,6 +121,12 @@ const Progress = () => {
   const renderPanel = () => {
     return panelMap[currentStep as keyof typeof panelMap] || panelMap[1];
   };
+
+  // Function to handle authentication success
+  // const handleAuthenticationSuccess = () => {
+  //   setIsAuthenticated(true);
+  //   // Optionally, navigate to the next step or perform other actions
+  // };
 
   return (
     <Layout>

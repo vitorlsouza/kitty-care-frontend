@@ -1,97 +1,72 @@
-import React from 'react';
-import NavigationButtons from '../NavigationButtons';
-import { PanelProps } from './types';
-import { useCatForm } from './hooks/useCatForm';
+import React, { useState } from "react";
+import NavigationButtons from "../NavigationButtons";
+import { PROGRESS_ITEMS } from "./constants/progressItems";
+import { ProgressCard } from "./components/ProgressCard";
 
-/**
- * Panel06 Component
- * Collects basic information about the user's cat including gender, age, location
- */
-const Panel06: React.FC<PanelProps> = ({ nextStep, previousStep }) => {
-  const {
-    catName,
-    setCatName,
-    gender,
-    setGender,
-    age,
-    setAge,
-    errors,
-    handleSubmit,
-    isValid
-  } = useCatForm(nextStep);
+interface Panel06Props {
+  nextStep: () => void;
+  previousStep: () => void;
+}
+
+const MAX_GOALS = 10;
+
+const Panel06: React.FC<Panel06Props> = ({ nextStep, previousStep }) => {
+  const [selectedProgress, setSelectedProgress] = useState<string[]>(JSON.parse(localStorage.getItem("required_progress") || '[]'));
+
+
+  const handleCardSelect = (progress: string) => {
+    setSelectedProgress(prev => {
+      if (prev.includes(progress)) {
+        return prev.filter((g) => g !== progress);
+      }
+      if (prev.length < MAX_GOALS) {
+        return [...prev, progress];
+      }
+      return prev;
+    });
+  };
+
+  const handleSubmit = () => {
+    if (selectedProgress !== null) {
+      localStorage.setItem("required_progress", JSON.stringify(selectedProgress));
+
+      nextStep();
+    }
+  };
 
   return (
-    <div className="w-full max-w-md lg:max-w-lg p-4 lg:p-6 mx-auto font-inter">
-      <header className="text-center mb-6">
+    <main className="w-full max-w-2xl lg:max-w-6xl mx-auto p-6 relative">
+      <header className="text-center mb-8">
         <h1 className="font-bold text-2xl lg:text-3xl mb-2">
-          Tell Us About Your Cat
+          What Progress is Most Important To You?
         </h1>
-        <p className="text-md text-darkGray mx-12">
-          Please provide some basic details about your cat to help us offer the best advice.
+        <p className="text-sm text-darkGray max-w-2xl mx-auto">
+          Choose the most important area where you'd like to see progress for
+          your cat.
         </p>
       </header>
 
-      <div className="space-y-4 mx-10 mb-6">
-        {/* Gender Selection */}
-        <div className='text-center'>
-          <p className="text-md font-medium mb-2">
-            Please tell us your cat's name <span className="text-red-500">*</span>
-          </p>
-          <input
-            type='text'
-            value={catName || ''}
-            onChange={(e) => setCatName(e.target.value)}
-            className='w-full lg:w-3/4 border border-gray-300 px-4 py-2 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-            placeholder={'Input your cat\'s name'} />
-          {errors.catName && <p className="text-red-500 text-sm">{errors.catName}</p>}
-        </div>
-        <div className="text-center">
-          <p className="text-md font-medium mb-2">
-            Select your cat's gender <span className="text-red-500">*</span>
-          </p>
-          <div className="flex justify-center space-x-3">
-            {['Male', 'Female'].map((option) => (
-              <button
-                key={option}
-                className={`w-44 lg:w-32 px-4 lg:px-9 py-2 rounded-full border ${gender === option ? 'bg-primaryBlue text-white' : 'border-gray-300'
-                  }`}
-                onClick={() => setGender(option)}
-                type="button"
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-          {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
-        </div>
-
-        {/* Name & Age Input */}
-        <div className="text-center">
-          <select
-            value={age || ''}
-            onChange={(e) => setAge(e.target.value)}
-            className='w-full lg:w-3/4 border border-gray-300 bg-white px-4 h-12 rounded-full focus:border-primaryBlue focus:outline-none placeholder:text-sm'
-          >
-            <option value="" disabled>
-              Select your cat's age
-            </option>
-            {Array.from({ length: 24 }, (_, i) => (
-              <option key={i} value={i + 1}>
-                {i + 1} {i + 1 === 1 ? 'year' : 'years'}
-              </option>
-            ))}
-          </select>
-          {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
-        </div>
-
-      </div>
+      <section
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 lg:mx-12"
+        role="radiogroup"
+        aria-label="Progress options"
+      >
+        {PROGRESS_ITEMS.map((item) => (
+          <ProgressCard
+            key={item.id}
+            item={item}
+            isSelected={selectedProgress.includes(item.title)}
+            onSelect={handleCardSelect}
+          />
+        ))}
+      </section>
 
       <NavigationButtons
         nextStep={handleSubmit}
         previousStep={previousStep}
-        isNextDisabled={!isValid}
+        isNextDisabled={selectedProgress.length === 0}
       />
-    </div>
+    </main>
   );
 };
 
