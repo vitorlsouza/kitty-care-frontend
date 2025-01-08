@@ -127,7 +127,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                     <div>
                                         <div className="text-[14px] font-semibold opacity-60 text-center">
                                             Applicable VAT, sales or other applicable taxes may apply.
-                                            Cancel anytime.
                                         </div>
                                     </div>
                                 </div>
