@@ -10,7 +10,7 @@ const PayMethodBtn = ({ onClick }: { onClick: () => void }) => {
         <div className="flex gap-4 items-center">
           <img src="/assets/svg/visa.svg" alt="Visa"/>
           <img src="/assets/svg/master.svg" alt="Mastercard" />
-          <FaCcAmex />
+          <FaCcAmex className="text-blue-400 text-3xl"/>
         </div>
         <button className="text-blue-500 text-2xl">
           <FaAngleRight />
