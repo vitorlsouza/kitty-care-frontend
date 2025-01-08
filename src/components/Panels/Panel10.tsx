@@ -38,7 +38,7 @@ const Panel10: React.FC<Panel10Props> = ({ nextStep, previousStep }) => {
         </p>
       </div>
 
-      <div role="radiogroup" className="space-y-1 md:mx-32 lg:mx-60">
+      <div role="radiogroup" className="space-y-1 md:mx-32 lg:mx-60 mb-8">
         {FREQUENCY_OPTIONS.map((option) => (
           <FrequencyCard
             key={option.id}

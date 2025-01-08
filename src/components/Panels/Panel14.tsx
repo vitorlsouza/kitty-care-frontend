@@ -22,13 +22,13 @@ const OverviewSection: React.FC<OverviewSectionProps> = ({ title, items }) => {
           items.map((item, idx) => (
             <span
               key={idx}
-              className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray"
+              className="bg-white text-black py-3 px-5 rounded-full text-sm border border-black"
             >
               {item}
             </span>
           ))
         ) : (
-          <span className="bg-white text-mediumGray py-3 px-5 rounded-full text-sm border border-mediumGray">
+          <span className="bg-white text-black py-3 px-5 rounded-full text-sm border border-black">
             {items}
           </span>
         )}
