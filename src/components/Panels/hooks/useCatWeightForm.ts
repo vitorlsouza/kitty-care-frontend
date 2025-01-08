@@ -48,10 +48,10 @@ export const useCatWeightForm = ({ onSubmit }: UseCatWeightFormProps) => {
       isValid = false;
     }
 
-    if (!targetWeight || !WEIGHT_REGEX.test(targetWeight) || parseFloat(targetWeight) <= 0) {
-      newErrors.targetWeight = "Please enter a valid target weight (e.g., 8.5)";
-      isValid = false;
-    }
+    // if (!WEIGHT_REGEX.test(targetWeight) || parseFloat(targetWeight) <= 0) {
+    //   newErrors.targetWeight = "Please enter a valid target weight (e.g., 8.5)";
+    //   isValid = false;
+    // }
 
     setErrors(newErrors);
     return isValid;
@@ -79,6 +79,6 @@ export const useCatWeightForm = ({ onSubmit }: UseCatWeightFormProps) => {
     setTargetWeight,
     errors,
     handleSubmit,
-    isFormValid: !!breed && !!weight && !!unit && !!targetWeight,
+    isFormValid: !!breed && !!weight && !!unit
   };
 }; 

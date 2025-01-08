@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PawAnimation from '../PawPrintAnimation';
-import NavigationButtons from '../NavigationButtons';
 import useCatRecommendations from '../../hooks/useCatRecommendations';
 import useCreateCat from '../../hooks/useCreateCat';
 // import { useNavigate } from 'react-router-dom';
@@ -12,8 +11,8 @@ interface Panel13Props {
 
 const LOADING_DELAY = 15000;
 
-const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const Panel13: React.FC<Panel13Props> = ({ nextStep }) => {
+  // const [isLoading, setIsLoading] = useState(true);
   const { getCatRecommendations } = useCatRecommendations();
   const { createCat } = useCreateCat();
   // const navigate = useNavigate();
@@ -30,14 +29,14 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
 
         if (success) {
           setTimeout(() => {
-            setIsLoading(false);
+            // setIsLoading(false);
             nextStep();
             // navigate('/signup')
           }, LOADING_DELAY);
         }
       } catch (error) {
         console.error('Error creating cat:', error);
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     };
 
@@ -74,11 +73,11 @@ const Panel13: React.FC<Panel13Props> = ({ nextStep, previousStep }) => {
         </div>
       </main>
 
-      <NavigationButtons
+      {/* <NavigationButtons
         nextStep={nextStep}
         previousStep={previousStep}
         isNextDisabled={isLoading}
-      />
+      /> */}
     </div>
   );
 };

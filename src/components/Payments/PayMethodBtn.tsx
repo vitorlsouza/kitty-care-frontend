@@ -1,4 +1,4 @@
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleRight, FaCcAmex } from "react-icons/fa";
 
 const PayMethodBtn = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -10,6 +10,7 @@ const PayMethodBtn = ({ onClick }: { onClick: () => void }) => {
         <div className="flex gap-4 items-center">
           <img src="/assets/svg/visa.svg" alt="Visa"/>
           <img src="/assets/svg/master.svg" alt="Mastercard" />
+          <FaCcAmex />
         </div>
         <button className="text-blue-500 text-2xl">
           <FaAngleRight />
