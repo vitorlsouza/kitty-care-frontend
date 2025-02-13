@@ -73,7 +73,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 <li
                   key={index}
                   onClick={() => {
-                    onSelect(option);
+                    onSelect(option.toLocaleLowerCase());
                     setIsOpen(false);
                   }}
                   className="text-center py-2 hover:bg-[#D1D6E2] rounded-[15px] text-gray-900 cursor-pointer"
