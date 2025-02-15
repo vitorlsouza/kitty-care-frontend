@@ -1,50 +1,54 @@
-# React + TypeScript + Vite
+# Table of Contents
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Setup Instructions](#setup-instructions)
+    - [Cloning the Repository](#cloning-the-repository)
+    - [Installing Dependencies](#installing-dependencies)
+    - [Environment Variables](#environment-variables)
+    - [Starting the Development Server](#starting-the-development-server)
+  - [Testing the Application](#testing-the-application)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## Expanding the ESLint configuration
+This project is a frontend web application built using React.js and integrates with the backend API for authentication and data management. It provides a user-friendly interface for interacting with the system.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Setup Instructions
 
-- Configure the top-level `parserOptions` property like this:
+### Cloning the Repository
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```sh
+git clone <[repository_url](https://github.com/vitorlsouza/kitty-care-frontend.git)>
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Installing Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm install
 ```
+
+### Environment Variables
+
+Create a `.env` file in the root directory and add the following environment variables:
+
+```env
+VITE_BACKEND_BASE_URL=http://localhost:3000
+```
+
+### Starting the Development Server
+
+```sh
+npm run dev
+```
+
+## Testing the Application
+
+Once the development server is running, open your browser and navigate to:
+
+```
+http://localhost:5173
+```
+
+Try logging in with Google OAuth to verify that authentication is working correctly.
