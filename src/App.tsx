@@ -1,25 +1,32 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+} from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import ReactPixel from 'react-facebook-pixel';
 
-import Dashboard from "./pages/Dashboard.tsx";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Progress from "./pages/Progress.tsx";
-import Chatroom from "./pages/Chatroom";
-import PriceSelection from "./pages/PriceSelection.tsx";
-import Profile from "./pages/Profile.tsx";
-import EmailSentSuccess from "./pages/EmailSentSuccess.tsx";
-import SignUpConfirm from "./pages/SignUpConfirm.tsx";
+import Dashboard from './pages/Dashboard.tsx';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Progress from './pages/Progress.tsx';
+import Chatroom from './pages/Chatroom';
+import PriceSelection from './pages/PriceSelection.tsx';
+import Profile from './pages/Profile.tsx';
+import EmailSentSuccess from './pages/EmailSentSuccess.tsx';
+import SignUpConfirm from './pages/SignUpConfirm.tsx';
 
 import PageHead from './components/PageHead';
-import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 import LoadingOverlay from './components/LoadingOverlay/LoadingOverlay';
 
-import { useAppDispatch } from "./Redux/hooks";
-import { logout, signUpUser } from "./Redux/features/userSlice";
-import { isAuthenticated } from "./utils/auth";
+import { useAppDispatch } from './Redux/hooks';
+import { logout, signUpUser } from './Redux/features/userSlice';
+import { isAuthenticated } from './utils/auth';
+import AuthCallback from './components/Login/AuthCallback.tsx';
 
 const ROUTES = {
   HOME: '/',
@@ -32,12 +39,12 @@ const ROUTES = {
   PROGRESS: '/progress',
   CAT_ASSISTANT: '/cat-assistant',
   CAT_PROFILE: '/cat-profile',
+  AUTH_CALLBACK: '/auth/callback',
   NOT_FOUND: '/*',
 };
 
-const ProtectedRouteWrapper: React.FC<{ children: React.ReactNode; }> = React.memo(({ children }) => (
-  <ProtectedRoute>{children}</ProtectedRoute>
-));
+const ProtectedRouteWrapper: React.FC<{ children: React.ReactNode }> =
+  React.memo(({ children }) => <ProtectedRoute>{children}</ProtectedRoute>);
 
 const AppContent = () => {
   const dispatch = useAppDispatch();
@@ -52,11 +59,13 @@ const AppContent = () => {
       if (!auth) {
         dispatch(logout());
       } else {
-        dispatch(signUpUser({
-          email: auth?.email,
-          first_name: auth?.full_name?.split(" ")[0],
-          last_name: auth?.full_name?.split(" ")[1]
-        }));
+        dispatch(
+          signUpUser({
+            email: auth?.email,
+            first_name: auth?.full_name?.split(' ')[0],
+            last_name: auth?.full_name?.split(' ')[1],
+          })
+        );
       }
     };
 
@@ -69,14 +78,50 @@ const AppContent = () => {
     { path: ROUTES.HOME, element: <Navigate to={ROUTES.LOGIN} replace /> },
     { path: ROUTES.LOGIN, element: <Login /> },
     { path: ROUTES.SIGNUP, element: <Signup /> },
+    { path: ROUTES.AUTH_CALLBACK, element: <AuthCallback /> },
     { path: ROUTES.SENT_MAIL, element: <EmailSentSuccess /> },
     { path: ROUTES.CONFIRM_SIGNUP, element: <SignUpConfirm /> },
     { path: ROUTES.PROGRESS, element: <Progress /> },
-    { path: ROUTES.DASHBOARD, element: <ProtectedRouteWrapper><Dashboard /></ProtectedRouteWrapper> },
-    { path: ROUTES.PRICE_SELECTION, element: <ProtectedRouteWrapper><PriceSelection /></ProtectedRouteWrapper> },
-    { path: ROUTES.CAT_ASSISTANT, element: <ProtectedRouteWrapper><Chatroom /></ProtectedRouteWrapper> },
-    { path: ROUTES.CAT_PROFILE, element: <ProtectedRouteWrapper><Profile /></ProtectedRouteWrapper> },
-    { path: ROUTES.NOT_FOUND, element: <ProtectedRouteWrapper><div>Not found</div></ProtectedRouteWrapper> },
+    {
+      path: ROUTES.DASHBOARD,
+      element: (
+        <ProtectedRouteWrapper>
+          <Dashboard />
+        </ProtectedRouteWrapper>
+      ),
+    },
+    {
+      path: ROUTES.PRICE_SELECTION,
+      element: (
+        <ProtectedRouteWrapper>
+          <PriceSelection />
+        </ProtectedRouteWrapper>
+      ),
+    },
+    {
+      path: ROUTES.CAT_ASSISTANT,
+      element: (
+        <ProtectedRouteWrapper>
+          <Chatroom />
+        </ProtectedRouteWrapper>
+      ),
+    },
+    {
+      path: ROUTES.CAT_PROFILE,
+      element: (
+        <ProtectedRouteWrapper>
+          <Profile />
+        </ProtectedRouteWrapper>
+      ),
+    },
+    {
+      path: ROUTES.NOT_FOUND,
+      element: (
+        <ProtectedRouteWrapper>
+          <div>Not found</div>
+        </ProtectedRouteWrapper>
+      ),
+    },
   ];
 
   return (

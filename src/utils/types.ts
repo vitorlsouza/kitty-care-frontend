@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
 export interface AuthToken {
   token: string;
@@ -129,4 +129,9 @@ export interface SubscriptionState {
 export interface Goal {
   title: string;
   description: string;
+}
+export interface UserInfoProps {
+  name: string;
+  picture: string;
+  email: string;
 }
